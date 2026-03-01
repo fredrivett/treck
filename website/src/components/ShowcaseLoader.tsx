@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import type { FlowGraph as FlowGraphData } from '@treck/graph/types.js';
+import { useEffect, useState } from 'react';
 import { ShowcaseViewer } from './ShowcaseViewer';
 
 interface ShowcaseLoaderProps {

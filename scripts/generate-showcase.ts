@@ -100,7 +100,10 @@ mkdirSync(tmpDir, { recursive: true });
 
 console.log(`\nGenerating showcase for: ${slug}`);
 console.log(`Cloning ${project.repo}...`);
-run(`git clone --depth 1 ${project.branch ? `-b ${project.branch}` : ''} ${project.repo} ${tmpDir}`, rootDir);
+run(
+  `git clone --depth 1 ${project.branch ? `-b ${project.branch}` : ''} ${project.repo} ${tmpDir}`,
+  rootDir,
+);
 
 // Write treck config
 const configDir = resolve(tmpDir, '_treck');

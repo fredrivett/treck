@@ -9,10 +9,7 @@
       "filePath": "scripts/test-extractor.ts",
       "isAsync": false,
       "hash": "041812ab6c97e23ac6f4c03704d2f17451f6befa86fa2220093f1b1a5e51cf96",
-      "lineRange": [
-        14,
-        14
-      ],
+      "lineRange": [14, 14],
       "description": "Path to the init command file used as the extraction test target.",
       "isExported": false
     },
@@ -23,10 +20,7 @@
       "filePath": "scripts/test-extractor.ts",
       "isAsync": false,
       "hash": "63f545433b06f4c10038262a9946201ae59c8a2d8d87087ef6f8f532c72efda3",
-      "lineRange": [
-        20,
-        20
-      ],
+      "lineRange": [20, 20],
       "description": "Extraction result containing all symbols found in the test file.",
       "isExported": false
     },
@@ -37,10 +31,7 @@
       "filePath": "scripts/test-extractor.ts",
       "isAsync": false,
       "hash": "7de7de23bab776be13401123cd8fb6963d5c4a4ec500fc88893980f0d98fc71d",
-      "lineRange": [
-        41,
-        41
-      ],
+      "lineRange": [41, 41],
       "description": "Single-symbol extraction test targeting `registerInitCommand`.",
       "isExported": false
     },
@@ -51,10 +42,7 @@
       "filePath": "src/checker/doc-parser.ts",
       "isAsync": false,
       "hash": "98cf47944930064050ae50c22f3ca8e64d562018fd0cb05595d275998cddfeb0",
-      "lineRange": [
-        6,
-        89
-      ],
+      "lineRange": [6, 89],
       "description": "Parses documentation markdown files and extracts frontmatter metadata (title, hashes, dependencies).",
       "isExported": true
     },
@@ -65,10 +53,7 @@
       "filePath": "src/checker/index.ts",
       "isAsync": false,
       "hash": "8c337ed31c358621be95b184b893fef41e414805ec9f1659bbd8286b698ce946",
-      "lineRange": [
-        11,
-        172
-      ],
+      "lineRange": [11, 172],
       "description": "Detects when generated docs are out of sync with source code by comparing content hashes.",
       "isExported": true
     },
@@ -79,10 +64,7 @@
       "filePath": "src/cli/commands/check.ts",
       "isAsync": false,
       "hash": "02537eebcd3d17c8111f45f843ca596236ec94c27effc4f52c56042d78459f2b",
-      "lineRange": [
-        6,
-        91
-      ],
+      "lineRange": [6, 91],
       "description": "Register the `treck check` CLI command.\n\nScans all generated docs for staleness by comparing source code hashes\nagainst the hashes stored in doc frontmatter. Exits with code 1 if any\nstale docs are found (useful for CI).",
       "structuredParams": [
         {
@@ -101,10 +83,7 @@
       "filePath": "src/cli/commands/check.ts",
       "isAsync": false,
       "hash": "de3ce74b6259adc1023a1f334403eded5a090332760b94e9e21af96e05a3199a",
-      "lineRange": [
-        91,
-        103
-      ],
+      "lineRange": [91, 103],
       "description": "Map a staleness reason code to a human-readable label.",
       "structuredParams": [
         {
@@ -124,10 +103,7 @@
       "filePath": "src/cli/commands/check.ts",
       "isAsync": false,
       "hash": "193873a035939aa703afb6b94f8902a31b1a01d3d5d6e3fda779861a12eac62f",
-      "lineRange": [
-        103,
-        109
-      ],
+      "lineRange": [103, 109],
       "description": "Convert an absolute path to a path relative to the current working directory.",
       "structuredParams": [
         {
@@ -147,10 +123,7 @@
       "filePath": "src/cli/commands/init.ts",
       "isAsync": false,
       "hash": "373b67d67725704eb10197c39b6c42110c3e02dbe8a2d8d00b8b2d26737ee9ab",
-      "lineRange": [
-        16,
-        122
-      ],
+      "lineRange": [16, 122],
       "description": "Register the `treck init` CLI command.\n\nRuns an interactive setup wizard that prompts for output directory,\ninclude/exclude patterns, and writes a `config.yaml` file.",
       "structuredParams": [
         {
@@ -169,10 +142,7 @@
       "filePath": "src/cli/commands/init.ts",
       "isAsync": false,
       "hash": "ecfa4b35bed5ca4d3b1e0ac582db3e909516ab9fc153b3a336158b5b5474d827",
-      "lineRange": [
-        122,
-        158
-      ],
+      "lineRange": [122, 158],
       "description": "Split a comma-separated glob list while preserving commas inside brace sets.\nExample: `<pattern-1>,<pattern-2>` => two patterns.",
       "structuredParams": [
         {
@@ -192,10 +162,7 @@
       "filePath": "src/cli/commands/init.ts",
       "isAsync": false,
       "hash": "f294cb3fefea02587e4010e1cf8f0c2a712bba9223716087c1b40026978be03b",
-      "lineRange": [
-        158,
-        178
-      ],
+      "lineRange": [158, 178],
       "description": "Serialize an init config object to a YAML config file string.",
       "structuredParams": [
         {
@@ -215,10 +182,7 @@
       "filePath": "src/cli/commands/serve.ts",
       "isAsync": false,
       "hash": "ba30ecc1878b4e3d1ac4da23d4bd9d4d5ef7d435a28b8d280981210fde5727ed",
-      "lineRange": [
-        10,
-        64
-      ],
+      "lineRange": [10, 64],
       "description": "Register the `treck serve` CLI command.\n\nStarts the documentation viewer HTTP server and optionally opens it\nin the default browser.",
       "structuredParams": [
         {
@@ -237,10 +201,7 @@
       "filePath": "src/cli/commands/status.ts",
       "isAsync": false,
       "hash": "55a57a5e9170f7f668cc262713770d4cd54cb258e2ad86b2cb2c5b7bf31068b4",
-      "lineRange": [
-        14,
-        107
-      ],
+      "lineRange": [14, 107],
       "description": "Register the `treck status` CLI command.\n\nScans the project for documentation coverage and displays statistics\nincluding a coverage bar, undocumented symbols, and a suggestion for\nthe next file to document.",
       "structuredParams": [
         {
@@ -259,10 +220,7 @@
       "filePath": "src/cli/commands/sync.ts",
       "isAsync": false,
       "hash": "84646837b7c609306428fc819c8e64578952b34fec901a9645a2e5ee2b13c916",
-      "lineRange": [
-        9,
-        141
-      ],
+      "lineRange": [9, 141],
       "description": "Register the `treck sync` CLI command.\n\nFinds source files, builds the dependency graph, and generates static\nmarkdown documentation for every node. Optionally filters to a target path.",
       "structuredParams": [
         {
@@ -281,10 +239,7 @@
       "filePath": "src/cli/index.ts",
       "isAsync": false,
       "hash": "757dc0d4b447ef46333d1e0d1fb3cfc667798e7c0988ca4d50e63eaef1f352c2",
-      "lineRange": [
-        7,
-        7
-      ],
+      "lineRange": [7, 7],
       "description": "The treck CLI instance, powered by cac.",
       "isExported": false
     },
@@ -295,10 +250,7 @@
       "filePath": "src/cli/index.ts",
       "isAsync": false,
       "hash": "9414a23a483396e472a47f35e0ae9d6d5f6ebd5dcfa3209f117a6fecd3f95fea",
-      "lineRange": [
-        26,
-        26
-      ],
+      "lineRange": [26, 26],
       "description": "Parsed CLI arguments and options.",
       "isExported": false
     },
@@ -309,10 +261,7 @@
       "filePath": "src/cli/utils/config.ts",
       "isAsync": false,
       "hash": "c87da552db5b78d15019bc3acfa6508273e5d6dc95d91e6726a4ef90808bf559",
-      "lineRange": [
-        10,
-        36
-      ],
+      "lineRange": [10, 36],
       "description": "Load the treck configuration from `_treck/config.yaml`.\n\nParses the YAML config file to extract the output directory and\ninclude/exclude scope patterns. Returns null if no config file exists.",
       "structuredParams": [
         {
@@ -334,10 +283,7 @@
       "filePath": "src/cli/utils/config.ts",
       "isAsync": false,
       "hash": "2cdc4ac180558537f582054103aacd0fd3c67e00528496ba91816bdfe75925a5",
-      "lineRange": [
-        36,
-        64
-      ],
+      "lineRange": [36, 64],
       "description": "Parse a YAML list under a given key.\nFinds `key:` on its own line, then collects subsequent `- value` lines.\nSkips blank lines and comment lines within the list.",
       "structuredParams": [
         {
@@ -363,10 +309,7 @@
       "filePath": "src/cli/utils/config.ts",
       "isAsync": false,
       "hash": "f8a587abb15d6654b8ee0c83aafe38cb2fb8ce14f969b8452518b9a9f7a8baf4",
-      "lineRange": [
-        64,
-        75
-      ],
+      "lineRange": [64, 75],
       "description": "Remove surrounding single or double quotes from a string value.",
       "structuredParams": [
         {
@@ -386,10 +329,7 @@
       "filePath": "src/cli/utils/detect-sources.ts",
       "isAsync": false,
       "hash": "6be9d0ccd84e3b3823f1d404ab36306dfe55bb0f15280ce89a6d72df9a81e50f",
-      "lineRange": [
-        18,
-        51
-      ],
+      "lineRange": [18, 51],
       "description": "Detect likely source-code include patterns from common project layouts.\n\nReturns candidate patterns in priority order. Falls back to the historical\ndefault when no likely source files are found.",
       "structuredParams": [
         {
@@ -409,10 +349,7 @@
       "filePath": "src/cli/utils/detect-sources.ts",
       "isAsync": false,
       "hash": "5a4d31e6b5d0f247d0f198a75d3043b230b8e69d0d6271a41096f480348f8095",
-      "lineRange": [
-        51,
-        59
-      ],
+      "lineRange": [51, 59],
       "structuredParams": [
         {
           "name": "directoryPath",
@@ -437,10 +374,7 @@
       "filePath": "src/cli/utils/detect-sources.ts",
       "isAsync": false,
       "hash": "dbf0091eabd55559bc18e29bca046e580e89b9e3a2a967b4e92bc242a1cadca6",
-      "lineRange": [
-        59,
-        85
-      ],
+      "lineRange": [59, 85],
       "structuredParams": [
         {
           "name": "directoryPath",
@@ -465,10 +399,7 @@
       "filePath": "src/cli/utils/detect-sources.ts",
       "isAsync": false,
       "hash": "f7cfccb07ee2e9311395f45d53ccfe0ee4dc21a76a39dba2be2529d27d22e3a2",
-      "lineRange": [
-        85,
-        96
-      ],
+      "lineRange": [85, 96],
       "structuredParams": [
         {
           "name": "rootDir",
@@ -487,10 +418,7 @@
       "filePath": "src/cli/utils/detect-sources.ts",
       "isAsync": false,
       "hash": "5ba30f5410f10c21e3bd4c4c99094f4777da1b7f23a6bfc15ef390188608607d",
-      "lineRange": [
-        96,
-        105
-      ],
+      "lineRange": [96, 105],
       "structuredParams": [
         {
           "name": "fileName",
@@ -509,10 +437,7 @@
       "filePath": "src/cli/utils/errors.ts",
       "isAsync": false,
       "hash": "4a13d1d192068fcdaba85f80615eaa2e332d4470e2a9788108e5e99ea8ca6992",
-      "lineRange": [
-        1,
-        11
-      ],
+      "lineRange": [1, 11],
       "description": "Base error class for all treck errors.",
       "isExported": true
     },
@@ -523,10 +448,7 @@
       "filePath": "src/cli/utils/errors.ts",
       "isAsync": false,
       "hash": "3925ca78508c91988ea19250de516c8dbb1db49b781577e9decb34ccb3a54cc0",
-      "lineRange": [
-        11,
-        19
-      ],
+      "lineRange": [11, 19],
       "description": "Thrown when the treck configuration file is invalid or missing required fields.",
       "isExported": true
     },
@@ -537,10 +459,7 @@
       "filePath": "src/cli/utils/errors.ts",
       "isAsync": false,
       "hash": "c7c7beef35783a69d2b628808828b4712e101629a471e9b4482936ee8011d429",
-      "lineRange": [
-        19,
-        27
-      ],
+      "lineRange": [19, 27],
       "description": "Thrown when input validation fails (e.g. invalid file paths or symbol names).",
       "isExported": true
     },
@@ -551,10 +470,7 @@
       "filePath": "src/cli/utils/errors.ts",
       "isAsync": false,
       "hash": "4ab86d63fa9e0a2c031daedf54492c3cba430aa25d33f1eecbfcc296a6208169",
-      "lineRange": [
-        27,
-        35
-      ],
+      "lineRange": [27, 35],
       "description": "Thrown when symbol extraction from a source file fails.",
       "isExported": true
     },
@@ -565,10 +481,7 @@
       "filePath": "src/cli/utils/errors.ts",
       "isAsync": false,
       "hash": "efa13ee6177f4c771562a3dfee72a182fd6bfe9191be534df6a3f11514d9d661",
-      "lineRange": [
-        35,
-        43
-      ],
+      "lineRange": [35, 43],
       "description": "Thrown when documentation generation fails for a symbol.",
       "isExported": true
     },
@@ -579,10 +492,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "1ec36b21c2af43bb80b963b92d778b492c66658b1aa3a3ed5ebf6bbe894f59cd",
-      "lineRange": [
-        14,
-        48
-      ],
+      "lineRange": [14, 48],
       "description": "Compute the next file to document from pre-computed data.\nRanks by import count (most-imported first), then by undocumented symbol count.",
       "structuredParams": [
         {
@@ -602,10 +512,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "d88531e68169133c9addbe0cbdbaf544bcda61554cb625c0980a577d57b619e9",
-      "lineRange": [
-        48,
-        62
-      ],
+      "lineRange": [48, 62],
       "description": "Render the \"Next up\" suggestion as a bordered note box.",
       "structuredParams": [
         {
@@ -625,10 +532,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "bf327d3a04fa4426af782651ebac21f0325583f58447c24059cfedb240ddc864",
-      "lineRange": [
-        72,
-        130
-      ],
+      "lineRange": [72, 130],
       "description": "Scan the project and return coverage data.",
       "structuredParams": [
         {
@@ -654,10 +558,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "3f806bf065e45dbf90dbb01ba552b2c8f37fd293fe0f8778250a8744f78b7938",
-      "lineRange": [
-        133,
-        133
-      ],
+      "lineRange": [133, 133],
       "description": "Yield to the event loop so spinner animations stay smooth during CPU-bound work.",
       "isExported": false
     },
@@ -668,10 +569,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": true,
       "hash": "2d4337759704458555fbb396a463ebd39abb07ee0fa25616d519f28ef7f310d4",
-      "lineRange": [
-        133,
-        207
-      ],
+      "lineRange": [133, 207],
       "description": "Async version of scanProject that yields throughout\nso spinner animations stay smooth.",
       "structuredParams": [
         {
@@ -703,10 +601,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": true,
       "hash": "0c23590120c25211a006807f22139b6836cceb9951d09fbcab3e0b67c1ae5b0b",
-      "lineRange": [
-        207,
-        242
-      ],
+      "lineRange": [207, 242],
       "description": "/**\n * Async version of {@link findSourceFiles}that yields to the event loop\n * between I/O operations so spinner animations stay smooth.\n ",
       "structuredParams": [
         {
@@ -732,10 +627,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": true,
       "hash": "90bba68ba62bf4b71f274a6c47dc623e3c42a49964b48d9894753b36b1108c94",
-      "lineRange": [
-        221,
-        238
-      ],
+      "lineRange": [221, 238],
       "structuredParams": [
         {
           "name": "dir",
@@ -753,10 +645,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "791923325bc8b9bc96276b2e8bc84e94a9644abd4131b226abb0e3946faa2100",
-      "lineRange": [
-        242,
-        271
-      ],
+      "lineRange": [242, 271],
       "description": "Render coverage stats (source files, symbols, coverage bar).",
       "structuredParams": [
         {
@@ -776,10 +665,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "e98d811607ad521391ebaac130f88b0451f16463d0b46a4587b774fffae47cb4",
-      "lineRange": [
-        271,
-        289
-      ],
+      "lineRange": [271, 289],
       "description": "Self-contained: scan the project, show coverage stats and next suggestion.\nUse this from commands that don't already have scanning data (e.g. generate).",
       "structuredParams": [
         {
@@ -805,10 +691,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "193873a035939aa703afb6b94f8902a31b1a01d3d5d6e3fda779861a12eac62f",
-      "lineRange": [
-        289,
-        297
-      ],
+      "lineRange": [289, 297],
       "description": "Convert an absolute path to a path relative to the current working directory.",
       "structuredParams": [
         {
@@ -828,10 +711,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "a53de60c0a3087b5f14e6c23c98d8c634d2b393cf94eaa525222f0772c7d8e38",
-      "lineRange": [
-        297,
-        334
-      ],
+      "lineRange": [297, 334],
       "description": "Find all source files matching the scope's include/exclude patterns.\n\nRecursively walks the directory tree, applying picomatch patterns to filter\nfiles. Skips `.git` and `node_modules` directories.",
       "structuredParams": [
         {
@@ -859,10 +739,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "96a78e598db0d90a4cad03c8241b2c7ba869e8c566a04188eaa55d49a499f0dc",
-      "lineRange": [
-        313,
-        330
-      ],
+      "lineRange": [313, 330],
       "structuredParams": [
         {
           "name": "dir",
@@ -880,10 +757,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "bdf5332ee0c19f8df964c394aa26beb8e4e37fedf79444808ba6b9376654d17f",
-      "lineRange": [
-        334,
-        365
-      ],
+      "lineRange": [334, 365],
       "description": "Recursively find all `.md` files in a directory.\n\nSkips `node_modules` and `.git` directories. Returns an empty array\nif the directory doesn't exist or can't be read.",
       "structuredParams": [
         {
@@ -903,10 +777,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "9bfd59a25e995860a0b8e1dcb7fb22aece46b0fc26a9c3e874e260e835a76282",
-      "lineRange": [
-        365,
-        402
-      ],
+      "lineRange": [365, 402],
       "description": "Count how many times each source file is imported by other files.\n\nParses import/export statements from all source files, resolves relative\nspecifiers, and tallies import counts per file. Used to rank documentation\npriority (most-imported files first).",
       "structuredParams": [
         {
@@ -927,10 +798,7 @@
       "filePath": "src/cli/utils/next-suggestion.ts",
       "isAsync": false,
       "hash": "e580e30aabf21c6c7eb6159341009f5bd1f36413a6541477000c2b5cbdba0fa7",
-      "lineRange": [
-        402,
-        432
-      ],
+      "lineRange": [402, 432],
       "description": "Resolve a relative import specifier to an absolute file path.\n\nTries the exact path, then common extensions (`.ts`, `.tsx`, `.js`, `.jsx`),\nthen `index.*` variants. Only resolves to files in the `sourceFiles` list.",
       "structuredParams": [
         {
@@ -962,10 +830,7 @@
       "filePath": "src/cli/utils/paths.ts",
       "isAsync": false,
       "hash": "785789f67ee52181b4612bfe6a65d578e5979bbcafa4f2dfabd5ad7cdad89fa0",
-      "lineRange": [
-        10,
-        36
-      ],
+      "lineRange": [10, 36],
       "description": "Convert an absolute or foreign-worktree file path to a relative path.\nUsed when writing dependency paths into doc frontmatter.",
       "structuredParams": [
         {
@@ -992,10 +857,7 @@
       "filePath": "src/cli/utils/paths.ts",
       "isAsync": false,
       "hash": "fdbb7f89d70caad703c655c0923d66c5da28eec8ea230836885ab57bf4a3dbfe",
-      "lineRange": [
-        36,
-        67
-      ],
+      "lineRange": [36, 67],
       "description": "Resolve a source file path from doc frontmatter to an absolute path\nin the current working directory. Used when reading source files.",
       "structuredParams": [
         {
@@ -1022,10 +884,7 @@
       "filePath": "src/extractor/jsdoc-extractor.ts",
       "isAsync": false,
       "hash": "a9a6c3db0e7cdff9213203968b427fe64bc53df390a28cb7b805b199b9cac622",
-      "lineRange": [
-        7,
-        21
-      ],
+      "lineRange": [7, 21],
       "description": "/**\n * Normalize a JSDoc comment value to a plain string.\n * The TS API returns either a string or a NodeArray<JSDocComment> depending on\n * whether the comment contains inline tags like {@link ...}.\n ",
       "structuredParams": [
         {
@@ -1045,10 +904,7 @@
       "filePath": "src/extractor/jsdoc-extractor.ts",
       "isAsync": false,
       "hash": "13aa0b9f13379c7623be727f38ba2b4dc7af561dcf9bfe9a8c3ba9c1729aafb3",
-      "lineRange": [
-        21,
-        71
-      ],
+      "lineRange": [21, 71],
       "description": "Extract JSDoc information from a TypeScript AST node.\nReturns undefined if no JSDoc comment is found.\n\nFor VariableDeclarations (arrow functions, const assignments), the JSDoc is\nattached to the parent VariableStatement, so we walk up the tree.",
       "structuredParams": [
         {
@@ -1074,10 +930,7 @@
       "filePath": "src/extractor/jsdoc-extractor.ts",
       "isAsync": false,
       "hash": "4b2c05df011670ddbb36699a664bd8d022c81ef79357840a02f5a33ecab52eb6",
-      "lineRange": [
-        71,
-        95
-      ],
+      "lineRange": [71, 95],
       "description": "Extract",
       "structuredParams": [
         {
@@ -1097,10 +950,7 @@
       "filePath": "src/extractor/jsdoc-extractor.ts",
       "isAsync": false,
       "hash": "c61bdf3f88f832b3bb00d497e5cb698ce86fab2af18cced556a0135bfdb0bd37",
-      "lineRange": [
-        95,
-        111
-      ],
+      "lineRange": [95, 111],
       "description": "Extract",
       "structuredParams": [
         {
@@ -1120,10 +970,7 @@
       "filePath": "src/extractor/jsdoc-extractor.ts",
       "isAsync": false,
       "hash": "6659b07369722ac55657e62c3113b4a46025bd27bfde397ef25cd7397d4c5cfa",
-      "lineRange": [
-        111,
-        131
-      ],
+      "lineRange": [111, 131],
       "description": "Extract all",
       "structuredParams": [
         {
@@ -1135,9 +982,7 @@
       ],
       "returnType": "string[]",
       "isExported": false,
-      "examples": [
-        "tag content as code strings."
-      ]
+      "examples": ["tag content as code strings."]
     },
     {
       "id": "src/extractor/jsdoc-extractor.ts:extractDeprecated",
@@ -1146,10 +991,7 @@
       "filePath": "src/extractor/jsdoc-extractor.ts",
       "isAsync": false,
       "hash": "c3b2536eaa41242ca263ab724b86780b38c9e2fba87d2f902f730a503f986405",
-      "lineRange": [
-        131,
-        152
-      ],
+      "lineRange": [131, 152],
       "description": "Extract",
       "structuredParams": [
         {
@@ -1170,10 +1012,7 @@
       "filePath": "src/extractor/jsdoc-extractor.ts",
       "isAsync": false,
       "hash": "fe253836749e7bd1120093eba7b37312ea962a9297f6525a6a75cf7a9c636c60",
-      "lineRange": [
-        152,
-        188
-      ],
+      "lineRange": [152, 188],
       "description": "Extract",
       "structuredParams": [
         {
@@ -1196,10 +1035,7 @@
       "filePath": "src/extractor/jsdoc-extractor.ts",
       "isAsync": false,
       "hash": "e3cd203cba8e326a884cdfa980c7d222e850fc2c148c1a4dab7bc5c5517b6444",
-      "lineRange": [
-        188,
-        208
-      ],
+      "lineRange": [188, 208],
       "description": "Extract all occurrences of a given tag name (e.g. 'throws').",
       "structuredParams": [
         {
@@ -1225,10 +1061,7 @@
       "filePath": "src/extractor/resolve-import.ts",
       "isAsync": false,
       "hash": "20aaea28e792e72fd11da207fac8c6888d934b9271a2ea3914febbb66d5eb0fd",
-      "lineRange": [
-        6,
-        45
-      ],
+      "lineRange": [6, 45],
       "description": "Strip // and /* comments from JSON text without corrupting string literals.\nWalks character-by-character, skipping over quoted strings so that\nsequences like \"@/*\" inside paths are preserved.",
       "structuredParams": [
         {
@@ -1248,10 +1081,7 @@
       "filePath": "src/extractor/resolve-import.ts",
       "isAsync": false,
       "hash": "b87a1233c055f685e0d3b73265133406c54dd3f3b0272e5654e17c688ffeb707",
-      "lineRange": [
-        53,
-        112
-      ],
+      "lineRange": [53, 112],
       "description": "Find and parse tsconfig.json paths from a source file's directory.\nWalks up the directory tree until it finds a tsconfig.json.\nResults are cached per tsconfig.json location.",
       "structuredParams": [
         {
@@ -1271,10 +1101,7 @@
       "filePath": "src/extractor/resolve-import.ts",
       "isAsync": false,
       "hash": "cc3f1fa9edfb149eba076c8c740fdaf0b677634d75809dacc41e41f643a247a2",
-      "lineRange": [
-        122,
-        156
-      ],
+      "lineRange": [122, 156],
       "description": "Try to resolve a file path by testing common extensions.\nHandles .js → .ts extension swapping for TypeScript ESM projects.",
       "structuredParams": [
         {
@@ -1294,10 +1121,7 @@
       "filePath": "src/extractor/resolve-import.ts",
       "isAsync": false,
       "hash": "95c337ac5f768754f967a9d44418a5b157740cbec1538cf0b346341ed4f4d712",
-      "lineRange": [
-        156,
-        190
-      ],
+      "lineRange": [156, 190],
       "description": "Resolve an import specifier to an absolute file path.\n\nHandles:\n- Relative imports (./foo, ../bar)\n- tsconfig path aliases (@/lib/foo,",
       "structuredParams": [
         {
@@ -1323,10 +1147,7 @@
       "filePath": "src/extractor/resolve-import.ts",
       "isAsync": false,
       "hash": "2a8c4e612b420aec221efe631201d63d1e23567063805899943805aa669879b0",
-      "lineRange": [
-        190,
-        197
-      ],
+      "lineRange": [190, 197],
       "description": "Clear the tsconfig cache (useful for testing)",
       "returnType": "void",
       "isExported": true
@@ -1338,10 +1159,7 @@
       "filePath": "src/extractor/typescript-extractor.ts",
       "isAsync": false,
       "hash": "b10a069224789fd0a715bc50512a37abb183f4b87c04fe0f7628b126717dd997",
-      "lineRange": [
-        18,
-        686
-      ],
+      "lineRange": [18, 686],
       "description": "Extracts symbols (functions, classes, arrow functions, call expressions) from TypeScript/JavaScript files using the TS Compiler API.",
       "isExported": true
     },
@@ -1352,10 +1170,7 @@
       "filePath": "src/extractor/typescript-extractor.ts",
       "isAsync": false,
       "hash": "4ad622a8532a3db11d8b510ec74eb8218bbfecbb3fc271be3956e59a84c8b8d9",
-      "lineRange": [
-        33,
-        71
-      ],
+      "lineRange": [33, 71],
       "structuredParams": [
         {
           "name": "node",
@@ -1373,10 +1188,7 @@
       "filePath": "src/extractor/typescript-extractor.ts",
       "isAsync": false,
       "hash": "08ec194bd0cdf376521d81485ca43514210279376baeab7ca3d53902d76ab887",
-      "lineRange": [
-        107,
-        108
-      ],
+      "lineRange": [107, 108],
       "structuredParams": [
         {
           "name": "group",
@@ -1394,10 +1206,7 @@
       "filePath": "src/extractor/typescript-extractor.ts",
       "isAsync": false,
       "hash": "6e49e28b4971399b0e46672aae2ce17e30de9daa575a30ccadf1315f195e986d",
-      "lineRange": [
-        110,
-        111
-      ],
+      "lineRange": [110, 111],
       "structuredParams": [
         {
           "name": "node",
@@ -1416,10 +1225,7 @@
       "filePath": "src/extractor/typescript-extractor.ts",
       "isAsync": false,
       "hash": "97cfd27155368b252ed1df393e0a2b77bb52422b85b434272b004971f55e1006",
-      "lineRange": [
-        113,
-        144
-      ],
+      "lineRange": [113, 144],
       "structuredParams": [
         {
           "name": "node",
@@ -1456,10 +1262,7 @@
       "filePath": "src/extractor/typescript-extractor.ts",
       "isAsync": false,
       "hash": "d1d9f1b05417760c37dbf11fe7fc86312e469b67559ee4f4a07353d799a077b5",
-      "lineRange": [
-        146,
-        238
-      ],
+      "lineRange": [146, 238],
       "structuredParams": [
         {
           "name": "node",
@@ -1483,10 +1286,7 @@
       "filePath": "src/extractor/typescript-extractor.ts",
       "isAsync": false,
       "hash": "43e83465c836469e04dbc8b094837932a3b2fe40471f1f48cd9956c1c08adfc4",
-      "lineRange": [
-        393,
-        422
-      ],
+      "lineRange": [393, 422],
       "entryType": "inngest-function",
       "structuredParams": [
         {
@@ -1505,10 +1305,7 @@
       "filePath": "src/generator/static-doc-generator.ts",
       "isAsync": false,
       "hash": "47d1a080ab1e47ad8f571504413a9c17bb24d5e6808e3d2febe5013515889411",
-      "lineRange": [
-        15,
-        248
-      ],
+      "lineRange": [15, 248],
       "description": "Generates static markdown documentation files from graph nodes. No AI involved — all content comes from static analysis.",
       "isExported": true
     },
@@ -1519,10 +1316,7 @@
       "filePath": "src/graph/graph-builder.ts",
       "isAsync": false,
       "hash": "ef3684ac4a08f858be418deb45afccd989f15b6ab2e7337c6721d57388da32dc",
-      "lineRange": [
-        16,
-        24
-      ],
+      "lineRange": [16, 24],
       "description": "Compute a path relative to `process.cwd()`.\nKeeps node IDs deterministic and human-readable.",
       "structuredParams": [
         {
@@ -1542,10 +1336,7 @@
       "filePath": "src/graph/graph-builder.ts",
       "isAsync": false,
       "hash": "25ef796a287ec718c3c81230f9b5dee5aa33b12d716874d86b143a5b47161cea",
-      "lineRange": [
-        24,
-        45
-      ],
+      "lineRange": [24, 45],
       "description": "Map a RuntimeConnection type string to a GraphEdge EdgeType.\nFalls back to 'async-dispatch' for unknown connection types.",
       "structuredParams": [
         {
@@ -1565,10 +1356,7 @@
       "filePath": "src/graph/graph-builder.ts",
       "isAsync": false,
       "hash": "d989130721fc97026d75d24a4ba79bbec0ac57770083470fb2e5041796a5be3b",
-      "lineRange": [
-        45,
-        56
-      ],
+      "lineRange": [45, 56],
       "description": "Check whether a symbol's fullText indicates it is async.\nMatches `async function`, `async (`, `async =>`  etc.",
       "structuredParams": [
         {
@@ -1588,10 +1376,7 @@
       "filePath": "src/graph/graph-builder.ts",
       "isAsync": false,
       "hash": "fe22d951761c621c1745a57b7f120b4b3e8d4d449917431e967583d01b1ae541",
-      "lineRange": [
-        56,
-        349
-      ],
+      "lineRange": [56, 349],
       "description": "/** Builds a {@link FlowGraph}from TypeScript source files by extracting symbols, detecting entry points, and resolving call edges. ",
       "isExported": true
     },
@@ -1602,10 +1387,7 @@
       "filePath": "src/graph/graph-query.ts",
       "isAsync": false,
       "hash": "f08c46ea5cd47d1b916fc66541a251a74af803557ad79b1ccdce79800ee67047",
-      "lineRange": [
-        10,
-        17
-      ],
+      "lineRange": [10, 17],
       "description": "Find all entry point nodes in the graph",
       "structuredParams": [
         {
@@ -1625,10 +1407,7 @@
       "filePath": "src/graph/graph-query.ts",
       "isAsync": false,
       "hash": "3a92af06492c877bf35827ffa9820df09635d9910dbe004f70860d02be59bca8",
-      "lineRange": [
-        17,
-        51
-      ],
+      "lineRange": [17, 51],
       "description": "Find all nodes reachable from a starting node via BFS.\nReturns the subgraph (nodes + edges) reachable from the start.",
       "structuredParams": [
         {
@@ -1654,10 +1433,7 @@
       "filePath": "src/graph/graph-query.ts",
       "isAsync": false,
       "hash": "2c9e4851fcd783621577f10713c04bbe4a43ac2e7aa25792b5bd4af5253fc110",
-      "lineRange": [
-        51,
-        90
-      ],
+      "lineRange": [51, 90],
       "description": "Find all paths between two nodes using DFS.\nReturns an array of paths, where each path is an array of node IDs.\nLimits to maxPaths to avoid combinatorial explosion.",
       "structuredParams": [
         {
@@ -1696,10 +1472,7 @@
       "filePath": "src/graph/graph-query.ts",
       "isAsync": false,
       "hash": "4e71d0b5d79ba02f1c8ae0f90c7187197ca371a52d77f732e490db35ec51f179",
-      "lineRange": [
-        65,
-        85
-      ],
+      "lineRange": [65, 85],
       "structuredParams": [
         {
           "name": "current",
@@ -1730,10 +1503,7 @@
       "filePath": "src/graph/graph-query.ts",
       "isAsync": false,
       "hash": "164e8dda9436f98408f40ebcd08213d67520ffadd1b5e0782c293e0639902282",
-      "lineRange": [
-        90,
-        103
-      ],
+      "lineRange": [90, 103],
       "description": "Build an adjacency list from graph edges (source → [targets])",
       "structuredParams": [
         {
@@ -1753,10 +1523,7 @@
       "filePath": "src/graph/graph-store.ts",
       "isAsync": false,
       "hash": "a6dd0d3c4f9f86e9f19b7c149b439abcffa58181f0e232bac5b769a23403f996",
-      "lineRange": [
-        7,
-        54
-      ],
+      "lineRange": [7, 54],
       "isExported": true
     },
     {
@@ -1766,10 +1533,7 @@
       "filePath": "src/graph/graph-to-mermaid.ts",
       "isAsync": false,
       "hash": "1baf4e2b8b3d4e508821398ea63dee7f025eb8d9c023c7d857d51793b9631ba6",
-      "lineRange": [
-        7,
-        46
-      ],
+      "lineRange": [7, 46],
       "description": "Generate a mermaid flowchart for a specific node and its immediate connections.\nUsed in per-symbol documentation.",
       "structuredParams": [
         {
@@ -1802,10 +1566,7 @@
       "filePath": "src/graph/graph-to-mermaid.ts",
       "isAsync": false,
       "hash": "27c185cdf919955bbe81651b55d04bd9802afb03a3bd8b966fa616e281451d57",
-      "lineRange": [
-        46,
-        60
-      ],
+      "lineRange": [46, 60],
       "description": "Generate a mermaid flowchart for an entire flow (from an entry point).\nShows all nodes reachable from the entry point.",
       "structuredParams": [
         {
@@ -1837,10 +1598,7 @@
       "filePath": "src/graph/graph-to-mermaid.ts",
       "isAsync": false,
       "hash": "301f6918d0c3139da387bc45a167d3baa7569ce5b19a0cf2b63d8934abb9e080",
-      "lineRange": [
-        60,
-        130
-      ],
+      "lineRange": [60, 130],
       "description": "Build a mermaid flowchart string from a set of nodes and edges.\n\nGroups nodes into subgraphs by file path, applies styling to the\nhighlighted node and entry points, and renders edge arrows based on type.",
       "structuredParams": [
         {
@@ -1878,10 +1636,7 @@
       "filePath": "src/graph/graph-to-mermaid.ts",
       "isAsync": false,
       "hash": "ba1bc940a918499cbd0ae6d8997935114846a5ff02dca9687d957326680ee2fb",
-      "lineRange": [
-        130,
-        146
-      ],
+      "lineRange": [130, 146],
       "description": "Build a display label for a graph node, including async prefix and metadata.",
       "structuredParams": [
         {
@@ -1901,10 +1656,7 @@
       "filePath": "src/graph/graph-to-mermaid.ts",
       "isAsync": false,
       "hash": "d097f6cc33d49fd1983eb4b30446e90774b25fe7f4bc69e49cb74e84f061982b",
-      "lineRange": [
-        146,
-        155
-      ],
+      "lineRange": [146, 155],
       "description": "Return the mermaid arrow syntax for a given edge type.",
       "structuredParams": [
         {
@@ -1924,10 +1676,7 @@
       "filePath": "src/graph/graph-to-mermaid.ts",
       "isAsync": false,
       "hash": "4e32ef11830135e16d23b1f831de0348b99b4aafeaa4c9ac05d185fef8001cf6",
-      "lineRange": [
-        155,
-        162
-      ],
+      "lineRange": [155, 162],
       "description": "Sanitize a label for mermaid (escape characters that break parsing)",
       "structuredParams": [
         {
@@ -1947,10 +1696,7 @@
       "filePath": "src/graph/graph-to-mermaid.ts",
       "isAsync": false,
       "hash": "24dbed29c3876b7eb4715c9e48b692a70314100b6c23bbcbd6c34e5a958b0864",
-      "lineRange": [
-        162,
-        169
-      ],
+      "lineRange": [162, 169],
       "description": "Sanitize a node ID for mermaid (replace special characters)",
       "structuredParams": [
         {
@@ -1970,10 +1716,7 @@
       "filePath": "src/hasher/index.ts",
       "isAsync": false,
       "hash": "6bf2acdd6eadbec3589bf9e03a1b6c71ab4e5a012b8b697514d242981278106f",
-      "lineRange": [
-        8,
-        67
-      ],
+      "lineRange": [8, 67],
       "description": "SHA256 content hasher for detecting symbol changes. Hashes params + body (not name) so renames don't trigger staleness.",
       "isExported": true
     },
@@ -1984,10 +1727,7 @@
       "filePath": "src/hasher/index.ts",
       "isAsync": false,
       "hash": "9f17b3c67367f0748d4df2c54b67789b4bd36f3a8d20c2952d1002744da0b0e6",
-      "lineRange": [
-        67,
-        75
-      ],
+      "lineRange": [67, 75],
       "description": "Convenience function to hash symbol content",
       "structuredParams": [
         {
@@ -2007,10 +1747,7 @@
       "filePath": "src/matchers/inngest.ts",
       "isAsync": false,
       "hash": "1b4c5335c79892998114e91d40be838cf97ec0de8eed02b06eb91904968b0275",
-      "lineRange": [
-        15,
-        25
-      ],
+      "lineRange": [15, 25],
       "description": "Extract the event name from an inngest.createFunction call.\nLooks for patterns like: { event: \"user/created\" } or { event: \"app/image.analyzed\" }",
       "structuredParams": [
         {
@@ -2030,10 +1767,7 @@
       "filePath": "src/matchers/inngest.ts",
       "isAsync": false,
       "hash": "050add51d7442e7ab809e7abc01ef59ab666a6ff5da6ef76ffc3a22ef593f1e4",
-      "lineRange": [
-        25,
-        34
-      ],
+      "lineRange": [25, 34],
       "description": "Extract the function ID from an inngest.createFunction call.\nLooks for patterns like: { id: \"analyze-image\" }",
       "structuredParams": [
         {
@@ -2053,10 +1787,7 @@
       "filePath": "src/matchers/nextjs.ts",
       "isAsync": false,
       "hash": "044284efa0dd6e4810311777b71503195d683f533a669c1cf6860b132c9c5ec9",
-      "lineRange": [
-        24,
-        34
-      ],
+      "lineRange": [24, 34],
       "description": "Extract route path from file path.\ne.g. \"src/app/api/analyze/route.ts\" -> \"/api/analyze\"",
       "structuredParams": [
         {
@@ -2076,10 +1807,7 @@
       "filePath": "src/matchers/nextjs.ts",
       "isAsync": false,
       "hash": "9dc81fd4d2dd5ffea2cb11a404edb280af6b9cb9be773b26b1ad32dd5f926e90",
-      "lineRange": [
-        34,
-        44
-      ],
+      "lineRange": [34, 44],
       "description": "Extract page path from file path.\ne.g. \"src/app/dashboard/page.tsx\" -> \"/dashboard\"",
       "structuredParams": [
         {
@@ -2099,10 +1827,7 @@
       "filePath": "src/matchers/trigger-dev.ts",
       "isAsync": false,
       "hash": "050add51d7442e7ab809e7abc01ef59ab666a6ff5da6ef76ffc3a22ef593f1e4",
-      "lineRange": [
-        16,
-        25
-      ],
+      "lineRange": [16, 25],
       "description": "Extract the task ID from a task() definition.\nLooks for: task({ id: \"process-image\", ... })",
       "structuredParams": [
         {
@@ -2122,10 +1847,7 @@
       "filePath": "src/server/index.ts",
       "isAsync": false,
       "hash": "65d7a1015d99286b6a20b67bf43e1e46f197b43a3808dae3dff4f3db6dc10904",
-      "lineRange": [
-        22,
-        71
-      ],
+      "lineRange": [22, 71],
       "description": "Build a lookup index of all documented symbols from the output directory.\n\nParses every markdown doc file, extracts frontmatter metadata, and builds\ntwo maps: one keyed by doc path, one keyed by symbol name (for cross-referencing).",
       "structuredParams": [
         {
@@ -2146,10 +1868,7 @@
       "filePath": "src/server/index.ts",
       "isAsync": false,
       "hash": "7bf53b227145eac2c7269cfa0ba017e68dd7dcc5e58d95adec9f786e6f1d0909",
-      "lineRange": [
-        71,
-        89
-      ],
+      "lineRange": [71, 89],
       "description": "Extract the overview text from a markdown doc file.\n\nStrips frontmatter and the title heading, then returns everything up to\nthe first `<details>` block or `##` heading.",
       "structuredParams": [
         {
@@ -2170,10 +1889,7 @@
       "filePath": "src/server/index.ts",
       "isAsync": false,
       "hash": "0ff4d1b7e07e814f8fba71765f9881dae114b5a3a718a356e8d052ef1aae4542",
-      "lineRange": [
-        89,
-        130
-      ],
+      "lineRange": [89, 130],
       "description": "Extract related symbol names from a doc file's Related section.\n\nLooks for backtick-wrapped (`SymbolName`) and bold (**SymbolName**) references\ninside `<details><summary>Related</summary>` blocks, deduplicating and\nexcluding the symbol's own name.",
       "structuredParams": [
         {
@@ -2201,10 +1917,7 @@
       "filePath": "src/server/index.ts",
       "isAsync": false,
       "hash": "b80103cbe98b781a768e4007cf2005a8bf961ed5722ecea20f0caf182452cee4",
-      "lineRange": [
-        112,
-        117
-      ],
+      "lineRange": [112, 117],
       "structuredParams": [
         {
           "name": "name",
@@ -2222,10 +1935,7 @@
       "filePath": "src/server/index.ts",
       "isAsync": false,
       "hash": "1dd94ebbfcda22c827d87693ff30aea9a9b544d735f5605fe2057e9fd6d6cab3",
-      "lineRange": [
-        130,
-        167
-      ],
+      "lineRange": [130, 167],
       "description": "Generate a mermaid flowchart showing a symbol's related dependencies.\n\nCreates a left-to-right flowchart with clickable nodes linking to each\nrelated symbol's doc page. Returns null if no related symbols exist in the index.",
       "structuredParams": [
         {
@@ -2253,10 +1963,7 @@
       "filePath": "src/server/index.ts",
       "isAsync": false,
       "hash": "26a9de54874be88b70230478d7eae64598ed6f6c379c01318138dab9ad027c7b",
-      "lineRange": [
-        150,
-        150
-      ],
+      "lineRange": [150, 150],
       "structuredParams": [
         {
           "name": "name",
@@ -2274,10 +1981,7 @@
       "filePath": "src/server/index.ts",
       "isAsync": false,
       "hash": "0d6c2a43f13b1020445e9f183a9d42d6972a894c522f570cb30eae2557507a74",
-      "lineRange": [
-        167,
-        196
-      ],
+      "lineRange": [167, 196],
       "description": "Build the JSON response for the `/api/index` endpoint.\n\nGroups symbol entries by source directory and sorts both directories\nand entries alphabetically for the sidebar tree.",
       "structuredParams": [
         {
@@ -2296,10 +2000,7 @@
       "filePath": "src/server/index.ts",
       "isAsync": false,
       "hash": "ac9f44c78993bf8d3d0e4d064e3e940b5a72d1df177383e9bd8999b9b1aa4300",
-      "lineRange": [
-        196,
-        251
-      ],
+      "lineRange": [196, 251],
       "description": "Build the JSON response for the `/api/doc` endpoint.\n\nReads the markdown file, strips frontmatter, and enriches the response\nwith metadata from the symbol index (dependency graph, related symbols).\nFalls back to a basic response if the index is stale.",
       "structuredParams": [
         {
@@ -2333,10 +2034,7 @@
       "filePath": "src/server/index.ts",
       "isAsync": false,
       "hash": "8131a9f57e256532d6becf8708767698b20d05275c71283f82ec56dd42c8d0a8",
-      "lineRange": [
-        260,
-        277
-      ],
+      "lineRange": [260, 277],
       "description": "Serve a static file with the appropriate Content-Type header.",
       "structuredParams": [
         {
@@ -2364,10 +2062,7 @@
       "filePath": "src/server/index.ts",
       "isAsync": true,
       "hash": "8bc7695d720b408a4036fcfec10bf950ba9fe4c78b452db36e693d6fc802868e",
-      "lineRange": [
-        277,
-        408
-      ],
+      "lineRange": [277, 408],
       "description": "Start the treck documentation viewer HTTP server.\n\nServes the single-page viewer app, a JSON API for the symbol index and\nindividual doc pages, and the graph data. Watches the output directory\nfor changes and rebuilds the index automatically.\n\nIf the requested port is taken, retries up to 10 consecutive ports.",
       "structuredParams": [
         {
@@ -2386,9 +2081,7 @@
         }
       ],
       "isExported": true,
-      "throws": [
-        "If no available port is found after 10 attempts"
-      ]
+      "throws": ["If no available port is found after 10 attempts"]
     },
     {
       "id": "src/server/template.ts:getTemplate",
@@ -2397,10 +2090,7 @@
       "filePath": "src/server/template.ts",
       "isAsync": true,
       "hash": "6ac38e4bf0a242d583ba4287778d10dfd88a06244eb673057214c3fe95045c04",
-      "lineRange": [
-        1,
-        828
-      ],
+      "lineRange": [1, 828],
       "description": "Return the HTML template for the legacy documentation viewer SPA.\n\nThis is a self-contained single-page app with inline CSS and JavaScript\nthat renders a sidebar tree, search, and markdown doc content.",
       "returnType": "string",
       "isExported": true
@@ -2412,10 +2102,7 @@
       "filePath": "src/server/viewer/App.tsx",
       "isAsync": false,
       "hash": "87ac4c033795281f66ba1d1d4df812cecf0b4bbba84bc143955abbd0fee14b58",
-      "lineRange": [
-        10,
-        73
-      ],
+      "lineRange": [10, 73],
       "isExported": false
     },
     {
@@ -2425,10 +2112,7 @@
       "filePath": "src/server/viewer/App.tsx",
       "isAsync": false,
       "hash": "9d19c25a28b0ff981d980ee0a8b0b042340b951fb10211ea14909fa3a131b5e7",
-      "lineRange": [
-        73,
-        84
-      ],
+      "lineRange": [73, 84],
       "isExported": false
     },
     {
@@ -2438,10 +2122,7 @@
       "filePath": "src/server/viewer/App.tsx",
       "isAsync": false,
       "hash": "e49984cf8510b0356ee1bb4239f29a43b744e5bf4111c7e69db463aa44d592c2",
-      "lineRange": [
-        84,
-        102
-      ],
+      "lineRange": [84, 102],
       "isExported": false
     },
     {
@@ -2451,10 +2132,7 @@
       "filePath": "src/server/viewer/App.tsx",
       "isAsync": false,
       "hash": "28f3f1a2be94adec0ef31d8818dd95121a3bb28b3649c12bf17230c156ec60b8",
-      "lineRange": [
-        102,
-        110
-      ],
+      "lineRange": [102, 110],
       "isExported": true
     },
     {
@@ -2464,10 +2142,7 @@
       "filePath": "src/server/viewer/components/DocContent.tsx",
       "isAsync": false,
       "hash": "6c537a92d0fa0ca8fe50153331274de7bf7773d6bfd19f5fe0808f404b4ea564",
-      "lineRange": [
-        9,
-        29
-      ],
+      "lineRange": [9, 29],
       "structuredParams": [
         {
           "name": "{ markdown, sourcePath, generated }",
@@ -2485,10 +2160,7 @@
       "filePath": "src/server/viewer/components/DocPanel.tsx",
       "isAsync": false,
       "hash": "f5a262a430b42007316ce0dbfe1d5de568e2d0b5c80c51e259bd648849443c3d",
-      "lineRange": [
-        27,
-        32
-      ],
+      "lineRange": [27, 32],
       "structuredParams": [
         {
           "name": "node",
@@ -2507,10 +2179,7 @@
       "filePath": "src/server/viewer/components/DocPanel.tsx",
       "isAsync": false,
       "hash": "157a97ac980c98d3ea67fb151a9d891b6132aa94d1ee5d9b13b98be1c5e33a9d",
-      "lineRange": [
-        32,
-        36
-      ],
+      "lineRange": [32, 36],
       "structuredParams": [
         {
           "name": "docPath",
@@ -2529,10 +2198,7 @@
       "filePath": "src/server/viewer/components/DocPanel.tsx",
       "isAsync": false,
       "hash": "8b8ecf5f2deeeb953fe6c3bb1ea2d44eb7406777910029407d22f933ac76d696",
-      "lineRange": [
-        36,
-        204
-      ],
+      "lineRange": [36, 204],
       "structuredParams": [
         {
           "name": "{ node, onClose }",
@@ -2550,10 +2216,7 @@
       "filePath": "src/server/viewer/components/DocsTree.tsx",
       "isAsync": false,
       "hash": "3b13121bebcc03c1192de7b05b57bb86b126bf213f273efb7c1d74577a9082dc",
-      "lineRange": [
-        11,
-        33
-      ],
+      "lineRange": [11, 33],
       "structuredParams": [
         {
           "name": "index",
@@ -2578,10 +2241,7 @@
       "filePath": "src/server/viewer/components/DocsTree.tsx",
       "isAsync": false,
       "hash": "d33be8f3917e0979e4d7879d488089df56891b23d805b92c537b6c96c4ee2842",
-      "lineRange": [
-        33,
-        45
-      ],
+      "lineRange": [33, 45],
       "structuredParams": [
         {
           "name": "{ guides, isLast }",
@@ -2599,10 +2259,7 @@
       "filePath": "src/server/viewer/components/DocsTree.tsx",
       "isAsync": false,
       "hash": "90a04060973045e889348216387e84ff0f733b8be8ac98c603861343e22c0afa",
-      "lineRange": [
-        58,
-        136
-      ],
+      "lineRange": [58, 136],
       "structuredParams": [
         {
           "name": "{\n  name,\n  node,\n  depth,\n  guides,\n  isLast,\n  activeDocPath,\n  forceExpand,\n  collapsedDirs,\n  onToggleDir,\n  dirPath,\n}",
@@ -2620,10 +2277,7 @@
       "filePath": "src/server/viewer/components/DocsTree.tsx",
       "isAsync": false,
       "hash": "3a33c6707508b1624fad86fd62bb2eed6258a0d69cb6a35c4133111444572bc4",
-      "lineRange": [
-        136,
-        244
-      ],
+      "lineRange": [136, 244],
       "isExported": true
     },
     {
@@ -2633,10 +2287,7 @@
       "filePath": "src/server/viewer/components/DocsTree.tsx",
       "isAsync": false,
       "hash": "25227986a80365d07c219e758d00e9285d3ca53e941b67e446b613556f256608",
-      "lineRange": [
-        171,
-        178
-      ],
+      "lineRange": [171, 178],
       "structuredParams": [
         {
           "name": "node",
@@ -2660,10 +2311,7 @@
       "filePath": "src/server/viewer/components/DocsViewer.tsx",
       "isAsync": true,
       "hash": "a5b78cf6ac161e067302166af1ac5853bee7469a2e5ac5d5b0e006f290ae3338",
-      "lineRange": [
-        14,
-        50
-      ],
+      "lineRange": [14, 50],
       "structuredParams": [
         {
           "name": "container",
@@ -2681,10 +2329,7 @@
       "filePath": "src/server/viewer/components/DocsViewer.tsx",
       "isAsync": false,
       "hash": "6d65bcb50b2e5e2326ffa0f0cb3a3521b6872bd663b5e48ae6af59de2609d723",
-      "lineRange": [
-        50,
-        78
-      ],
+      "lineRange": [50, 78],
       "structuredParams": [
         {
           "name": "container",
@@ -2714,10 +2359,7 @@
       "filePath": "src/server/viewer/components/DocsViewer.tsx",
       "isAsync": false,
       "hash": "4bdced24ca5d493695edbc867da15dee4de0f448a83b91d76c5be5a619e0213a",
-      "lineRange": [
-        78,
-        226
-      ],
+      "lineRange": [78, 226],
       "isExported": true
     },
     {
@@ -2727,10 +2369,7 @@
       "filePath": "src/server/viewer/components/FlowControls.tsx",
       "isAsync": false,
       "hash": "a42d09822e7ac6706a077f36b81ddfe92901af962db30c7ca85cd8ae76c7430f",
-      "lineRange": [
-        21,
-        169
-      ],
+      "lineRange": [21, 169],
       "structuredParams": [
         {
           "name": "{\n  entryPoints,\n  selectedEntry,\n  onSelectEntry,\n  searchQuery,\n  onSearch,\n  nodeCount,\n  edgeCount,\n  availableTypes,\n  enabledTypes,\n  onToggleType,\n  onSoloType,\n  onResetTypes,\n  showConditionals,\n  onToggleConditionals,\n  hasConditionalEdges,\n}",
@@ -2748,10 +2387,7 @@
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": false,
       "hash": "07da06467e4b96f13b7f90fcf2a68be407aed5ebf9f9ab8b9c1724bae991134a",
-      "lineRange": [
-        39,
-        46
-      ],
+      "lineRange": [39, 46],
       "structuredParams": [
         {
           "name": "node",
@@ -2770,10 +2406,7 @@
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": false,
       "hash": "d8bb9027fbd1e97c6e68c2fbc8b73510a052e8187eaa846d0319fb34df328584",
-      "lineRange": [
-        63,
-        70
-      ],
+      "lineRange": [63, 70],
       "structuredParams": [
         {
           "name": "node",
@@ -2792,10 +2425,7 @@
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": false,
       "hash": "2715c980acd3228c2eca1f77b3c4709e28a62dfe251d32aa76c481fd8bef6137",
-      "lineRange": [
-        70,
-        74
-      ],
+      "lineRange": [70, 74],
       "structuredParams": [
         {
           "name": "category",
@@ -2814,10 +2444,7 @@
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": false,
       "hash": "ad2ac947b6cf189bcf550c65a4862c92be877408a2c8caffc3a45d2d26fb7764",
-      "lineRange": [
-        74,
-        91
-      ],
+      "lineRange": [74, 91],
       "structuredParams": [
         {
           "name": "node",
@@ -2836,10 +2463,7 @@
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": false,
       "hash": "ecc00cfa0510fd93b93965a5f654bfb3015ba081fa320438107f99f7a0db5de8",
-      "lineRange": [
-        91,
-        117
-      ],
+      "lineRange": [91, 117],
       "structuredParams": [
         {
           "name": "graphEdges",
@@ -2864,10 +2488,7 @@
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": true,
       "hash": "5cea563ee8eca55ceceee3185480d4206b523c95c6ee7845075ae91a094026e7",
-      "lineRange": [
-        119,
-        154
-      ],
+      "lineRange": [119, 154],
       "structuredParams": [
         {
           "name": "currentNodes",
@@ -2904,10 +2525,7 @@
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": false,
       "hash": "e41df2e1b873734b95137a483bc20da4e54af885479ac2e0c189a697d7871c7d",
-      "lineRange": [
-        159,
-        455
-      ],
+      "lineRange": [159, 455],
       "structuredParams": [
         {
           "name": "{ graph, onLayoutReady }",
@@ -2925,10 +2543,7 @@
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": false,
       "hash": "804dc5ea6422d0c9802c7a097a71031eb127c1d0674e358426dc3151261c02a2",
-      "lineRange": [
-        179,
-        188
-      ],
+      "lineRange": [179, 188],
       "structuredParams": [
         {
           "name": "node",
@@ -2947,10 +2562,7 @@
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": false,
       "hash": "f497518f3c90002642509acd66a55fc07fa2ead49a6b15d8f91cfec4c8f2c7c9",
-      "lineRange": [
-        455,
-        463
-      ],
+      "lineRange": [455, 463],
       "structuredParams": [
         {
           "name": "{ graph, onLayoutReady }",
@@ -2968,10 +2580,7 @@
       "filePath": "src/server/viewer/components/LayoutSettings.tsx",
       "isAsync": false,
       "hash": "f978e7d1d00f9e9e4b0c7f34238bb56c30bd2fb4a898c568123ced34f9d865be",
-      "lineRange": [
-        64,
-        223
-      ],
+      "lineRange": [64, 223],
       "structuredParams": [
         {
           "name": "{ options, onChange }",
@@ -2989,10 +2598,7 @@
       "filePath": "src/server/viewer/components/LayoutSettings.tsx",
       "isAsync": false,
       "hash": "313c6ea1370b863c6ccb31a47df4343dd13327f5d6b1cfdc241d8a8099c4075c",
-      "lineRange": [
-        69,
-        73
-      ],
+      "lineRange": [69, 73],
       "structuredParams": [
         {
           "name": "key",
@@ -3016,10 +2622,7 @@
       "filePath": "src/server/viewer/components/LoadingSpinner.tsx",
       "isAsync": false,
       "hash": "87c66ed2b42920e8be1c4a061fe2243d74c786aa05d9f563dca068f260f9b1d0",
-      "lineRange": [
-        1,
-        8
-      ],
+      "lineRange": [1, 8],
       "isExported": true
     },
     {
@@ -3029,10 +2632,7 @@
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
       "hash": "ac8faa600df4ca7e7b53e288c2241dd895f2893ac2a2555dfe9017bdc02a95be",
-      "lineRange": [
-        20,
-        24
-      ],
+      "lineRange": [20, 24],
       "structuredParams": [
         {
           "name": "d",
@@ -3056,10 +2656,7 @@
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
       "hash": "7466269f02fbd074047822092c11d21f69f37ae53f0074947eb83e130a4cd8ff",
-      "lineRange": [
-        96,
-        135
-      ],
+      "lineRange": [96, 135],
       "structuredParams": [
         {
           "name": "{ data }",
@@ -3077,10 +2674,7 @@
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
       "hash": "98b723605400f973132710176aa2f77ff6a7033735f367850771d0ed8ad577a8",
-      "lineRange": [
-        135,
-        160
-      ],
+      "lineRange": [135, 160],
       "structuredParams": [
         {
           "name": "{ data }",
@@ -3098,10 +2692,7 @@
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
       "hash": "6c0fc1e742b9be32a86d71d6a1cfa567504f57b753a19894075211665ea23b6c",
-      "lineRange": [
-        160,
-        185
-      ],
+      "lineRange": [160, 185],
       "structuredParams": [
         {
           "name": "{ data }",
@@ -3119,10 +2710,7 @@
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
       "hash": "2226a5ebcd98189c38dc05b524aadd3393376d5864ee788965eab4d0d0a13b5e",
-      "lineRange": [
-        185,
-        210
-      ],
+      "lineRange": [185, 210],
       "structuredParams": [
         {
           "name": "{ data }",
@@ -3140,10 +2728,7 @@
       "filePath": "src/server/viewer/components/Sidebar.tsx",
       "isAsync": false,
       "hash": "adb8db429083d9716478e15a0f217fdcc59cdbd8b2a0e7496a492b6e3da5202a",
-      "lineRange": [
-        5,
-        13
-      ],
+      "lineRange": [5, 13],
       "structuredParams": [
         {
           "name": "{ children }",
@@ -3161,10 +2746,7 @@
       "filePath": "src/server/viewer/components/ViewNav.tsx",
       "isAsync": false,
       "hash": "884c8ba766df40e20c9306c2f705ea65ced68e7a7b5d1ad2a2ab79cfb4b6a679",
-      "lineRange": [
-        3,
-        29
-      ],
+      "lineRange": [3, 29],
       "structuredParams": [
         {
           "name": "{\n  to,\n  label,\n  icon: Icon,\n  isActive,\n}",
@@ -3182,10 +2764,7 @@
       "filePath": "src/server/viewer/components/ViewNav.tsx",
       "isAsync": false,
       "hash": "28b14043a4043a60dfb3721a0ec3cf474a34f6392e64f1ec401cb892b20f7802",
-      "lineRange": [
-        29,
-        45
-      ],
+      "lineRange": [29, 45],
       "isExported": true
     },
     {
@@ -3195,10 +2774,7 @@
       "filePath": "src/server/viewer/components/ui/badge.tsx",
       "isAsync": false,
       "hash": "403ada1cbdf61093b7be5c8f558d9b1a024029b35e3fe8754e23d8c0264fa610",
-      "lineRange": [
-        51,
-        59
-      ],
+      "lineRange": [51, 59],
       "structuredParams": [
         {
           "name": "{ variant, children }",
@@ -3216,10 +2792,7 @@
       "filePath": "src/server/viewer/components/ui/drawer.tsx",
       "isAsync": false,
       "hash": "55a4ff8d508c00b4e4d461f70e3ef5e57eb03408ce94ab20628ed5bbd3b7e2a6",
-      "lineRange": [
-        4,
-        8
-      ],
+      "lineRange": [4, 8],
       "structuredParams": [
         {
           "name": "{ ...props }",
@@ -3237,10 +2810,7 @@
       "filePath": "src/server/viewer/components/ui/drawer.tsx",
       "isAsync": false,
       "hash": "acbc49014e463128269552ef3b29a4c2777cbd27a78f31d16c5dcdc16bb01889",
-      "lineRange": [
-        8,
-        12
-      ],
+      "lineRange": [8, 12],
       "structuredParams": [
         {
           "name": "{ ...props }",
@@ -3258,10 +2828,7 @@
       "filePath": "src/server/viewer/components/ui/drawer.tsx",
       "isAsync": false,
       "hash": "09f75150a2893fe6b65e805f5273c1cfe681d73ff98b6512787472787c48e6f3",
-      "lineRange": [
-        12,
-        16
-      ],
+      "lineRange": [12, 16],
       "structuredParams": [
         {
           "name": "{ ...props }",
@@ -3279,10 +2846,7 @@
       "filePath": "src/server/viewer/components/ui/drawer.tsx",
       "isAsync": false,
       "hash": "be07ec98d52f7625aaa0df8b850529190211df7636a62e9dcc24fc00cd28fda2",
-      "lineRange": [
-        16,
-        20
-      ],
+      "lineRange": [16, 20],
       "structuredParams": [
         {
           "name": "{ ...props }",
@@ -3300,10 +2864,7 @@
       "filePath": "src/server/viewer/components/ui/drawer.tsx",
       "isAsync": false,
       "hash": "33e41f51a68c6a6d5fbf4899c40ffb305979a17162fa10a7c216e5317d69bf94",
-      "lineRange": [
-        20,
-        36
-      ],
+      "lineRange": [20, 36],
       "structuredParams": [
         {
           "name": "{\n  className,\n  ...props\n}",
@@ -3321,10 +2882,7 @@
       "filePath": "src/server/viewer/components/ui/drawer.tsx",
       "isAsync": false,
       "hash": "cbadfa57994963ac8a1139b238a7e358b7a06d6a5a8609dc566b40748000dd42",
-      "lineRange": [
-        36,
-        63
-      ],
+      "lineRange": [36, 63],
       "structuredParams": [
         {
           "name": "{\n  className,\n  children,\n  ...props\n}",
@@ -3342,10 +2900,7 @@
       "filePath": "src/server/viewer/components/ui/drawer.tsx",
       "isAsync": false,
       "hash": "8bfb8bef87e6812949b6a074fd3231a46861788f0a64e5ddf6b2dc605625e5ea",
-      "lineRange": [
-        63,
-        76
-      ],
+      "lineRange": [63, 76],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3363,10 +2918,7 @@
       "filePath": "src/server/viewer/components/ui/drawer.tsx",
       "isAsync": false,
       "hash": "6f350f81f16693dc39e3d38f4f288a1b2ef856e4e269b009dae4a3910a04e6ea",
-      "lineRange": [
-        76,
-        86
-      ],
+      "lineRange": [76, 86],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3384,10 +2936,7 @@
       "filePath": "src/server/viewer/components/ui/drawer.tsx",
       "isAsync": false,
       "hash": "c267dbce126a7110877f49d7c31136677de05d51a0d95587fb01c41c68e53a6a",
-      "lineRange": [
-        86,
-        96
-      ],
+      "lineRange": [86, 96],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3405,10 +2954,7 @@
       "filePath": "src/server/viewer/components/ui/drawer.tsx",
       "isAsync": false,
       "hash": "6b69b0c126ac8d1eb1b0fdb162cd6d137a5f72e11ce7da249d46efb58d2c0e53",
-      "lineRange": [
-        96,
-        106
-      ],
+      "lineRange": [96, 106],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3426,10 +2972,7 @@
       "filePath": "src/server/viewer/components/ui/drawer.tsx",
       "isAsync": false,
       "hash": "c1838ecca6ca47a0e2adf805933cbb66688b58a46c0102d03fb9f7abae9ace06",
-      "lineRange": [
-        106,
-        119
-      ],
+      "lineRange": [106, 119],
       "structuredParams": [
         {
           "name": "{\n  className,\n  ...props\n}",
@@ -3447,10 +2990,7 @@
       "filePath": "src/server/viewer/components/ui/sheet-or-drawer.tsx",
       "isAsync": false,
       "hash": "86954d491d3b07d3fe7f9b5d7283f904689f3210131cfedcad2d3ee5543a2591",
-      "lineRange": [
-        28,
-        41
-      ],
+      "lineRange": [28, 41],
       "structuredParams": [
         {
           "name": "{ children, ...props }",
@@ -3468,10 +3008,7 @@
       "filePath": "src/server/viewer/components/ui/sheet-or-drawer.tsx",
       "isAsync": false,
       "hash": "700ea6028714f0dad401b4b94cd521931b357ade093d7f7456339664d3b7a0dc",
-      "lineRange": [
-        41,
-        66
-      ],
+      "lineRange": [41, 66],
       "structuredParams": [
         {
           "name": "{\n  className,\n  children,\n  ...props\n}",
@@ -3489,10 +3026,7 @@
       "filePath": "src/server/viewer/components/ui/sheet-or-drawer.tsx",
       "isAsync": false,
       "hash": "ffb5b1f0a18de8a3c750ddc5d776cfaf5d0f781a20366067d254d39dc5f2b39a",
-      "lineRange": [
-        66,
-        79
-      ],
+      "lineRange": [66, 79],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3510,10 +3044,7 @@
       "filePath": "src/server/viewer/components/ui/sheet-or-drawer.tsx",
       "isAsync": false,
       "hash": "48856db3ddc65fb30a0a89b6fbba9f70fc06bb2d4390f5708657de93a8873738",
-      "lineRange": [
-        79,
-        92
-      ],
+      "lineRange": [79, 92],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3531,10 +3062,7 @@
       "filePath": "src/server/viewer/components/ui/sheet-or-drawer.tsx",
       "isAsync": false,
       "hash": "344c43a7c818013820bef81514f240993c497bd7a1c85af3b93fcf3a7e2bc2df",
-      "lineRange": [
-        92,
-        105
-      ],
+      "lineRange": [92, 105],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3552,10 +3080,7 @@
       "filePath": "src/server/viewer/components/ui/sheet-or-drawer.tsx",
       "isAsync": false,
       "hash": "1d535e4cc3d14a620fa624f88e8ca97867db52a969e2b8c433398149d5eee550",
-      "lineRange": [
-        105,
-        118
-      ],
+      "lineRange": [105, 118],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3573,10 +3098,7 @@
       "filePath": "src/server/viewer/components/ui/sheet-or-drawer.tsx",
       "isAsync": false,
       "hash": "252206d397d59c432f51e240c575267cd31a645d23d7167edd2468e31b131ffa",
-      "lineRange": [
-        118,
-        134
-      ],
+      "lineRange": [118, 134],
       "structuredParams": [
         {
           "name": "{\n  className,\n  ...props\n}",
@@ -3594,10 +3116,7 @@
       "filePath": "src/server/viewer/components/ui/sheet-or-drawer.tsx",
       "isAsync": false,
       "hash": "2f0f28ebf157f4af83f0f2d564f31fbb094ee4982db6f1d57db647b72d00e328",
-      "lineRange": [
-        134,
-        147
-      ],
+      "lineRange": [134, 147],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3615,10 +3134,7 @@
       "filePath": "src/server/viewer/components/ui/sheet.tsx",
       "isAsync": false,
       "hash": "4ef2343b7b75f8de902e8c6e186e195e97a542b4c0ddbf9d9c959c7984fe4d6c",
-      "lineRange": [
-        4,
-        8
-      ],
+      "lineRange": [4, 8],
       "structuredParams": [
         {
           "name": "{ ...props }",
@@ -3636,10 +3152,7 @@
       "filePath": "src/server/viewer/components/ui/sheet.tsx",
       "isAsync": false,
       "hash": "128e80c72393d26117a94948db8c6e5513c8941027545ace237ddb395e69dbc2",
-      "lineRange": [
-        8,
-        12
-      ],
+      "lineRange": [8, 12],
       "structuredParams": [
         {
           "name": "{ ...props }",
@@ -3657,10 +3170,7 @@
       "filePath": "src/server/viewer/components/ui/sheet.tsx",
       "isAsync": false,
       "hash": "9d1148f8858eafb459bf49dd657338f24bbf999d7a57736de10f49f71d4238e4",
-      "lineRange": [
-        12,
-        16
-      ],
+      "lineRange": [12, 16],
       "structuredParams": [
         {
           "name": "{ ...props }",
@@ -3678,10 +3188,7 @@
       "filePath": "src/server/viewer/components/ui/sheet.tsx",
       "isAsync": false,
       "hash": "fff4b812be7d61ef6a3fed5bfb34b89065cf8d499b032bbcfa6738734ff14e60",
-      "lineRange": [
-        16,
-        20
-      ],
+      "lineRange": [16, 20],
       "structuredParams": [
         {
           "name": "{ ...props }",
@@ -3699,10 +3206,7 @@
       "filePath": "src/server/viewer/components/ui/sheet.tsx",
       "isAsync": false,
       "hash": "b7e540cf000862efffaea1a04bf8a0738234363b780d8ed4a9fd46935d1f4e1b",
-      "lineRange": [
-        20,
-        36
-      ],
+      "lineRange": [20, 36],
       "structuredParams": [
         {
           "name": "{\n  className,\n  ...props\n}",
@@ -3720,10 +3224,7 @@
       "filePath": "src/server/viewer/components/ui/sheet.tsx",
       "isAsync": false,
       "hash": "e5773d15adbd72bfaf697a9fe1dd42710416d568b3a79a0dc98f34ac4b405a7d",
-      "lineRange": [
-        36,
-        84
-      ],
+      "lineRange": [36, 84],
       "structuredParams": [
         {
           "name": "{\n  className,\n  children,\n  side = 'right',\n  overlay = false,\n  showCloseButton = false,\n  ...props\n}",
@@ -3741,10 +3242,7 @@
       "filePath": "src/server/viewer/components/ui/sheet.tsx",
       "isAsync": false,
       "hash": "c1388058ba63b9d8ad81b6b55cf12270c787b604f07846b8eeabb4cd780d653e",
-      "lineRange": [
-        84,
-        94
-      ],
+      "lineRange": [84, 94],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3762,10 +3260,7 @@
       "filePath": "src/server/viewer/components/ui/sheet.tsx",
       "isAsync": false,
       "hash": "bcbf0501264dde6db269aeb18c53828cd5bae6bb51501c16de6986ffbe8c7cae",
-      "lineRange": [
-        94,
-        104
-      ],
+      "lineRange": [94, 104],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3783,10 +3278,7 @@
       "filePath": "src/server/viewer/components/ui/sheet.tsx",
       "isAsync": false,
       "hash": "d4f30226859dedd090350598062adfdff4401bd4f1a9b215df63f54afb9468e1",
-      "lineRange": [
-        104,
-        110
-      ],
+      "lineRange": [104, 110],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3804,10 +3296,7 @@
       "filePath": "src/server/viewer/components/ui/sheet.tsx",
       "isAsync": false,
       "hash": "d53760ac93e6c4774185838448c2f157e05c2b26d7dc03adc35eb5210ed53dd5",
-      "lineRange": [
-        110,
-        120
-      ],
+      "lineRange": [110, 120],
       "structuredParams": [
         {
           "name": "{ className, ...props }",
@@ -3825,10 +3314,7 @@
       "filePath": "src/server/viewer/components/ui/sheet.tsx",
       "isAsync": false,
       "hash": "344420d9a536da79a611ca02eb5a66ee41fb4a45e013e0d5933257ff67e1df47",
-      "lineRange": [
-        120,
-        133
-      ],
+      "lineRange": [120, 133],
       "structuredParams": [
         {
           "name": "{\n  className,\n  ...props\n}",
@@ -3846,10 +3332,7 @@
       "filePath": "src/server/viewer/docs-utils.ts",
       "isAsync": false,
       "hash": "851f77055f07497ac0536912fefc7760156a3b5bc97a55f4e6cacd729e7f0642",
-      "lineRange": [
-        1,
-        4
-      ],
+      "lineRange": [1, 4],
       "description": "Convert a docPath (e.g. \"src/checker/index/StaleChecker.md\") to a URL path",
       "structuredParams": [
         {
@@ -3869,10 +3352,7 @@
       "filePath": "src/server/viewer/docs-utils.ts",
       "isAsync": false,
       "hash": "860aee449ec78b14697efd263ab0bec27bd992b737975daf2014b2baa11bcf28",
-      "lineRange": [
-        4,
-        11
-      ],
+      "lineRange": [4, 11],
       "description": "Convert a URL pathname back to a docPath for the API",
       "structuredParams": [
         {
@@ -3892,10 +3372,7 @@
       "filePath": "src/server/viewer/docs-utils.ts",
       "isAsync": false,
       "hash": "2bf0c9501f8785a8af4b0301202426c28164beeb03a0122d8e1a380b463b14f9",
-      "lineRange": [
-        11,
-        20
-      ],
+      "lineRange": [11, 20],
       "description": "Escape HTML special characters to prevent XSS in rendered content.",
       "structuredParams": [
         {
@@ -3915,10 +3392,7 @@
       "filePath": "src/server/viewer/grid.ts",
       "isAsync": false,
       "hash": "33db6a2c18fe7143af289f05721522dee348e7a6dcff7ef2c3eb46c94e6a6ce6",
-      "lineRange": [
-        3,
-        8
-      ],
+      "lineRange": [3, 8],
       "description": "Round a value up to the nearest multiple of SNAP_CEIL_SIZE (GRID_SIZE * 2).",
       "structuredParams": [
         {
@@ -3938,10 +3412,7 @@
       "filePath": "src/server/viewer/lib/utils.ts",
       "isAsync": false,
       "hash": "f0e52b311e469801461b483fceaa7914d98793cdcba1d6db5fef8c16cdedc735",
-      "lineRange": [
-        2,
-        7
-      ],
+      "lineRange": [2, 7],
       "description": "Merge Tailwind CSS class names, resolving conflicts via `tailwind-merge`.",
       "structuredParams": [
         {
@@ -3960,10 +3431,7 @@
       "filePath": "src/server/viewer/main.tsx",
       "isAsync": false,
       "hash": "87033320aacc330be14b6cc0d766433536147efbc23f6a3cc0010e98418b70ab",
-      "lineRange": [
-        6,
-        6
-      ],
+      "lineRange": [6, 6],
       "isExported": false
     }
   ],

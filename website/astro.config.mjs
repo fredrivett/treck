@@ -1,7 +1,7 @@
+import { resolve } from 'node:path';
+import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
-import { resolve } from 'node:path';
 
 export default defineConfig({
   site: 'https://treck.dev',

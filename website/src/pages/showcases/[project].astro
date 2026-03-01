@@ -1,13 +1,13 @@
 ---
-import Base from '../../layouts/Base.astro';
 import { ShowcaseLoader } from '../../components/ShowcaseLoader';
+import Base from '../../layouts/Base.astro';
 import { showcases } from '../../showcases';
 
 export function getStaticPaths() {
-	return showcases.map((project) => ({
-		params: { project: project.slug },
-		props: project,
-	}));
+  return showcases.map((project) => ({
+    params: { project: project.slug },
+    props: project,
+  }));
 }
 
 const { slug, name, description, repo } = Astro.props;

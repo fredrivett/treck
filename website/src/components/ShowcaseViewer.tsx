@@ -1,10 +1,10 @@
-import { useCallback, useMemo, useState } from 'react';
-import { MemoryRouter } from 'react-router';
 import type { FlowGraph as FlowGraphData } from '@treck/graph/types.js';
 import { FlowControls } from '@viewer/components/FlowControls';
 import { FlowGraph, getNodeCategory, type NodeCategory } from '@viewer/components/FlowGraph';
 import { LoadingSpinner } from '@viewer/components/LoadingSpinner';
 import { Sidebar } from '@viewer/components/Sidebar';
+import { useCallback, useMemo, useState } from 'react';
+import { MemoryRouter } from 'react-router';
 
 interface ShowcaseViewerProps {
   /** Pre-loaded graph data for the showcased project. */
@@ -77,9 +77,7 @@ function ShowcaseViewerInner({ graph, projectName }: ShowcaseViewerProps) {
       );
       filtered = {
         nodes: filtered.nodes.filter((n) => matchingIds.has(n.id)),
-        edges: filtered.edges.filter(
-          (e) => matchingIds.has(e.source) && matchingIds.has(e.target),
-        ),
+        edges: filtered.edges.filter((e) => matchingIds.has(e.source) && matchingIds.has(e.target)),
       };
     }
 
