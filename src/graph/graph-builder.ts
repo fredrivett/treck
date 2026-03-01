@@ -198,6 +198,9 @@ export class GraphBuilder {
 
     const dedupedEdges = this.deduplicateEdges(edges);
 
+    // Free cached ASTs now that the build is complete
+    this.extractor.clearCache();
+
     return {
       version: '1.0',
       generatedAt: new Date().toISOString(),

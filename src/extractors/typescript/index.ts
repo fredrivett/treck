@@ -19,6 +19,35 @@ import type {
 
 /** Extracts symbols (functions, classes, arrow functions, call expressions) from TypeScript/JavaScript files using the TS Compiler API. */
 export class TypeScriptExtractor {
+  /** Cache of parsed ASTs keyed by file path, avoiding redundant reads and parses within a single build. */
+  private astCache = new Map<string, { sourceText: string; sourceFile: ts.SourceFile }>();
+
+  /**
+   * Get or create a parsed TS SourceFile for the given path.
+   *
+   * Caches the result so that multiple extraction methods called on the
+   * same file (symbols, imports, call sites, re-exports) share a single
+   * read and parse.
+   *
+   * @param filePath - Absolute path to the source file
+   * @returns The raw source text and parsed SourceFile
+   */
+  private getSourceFile(filePath: string): { sourceText: string; sourceFile: ts.SourceFile } {
+    const cached = this.astCache.get(filePath);
+    if (cached) return cached;
+
+    const sourceText = readFileSync(filePath, 'utf-8');
+    const sourceFile = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.Latest, true);
+    const entry = { sourceText, sourceFile };
+    this.astCache.set(filePath, entry);
+    return entry;
+  }
+
+  /** Clear the AST cache to free memory after a build completes. */
+  clearCache(): void {
+    this.astCache.clear();
+  }
+
   /**
    * Extract all symbols from a TypeScript/JavaScript file
    */
@@ -27,8 +56,7 @@ export class TypeScriptExtractor {
     const errors: string[] = [];
 
     try {
-      const sourceText = readFileSync(filePath, 'utf-8');
-      const sourceFile = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.Latest, true);
+      const { sourceFile } = this.getSourceFile(filePath);
 
       const visit = (node: ts.Node) => {
         try {
@@ -94,8 +122,7 @@ export class TypeScriptExtractor {
    * records a chain of ancestor conditions on each call site.
    */
   extractCallSites(filePath: string, symbolName: string): CallSite[] {
-    const sourceText = readFileSync(filePath, 'utf-8');
-    const sourceFile = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.Latest, true);
+    const { sourceFile } = this.getSourceFile(filePath);
 
     // Find the symbol's AST node
     const bodyNode = this.findSymbolBody(sourceFile, symbolName);
@@ -303,8 +330,7 @@ export class TypeScriptExtractor {
    * Extract import declarations from a file
    */
   extractImports(filePath: string): ImportInfo[] {
-    const sourceText = readFileSync(filePath, 'utf-8');
-    const sourceFile = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.Latest, true);
+    const { sourceFile } = this.getSourceFile(filePath);
 
     const imports: ImportInfo[] = [];
 
@@ -351,8 +377,7 @@ export class TypeScriptExtractor {
    * Handles: export { Foo } from "./bar", export { Foo as Bar } from "./bar"
    */
   extractReExports(filePath: string): ReExportInfo[] {
-    const sourceText = readFileSync(filePath, 'utf-8');
-    const sourceFile = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.Latest, true);
+    const { sourceFile } = this.getSourceFile(filePath);
 
     const reExports: ReExportInfo[] = [];
 
