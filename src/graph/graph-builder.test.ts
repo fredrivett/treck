@@ -757,6 +757,27 @@ export function handle(req: any) {
       expect(edge).toBeDefined();
       expect(edge?.type).toBe('http-request');
     });
+
+    it('should detect server actions via "use server" directive without file I/O in matcher', () => {
+      const actionsFile = join(TEST_DIR, 'actions.ts');
+      writeFileSync(
+        actionsFile,
+        `"use server"
+export async function createItem(name: string) {
+  return { name }
+}
+export async function deleteItem(id: string) {
+  return id
+}`,
+      );
+
+      const graph = builder.build([actionsFile]);
+
+      const createNode = graph.nodes.find((n) => n.name === 'createItem');
+      const deleteNode = graph.nodes.find((n) => n.name === 'deleteItem');
+      expect(createNode?.entryType).toBe('server-action');
+      expect(deleteNode?.entryType).toBe('server-action');
+    });
   });
 });
 

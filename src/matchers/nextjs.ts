@@ -8,7 +8,6 @@
  * - Server actions ("use server" directive)
  */
 
-import { readFileSync } from 'node:fs';
 import type { SymbolInfo } from '../extractors/types.js';
 import { TypeScriptExtractor } from '../extractors/typescript/index.js';
 import type { EdgeType } from '../graph/types.js';
@@ -24,9 +23,6 @@ const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'
 const API_ROUTE_PATTERN = /app\/api\/(.+)\/route\.(ts|tsx|js|jsx)$/;
 const PAGE_PATTERN = /app\/(.+)\/page\.(ts|tsx|js|jsx)$/;
 const MIDDLEWARE_PATTERN = /middleware\.(ts|tsx|js|jsx)$/;
-
-/** Cache of file path → whether the file starts with "use server" directive. */
-const useServerCache = new Map<string, boolean>();
 
 /**
  * Extract route path from file path.
@@ -173,26 +169,15 @@ export const nextjsMatcher: FrameworkMatcher = {
       };
     }
 
-    // Server actions — check for "use server" directive in the file
-    if (symbol.kind === 'function' || symbol.kind === 'const') {
-      let hasUseServer = useServerCache.get(filePath);
-      if (hasUseServer === undefined) {
-        try {
-          const content = readFileSync(filePath, 'utf-8');
-          hasUseServer =
-            content.trimStart().startsWith("'use server'") ||
-            content.trimStart().startsWith('"use server"');
-        } catch {
-          hasUseServer = false;
-        }
-        useServerCache.set(filePath, hasUseServer);
-      }
-      if (hasUseServer) {
-        return {
-          entryType: 'server-action',
-          metadata: {},
-        };
-      }
+    // Server actions — check for "use server" directive attached by the extractor
+    if (
+      (symbol.kind === 'function' || symbol.kind === 'const') &&
+      symbol.directives?.includes('use server')
+    ) {
+      return {
+        entryType: 'server-action',
+        metadata: {},
+      };
     }
 
     return null;

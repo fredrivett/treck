@@ -2127,4 +2127,43 @@ export function greet(name: string) { return helper(name) }
       expect(result2.symbols[1].name).toBe('baz');
     });
   });
+
+  describe('File-level directives', () => {
+    it('should attach "use server" directive to all symbols in the file', () => {
+      const code = `"use server"
+export async function createUser(name: string) { return { name } }
+export async function deleteUser(id: string) { return id }
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols).toHaveLength(2);
+      expect(result.symbols[0].directives).toEqual(['use server']);
+      expect(result.symbols[1].directives).toEqual(['use server']);
+    });
+
+    it('should attach "use client" directive to symbols', () => {
+      const code = `'use client'
+export function Counter() { return 1 }
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols[0].directives).toEqual(['use client']);
+    });
+
+    it('should not attach directives when none exist', () => {
+      const code = `export function plain() { return 1 }`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols[0].directives).toBeUndefined();
+    });
+
+    it('should not treat string literals after code as directives', () => {
+      const code = `export function foo() { return 1 }
+"use server"
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols[0].directives).toBeUndefined();
+    });
+  });
 });
