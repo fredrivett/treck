@@ -153,7 +153,8 @@ export async function startServer(outputDir: string, port: number) {
     // Serve viewer assets (JS, CSS, etc.)
     if (url.pathname.startsWith('/assets/')) {
       const assetPath = resolve(viewerDistDir, url.pathname.slice(1));
-      if (serveStaticFile(assetPath, res)) return;
+      // Prevent path traversal — ensure the resolved path stays within viewerDistDir
+      if (assetPath.startsWith(`${viewerDistDir}/`) && serveStaticFile(assetPath, res)) return;
     }
 
     // Serve viewer (SPA fallback) at root

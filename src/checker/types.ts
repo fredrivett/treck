@@ -1,20 +1,22 @@
 /**
- * Types for staleness checker
+ * Types for the staleness checker.
  */
 
+/** A source-code dependency tracked for a documented symbol. */
 export interface DocDependency {
   path: string;
   symbol: string;
   hash: string;
-  asOf?: string; // Git commit hash when this was last valid
+  /** Git commit hash when this dependency was last valid. */
+  asOf?: string;
 }
 
+/** Frontmatter metadata stored alongside a generated doc file. */
 export interface DocMetadata {
   title: string;
   treckVersion?: string;
   generated: string;
   dependencies: DocDependency[];
-  // Badge / symbol metadata
   kind?: string;
   exported?: boolean;
   isAsync?: boolean;
@@ -30,12 +32,14 @@ export interface DocMetadata {
   taskId?: string;
 }
 
+/** A graph node whose source code has changed since the last sync. */
 export interface StaleDoc {
   nodeId: string;
   reason: string;
   staleDependencies: StaleDependency[];
 }
 
+/** A single dependency that is out of date within a stale doc. */
 export interface StaleDependency {
   path: string;
   symbol: string;
@@ -44,6 +48,7 @@ export interface StaleDependency {
   reason: 'changed' | 'not-found' | 'file-not-found';
 }
 
+/** Aggregate result of checking all graph nodes for staleness. */
 export interface CheckResult {
   totalDocs: number;
   staleDocs: StaleDoc[];

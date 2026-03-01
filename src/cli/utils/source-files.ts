@@ -125,6 +125,7 @@ export function getRelativePath(absolutePath: string): string {
 export function countImports(sourceFiles: string[]): Map<string, number> {
   const importCounts = new Map<string, number>();
   const importPattern = /(?:import|export)\s+.*?from\s+['"]([^'"]+)['"]/g;
+  const sourceFileSet = new Set(sourceFiles);
 
   for (const file of sourceFiles) {
     try {
@@ -135,7 +136,7 @@ export function countImports(sourceFiles: string[]): Map<string, number> {
         if (!specifier.startsWith('.')) continue;
 
         const dir = dirname(file);
-        const resolved = resolveImport(dir, specifier, sourceFiles);
+        const resolved = resolveImport(dir, specifier, sourceFileSet);
         if (resolved) {
           const rel = getRelativePath(resolved);
           importCounts.set(rel, (importCounts.get(rel) || 0) + 1);
@@ -191,27 +192,31 @@ function gitTrackedFilesAsync(rootDir: string): Promise<string[] | null> {
  * Resolve a relative import specifier to an absolute file path.
  *
  * Tries the exact path, then common extensions (`.ts`, `.tsx`, `.js`, `.jsx`),
- * then `index.*` variants. Only resolves to files in the `sourceFiles` list.
+ * then `index.*` variants. Only resolves to files in the `sourceFiles` set.
  */
-function resolveImport(fromDir: string, specifier: string, sourceFiles: string[]): string | null {
+function resolveImport(
+  fromDir: string,
+  specifier: string,
+  sourceFiles: Set<string>,
+): string | null {
   const base = resolve(fromDir, specifier);
 
-  if (sourceFiles.includes(base)) return base;
+  if (sourceFiles.has(base)) return base;
 
   const stripped = base.replace(/\.[jt]sx?$/, '');
 
   const extensions = ['.ts', '.tsx', '.js', '.jsx'];
   for (const ext of extensions) {
-    if (sourceFiles.includes(stripped + ext)) return stripped + ext;
+    if (sourceFiles.has(stripped + ext)) return stripped + ext;
   }
 
   for (const ext of extensions) {
     const indexPath = join(base, `index${ext}`);
-    if (sourceFiles.includes(indexPath)) return indexPath;
+    if (sourceFiles.has(indexPath)) return indexPath;
   }
   for (const ext of extensions) {
     const indexPath = join(stripped, `index${ext}`);
-    if (sourceFiles.includes(indexPath)) return indexPath;
+    if (sourceFiles.has(indexPath)) return indexPath;
   }
 
   return null;

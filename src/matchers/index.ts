@@ -10,11 +10,5 @@ import { nextjsMatcher } from './nextjs.js';
 import { triggerDevMatcher } from './trigger-dev.js';
 import type { FrameworkMatcher } from './types.js';
 
+/** All registered framework matchers, checked in order during graph building. */
 export const matchers: FrameworkMatcher[] = [nextjsMatcher, inngestMatcher, triggerDevMatcher];
-
-export type {
-  EntryPointMatch,
-  FrameworkMatcher,
-  ResolvedConnection,
-  RuntimeConnection,
-} from './types.js';
