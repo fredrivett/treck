@@ -175,7 +175,7 @@ export class GraphBuilder {
             const resolved = matcher.resolveConnection(connection, sourceFiles, sourceFileSet);
             if (resolved) {
               const targetRelPath = getRelativePath(resolved.targetFilePath);
-              const targetId = `${targetRelPath}:${resolved.targetSymbol.name}`;
+              const targetId = `${targetRelPath}:${resolved.targetName}`;
 
               if (nodeMap.has(targetId)) {
                 edges.push({

@@ -6,7 +6,6 @@
  * - Runtime connections (event dispatches, task triggers, HTTP calls)
  */
 
-import type { SymbolInfo } from '../extractors/types.js';
 import type { EdgeType, EntryPointMetadata, EntryType } from '../graph/types.js';
 
 /**
@@ -41,7 +40,7 @@ export interface RuntimeConnection {
  * A runtime connection that has been resolved to a target symbol
  */
 export interface ResolvedConnection {
-  targetSymbol: SymbolInfo;
+  targetName: string;
   targetFilePath: string;
   edgeType: EdgeType;
 }

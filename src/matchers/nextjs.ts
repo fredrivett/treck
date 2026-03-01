@@ -9,8 +9,6 @@
  */
 
 import type { SymbolInfo } from '../extractors/types.js';
-import { TypeScriptExtractor } from '../extractors/typescript/index.js';
-import type { EdgeType } from '../graph/types.js';
 import type {
   EntryPointMatch,
   FrameworkMatcher,
@@ -55,84 +53,6 @@ function findRouteFile(routePath: string, fileSet: Set<string>): string | null {
     }
   }
   return null;
-}
-
-/**
- * Find a page file among project files for a given page path.
- * Tries `{prefix}/app/{pagePath}/page.{ext}` for common prefixes.
- */
-function findPageFile(pagePath: string, fileSet: Set<string>): string | null {
-  for (const file of fileSet) {
-    if (PAGE_PATTERN.test(file) && extractPagePath(file) === `/${pagePath}`) {
-      return file;
-    }
-  }
-  return null;
-}
-
-/**
- * Create a stub SymbolInfo used as a reference pointer for connection resolution.
- * Only the `name` field is meaningful — the graph builder uses it to look up the
- * real node in its nodeMap.
- */
-function createStubSymbol(name: string, filePath: string, kind: SymbolInfo['kind']): SymbolInfo {
-  return {
-    name,
-    kind,
-    filePath,
-    params: '',
-    body: '',
-    fullText: '',
-    startLine: 0,
-    endLine: 0,
-  };
-}
-
-/** Shared extractor instance for resolving connections. */
-let sharedExtractor: TypeScriptExtractor | null = null;
-
-/**
- * Resolve a fetch connection to an API route handler symbol.
- * Extracts symbols from the route file and finds the matching HTTP method.
- */
-function resolveRouteFile(
-  routePath: string,
-  fileSet: Set<string>,
-  defaultMethod: string,
-): ResolvedConnection | null {
-  const routeFile = findRouteFile(routePath, fileSet);
-  if (!routeFile) return null;
-
-  if (!sharedExtractor) sharedExtractor = new TypeScriptExtractor();
-  const { symbols } = sharedExtractor.extractSymbols(routeFile);
-  const handler = symbols.find((s) => s.name === defaultMethod);
-  if (!handler) return null;
-
-  return {
-    targetSymbol: handler,
-    targetFilePath: routeFile,
-    edgeType: 'http-request',
-  };
-}
-
-/**
- * Resolve a navigation connection to a page component.
- * Extracts symbols from the page file and finds the default export.
- */
-function resolvePageFile(pagePath: string, fileSet: Set<string>): ResolvedConnection | null {
-  const pageFile = findPageFile(pagePath, fileSet);
-  if (!pageFile) return null;
-
-  if (!sharedExtractor) sharedExtractor = new TypeScriptExtractor();
-  const { symbols } = sharedExtractor.extractSymbols(pageFile);
-  const pageComponent = symbols.find((s) => s.name === 'default');
-  if (!pageComponent) return null;
-
-  return {
-    targetSymbol: pageComponent,
-    targetFilePath: pageFile,
-    edgeType: 'http-request',
-  };
 }
 
 export const nextjsMatcher: FrameworkMatcher = {
@@ -226,8 +146,8 @@ export const nextjsMatcher: FrameworkMatcher = {
    * Resolve a Next.js runtime connection to a concrete graph edge.
    *
    * For `fetch` connections, finds the matching API route file and targets
-   * the handler matching the HTTP method.
-   * For `navigation` connections, matches to a page component.
+   * the handler matching the HTTP method. Navigation connections fall through
+   * to the graph builder's metadata-based matching.
    */
   resolveConnection(
     connection: RuntimeConnection,
@@ -242,16 +162,10 @@ export const nextjsMatcher: FrameworkMatcher = {
       const routeFile = findRouteFile(routePath, fileSet);
       if (!routeFile) return null;
       return {
-        targetSymbol: createStubSymbol(connection.httpMethod ?? 'GET', routeFile, 'function'),
+        targetName: connection.httpMethod ?? 'GET',
         targetFilePath: routeFile,
-        edgeType: 'http-request' as EdgeType,
+        edgeType: 'http-request',
       };
-    }
-
-    if (connection.type === 'navigation') {
-      // Match /dashboard to app/dashboard/page.{ts,tsx,js,jsx}
-      const pagePath = connection.targetHint.replace(/^\//, '');
-      return resolvePageFile(pagePath, fileSet);
     }
 
     return null;
