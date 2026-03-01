@@ -9,14 +9,17 @@
   "scripts": {
     "dev": "bash scripts/run.sh",
     "dev:cli": "tsdown src/cli/index.ts --watch",
-    "build": "tsdown src/cli/index.ts && npm run build:viewer",
+    "build": "tsdown src/cli/index.ts && pnpm run build:viewer",
     "build:viewer": "vite build --config src/server/viewer/vite.config.ts",
     "treck": "node dist/index.mjs",
     "test": "vitest",
     "test:extractor": "tsx scripts/test-extractor.ts",
     "format": "biome check --write .",
     "format:check": "biome check .",
-    "format:unsafe": "biome check --write --unsafe ."
+    "format:unsafe": "biome check --write --unsafe .",
+    "website": "pnpm --filter @treck/website dev",
+    "website:build": "pnpm --filter @treck/website build",
+    "website:preview": "pnpm --filter @treck/website preview"
   },
   "keywords": [],
   "author": "@fredrivett",
