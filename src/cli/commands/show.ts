@@ -26,6 +26,9 @@ Options:
   --depth <n>   Limit traversal depth (default: full connected flow)
   --beautify    Render mermaid as Unicode box-drawing art for the terminal
 
+Tip: If file paths contain parentheses or brackets, wrap the target in quotes:
+  treck show "src/app/(dashboard)/page.tsx:Home"
+
 Examples:
   treck show src/api/route.ts:GET
   treck show src/api/route.ts:GET --docs
