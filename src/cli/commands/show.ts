@@ -176,7 +176,7 @@ export function formatMermaidOutput(
     return nodeToMermaid(graph, nodeIds[0], depth);
   }
   const { nodes, edges } = connectedSubgraph(graph, nodeIds, depth);
-  return flowToMermaid(nodes, edges, undefined, new Set(nodeIds));
+  return flowToMermaid(nodes, edges, new Set(nodeIds));
 }
 
 /**

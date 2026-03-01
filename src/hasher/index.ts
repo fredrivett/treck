@@ -50,26 +50,4 @@ export class ContentHasher {
       .replace(/[ ]+/g, ' ') // Multiple spaces to single
       .trim();
   }
-
-  /**
-   * Compare two symbols to see if content changed
-   */
-  hasChanged(oldSymbol: SymbolInfo, newSymbol: SymbolInfo): boolean {
-    return this.hashSymbol(oldSymbol) !== this.hashSymbol(newSymbol);
-  }
-
-  /**
-   * Get a short hash (first 8 chars) for display purposes
-   */
-  shortHash(hash: string): string {
-    return hash.substring(0, 8);
-  }
-}
-
-/**
- * Convenience function to hash symbol content
- */
-export function hashSymbol(symbol: SymbolInfo): string {
-  const hasher = new ContentHasher();
-  return hasher.hashSymbol(symbol);
 }

@@ -130,24 +130,13 @@ describe('flowToMermaid', () => {
       { id: 'e2', source: 'b.ts:B', target: 'c.ts:C', type: 'direct-call', isAsync: false },
     ];
 
-    const mermaid = flowToMermaid(
-      [nodeA, nodeB, nodeC],
-      edges,
-      undefined,
-      new Set(['a.ts:A', 'c.ts:C']),
-    );
+    const mermaid = flowToMermaid([nodeA, nodeB, nodeC], edges, new Set(['a.ts:A', 'c.ts:C']));
 
     // Both A and C should have the highlight style
     expect(mermaid).toContain('style a_ts_A fill:#dbeafe');
     expect(mermaid).toContain('style c_ts_C fill:#dbeafe');
     // B should NOT be highlighted
     expect(mermaid).not.toContain('style b_ts_B fill:#dbeafe');
-  });
-
-  it('falls back to entryNodeId for backwards compatibility', () => {
-    const nodeA = makeNode({ id: 'a.ts:A', name: 'A', filePath: 'a.ts' });
-    const mermaid = flowToMermaid([nodeA], [], 'a.ts:A');
-    expect(mermaid).toContain('style a_ts_A fill:#dbeafe');
   });
 
   it('styles entry points differently from highlights', () => {
@@ -159,7 +148,7 @@ describe('flowToMermaid', () => {
     });
     const nodeB = makeNode({ id: 'b.ts:B', name: 'B', filePath: 'b.ts' });
 
-    const mermaid = flowToMermaid([nodeA, nodeB], [], undefined, new Set(['b.ts:B']));
+    const mermaid = flowToMermaid([nodeA, nodeB], [], new Set(['b.ts:B']));
 
     // B is highlighted (blue)
     expect(mermaid).toContain('style b_ts_B fill:#dbeafe');
@@ -175,7 +164,7 @@ describe('flowToMermaid', () => {
       entryType: 'api-route',
     });
 
-    const mermaid = flowToMermaid([nodeA], [], undefined, new Set(['a.ts:A']));
+    const mermaid = flowToMermaid([nodeA], [], new Set(['a.ts:A']));
 
     // Should have the highlight style, NOT the entry point style
     expect(mermaid).toContain('style a_ts_A fill:#dbeafe');
