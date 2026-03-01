@@ -56,13 +56,40 @@ treck status            # coverage summary
 treck status --verbose  # include full list of symbols missing JSDoc
 ```
 
-### `treck serve [--port <number>]`
+### `treck show <targets> [--docs] [--depth <n>] [--beautify]`
+
+Show graph data for symbols in your codebase. Outputs a mermaid flowchart by default, or full markdown documentation with `--docs`.
+
+Targets can be `file:symbol` or a file path (comma-separated for multiple).
+
+```bash
+treck show src/api/route.ts:GET              # mermaid diagram for one symbol
+treck show src/api/route.ts                  # all symbols in a file
+treck show src/api/route.ts:GET --docs       # full markdown documentation
+treck show src/api/route.ts:GET --depth 1    # limit traversal depth
+treck show src/api/route.ts:GET --beautify   # Unicode box-drawing art in terminal
+```
+
+### `treck jsdoc [--verbose] [--prompt] [--run <agent>]`
+
+Show JSDoc coverage and optionally hand off to a coding agent to auto-populate missing comments.
+
+```bash
+treck jsdoc                    # coverage summary
+treck jsdoc --verbose          # include full list of symbols missing JSDoc
+treck jsdoc --prompt           # print agent prompt to stdout (for piping)
+treck jsdoc --run claude       # hand off to Claude Code
+treck jsdoc --run codex        # hand off to Codex
+```
+
+### `treck serve [--port <number>] [--focus <targets>]`
 
 Start an interactive documentation viewer in your browser. Displays a flow graph of your codebase with clickable nodes that open symbol documentation in a side panel.
 
 ```bash
-treck serve              # default port 3456
+treck serve                                              # default port 3456
 treck serve --port 8080
+treck serve --focus src/api/route.ts:GET,src/lib/db.ts   # open with symbols pre-selected
 ```
 
 ## How it works
@@ -103,12 +130,12 @@ scope:
 ```bash
 git clone https://github.com/fredrivett/treck
 cd treck
-npm install
+pnpm install
 ```
 
 ```bash
-npm run dev          # watch mode
-npm run build        # build to dist/
-npm test             # run tests
-npm run format       # format with biome
+pnpm run dev          # watch mode
+pnpm run build        # build to dist/
+pnpm test             # run tests
+pnpm run format       # format with biome
 ```
