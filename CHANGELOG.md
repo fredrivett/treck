@@ -1,5 +1,13 @@
 # treck
 
+## 0.2.3
+
+### Patch Changes
+
+- 91142a3: Add vitest config to exclude .claude worktree directories from test discovery
+- 72841f7: Fix linting issues across codebase
+- cff5a20: Remove unused `outputDir` parameter from `scanProject` and `scanProjectAsync`
+
 ## 0.2.2
 
 ### Patch Changes
