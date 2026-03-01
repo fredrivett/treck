@@ -1,0 +1,109 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Treck — Your codebase, visualised">
+	<div class="min-h-screen flex flex-col">
+		<!-- Nav -->
+		<nav class="flex items-center justify-between px-6 py-4 max-w-5xl mx-auto w-full">
+			<a href="/" class="text-xl font-bold tracking-tight">treck</a>
+			<div class="flex items-center gap-6 text-sm text-zinc-400">
+				<a href="https://www.npmjs.com/package/treck" class="hover:text-zinc-100 transition-colors">npm</a>
+				<a href="https://github.com/fredrivett/treck" class="hover:text-zinc-100 transition-colors">GitHub</a>
+			</div>
+		</nav>
+
+		<!-- Hero -->
+		<main class="flex-1 flex flex-col items-center justify-center px-6 text-center">
+			<div class="max-w-2xl mx-auto space-y-8">
+				<h1 class="text-5xl sm:text-6xl font-bold tracking-tight leading-tight">
+					Your codebase,<br />
+					<span class="text-violet-400">visualised</span>
+				</h1>
+				<p class="text-lg sm:text-xl text-zinc-400 max-w-lg mx-auto leading-relaxed">
+					Evergreen maps of every code flow. Trace button clicks to database
+					updates. Always in sync.
+				</p>
+
+				<!-- Install -->
+				<div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+					<code class="bg-zinc-900 border border-zinc-800 rounded-lg px-5 py-3 text-sm font-mono text-zinc-300">
+						npm install treck
+					</code>
+				</div>
+
+				<!-- Feature pills -->
+				<div class="flex flex-wrap justify-center gap-2 text-sm">
+					<span class="bg-zinc-900 border border-zinc-800 rounded-full px-4 py-1.5 text-zinc-400">
+						Maps your codebase
+					</span>
+					<span class="bg-zinc-900 border border-zinc-800 rounded-full px-4 py-1.5 text-zinc-400">
+						Traces code flows
+					</span>
+					<span class="bg-zinc-900 border border-zinc-800 rounded-full px-4 py-1.5 text-zinc-400">
+						Keeps docs in sync
+					</span>
+					<span class="bg-zinc-900 border border-zinc-800 rounded-full px-4 py-1.5 text-zinc-400">
+						Interactive explorer
+					</span>
+				</div>
+			</div>
+
+			<!-- How it works -->
+			<section class="mt-24 max-w-3xl mx-auto w-full">
+				<h2 class="text-2xl font-semibold mb-10">How it works</h2>
+				<div class="grid sm:grid-cols-2 gap-6 text-left">
+					<div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
+						<div class="text-violet-400 font-mono text-sm mb-2">01</div>
+						<h3 class="font-semibold mb-1">Map</h3>
+						<p class="text-sm text-zinc-400">
+							Extracts every function, component, and entry point from your
+							TypeScript codebase.
+						</p>
+					</div>
+					<div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
+						<div class="text-violet-400 font-mono text-sm mb-2">02</div>
+						<h3 class="font-semibold mb-1">Connect</h3>
+						<p class="text-sm text-zinc-400">
+							Builds a dependency graph connecting every call chain from entry
+							point to leaf.
+						</p>
+					</div>
+					<div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
+						<div class="text-violet-400 font-mono text-sm mb-2">03</div>
+						<h3 class="font-semibold mb-1">Detect</h3>
+						<p class="text-sm text-zinc-400">
+							Content hashing detects when code changes and reports stale
+							documentation.
+						</p>
+					</div>
+					<div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
+						<div class="text-violet-400 font-mono text-sm mb-2">04</div>
+						<h3 class="font-semibold mb-1">Explore</h3>
+						<p class="text-sm text-zinc-400">
+							Interactive browser-based viewer to navigate your code flows as a
+							visual graph.
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- Quick start -->
+			<section class="mt-24 max-w-lg mx-auto w-full text-left">
+				<h2 class="text-2xl font-semibold mb-6 text-center">Quick start</h2>
+				<div
+					class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 font-mono text-sm space-y-2 text-zinc-300"
+				>
+					<p><span class="text-zinc-500">$</span> npx treck init</p>
+					<p><span class="text-zinc-500">$</span> npx treck sync</p>
+					<p><span class="text-zinc-500">$</span> npx treck serve</p>
+				</div>
+			</section>
+		</main>
+
+		<!-- Footer -->
+		<footer class="py-8 text-center text-sm text-zinc-600">
+			<p>MIT License &middot; Built by <a href="https://github.com/fredrivett" class="text-zinc-400 hover:text-zinc-100 transition-colors">@fredrivett</a></p>
+		</footer>
+	</div>
+</Base>
