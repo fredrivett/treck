@@ -5,7 +5,7 @@
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { TypeScriptExtractor } from '../extractor/index.js';
+import { TypeScriptExtractor } from '../extractors/typescript/index.js';
 import { GraphStore } from '../graph/graph-store.js';
 import type { FlowGraph, GraphNode } from '../graph/types.js';
 import { ContentHasher } from '../hasher/index.js';

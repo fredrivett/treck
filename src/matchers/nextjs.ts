@@ -9,7 +9,7 @@
  */
 
 import { readFileSync } from 'node:fs';
-import type { SymbolInfo } from '../extractor/types.js';
+import type { SymbolInfo } from '../extractors/types.js';
 import type {
   EntryPointMatch,
   FrameworkMatcher,

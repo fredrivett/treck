@@ -4,9 +4,9 @@
 
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { ExtractionError } from '../cli/utils/errors.js';
-import type { ConditionInfo } from '../graph/types.js';
-import { extractJsDoc } from './jsdoc-extractor.js';
+import { ExtractionError } from '../../cli/utils/errors.js';
+import type { ConditionInfo } from '../../graph/types.js';
+import { extractJsDoc } from '../jsdoc/index.js';
 import type {
   CallSite,
   ExtractionResult,
@@ -15,7 +15,7 @@ import type {
   ParamInfo,
   ReExportInfo,
   SymbolInfo,
-} from './types.js';
+} from '../types.js';
 
 /** Extracts symbols (functions, classes, arrow functions, call expressions) from TypeScript/JavaScript files using the TS Compiler API. */
 export class TypeScriptExtractor {

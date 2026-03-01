@@ -5,7 +5,7 @@
  */
 
 import { join } from 'node:path';
-import { TypeScriptExtractor } from '../src/extractor/index.js';
+import { TypeScriptExtractor } from '../src/extractors/typescript/index.js';
 
 /** Extractor instance used for the test run. */
 const extractor = new TypeScriptExtractor();

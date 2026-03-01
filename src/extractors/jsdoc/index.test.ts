@@ -4,7 +4,7 @@
 
 import ts from 'typescript';
 import { describe, expect, it } from 'vitest';
-import { extractJsDoc } from './jsdoc-extractor.js';
+import { extractJsDoc } from './index.js';
 
 /**
  * Parse source code and return the first statement's JSDoc info.

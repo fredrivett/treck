@@ -6,7 +6,7 @@
  * - Runtime connections (event dispatches, task triggers, HTTP calls)
  */
 
-import type { SymbolInfo } from '../extractor/types.js';
+import type { SymbolInfo } from '../extractors/types.js';
 import type { EdgeType, EntryPointMetadata, EntryType } from '../graph/types.js';
 
 /**

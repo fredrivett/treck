@@ -2,7 +2,7 @@
  * Types for the project-wide call graph
  */
 
-import type { ParamInfo } from '../extractor/types.js';
+import type { ParamInfo } from '../extractors/types.js';
 
 export interface GraphNode {
   id: string; // "src/api/analyze/route.ts:POST"

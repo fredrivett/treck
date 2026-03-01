@@ -4,7 +4,7 @@
 
 import { existsSync } from 'node:fs';
 import { resolveSourcePath } from '../cli/utils/paths.js';
-import { TypeScriptExtractor } from '../extractor/index.js';
+import { TypeScriptExtractor } from '../extractors/typescript/index.js';
 import { GraphStore } from '../graph/graph-store.js';
 import { ContentHasher } from '../hasher/index.js';
 import type { CheckResult } from './types.js';

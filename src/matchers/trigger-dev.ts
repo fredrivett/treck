@@ -7,7 +7,7 @@
  * - Batch triggers (tasks.batchTrigger("task-id"))
  */
 
-import type { SymbolInfo } from '../extractor/types.js';
+import type { SymbolInfo } from '../extractors/types.js';
 import type {
   EntryPointMatch,
   FrameworkMatcher,

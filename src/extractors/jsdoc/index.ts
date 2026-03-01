@@ -4,7 +4,7 @@
  */
 
 import ts from 'typescript';
-import type { JsDocInfo, JsDocParamTag } from './types.js';
+import type { JsDocInfo, JsDocParamTag } from '../types.js';
 
 /**
  * Normalize a JSDoc comment value to a plain string.

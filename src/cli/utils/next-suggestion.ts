@@ -4,7 +4,7 @@ import { readdir, stat } from 'node:fs/promises';
 import { dirname, join, relative, resolve } from 'node:path';
 import * as p from '@clack/prompts';
 import picomatch from 'picomatch';
-import { TypeScriptExtractor } from '../../extractor/index.js';
+import { TypeScriptExtractor } from '../../extractors/typescript/index.js';
 import type { TreckConfig } from './config.js';
 
 export interface ProjectScan {

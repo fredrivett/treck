@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { SymbolInfo } from '../extractor/types.js';
+import type { SymbolInfo } from '../extractors/types.js';
 import { triggerDevMatcher } from './trigger-dev.js';
 
 /** Helper to create a minimal SymbolInfo for testing */

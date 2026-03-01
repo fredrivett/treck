@@ -5,7 +5,7 @@
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { clearTsconfigCache, resolveImportPath } from './resolve-import.js';
+import { clearTsconfigCache, resolveImportPath } from './index.js';
 
 const TEST_DIR = join(process.cwd(), '.test-resolve');
 const SRC_DIR = join(TEST_DIR, 'src');

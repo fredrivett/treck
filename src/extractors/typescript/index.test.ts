@@ -5,7 +5,7 @@
 import { existsSync, mkdirSync, unlinkSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { TypeScriptExtractor } from './typescript-extractor.js';
+import { TypeScriptExtractor } from './index.js';
 
 const TEST_DIR = join(process.cwd(), '.test-tmp');
 const TEST_FILE = join(TEST_DIR, 'test.ts');

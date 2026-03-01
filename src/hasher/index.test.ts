@@ -3,7 +3,7 @@
  */
 
 import { beforeEach, describe, expect, it } from 'vitest';
-import type { SymbolInfo } from '../extractor/types.js';
+import type { SymbolInfo } from '../extractors/types.js';
 import { ContentHasher, hashSymbol } from './index.js';
 
 describe('ContentHasher', () => {
