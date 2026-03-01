@@ -35,19 +35,16 @@ export function nodeToMermaid(graph: FlowGraph, nodeId: string, depth = 1): stri
  *
  * @param nodes - The nodes to include in the diagram
  * @param edges - The edges connecting the nodes
- * @param entryNodeId - Deprecated: use highlightIds instead. Kept for backwards compatibility.
  * @param highlightIds - Set of node IDs to highlight (blue styling)
  */
 export function flowToMermaid(
   nodes: GraphNode[],
   edges: GraphEdge[],
-  entryNodeId?: string,
   highlightIds?: Set<string>,
 ): string {
   const nodeMap = new Map(nodes.map((n) => [n.id, n]));
   const included = new Set(nodes.map((n) => n.id));
-  const highlights = highlightIds ?? (entryNodeId ? new Set([entryNodeId]) : new Set<string>());
-  return buildMermaid(highlights, included, edges, nodeMap);
+  return buildMermaid(highlightIds ?? new Set<string>(), included, edges, nodeMap);
 }
 
 /**

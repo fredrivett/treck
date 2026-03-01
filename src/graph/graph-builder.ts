@@ -24,14 +24,7 @@ function connectionTypeToEdgeType(type: ConnectionType): EdgeType {
   switch (type) {
     case 'inngest-send':
       return 'event-emit';
-    case 'inngest-invoke':
-      return 'async-dispatch';
-    case 'task-trigger':
-      return 'async-dispatch';
-    case 'task-trigger-ref':
-      return 'async-dispatch';
     case 'fetch':
-      return 'http-request';
     case 'navigation':
       return 'http-request';
     default:

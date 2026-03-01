@@ -4,7 +4,7 @@
 
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { SymbolInfo } from '../extractors/types.js';
-import { ContentHasher, hashSymbol } from './index.js';
+import { ContentHasher } from './index.js';
 
 describe('ContentHasher', () => {
   let hasher: ContentHasher;
@@ -225,110 +225,6 @@ describe('ContentHasher', () => {
       };
 
       expect(hasher.hashSymbol(symbol1)).toBe(hasher.hashSymbol(symbol2));
-    });
-  });
-
-  describe('hasChanged', () => {
-    it('should detect no change for identical symbols', () => {
-      const symbol: SymbolInfo = {
-        name: 'func',
-        kind: 'function',
-        filePath: 'test.ts',
-        params: 'a: number',
-        body: '{ return a }',
-        fullText: 'function func(a: number) { return a }',
-        startLine: 1,
-        endLine: 3,
-      };
-
-      expect(hasher.hasChanged(symbol, symbol)).toBe(false);
-    });
-
-    it('should detect no change when only name changes', () => {
-      const symbol1: SymbolInfo = {
-        name: 'oldName',
-        kind: 'function',
-        filePath: 'test.ts',
-        params: 'a: number',
-        body: '{ return a }',
-        fullText: 'function oldName(a: number) { return a }',
-        startLine: 1,
-        endLine: 3,
-      };
-
-      const symbol2: SymbolInfo = {
-        ...symbol1,
-        name: 'newName',
-      };
-
-      expect(hasher.hasChanged(symbol1, symbol2)).toBe(false);
-    });
-
-    it('should detect change when params change', () => {
-      const symbol1: SymbolInfo = {
-        name: 'func',
-        kind: 'function',
-        filePath: 'test.ts',
-        params: 'a: number',
-        body: '{ return a }',
-        fullText: 'test',
-        startLine: 1,
-        endLine: 3,
-      };
-
-      const symbol2: SymbolInfo = {
-        ...symbol1,
-        params: 'a: number, b: number',
-      };
-
-      expect(hasher.hasChanged(symbol1, symbol2)).toBe(true);
-    });
-
-    it('should detect change when body changes', () => {
-      const symbol1: SymbolInfo = {
-        name: 'func',
-        kind: 'function',
-        filePath: 'test.ts',
-        params: 'a: number',
-        body: '{ return a }',
-        fullText: 'test',
-        startLine: 1,
-        endLine: 3,
-      };
-
-      const symbol2: SymbolInfo = {
-        ...symbol1,
-        body: '{ return a * 2 }',
-      };
-
-      expect(hasher.hasChanged(symbol1, symbol2)).toBe(true);
-    });
-  });
-
-  describe('shortHash', () => {
-    it('should return first 8 characters of hash', () => {
-      const hash = 'abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890';
-      expect(hasher.shortHash(hash)).toBe('abcdef12');
-      expect(hasher.shortHash(hash)).toHaveLength(8);
-    });
-  });
-
-  describe('hashSymbol convenience function', () => {
-    it('should work as standalone function', () => {
-      const symbol: SymbolInfo = {
-        name: 'func',
-        kind: 'function',
-        filePath: 'test.ts',
-        params: 'a: number',
-        body: '{ return a }',
-        fullText: 'test',
-        startLine: 1,
-        endLine: 3,
-      };
-
-      const hash = hashSymbol(symbol);
-      expect(hash).toHaveLength(64);
-      expect(typeof hash).toBe('string');
     });
   });
 

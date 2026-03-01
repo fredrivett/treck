@@ -19,8 +19,6 @@ import {
   type SymbolIndex,
 } from './symbol-index.js';
 
-export type { SymbolEntry, SymbolIndex } from './symbol-index.js';
-
 const MIME_TYPES: Record<string, string> = {
   '.html': 'text/html',
   '.js': 'application/javascript',

@@ -11,6 +11,7 @@ import { TypeScriptExtractor } from '../../extractors/typescript/index.js';
 import type { TreckConfig } from './config.js';
 import { findSourceFiles, findSourceFilesAsync, getRelativePath } from './source-files.js';
 
+/** Aggregated JSDoc coverage data for a project scan. */
 export interface ProjectScan {
   sourceFiles: string[];
   allSymbols: {
@@ -23,7 +24,51 @@ export interface ProjectScan {
 }
 
 /**
- * Scan the project and return coverage data.
+ * Extract symbol metadata from a single file.
+ *
+ * Returns an empty array if the file cannot be parsed.
+ */
+function extractFileSymbols(
+  extractor: TypeScriptExtractor,
+  file: string,
+): ProjectScan['allSymbols'] {
+  try {
+    const result = extractor.extractSymbols(file);
+    return result.symbols.map((symbol) => ({
+      file,
+      symbol: {
+        name: symbol.name,
+        hasJsDoc: symbol.jsDoc !== undefined,
+        isExported: symbol.isExported ?? false,
+        isTrivial: isTrivialBody(symbol.body),
+      },
+    }));
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Compute coverage statistics from extracted symbols.
+ */
+function buildScanResult(
+  sourceFiles: string[],
+  allSymbols: ProjectScan['allSymbols'],
+): ProjectScan {
+  const nonTrivialExported = (s: (typeof allSymbols)[number]) =>
+    s.symbol.isExported && !s.symbol.isTrivial;
+
+  return {
+    sourceFiles,
+    allSymbols,
+    totalSymbols: allSymbols.length,
+    exportedSymbols: allSymbols.filter(nonTrivialExported).length,
+    withJsDoc: allSymbols.filter((s) => nonTrivialExported(s) && s.symbol.hasJsDoc).length,
+  };
+}
+
+/**
+ * Scan the project synchronously and return JSDoc coverage data.
  */
 export function scanProject(scope: TreckConfig['scope']): ProjectScan {
   const sourceFiles = findSourceFiles(process.cwd(), scope);
@@ -32,96 +77,41 @@ export function scanProject(scope: TreckConfig['scope']): ProjectScan {
   if (sourceFiles.length > 0) {
     const extractor = new TypeScriptExtractor();
     for (const file of sourceFiles) {
-      try {
-        const result = extractor.extractSymbols(file);
-        for (const symbol of result.symbols) {
-          allSymbols.push({
-            file,
-            symbol: {
-              name: symbol.name,
-              hasJsDoc: symbol.jsDoc !== undefined,
-              isExported: symbol.isExported ?? false,
-              isTrivial: isTrivialBody(symbol.body),
-            },
-          });
-        }
-      } catch {
-        // Skip files that can't be parsed
-      }
+      allSymbols.push(...extractFileSymbols(extractor, file));
     }
   }
 
-  const totalSymbols = allSymbols.length;
-  const nonTrivialExported = (s: (typeof allSymbols)[number]) =>
-    s.symbol.isExported && !s.symbol.isTrivial;
-  const exportedSymbols = allSymbols.filter(nonTrivialExported).length;
-  const withJsDoc = allSymbols.filter((s) => nonTrivialExported(s) && s.symbol.hasJsDoc).length;
-
-  return {
-    sourceFiles,
-    allSymbols,
-    totalSymbols,
-    exportedSymbols,
-    withJsDoc,
-  };
+  return buildScanResult(sourceFiles, allSymbols);
 }
 
 /** Yield to the event loop so spinner animations stay smooth during CPU-bound work. */
 const tick = () => new Promise<void>((resolve) => setImmediate(resolve));
 
 /**
- * Async version of scanProject that yields throughout
- * so spinner animations stay smooth.
+ * Scan the project asynchronously, yielding periodically so spinner animations stay smooth.
+ *
+ * @param scope - Include/exclude patterns for source file discovery
+ * @param onProgress - Optional callback invoked with progress messages
  */
 export async function scanProjectAsync(
   scope: TreckConfig['scope'],
   onProgress?: (message: string) => void,
 ): Promise<ProjectScan> {
-  // Phase 1: find source files (async fs, yields naturally at each I/O)
   const sourceFiles = await findSourceFilesAsync(process.cwd(), scope);
-
   const allSymbols: ProjectScan['allSymbols'] = [];
 
   if (sourceFiles.length > 0) {
     onProgress?.(`Analyzing ${sourceFiles.length} source files`);
     await tick();
 
-    // Phase 2: extract symbols, yielding every batch of files
     const extractor = new TypeScriptExtractor();
     for (let i = 0; i < sourceFiles.length; i++) {
-      try {
-        const result = extractor.extractSymbols(sourceFiles[i]);
-        for (const symbol of result.symbols) {
-          allSymbols.push({
-            file: sourceFiles[i],
-            symbol: {
-              name: symbol.name,
-              hasJsDoc: symbol.jsDoc !== undefined,
-              isExported: symbol.isExported ?? false,
-              isTrivial: isTrivialBody(symbol.body),
-            },
-          });
-        }
-      } catch {
-        // Skip files that can't be parsed
-      }
+      allSymbols.push(...extractFileSymbols(extractor, sourceFiles[i]));
       if (i % 10 === 9) await tick();
     }
   }
 
-  const totalSymbols = allSymbols.length;
-  const nonTrivialExported = (s: (typeof allSymbols)[number]) =>
-    s.symbol.isExported && !s.symbol.isTrivial;
-  const exportedSymbols = allSymbols.filter(nonTrivialExported).length;
-  const withJsDoc = allSymbols.filter((s) => nonTrivialExported(s) && s.symbol.hasJsDoc).length;
-
-  return {
-    sourceFiles,
-    allSymbols,
-    totalSymbols,
-    exportedSymbols,
-    withJsDoc,
-  };
+  return buildScanResult(sourceFiles, allSymbols);
 }
 
 /**

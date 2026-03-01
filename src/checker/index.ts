@@ -115,5 +115,3 @@ export class StaleChecker {
     return result;
   }
 }
-
-export * from './types.js';

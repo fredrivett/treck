@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
+/** Parsed treck project configuration from `_treck/config.yaml`. */
 export interface TreckConfig {
   outputDir: string;
   scope: {
