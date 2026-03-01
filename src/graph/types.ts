@@ -22,7 +22,7 @@ export interface GraphNode {
   deprecated?: string | boolean;
   throws?: string[];
   see?: string[];
-  hasJsDoc?: boolean;
+  hasJsDoc: boolean;
   isTrivial?: boolean;
 }
 
