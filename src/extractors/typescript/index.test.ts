@@ -2085,4 +2085,46 @@ export async function fetchData() { return fetch('/api') }
       expect(result.symbols[0].isExported).toBe(true);
     });
   });
+
+  describe('AST cache', () => {
+    it('should return consistent results across cached calls', () => {
+      const code = `
+import { helper } from './helper'
+export function greet(name: string) { return helper(name) }
+`;
+      writeFileSync(TEST_FILE, code);
+
+      const symbols = extractor.extractSymbols(TEST_FILE);
+      const imports = extractor.extractImports(TEST_FILE);
+      const callSites = extractor.extractCallSites(TEST_FILE, 'greet');
+
+      expect(symbols.symbols).toHaveLength(1);
+      expect(symbols.symbols[0].name).toBe('greet');
+      expect(imports).toHaveLength(1);
+      expect(imports[0].name).toBe('helper');
+      expect(callSites).toHaveLength(1);
+      expect(callSites[0].name).toBe('helper');
+    });
+
+    it('should not return stale results after clearCache', () => {
+      const codeV1 = `function foo() { return 1 }`;
+      writeFileSync(TEST_FILE, codeV1);
+
+      const result1 = extractor.extractSymbols(TEST_FILE);
+      expect(result1.symbols).toHaveLength(1);
+      expect(result1.symbols[0].name).toBe('foo');
+
+      // Overwrite the file with different content
+      const codeV2 = `function bar() { return 2 }\nfunction baz() { return 3 }`;
+      writeFileSync(TEST_FILE, codeV2);
+
+      // Without clearing cache, we'd get stale results
+      extractor.clearCache();
+
+      const result2 = extractor.extractSymbols(TEST_FILE);
+      expect(result2.symbols).toHaveLength(2);
+      expect(result2.symbols[0].name).toBe('bar');
+      expect(result2.symbols[1].name).toBe('baz');
+    });
+  });
 });
