@@ -42,17 +42,28 @@ function extractPagePath(filePath: string): string {
   return `/${match[1]}`;
 }
 
+/** Cached route map (route path → file path) for O(1) lookups. */
+let cachedRouteMap: Map<string, string> | null = null;
+let cachedProjectFiles: string[] | null = null;
+
 /**
- * Find a route file among project files for a given API route path.
- * Tries `{prefix}/app/{routePath}/route.{ext}` for common prefixes.
+ * Get or build a map from route paths to file paths.
+ * Cached by reference equality on projectFiles — the graph builder passes
+ * the same array for every connection, so this builds the map once per build.
+ * @param projectFiles - all source file paths in the project
  */
-function findRouteFile(routePath: string, fileSet: Set<string>): string | null {
-  for (const file of fileSet) {
-    if (API_ROUTE_PATTERN.test(file) && extractRoutePath(file) === `/${routePath}`) {
-      return file;
+function getRouteMap(projectFiles: string[]): Map<string, string> {
+  if (cachedProjectFiles === projectFiles && cachedRouteMap) {
+    return cachedRouteMap;
+  }
+  cachedRouteMap = new Map();
+  for (const f of projectFiles) {
+    if (API_ROUTE_PATTERN.test(f)) {
+      cachedRouteMap.set(extractRoutePath(f), f);
     }
   }
-  return null;
+  cachedProjectFiles = projectFiles;
+  return cachedRouteMap;
 }
 
 export const nextjsMatcher: FrameworkMatcher = {
@@ -154,12 +165,8 @@ export const nextjsMatcher: FrameworkMatcher = {
     projectFiles: string[],
     projectFileSet?: Set<string>,
   ): ResolvedConnection | null {
-    const fileSet = projectFileSet ?? new Set(projectFiles);
-
     if (connection.type === 'fetch') {
-      // Match /api/foo/bar to app/api/foo/bar/route.{ts,tsx,js,jsx}
-      const routePath = connection.targetHint.replace(/^\//, '');
-      const routeFile = findRouteFile(routePath, fileSet);
+      const routeFile = getRouteMap(projectFiles).get(connection.targetHint) ?? null;
       if (!routeFile) return null;
       return {
         targetName: connection.httpMethod ?? 'GET',
