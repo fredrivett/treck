@@ -24,7 +24,20 @@ function connectionTypeToEdgeType(type: ConnectionType): EdgeType {
   switch (type) {
     case 'inngest-send':
       return 'event-emit';
-    case 'fetch':
+    case 'inngest-invoke':
+      return 'async-dispatch';
+    case 'task-trigger':
+      return 'async-dispatch';
+    case 'task-trigger-ref':
+      return 'async-dispatch';
+    case 'fetch:GET':
+    case 'fetch:POST':
+    case 'fetch:PUT':
+    case 'fetch:DELETE':
+    case 'fetch:PATCH':
+    case 'fetch:HEAD':
+    case 'fetch:OPTIONS':
+      return 'http-request';
     case 'navigation':
       return 'http-request';
     default:
@@ -331,9 +344,10 @@ export class GraphBuilder {
 
       // For Next.js fetch/navigation, match by route metadata
       const isFetchMatch =
-        connection.type === 'fetch' &&
+        connection.type.startsWith('fetch:') &&
         node.entryType === 'api-route' &&
-        node.metadata?.route === connection.targetHint;
+        node.metadata?.route === connection.targetHint &&
+        node.metadata?.httpMethod === connection.type.split(':')[1];
 
       const isNavigationMatch =
         connection.type === 'navigation' &&

@@ -514,7 +514,7 @@ export function handle(req: any) {
   });
 
   describe('Next.js runtime connection edges', () => {
-    it('should create http-request edge from fetch("/api/...") to API route handler', () => {
+    it('should create http-request edge from fetch with explicit method to matching handler', () => {
       const apiDir = join(TEST_DIR, 'app', 'api', 'analyze');
       mkdirSync(apiDir, { recursive: true });
 
@@ -530,7 +530,7 @@ export function handle(req: any) {
       writeFileSync(
         callerFile,
         `export async function submitAnalysis() {
-  const res = await fetch("/api/analyze")
+  const res = await fetch("/api/analyze", { method: "POST", body: "{}" })
   return res.json()
 }`,
       );
@@ -548,6 +548,41 @@ export function handle(req: any) {
       expect(edge).toBeDefined();
       expect(edge?.type).toBe('http-request');
       expect(edge?.label).toBe('/api/analyze');
+    });
+
+    it('should default bare fetch() to GET', () => {
+      const apiDir = join(TEST_DIR, 'app', 'api', 'status');
+      mkdirSync(apiDir, { recursive: true });
+
+      const routeFile = join(apiDir, 'route.ts');
+      writeFileSync(
+        routeFile,
+        `export async function GET(req: Request) {
+  return Response.json({ status: "ok" })
+}`,
+      );
+
+      const callerFile = join(TEST_DIR, 'health.ts');
+      writeFileSync(
+        callerFile,
+        `export async function checkStatus() {
+  const res = await fetch("/api/status")
+  return res.json()
+}`,
+      );
+
+      const graph = builder.build([routeFile, callerFile]);
+
+      const routeNode = graph.nodes.find((n) => n.name === 'GET');
+      const callerNode = graph.nodes.find((n) => n.name === 'checkStatus');
+      expect(routeNode).toBeDefined();
+      expect(callerNode).toBeDefined();
+
+      const edge = graph.edges.find(
+        (e) => e.source === callerNode?.id && e.target === routeNode?.id,
+      );
+      expect(edge).toBeDefined();
+      expect(edge?.type).toBe('http-request');
     });
 
     it('should create http-request edge from router.push() to page', () => {
@@ -605,41 +640,33 @@ export function handle(req: any) {
       expect(edges).toHaveLength(0);
     });
 
-    it('should resolve fetch to GET handler via fallback when POST is not defined', () => {
-      const apiDir = join(TEST_DIR, 'app', 'api', 'status');
+    it('should not create edge when fetch method does not match any handler', () => {
+      const apiDir = join(TEST_DIR, 'app', 'api', 'items');
       mkdirSync(apiDir, { recursive: true });
 
       const routeFile = join(apiDir, 'route.ts');
       writeFileSync(
         routeFile,
-        `export async function GET(req: Request) {
-  return Response.json({ status: "ok" })
+        `export async function POST(req: Request) {
+  return Response.json({ created: true })
 }`,
       );
 
-      const callerFile = join(TEST_DIR, 'health.ts');
+      // Bare fetch is GET, but route only has POST
+      const callerFile = join(TEST_DIR, 'list.ts');
       writeFileSync(
         callerFile,
-        `export async function checkStatus() {
-  const res = await fetch("/api/status")
+        `export async function listItems() {
+  const res = await fetch("/api/items")
   return res.json()
 }`,
       );
 
       const graph = builder.build([routeFile, callerFile]);
 
-      const routeNode = graph.nodes.find((n) => n.name === 'GET');
-      const callerNode = graph.nodes.find((n) => n.name === 'checkStatus');
-      expect(routeNode).toBeDefined();
-      expect(callerNode).toBeDefined();
-
-      // resolveConnection guesses POST, which doesn't exist — fallback
-      // matches via route metadata and connects to GET handler
-      const edge = graph.edges.find(
-        (e) => e.source === callerNode?.id && e.target === routeNode?.id,
-      );
-      expect(edge).toBeDefined();
-      expect(edge?.type).toBe('http-request');
+      const callerNode = graph.nodes.find((n) => n.name === 'listItems');
+      const edges = graph.edges.filter((e) => e.source === callerNode?.id);
+      expect(edges).toHaveLength(0);
     });
   });
 });

@@ -202,12 +202,21 @@ export const nextjsMatcher: FrameworkMatcher = {
   detectConnections(symbol: SymbolInfo, _filePath: string): RuntimeConnection[] {
     const connections: RuntimeConnection[] = [];
     const fetchPattern = /fetch\s*\(\s*['"`](\/?api\/[^'"`]+)['"`]/g;
+    const methodPattern = /method\s*:\s*['"`](\w+)['"`]/;
     let match: RegExpExecArray | null;
     match = fetchPattern.exec(symbol.body);
     while (match !== null) {
+      const url = match[1].startsWith('/') ? match[1] : `/${match[1]}`;
+
+      // Look ahead from the match position for a method option
+      const lookAhead = symbol.body.substring(match.index, match.index + 300);
+      const methodMatch = methodPattern.exec(lookAhead);
+      const method = methodMatch ? methodMatch[1].toUpperCase() : 'GET';
+      const type = HTTP_METHODS.includes(method) ? `fetch:${method}` : 'fetch:GET';
+
       connections.push({
-        type: 'fetch',
-        targetHint: match[1].startsWith('/') ? match[1] : `/${match[1]}`,
+        type,
+        targetHint: url,
         sourceLocation: [symbol.startLine, symbol.endLine],
       });
       match = fetchPattern.exec(symbol.body);
@@ -231,10 +240,9 @@ export const nextjsMatcher: FrameworkMatcher = {
   /**
    * Resolve a Next.js runtime connection to a concrete graph edge.
    *
-   * For `fetch` connections, matches the URL path to an API route file and
-   * resolves to the GET handler (the most common default for fetch calls).
-   * If the guess is wrong, the graph builder falls through to metadata-based
-   * matching which can find the correct handler.
+   * For `fetch` connections, finds the matching API route file and uses the
+   * detected HTTP method (encoded in type as `fetch:GET`, `fetch:POST`, etc.)
+   * to target the correct handler.
    * For `navigation` connections, matches to a page component.
    */
   resolveConnection(
@@ -244,10 +252,17 @@ export const nextjsMatcher: FrameworkMatcher = {
   ): ResolvedConnection | null {
     const fileSet = projectFileSet ?? new Set(projectFiles);
 
-    if (connection.type === 'fetch') {
+    if (connection.type.startsWith('fetch:')) {
       // Match /api/foo/bar to app/api/foo/bar/route.{ts,tsx,js,jsx}
       const routePath = connection.targetHint.replace(/^\//, '');
-      return resolveRouteFile(routePath, fileSet, 'GET');
+      const method = connection.type.split(':')[1];
+      const routeFile = findRouteFile(routePath, fileSet);
+      if (!routeFile) return null;
+      return {
+        targetSymbol: createStubSymbol(method, routeFile, 'function'),
+        targetFilePath: routeFile,
+        edgeType: 'http-request' as EdgeType,
+      };
     }
 
     if (connection.type === 'navigation') {
