@@ -15,5 +15,8 @@ dist/
 # Test artifacts
 .test-*
 
+# Showcase generation temp files
+.showcase-tmp/
+
 # Internal spec (local only)
 .internal_spec/
