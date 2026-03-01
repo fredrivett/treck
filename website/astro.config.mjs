@@ -1,9 +1,9 @@
-import { defineConfig } from "astro/config";
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-	site: "https://treck.dev",
-	vite: {
-		plugins: [tailwindcss()],
-	},
+  site: 'https://treck.dev',
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

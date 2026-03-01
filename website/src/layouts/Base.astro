@@ -1,12 +1,15 @@
 ---
-import "../styles/global.css";
+import '../styles/global.css';
 
 interface Props {
-	title: string;
-	description?: string;
+  title: string;
+  description?: string;
 }
 
-const { title, description = "Your codebase, visualised. Evergreen maps of every code flow. Always in sync." } = Astro.props;
+const {
+  title,
+  description = 'Your codebase, visualised. Evergreen maps of every code flow. Always in sync.',
+} = Astro.props;
 ---
 
 <!doctype html>
