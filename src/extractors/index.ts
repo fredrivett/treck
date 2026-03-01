@@ -1,7 +1,6 @@
 /**
- * Symbol extraction - exports the main extractor and utilities
+ * Symbol extraction - exports the main extractor classes and types
  */
 
-export { resolveImportPath } from './resolve-import/index.js';
 export type { ExtractionResult, ImportInfo, SymbolInfo } from './types.js';
 export { TypeScriptExtractor } from './typescript/index.js';

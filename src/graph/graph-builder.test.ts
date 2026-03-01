@@ -5,9 +5,9 @@
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { clearTsconfigCache } from '../extractors/resolve-import/index.js';
 import { GraphBuilder } from './graph-builder.js';
 import { nodeToMermaid } from './graph-to-mermaid.js';
+import { clearTsconfigCache } from './resolve-import/index.js';
 
 const TEST_DIR = join(process.cwd(), '.test-graph');
 
