@@ -201,31 +201,20 @@ export const nextjsMatcher: FrameworkMatcher = {
   /** Detect `fetch("/api/...")` and `router.push()` calls as runtime connections. */
   detectConnections(symbol: SymbolInfo, _filePath: string): RuntimeConnection[] {
     const connections: RuntimeConnection[] = [];
-    const fetchPattern = /fetch\s*\(\s*['"`](\/?api\/[^'"`]+)['"`]/g;
-    const methodPattern = /method\s*:\s*['"`](\w+)['"`]/;
+    // Captures the URL (group 1) and optionally the HTTP method from the options
+    // object (group 2). The [^}]*? stops at the first `}`, so this works when
+    // `method` appears before any nested braces — which covers the common patterns.
+    const fetchPattern =
+      /fetch\s*\(\s*['"`](\/?api\/[^'"`]+)['"`]\s*(?:,\s*\{[^}]*?method\s*:\s*['"`](\w+)['"`])?/g;
     let match: RegExpExecArray | null;
     match = fetchPattern.exec(symbol.body);
     while (match !== null) {
       const url = match[1].startsWith('/') ? match[1] : `/${match[1]}`;
-
-      // Check for a method option in the fetch's options argument.
-      // Only look if a comma follows the URL (indicating an options arg exists),
-      // and stop before the next `fetch(` to avoid cross-contamination.
-      let method = 'GET';
-      const afterUrl = symbol.body.substring(match.index + match[0].length);
-      if (afterUrl.trimStart().startsWith(',')) {
-        const nextFetchIdx = afterUrl.indexOf('fetch');
-        const searchWindow =
-          nextFetchIdx > 0 ? afterUrl.substring(0, nextFetchIdx) : afterUrl.substring(0, 200);
-        const methodMatch = methodPattern.exec(searchWindow);
-        if (methodMatch) {
-          method = methodMatch[1].toUpperCase();
-        }
-      }
-      const type = HTTP_METHODS.includes(method) ? `fetch:${method}` : 'fetch:GET';
+      const detected = match[2]?.toUpperCase();
+      const method = detected && HTTP_METHODS.includes(detected) ? detected : 'GET';
 
       connections.push({
-        type,
+        type: `fetch:${method}`,
         targetHint: url,
         sourceLocation: [symbol.startLine, symbol.endLine],
       });
