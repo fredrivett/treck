@@ -1,0 +1,4 @@
+/* Tailwind v4 class-based dark mode — extracted to its own file because
+   biome's CSS parser cannot handle @variant with () syntax yet.
+   See: https://github.com/biomejs/biome/issues/7964 */
+@variant dark (&:where(.dark, .dark *));

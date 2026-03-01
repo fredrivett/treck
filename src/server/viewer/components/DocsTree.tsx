@@ -227,7 +227,7 @@ export function DocsTree({ visibleNames }: DocsTreeProps) {
   if (!index) {
     return (
       <div className="p-4 flex-1 overflow-auto">
-        <div className="text-sm text-gray-400">Loading...</div>
+        <div className="text-sm text-muted-foreground">Loading...</div>
       </div>
     );
   }
@@ -239,7 +239,7 @@ export function DocsTree({ visibleNames }: DocsTreeProps) {
           <button
             type="button"
             onClick={collapseAll}
-            className="flex-1 px-2 py-1 text-[11px] font-medium text-gray-500 bg-white border border-gray-200 rounded cursor-pointer hover:bg-gray-50 hover:text-gray-700 flex items-center justify-center gap-1"
+            className="flex-1 px-2 py-1 text-[11px] font-medium text-muted-foreground bg-background border border-border rounded cursor-pointer hover:bg-muted hover:text-foreground flex items-center justify-center gap-1"
           >
             <ChevronsDownUp size={12} />
             Collapse all
@@ -247,7 +247,7 @@ export function DocsTree({ visibleNames }: DocsTreeProps) {
           <button
             type="button"
             onClick={expandAll}
-            className="flex-1 px-2 py-1 text-[11px] font-medium text-gray-500 bg-white border border-gray-200 rounded cursor-pointer hover:bg-gray-50 hover:text-gray-700 flex items-center justify-center gap-1"
+            className="flex-1 px-2 py-1 text-[11px] font-medium text-muted-foreground bg-background border border-border rounded cursor-pointer hover:bg-muted hover:text-foreground flex items-center justify-center gap-1"
           >
             <ChevronsUpDown size={12} />
             Expand all

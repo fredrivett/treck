@@ -36,10 +36,9 @@ function GraphView({
     return (
       <div className="flex flex-col items-center justify-center h-full font-sans text-red-500 gap-2">
         <div className="font-semibold">Error loading graph</div>
-        <div className="text-gray-500 text-sm">{error}</div>
-        <div className="text-gray-400 text-[13px] mt-2">
-          Make sure you've run <code className="bg-gray-100 px-1.5 rounded">treck graph</code>{' '}
-          first.
+        <div className="text-muted-foreground text-sm">{error}</div>
+        <div className="text-muted-foreground text-[13px] mt-2">
+          Make sure you've run <code className="bg-muted px-1.5 rounded">treck graph</code> first.
         </div>
       </div>
     );
@@ -47,11 +46,11 @@ function GraphView({
 
   if (!loading && (!graph || graph.nodes.length === 0)) {
     return (
-      <div className="flex flex-col items-center justify-center h-full font-sans text-gray-500 gap-2">
+      <div className="flex flex-col items-center justify-center h-full font-sans text-muted-foreground gap-2">
         <div className="font-semibold text-base">No graph data</div>
         <div className="text-sm">
-          Run <code className="bg-gray-100 px-1.5 rounded">treck graph</code> to build the project
-          call graph.
+          Run <code className="bg-muted px-1.5 rounded">treck graph</code> to build the project call
+          graph.
         </div>
       </div>
     );
@@ -60,7 +59,7 @@ function GraphView({
   return (
     <div className="w-full h-full relative">
       {!layoutReady && (
-        <div className="absolute inset-0 z-20 bg-white">
+        <div className="absolute inset-0 z-20 bg-background">
           <LoadingSpinner />
         </div>
       )}
@@ -227,7 +226,7 @@ function Layout() {
           onToggleConditionals={() => setParam('conditionals', showConditionals ? null : 'true')}
           hasConditionalEdges={hasConditionalEdges}
         />
-        <div className="border-t border-gray-200" />
+        <div className="border-t border-border" />
         <DocsTree visibleNames={visibleNames} />
       </Sidebar>
       <main className="flex-1 relative overflow-hidden">

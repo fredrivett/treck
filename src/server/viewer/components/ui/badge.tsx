@@ -44,11 +44,11 @@ const variantClasses: Record<BadgeVariant, string> = {
   inngest: 'bg-pink-500 text-white',
   trigger: 'bg-pink-500 text-white',
   // Soft mid-tier badges
-  component: 'bg-orange-100 text-orange-700',
-  hook: 'bg-lime-100 text-lime-700',
-  async: 'bg-gray-100 text-gray-500',
-  'no-jsdoc': 'bg-amber-100 text-amber-600',
-  default: 'bg-gray-100 text-gray-600',
+  component: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300',
+  hook: 'bg-lime-100 text-lime-700 dark:bg-lime-900/30 dark:text-lime-300',
+  async: 'bg-muted text-muted-foreground',
+  'no-jsdoc': 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-300',
+  default: 'bg-muted text-muted-foreground',
 };
 
 /** Default display labels for each badge variant. */

@@ -1,7 +1,7 @@
 /** Subtle info card shown for trivial symbols where JSDoc isn't required. */
 export function TrivialSymbolInfo() {
   return (
-    <div className="rounded border border-blue-100 bg-blue-50/50 px-4 py-2.5 text-sm text-blue-700 my-3">
+    <div className="rounded border border-blue-100 bg-blue-50/50 px-4 py-2.5 text-sm text-blue-700 my-3 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-300">
       JSDoc not required — this is a trivial symbol with no logic.
     </div>
   );
@@ -10,17 +10,19 @@ export function TrivialSymbolInfo() {
 /** Banner shown when a symbol is missing its JSDoc comment, with a collapsible agent prompt. */
 export function MissingJsDocBanner() {
   return (
-    <div className="rounded border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 my-3">
+    <div className="rounded border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 my-3 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-200">
       <div className="font-semibold mb-1">No JSDoc comment found</div>
-      <p className="mb-2 text-amber-700">
+      <p className="mb-2 text-amber-700 dark:text-amber-300">
         Generate JSDoc comments automatically by running:{' '}
-        <code className="rounded bg-amber-100 px-1.5 py-0.5 text-xs">treck jsdoc --prompt</code>
+        <code className="rounded bg-amber-100 dark:bg-amber-900/50 px-1.5 py-0.5 text-xs">
+          treck jsdoc --prompt
+        </code>
       </p>
-      <details className="text-xs text-amber-700">
-        <summary className="cursor-pointer hover:text-amber-900 font-medium">
+      <details className="text-xs text-amber-700 dark:text-amber-300">
+        <summary className="cursor-pointer hover:text-amber-900 dark:hover:text-amber-100 font-medium">
           View agent prompt
         </summary>
-        <pre className="mt-2 whitespace-pre-wrap rounded bg-amber-100/50 p-3 text-[11px] leading-relaxed overflow-x-auto max-h-[400px] overflow-y-auto">
+        <pre className="mt-2 whitespace-pre-wrap rounded bg-amber-100/50 dark:bg-amber-900/30 p-3 text-[11px] leading-relaxed overflow-x-auto max-h-[400px] overflow-y-auto">
           {JSDOC_AGENT_PROMPT}
         </pre>
       </details>

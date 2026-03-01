@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./dark-variant.css";
 @plugin "@tailwindcss/typography";
 
 @theme inline {
@@ -27,6 +28,25 @@
   --secondary: oklch(96.7% 0.003 264.54);
   --secondary-foreground: oklch(21% 0.034 264.66);
   --radius: 0.625rem;
+  --graph-bg-dot: #d1d5db;
+  --graph-edge-label: #6b7280;
+  --graph-minimap-border: #e5e7eb;
+  --graph-minimap-mask: rgba(0, 0, 0, 0.05);
+}
+
+.dark {
+  --background: oklch(14.5% 0.015 285.82);
+  --foreground: oklch(92% 0.004 264.54);
+  --muted: oklch(22% 0.012 264.54);
+  --muted-foreground: oklch(60% 0.02 264.36);
+  --border: oklch(28% 0.01 264.53);
+  --ring: oklch(45% 0.02 261.33);
+  --secondary: oklch(22% 0.012 264.54);
+  --secondary-foreground: oklch(90% 0.006 264.54);
+  --graph-bg-dot: #374151;
+  --graph-edge-label: #9ca3af;
+  --graph-minimap-border: #374151;
+  --graph-minimap-mask: rgba(255, 255, 255, 0.08);
 }
 
 /* ---- Docs tree sidebar guides ---- */
@@ -100,7 +120,7 @@
 }
 
 .tree-dir-label:hover {
-  background: oklch(93% 0.003 264.54);
+  background: var(--muted);
 }
 
 .tree-dir-label .chevron {
@@ -142,11 +162,11 @@
 }
 
 a.tree-item:hover {
-  background: oklch(93% 0.003 264.54);
+  background: var(--muted);
 }
 
 a.tree-item.active {
-  background: oklch(90% 0.006 264.53);
+  background: var(--border);
   font-weight: 500;
 }
 
@@ -178,7 +198,7 @@ a.tree-item.active {
 }
 
 .doc-view .dep-graph {
-  background: oklch(98% 0.003 264.54);
+  background: var(--muted);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 20px;
@@ -255,13 +275,13 @@ a.tree-item.active {
 .doc-view #doc-content code {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
   font-size: 0.9em;
-  background: oklch(96% 0.003 264.54);
+  background: var(--muted);
   padding: 2px 6px;
   border-radius: 4px;
 }
 
 .doc-view #doc-content pre {
-  background: oklch(96% 0.003 264.54);
+  background: var(--muted);
   border-radius: 8px;
   padding: 16px;
   overflow-x: auto;
@@ -287,11 +307,11 @@ a.tree-item.active {
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
-  background: oklch(98% 0.003 264.54);
+  background: var(--muted);
 }
 
 .doc-view #doc-content details summary:hover {
-  background: oklch(93% 0.003 264.54);
+  background: var(--border);
 }
 
 .doc-view #doc-content details[open] summary {

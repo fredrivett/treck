@@ -54,9 +54,9 @@ const edgeRoutingOptions = [
 ];
 
 const selectClasses =
-  'w-full px-1.5 py-1 border border-gray-200 rounded text-xs bg-white text-gray-800';
+  'w-full px-1.5 py-1 border border-border rounded text-xs bg-background text-foreground';
 
-const labelClasses = 'text-[11px] font-medium text-gray-500 mb-0.5';
+const labelClasses = 'text-[11px] font-medium text-muted-foreground mb-0.5';
 
 interface LayoutSettingsProps {
   options: LayoutOptions;
@@ -77,15 +77,15 @@ export function LayoutSettings({ options, onChange }: LayoutSettingsProps) {
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className={`border border-gray-200 rounded-lg px-3 py-1.5 text-xs font-semibold cursor-pointer shadow-sm ${
-          open ? 'bg-gray-800 text-white' : 'bg-white text-gray-700'
+        className={`border border-border rounded-lg px-3 py-1.5 text-xs font-semibold cursor-pointer shadow-sm ${
+          open ? 'bg-foreground text-background' : 'bg-background text-foreground'
         }`}
       >
         Layout
       </button>
 
       {open && (
-        <div className="mt-2 bg-white rounded-xl p-3.5 shadow-lg border border-gray-200 w-[220px] flex flex-col gap-2.5">
+        <div className="mt-2 bg-background rounded-xl p-3.5 shadow-lg border border-border w-[220px] flex flex-col gap-2.5">
           <div>
             <div className={labelClasses}>Algorithm</div>
             <select
@@ -132,7 +132,7 @@ export function LayoutSettings({ options, onChange }: LayoutSettingsProps) {
               }
               className="w-full"
             />
-            <div className="text-[10px] text-gray-400 text-right">
+            <div className="text-[10px] text-muted-foreground text-right">
               {options['elk.spacing.nodeNode']}px
             </div>
           </div>
@@ -149,7 +149,7 @@ export function LayoutSettings({ options, onChange }: LayoutSettingsProps) {
               }
               className="w-full"
             />
-            <div className="text-[10px] text-gray-400 text-right">
+            <div className="text-[10px] text-muted-foreground text-right">
               {options['elk.layered.spacing.nodeNodeBetweenLayers']}px
             </div>
           </div>
@@ -212,7 +212,7 @@ export function LayoutSettings({ options, onChange }: LayoutSettingsProps) {
           <button
             type="button"
             onClick={() => onChange({ ...defaultLayoutOptions })}
-            className="px-2 py-1 border border-gray-200 rounded bg-gray-50 text-[11px] text-gray-500 cursor-pointer mt-0.5"
+            className="px-2 py-1 border border-border rounded bg-muted text-[11px] text-muted-foreground cursor-pointer mt-0.5"
           >
             Reset defaults
           </button>

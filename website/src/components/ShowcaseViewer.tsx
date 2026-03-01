@@ -106,11 +106,11 @@ function ShowcaseViewerInner({ graph, projectName }: ShowcaseViewerProps) {
   );
 
   return (
-    <div className="flex h-full font-sans">
+    <div className="dark flex h-full font-sans">
       <Sidebar>
-        <div className="p-4 border-b border-gray-200">
-          <h2 className="text-sm font-semibold text-gray-800">{projectName}</h2>
-          <p className="text-[11px] text-gray-500 mt-0.5">
+        <div className="p-4 border-b border-border">
+          <h2 className="text-sm font-semibold text-foreground">{projectName}</h2>
+          <p className="text-[11px] text-muted-foreground mt-0.5">
             Analysed with <span className="font-medium">treck</span>
           </p>
         </div>
@@ -133,7 +133,7 @@ function ShowcaseViewerInner({ graph, projectName }: ShowcaseViewerProps) {
       <main className="flex-1 relative overflow-hidden">
         <div className="w-full h-full relative">
           {!layoutReady && (
-            <div className="absolute inset-0 z-20 bg-white">
+            <div className="absolute inset-0 z-20 bg-background">
               <LoadingSpinner />
             </div>
           )}
@@ -143,6 +143,7 @@ function ShowcaseViewerInner({ graph, projectName }: ShowcaseViewerProps) {
             searchQuery={searchQuery}
             enabledTypes={enabledTypes}
             showConditionals={showConditionals}
+            darkMode
           />
         </div>
       </main>
