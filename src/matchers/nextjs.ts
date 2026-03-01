@@ -11,6 +11,7 @@
 import { readFileSync } from 'node:fs';
 import type { SymbolInfo } from '../extractors/types.js';
 import { TypeScriptExtractor } from '../extractors/typescript/index.js';
+import type { EdgeType } from '../graph/types.js';
 import type {
   EntryPointMatch,
   FrameworkMatcher,
@@ -71,6 +72,24 @@ function findPageFile(pagePath: string, fileSet: Set<string>): string | null {
     }
   }
   return null;
+}
+
+/**
+ * Create a stub SymbolInfo used as a reference pointer for connection resolution.
+ * Only the `name` field is meaningful — the graph builder uses it to look up the
+ * real node in its nodeMap.
+ */
+function createStubSymbol(name: string, filePath: string, kind: SymbolInfo['kind']): SymbolInfo {
+  return {
+    name,
+    kind,
+    filePath,
+    params: '',
+    body: '',
+    fullText: '',
+    startLine: 0,
+    endLine: 0,
+  };
 }
 
 /** Shared extractor instance for resolving connections. */
@@ -135,8 +154,9 @@ export const nextjsMatcher: FrameworkMatcher = {
       };
     }
 
-    // Page components (default export)
-    if (PAGE_PATTERN.test(filePath) && symbol.name === 'default') {
+    // Page components (default export — check fullText since the extractor
+    // uses the actual function name, not "default", for named default exports)
+    if (PAGE_PATTERN.test(filePath) && symbol.fullText.trimStart().startsWith('export default')) {
       return {
         entryType: 'page',
         metadata: {
@@ -213,6 +233,8 @@ export const nextjsMatcher: FrameworkMatcher = {
    *
    * For `fetch` connections, matches the URL path to an API route file and
    * resolves to the GET handler (the most common default for fetch calls).
+   * If the guess is wrong, the graph builder falls through to metadata-based
+   * matching which can find the correct handler.
    * For `navigation` connections, matches to a page component.
    */
   resolveConnection(

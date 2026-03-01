@@ -179,6 +179,9 @@ export class GraphBuilder {
                   label: connection.targetHint,
                   isAsync: true,
                 });
+              } else {
+                // Resolved target not in graph — fall through to metadata matching
+                this.addUnresolvedConnectionEdge(sourceId, connection, edges, nodeMap);
               }
             } else {
               // Even if the matcher can't resolve, record the connection
@@ -326,7 +329,25 @@ export class GraphBuilder {
         (node.entryType === 'trigger-task' || node.entryType === 'trigger-scheduled-task') &&
         node.name === connection.targetHint;
 
-      if (isEventMatch || isTaskMatch || isInvokeMatch || isTaskRefMatch) {
+      // For Next.js fetch/navigation, match by route metadata
+      const isFetchMatch =
+        connection.type === 'fetch' &&
+        node.entryType === 'api-route' &&
+        node.metadata?.route === connection.targetHint;
+
+      const isNavigationMatch =
+        connection.type === 'navigation' &&
+        node.entryType === 'page' &&
+        node.metadata?.route === connection.targetHint;
+
+      if (
+        isEventMatch ||
+        isTaskMatch ||
+        isInvokeMatch ||
+        isTaskRefMatch ||
+        isFetchMatch ||
+        isNavigationMatch
+      ) {
         edges.push({
           id: `${sourceId}->${nodeId}`,
           source: sourceId,
