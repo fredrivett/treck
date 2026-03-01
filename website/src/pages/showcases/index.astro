@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import { showcases } from '../../showcases';
+---
+
+<Base title="Showcases — Treck" description="See treck in action on popular TypeScript projects.">
+	<div class="min-h-screen flex flex-col">
+		<nav class="flex items-center justify-between px-6 py-4 max-w-5xl mx-auto w-full">
+			<a href="/" class="font-mono text-lg font-medium tracking-tight text-zinc-100">treck</a>
+			<div class="flex items-center gap-6 text-sm font-mono text-zinc-500">
+				<a href="/showcases" class="text-zinc-300">Showcases</a>
+				<a href="https://github.com/fredrivett/treck" class="hover:text-zinc-300 transition-colors">GitHub</a>
+			</div>
+		</nav>
+
+		<main class="flex-1 px-6 pt-12 sm:pt-16 max-w-3xl mx-auto w-full">
+			<h1 class="font-mono text-3xl font-bold tracking-tight mb-3">Showcases</h1>
+			<p class="text-zinc-500 text-sm mb-10 max-w-lg">
+				See how treck maps real-world TypeScript projects. Click a project to explore its interactive flow graph.
+			</p>
+
+			<div class="grid gap-px bg-zinc-800">
+				{showcases.map((project) => (
+					<a
+						href={`/showcases/${project.slug}`}
+						class="block bg-zinc-950 p-6 hover:bg-zinc-900/50 transition-colors group"
+					>
+						<div class="flex items-start justify-between">
+							<div>
+								<h2 class="font-mono font-medium text-base text-zinc-200 group-hover:text-white transition-colors">
+									{project.name}
+								</h2>
+								<p class="text-sm text-zinc-500 mt-1">{project.description}</p>
+							</div>
+							<span class="font-mono text-xs text-zinc-600 group-hover:text-zinc-400 transition-colors mt-1">
+								&rarr;
+							</span>
+						</div>
+					</a>
+				))}
+			</div>
+		</main>
+
+		<footer class="py-8 text-center text-xs font-mono text-zinc-700">
+			<p>MIT License &middot; Built by <a href="https://github.com/fredrivett" class="text-zinc-500 hover:text-zinc-300 transition-colors">@fredrivett</a></p>
+		</footer>
+	</div>
+</Base>
