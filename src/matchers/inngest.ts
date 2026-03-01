@@ -3,7 +3,8 @@
  *
  * Detects:
  * - Inngest function definitions (inngest.createFunction)
- * - Event dispatches (inngest.send)
+ * - Event dispatches (inngest.send, step.sendEvent)
+ * - Function invocations (step.invoke)
  */
 
 import type { SymbolInfo } from '../extractors/types.js';
@@ -54,11 +55,13 @@ export const inngestMatcher: FrameworkMatcher = {
     return null;
   },
 
-  /** Detect `inngest.send()` and `step.invoke()` calls as runtime connections. */
+  /** Detect `inngest.send()`, `step.sendEvent()`, and `step.invoke()` calls as runtime connections. */
   detectConnections(symbol: SymbolInfo, _filePath: string): RuntimeConnection[] {
     const connections: RuntimeConnection[] = [];
-    const sendPattern = /\.send\s*\(\s*\{[^}]*name\s*:\s*['"`]([^'"`]+)['"`]/g;
     let match: RegExpExecArray | null;
+
+    // Detect inngest.send({ name: "event" }) — supports optional array wrapper
+    const sendPattern = /\.send\s*\(\s*\[?\s*\{[^}]*name\s*:\s*['"`]([^'"`]+)['"`]/g;
     match = sendPattern.exec(symbol.body);
     while (match !== null) {
       connections.push({
@@ -69,8 +72,22 @@ export const inngestMatcher: FrameworkMatcher = {
       match = sendPattern.exec(symbol.body);
     }
 
-    // Detect step.invoke({ function: ref }) patterns
-    const invokePattern = /step\.invoke\s*\(\s*\{[^}]*function\s*:\s*(\w+)/g;
+    // Detect step.sendEvent("step-name", { name: "event" }) — supports optional array wrapper
+    const stepSendPattern =
+      /step\.sendEvent\s*\(\s*['"`][^'"`]*['"`]\s*,\s*\[?\s*\{[^}]*name\s*:\s*['"`]([^'"`]+)['"`]/g;
+    match = stepSendPattern.exec(symbol.body);
+    while (match !== null) {
+      connections.push({
+        type: 'inngest-send',
+        targetHint: match[1],
+        sourceLocation: [symbol.startLine, symbol.endLine],
+      });
+      match = stepSendPattern.exec(symbol.body);
+    }
+
+    // Detect step.invoke() — both old API and new API with step name
+    const invokePattern =
+      /step\.invoke\s*\(\s*(?:['"`][^'"`]*['"`]\s*,\s*)?\{[^}]*function\s*:\s*(\w+)/g;
     match = invokePattern.exec(symbol.body);
     while (match !== null) {
       connections.push({

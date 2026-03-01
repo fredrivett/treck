@@ -302,15 +302,25 @@ export class GraphBuilder {
     // Try to find a target node by matching the targetHint against
     // known node metadata (e.g., matching an event name to an inngest function)
     for (const [nodeId, node] of nodeMap) {
-      if (!node.metadata) continue;
+      // For invoke connections, match by variable name against inngest function nodes
+      const isInvokeMatch =
+        connection.type === 'inngest-invoke' &&
+        node.entryType === 'inngest-function' &&
+        node.name === connection.targetHint;
 
-      const isEventMatch =
-        connection.type === 'inngest-send' && node.metadata.eventTrigger === connection.targetHint;
+      // For event/task connections, match by metadata
+      let isEventMatch = false;
+      let isTaskMatch = false;
+      if (node.metadata) {
+        isEventMatch =
+          connection.type === 'inngest-send' &&
+          node.metadata.eventTrigger === connection.targetHint;
 
-      const isTaskMatch =
-        connection.type === 'task-trigger' && node.metadata.taskId === connection.targetHint;
+        isTaskMatch =
+          connection.type === 'task-trigger' && node.metadata.taskId === connection.targetHint;
+      }
 
-      if (isEventMatch || isTaskMatch) {
+      if (isEventMatch || isTaskMatch || isInvokeMatch) {
         edges.push({
           id: `${sourceId}->${nodeId}`,
           source: sourceId,
