@@ -12,6 +12,7 @@
   "dependencies": {
     "@fontsource/geist-mono": "^5.2.7",
     "@fontsource/geist-sans": "^5.2.5",
+    "@lucide/astro": "^0.575.0",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.7.0",
     "tailwindcss": "^4.1.18"
