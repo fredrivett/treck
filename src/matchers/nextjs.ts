@@ -199,9 +199,10 @@ export const nextjsMatcher: FrameworkMatcher = {
       const method = detected && HTTP_METHODS.includes(detected) ? detected : 'GET';
 
       connections.push({
-        type: `fetch:${method}`,
+        type: 'fetch',
         targetHint: url,
         sourceLocation: [symbol.startLine, symbol.endLine],
+        httpMethod: method,
       });
       match = fetchPattern.exec(symbol.body);
     }
@@ -224,9 +225,8 @@ export const nextjsMatcher: FrameworkMatcher = {
   /**
    * Resolve a Next.js runtime connection to a concrete graph edge.
    *
-   * For `fetch` connections, finds the matching API route file and uses the
-   * detected HTTP method (encoded in type as `fetch:GET`, `fetch:POST`, etc.)
-   * to target the correct handler.
+   * For `fetch` connections, finds the matching API route file and targets
+   * the handler matching the HTTP method.
    * For `navigation` connections, matches to a page component.
    */
   resolveConnection(
@@ -236,14 +236,13 @@ export const nextjsMatcher: FrameworkMatcher = {
   ): ResolvedConnection | null {
     const fileSet = projectFileSet ?? new Set(projectFiles);
 
-    if (connection.type.startsWith('fetch:')) {
+    if (connection.type === 'fetch') {
       // Match /api/foo/bar to app/api/foo/bar/route.{ts,tsx,js,jsx}
       const routePath = connection.targetHint.replace(/^\//, '');
-      const method = connection.type.split(':')[1];
       const routeFile = findRouteFile(routePath, fileSet);
       if (!routeFile) return null;
       return {
-        targetSymbol: createStubSymbol(method, routeFile, 'function'),
+        targetSymbol: createStubSymbol(connection.httpMethod ?? 'GET', routeFile, 'function'),
         targetFilePath: routeFile,
         edgeType: 'http-request' as EdgeType,
       };

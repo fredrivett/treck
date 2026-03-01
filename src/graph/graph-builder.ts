@@ -30,13 +30,7 @@ function connectionTypeToEdgeType(type: ConnectionType): EdgeType {
       return 'async-dispatch';
     case 'task-trigger-ref':
       return 'async-dispatch';
-    case 'fetch:GET':
-    case 'fetch:POST':
-    case 'fetch:PUT':
-    case 'fetch:DELETE':
-    case 'fetch:PATCH':
-    case 'fetch:HEAD':
-    case 'fetch:OPTIONS':
+    case 'fetch':
       return 'http-request';
     case 'navigation':
       return 'http-request';
@@ -344,10 +338,10 @@ export class GraphBuilder {
 
       // For Next.js fetch/navigation, match by route metadata
       const isFetchMatch =
-        connection.type.startsWith('fetch:') &&
+        connection.type === 'fetch' &&
         node.entryType === 'api-route' &&
         node.metadata?.route === connection.targetHint &&
-        node.metadata?.httpMethod === connection.type.split(':')[1];
+        node.metadata?.httpMethod === connection.httpMethod;
 
       const isNavigationMatch =
         connection.type === 'navigation' &&

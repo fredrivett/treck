@@ -33,6 +33,8 @@ export interface RuntimeConnection {
   type: ConnectionType;
   targetHint: string; // "image/analyze", "process-image", "/api/foo"
   sourceLocation: [number, number]; // line range in source
+  /** HTTP method for fetch connections (e.g. "GET", "POST"). */
+  httpMethod?: string;
 }
 
 /**
