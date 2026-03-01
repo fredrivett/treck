@@ -125,7 +125,7 @@ export function DocsViewer() {
 
   if (!docPath) {
     return (
-      <div className="flex flex-col items-center justify-center h-full font-sans text-gray-500 gap-2">
+      <div className="flex flex-col items-center justify-center h-full font-sans text-muted-foreground gap-2">
         <div className="font-semibold text-base">treck viewer</div>
         <div className="text-sm">Select a symbol from the sidebar to view its documentation.</div>
       </div>
@@ -135,18 +135,17 @@ export function DocsViewer() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="text-sm text-gray-400">Loading...</div>
+        <div className="text-sm text-muted-foreground">Loading...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center h-full font-sans text-gray-500 gap-2">
+      <div className="flex flex-col items-center justify-center h-full font-sans text-muted-foreground gap-2">
         <div className="font-semibold text-base">Document not found</div>
         <div className="text-sm">
-          Run <code className="bg-gray-100 px-1.5 rounded">treck sync</code> to generate
-          documentation.
+          Run <code className="bg-muted px-1.5 rounded">treck sync</code> to generate documentation.
         </div>
       </div>
     );
@@ -243,7 +242,7 @@ export function DocsViewer() {
           </div>
         )}
         {doc.deprecated && (
-          <div className="rounded border border-yellow-200 bg-yellow-50 px-3 py-2 text-sm text-yellow-800 my-3">
+          <div className="rounded border border-yellow-200 bg-yellow-50 px-3 py-2 text-sm text-yellow-800 my-3 dark:border-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-300">
             <strong>Deprecated</strong>
             {typeof doc.deprecated === 'string' && `: ${doc.deprecated}`}
           </div>

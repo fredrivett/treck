@@ -110,7 +110,7 @@ function toReactFlowEdges(graphEdges: FlowGraphData['edges'], showConditionals: 
       animated: effectiveType === 'async-dispatch' || effectiveType === 'event-emit',
       label,
       style,
-      labelStyle: { fontSize: 10, fill: '#6b7280' },
+      labelStyle: { fontSize: 10, fill: 'var(--graph-edge-label)' },
     };
   });
 }
@@ -158,6 +158,8 @@ interface FlowGraphProps {
   searchQuery: string;
   enabledTypes: Set<NodeCategory> | null;
   showConditionals: boolean;
+  /** When true, ReactFlow renders with its built-in dark colour scheme. */
+  darkMode?: boolean;
 }
 
 function FlowGraphInner({
@@ -166,6 +168,7 @@ function FlowGraphInner({
   searchQuery,
   enabledTypes,
   showConditionals,
+  darkMode,
 }: FlowGraphProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -432,7 +435,7 @@ function FlowGraphInner({
     <div className="w-full h-full relative">
       <LayoutSettings options={layoutOptions} onChange={setLayoutOptions} />
       {(selectedEntries.size > 0 || focusedEntries.size > 0) && (
-        <div className="absolute top-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-white/90 backdrop-blur border border-gray-200 rounded-full px-3 py-1.5 shadow-sm text-xs text-gray-600">
+        <div className="absolute top-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-background/90 backdrop-blur border border-border rounded-full px-3 py-1.5 shadow-sm text-xs text-muted-foreground">
           <span>{selectedEntries.size} selected</span>
           {(selectedEntries.size !== focusedEntries.size ||
             [...selectedEntries].some((id) => !focusedEntries.has(id))) && (
@@ -447,7 +450,7 @@ function FlowGraphInner({
           <button
             type="button"
             onClick={clearSelection}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-muted-foreground hover:text-foreground"
           >
             Clear
           </button>
@@ -460,6 +463,7 @@ function FlowGraphInner({
         onEdgesChange={onEdgesChange}
         onNodeClick={onNodeClick}
         nodeTypes={nodeTypes}
+        colorMode={darkMode ? 'dark' : 'light'}
         fitView
         minZoom={0.1}
         maxZoom={2}
@@ -469,12 +473,17 @@ function FlowGraphInner({
           type: 'smoothstep',
         }}
       >
-        <Background variant={BackgroundVariant.Dots} color="#d1d5db" gap={GRID_SIZE} size={1} />
+        <Background
+          variant={BackgroundVariant.Dots}
+          color="var(--graph-bg-dot)"
+          gap={GRID_SIZE}
+          size={1}
+        />
         <Controls position="bottom-right" />
         <MiniMap
           position="bottom-right"
-          style={{ border: '1px solid #e5e7eb', borderRadius: 8 }}
-          maskColor="rgba(0,0,0,0.05)"
+          style={{ border: '1px solid var(--graph-minimap-border)', borderRadius: 8 }}
+          maskColor="var(--graph-minimap-mask)"
         />
       </ReactFlow>
       <DocPanel node={null} onClose={() => {}} />
@@ -489,6 +498,7 @@ export function FlowGraph({
   searchQuery,
   enabledTypes,
   showConditionals,
+  darkMode,
 }: FlowGraphProps) {
   return (
     <ReactFlowProvider>
@@ -498,6 +508,7 @@ export function FlowGraph({
         searchQuery={searchQuery}
         enabledTypes={enabledTypes}
         showConditionals={showConditionals}
+        darkMode={darkMode}
       />
     </ReactFlowProvider>
   );

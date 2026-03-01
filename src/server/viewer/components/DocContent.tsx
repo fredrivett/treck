@@ -99,7 +99,7 @@ export function DocContent({
 
   return (
     <div className="space-y-3">
-      <div className="text-xs text-gray-400">
+      <div className="text-xs text-muted-foreground">
         {sourcePath}
         {lineRange && `:${lineRange}`}
         {generated && ` \u00b7 ${new Date(generated).toLocaleDateString()}`}
@@ -114,14 +114,14 @@ export function DocContent({
         </div>
       )}
       {deprecated && (
-        <div className="rounded border border-yellow-200 bg-yellow-50 px-3 py-2 text-sm text-yellow-800">
+        <div className="rounded border border-yellow-200 bg-yellow-50 px-3 py-2 text-sm text-yellow-800 dark:border-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-300">
           <strong>Deprecated</strong>
           {typeof deprecated === 'string' && `: ${deprecated}`}
         </div>
       )}
       {hasJsDoc === false && exported && <MissingJsDocBanner />}
       <div
-        className="prose prose-sm max-w-none prose-headings:text-gray-900 prose-p:text-gray-600 prose-a:text-blue-600 prose-code:rounded prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-pre:bg-gray-50 prose-pre:text-sm prose-td:text-sm prose-th:text-sm"
+        className="prose prose-sm max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-code:rounded prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-pre:bg-muted prose-pre:text-sm prose-td:text-sm prose-th:text-sm prose-td:text-muted-foreground prose-th:text-foreground prose-strong:text-foreground prose-li:text-muted-foreground"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: rendered from markdown via marked
         dangerouslySetInnerHTML={{ __html: html }}
       />

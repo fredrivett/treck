@@ -40,24 +40,24 @@ export function FlowControls({
         placeholder="Search nodes..."
         value={searchQuery}
         onChange={(e: ChangeEvent<HTMLInputElement>) => onSearch(e.target.value)}
-        className="w-full px-2.5 py-2 border border-gray-200 rounded-md text-[13px] outline-none mb-3"
+        className="w-full px-2.5 py-2 border border-border rounded-md text-[13px] outline-none mb-3 bg-background text-foreground"
       />
 
       {!loading && (
-        <div className="text-[11px] text-gray-500 mb-3">
+        <div className="text-[11px] text-muted-foreground mb-3">
           {nodeCount} nodes, {edgeCount} edges
         </div>
       )}
 
       {!loading && availableTypes.size > 0 && (
         <div className="mb-3">
-          <div className="text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
+          <div className="text-xs font-semibold text-foreground mb-1.5 flex items-center gap-1.5">
             <span>Node Types</span>
             {enabledTypes && (
               <button
                 type="button"
                 onClick={onResetTypes}
-                className="bg-transparent border-none p-0 text-[11px] text-gray-400 cursor-pointer font-normal"
+                className="bg-transparent border-none p-0 text-[11px] text-muted-foreground cursor-pointer font-normal"
               >
                 reset
               </button>
@@ -69,7 +69,7 @@ export function FlowControls({
               return (
                 <div
                   key={category}
-                  className="group flex items-center gap-1.5 text-xs text-gray-700"
+                  className="group flex items-center gap-1.5 text-xs text-foreground"
                 >
                   <label className="flex items-center gap-1.5 cursor-pointer flex-1 min-w-0">
                     <input
@@ -79,12 +79,12 @@ export function FlowControls({
                       className="m-0 shrink-0"
                     />
                     <span>{getCategoryLabel(category)}</span>
-                    <span className="text-gray-400 text-[11px]">({count})</span>
+                    <span className="text-muted-foreground text-[11px]">({count})</span>
                   </label>
                   <button
                     type="button"
                     onClick={() => onSoloType(category)}
-                    className="bg-transparent border-none px-0.5 py-0 text-[11px] text-gray-400 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-100"
+                    className="bg-transparent border-none px-0.5 py-0 text-[11px] text-muted-foreground cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-100"
                   >
                     only
                   </button>
@@ -97,7 +97,7 @@ export function FlowControls({
 
       {!loading && hasConditionalEdges && (
         <div className="mb-3">
-          <label className="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+          <label className="flex items-center gap-1.5 text-xs text-foreground cursor-pointer">
             <input
               type="checkbox"
               checked={showConditionals}

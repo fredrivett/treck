@@ -30,37 +30,37 @@ const entryTypeConfig: Record<
 > = {
   'api-route': {
     border: 'border-blue-500',
-    bg: 'bg-blue-50',
+    bg: 'bg-blue-50 dark:bg-blue-950',
     ring: 'ring-blue-500/25',
     handle: '#3b82f6',
   },
   page: {
     border: 'border-violet-500',
-    bg: 'bg-violet-50',
+    bg: 'bg-violet-50 dark:bg-violet-950',
     ring: 'ring-violet-500/25',
     handle: '#8b5cf6',
   },
   'inngest-function': {
     border: 'border-pink-500',
-    bg: 'bg-pink-50',
+    bg: 'bg-pink-50 dark:bg-pink-950',
     ring: 'ring-pink-500/25',
     handle: '#ec4899',
   },
   'trigger-task': {
     border: 'border-pink-500',
-    bg: 'bg-pink-50',
+    bg: 'bg-pink-50 dark:bg-pink-950',
     ring: 'ring-pink-500/25',
     handle: '#ec4899',
   },
   middleware: {
     border: 'border-cyan-500',
-    bg: 'bg-cyan-50',
+    bg: 'bg-cyan-50 dark:bg-cyan-950',
     ring: 'ring-cyan-500/25',
     handle: '#06b6d4',
   },
   'server-action': {
     border: 'border-emerald-500',
-    bg: 'bg-emerald-50',
+    bg: 'bg-emerald-50 dark:bg-emerald-950',
     ring: 'ring-emerald-500/25',
     handle: '#10b981',
   },
@@ -82,7 +82,7 @@ const entryTypeImpl: Record<string, { label: string; variant: BadgeVariant }> = 
 
 const defaultConfig = {
   border: 'border-gray-400',
-  bg: 'bg-gray-50',
+  bg: 'bg-gray-50 dark:bg-gray-900',
   ring: 'ring-gray-400/25',
   handle: '#6b7280',
 };
@@ -117,11 +117,13 @@ function EntryPointNode({ data }: NodeProps) {
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
-      <div className="font-semibold text-[13px] text-gray-800">{d.label}</div>
+      <div className="font-semibold text-[13px] text-foreground">{d.label}</div>
       {(route || eventTrigger || taskId) && (
-        <div className="text-[11px] text-gray-500 mt-0.5">{route || eventTrigger || taskId}</div>
+        <div className="text-[11px] text-muted-foreground mt-0.5">
+          {route || eventTrigger || taskId}
+        </div>
       )}
-      <div className="text-[10px] text-gray-400 mt-0.5">{d.filePath}</div>
+      <div className="text-[10px] text-muted-foreground mt-0.5">{d.filePath}</div>
       <Handle type="source" position={Position.Bottom} style={{ background: config.handle }} />
     </div>
   );
@@ -134,7 +136,7 @@ function ComponentNode({ data }: NodeProps) {
     <div
       className={nodeClass(
         d,
-        'border-[1.5px] rounded-[10px] px-3 py-2 min-w-[140px] border-orange-600 bg-orange-50 shadow',
+        'border-[1.5px] rounded-[10px] px-3 py-2 min-w-[140px] border-orange-600 bg-orange-50 dark:bg-orange-950 shadow',
         d.selected ? 'ring-2 ring-orange-500/25' : '',
       )}
     >
@@ -144,8 +146,8 @@ function ComponentNode({ data }: NodeProps) {
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
-      <div className="font-medium text-[13px] text-gray-700">{d.label}</div>
-      <div className="text-[10px] text-gray-400 mt-0.5">{d.filePath}</div>
+      <div className="font-medium text-[13px] text-foreground">{d.label}</div>
+      <div className="text-[10px] text-muted-foreground mt-0.5">{d.filePath}</div>
       <Handle type="source" position={Position.Bottom} style={{ background: '#f97316' }} />
     </div>
   );
@@ -158,7 +160,7 @@ function HookNode({ data }: NodeProps) {
     <div
       className={nodeClass(
         d,
-        'border-[1.5px] rounded-[10px] px-3 py-2 min-w-[140px] border-lime-600 bg-lime-50 shadow',
+        'border-[1.5px] rounded-[10px] px-3 py-2 min-w-[140px] border-lime-600 bg-lime-50 dark:bg-lime-950 shadow',
         d.selected ? 'ring-2 ring-lime-500/25' : '',
       )}
     >
@@ -168,8 +170,8 @@ function HookNode({ data }: NodeProps) {
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
-      <div className="font-medium text-[13px] text-gray-700">{d.label}</div>
-      <div className="text-[10px] text-gray-400 mt-0.5">{d.filePath}</div>
+      <div className="font-medium text-[13px] text-foreground">{d.label}</div>
+      <div className="text-[10px] text-muted-foreground mt-0.5">{d.filePath}</div>
       <Handle type="source" position={Position.Bottom} style={{ background: '#84cc16' }} />
     </div>
   );
@@ -182,18 +184,18 @@ function FunctionNode({ data }: NodeProps) {
     <div
       className={nodeClass(
         d,
-        'border rounded-lg px-3 py-2 min-w-[120px] border-blue-500 bg-blue-50 shadow',
+        'border rounded-lg px-3 py-2 min-w-[120px] border-blue-500 bg-blue-50 dark:bg-blue-950 shadow',
         d.selected ? 'ring-2 ring-blue-500/25' : '',
       )}
     >
       <Handle type="target" position={Position.Top} style={{ background: '#9ca3af' }} />
       <div className="flex items-center gap-1 mb-0.5">
-        <span className="text-[10px] text-gray-400">{d.kind}</span>
+        <span className="text-[10px] text-muted-foreground">{d.kind}</span>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
-      <div className="font-medium text-[13px] text-gray-700">{d.label}</div>
-      <div className="text-[10px] text-gray-400 mt-0.5">{d.filePath}</div>
+      <div className="font-medium text-[13px] text-foreground">{d.label}</div>
+      <div className="text-[10px] text-muted-foreground mt-0.5">{d.filePath}</div>
       <Handle type="source" position={Position.Bottom} style={{ background: '#9ca3af' }} />
     </div>
   );

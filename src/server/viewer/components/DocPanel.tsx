@@ -101,7 +101,7 @@ export function DocPanel({ node, onClose }: DocPanelProps) {
                     navigate(docPathToUrl(docPath));
                     onClose();
                   }}
-                  className="rounded p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                  className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
                   title="Open full doc"
                 >
                   <span className="sr-only">Open full doc</span>
@@ -121,7 +121,7 @@ export function DocPanel({ node, onClose }: DocPanelProps) {
                   </svg>
                 </button>
               )}
-              <SheetOrDrawerClose className="rounded p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600">
+              <SheetOrDrawerClose className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground">
                 <svg
                   width="14"
                   height="14"
@@ -146,13 +146,15 @@ export function DocPanel({ node, onClose }: DocPanelProps) {
         </SheetOrDrawerHeader>
 
         <SheetOrDrawerBody>
-          {loading && <div className="py-8 text-center text-sm text-gray-400">Loading...</div>}
+          {loading && (
+            <div className="py-8 text-center text-sm text-muted-foreground">Loading...</div>
+          )}
           {error && (
-            <div className="py-8 text-center text-sm text-gray-400">
+            <div className="py-8 text-center text-sm text-muted-foreground">
               No documentation found for this symbol.
               <br />
               <span className="text-xs">
-                Run <code className="rounded bg-gray-100 px-1 py-0.5">treck sync</code> to generate
+                Run <code className="rounded bg-muted px-1 py-0.5">treck sync</code> to generate
                 docs.
               </span>
             </div>
@@ -186,7 +188,7 @@ export function DocPanel({ node, onClose }: DocPanelProps) {
                 navigate(docPathToUrl(docPath));
                 onClose();
               }}
-              className="flex items-center justify-center gap-2 rounded-md border border-gray-200 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 w-full"
+              className="flex items-center justify-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-muted-foreground hover:bg-muted w-full"
             >
               <svg
                 width="14"
