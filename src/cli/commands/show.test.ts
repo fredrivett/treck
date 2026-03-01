@@ -4,7 +4,12 @@
 
 import { describe, expect, it } from 'vitest';
 import type { FlowGraph, GraphNode } from '../../graph/types.js';
-import { buildMetadataLine, formatDocsOutput, formatMermaidOutput } from './show.js';
+import {
+  beautifyMermaid,
+  buildMetadataLine,
+  formatDocsOutput,
+  formatMermaidOutput,
+} from './show.js';
 
 function makeNode(overrides: Partial<GraphNode> & { id: string; name: string }): GraphNode {
   return {
@@ -251,5 +256,31 @@ describe('formatDocsOutput', () => {
     const output = formatDocsOutput(['a.ts:A'], graph, 1);
     expect(output).toContain('**Calls:**');
     expect(output).toContain('`B`');
+  });
+});
+
+describe('beautifyMermaid', () => {
+  it('renders a simple flowchart as Unicode box-drawing art', async () => {
+    const mermaid = 'flowchart TD\n  A["Start"] --> B["End"]';
+    const output = await beautifyMermaid(mermaid);
+    // Should contain box-drawing characters, not mermaid source
+    expect(output).not.toContain('flowchart');
+    expect(output).toContain('Start');
+    expect(output).toContain('End');
+  });
+
+  it('renders mermaid output from formatMermaidOutput', async () => {
+    const nodeA = makeNode({ id: 'a.ts:A', name: 'A', filePath: 'a.ts' });
+    const nodeB = makeNode({ id: 'b.ts:B', name: 'B', filePath: 'b.ts' });
+    const graph = makeGraph(
+      [nodeA, nodeB],
+      [{ id: 'e1', source: 'a.ts:A', target: 'b.ts:B', type: 'direct-call', isAsync: false }],
+    );
+
+    const mermaid = formatMermaidOutput(['a.ts:A'], graph, 1);
+    const output = await beautifyMermaid(mermaid);
+    expect(output).not.toContain('flowchart');
+    expect(output).toContain('A');
+    expect(output).toContain('B');
   });
 });

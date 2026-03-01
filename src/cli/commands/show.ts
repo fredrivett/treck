@@ -9,6 +9,7 @@ import { explainUnresolved, resolveFocusTargets } from '../utils/resolve-targets
 interface ShowOptions {
   docs?: boolean;
   depth?: number;
+  beautify?: boolean;
 }
 
 const USAGE = `Show graph data for symbols in your codebase.
@@ -23,6 +24,7 @@ Targets: file:symbol or file path (comma-separated)
 Options:
   --docs        Output full markdown documentation instead of mermaid graph
   --depth <n>   Limit traversal depth (default: full connected flow)
+  --beautify    Render mermaid as Unicode box-drawing art for the terminal
 
 Examples:
   treck show src/api/route.ts:GET
@@ -83,10 +85,12 @@ export function registerShowCommand(cli: CAC) {
     .command('show [targets]', 'Show graph data for symbols (mermaid or markdown)')
     .option('--docs', 'Output full markdown documentation instead of mermaid graph')
     .option('--depth <n>', 'Limit traversal depth (default: full connected flow)')
+    .option('--beautify', 'Render mermaid as Unicode box-drawing art for the terminal')
     .example('treck show src/api/route.ts:GET')
     .example('treck show src/api/route.ts:GET --docs')
     .example('treck show src/api/route.ts:GET --depth 1')
-    .action((targets: string | undefined, options: ShowOptions) => {
+    .example('treck show src/api/route.ts:GET --beautify')
+    .action(async (targets: string | undefined, options: ShowOptions) => {
       if (!targets) {
         process.stderr.write(USAGE);
         process.exit(1);
@@ -123,11 +127,30 @@ export function registerShowCommand(cli: CAC) {
 
       const depth = options.depth ? Number(options.depth) : Number.POSITIVE_INFINITY;
 
-      const output = options.docs
+      const mermaidSource = options.docs
         ? formatDocsOutput(nodeIds, graph, depth)
         : formatMermaidOutput(nodeIds, graph, depth);
-      process.stdout.write(`${output}\n`);
+
+      if (options.beautify && !options.docs) {
+        const ascii = await beautifyMermaid(mermaidSource);
+        process.stdout.write(`${ascii}\n`);
+      } else {
+        process.stdout.write(`${mermaidSource}\n`);
+      }
     });
+}
+
+/**
+ * Render a mermaid diagram as Unicode box-drawing art for terminal display.
+ *
+ * Uses `beautiful-mermaid`'s ASCII renderer under the hood.
+ *
+ * @param mermaidSource - Raw mermaid flowchart source
+ * @returns Unicode box-drawing string
+ */
+export async function beautifyMermaid(mermaidSource: string): Promise<string> {
+  const { renderMermaidASCII } = await import('beautiful-mermaid');
+  return renderMermaidASCII(mermaidSource);
 }
 
 /**
