@@ -61,6 +61,12 @@ treck show src/api/route.ts:GET --depth 1    # limit traversal depth
 treck show src/api/route.ts:GET --beautify   # Unicode box-drawing art in terminal
 ```
 
+> **Tip:** If your file paths contain parentheses or brackets (common in Next.js route groups), wrap the target in quotes:
+>
+> ```bash
+> treck show "src/app/(dashboard)/users/[id]/page.tsx:UserDetail"
+> ```
+
 ### `treck jsdoc [--verbose] [--prompt] [--run <agent>]`
 
 Show JSDoc coverage and optionally hand off to a coding agent to auto-populate missing comments.
