@@ -353,6 +353,164 @@ export function handle(req: any) {
       expect(edge).toBeDefined();
       expect(edge?.type).toBe('async-dispatch');
     });
+
+    it('should create async-dispatch edge from instance trigger (myTask.trigger())', () => {
+      const taskFile = join(TEST_DIR, 'process.ts');
+      writeFileSync(
+        taskFile,
+        `export const processData = task({
+  id: "process-data",
+  run: async (payload) => { return { done: true } }
+})`,
+      );
+
+      const callerFile = join(TEST_DIR, 'handler.ts');
+      writeFileSync(
+        callerFile,
+        `export async function handleWebhook(req) {
+  await processData.trigger({ userId: req.userId })
+}`,
+      );
+
+      const graph = builder.build([taskFile, callerFile]);
+
+      const taskNode = graph.nodes.find((n) => n.name === 'processData');
+      const callerNode = graph.nodes.find((n) => n.name === 'handleWebhook');
+      expect(taskNode).toBeDefined();
+      expect(callerNode).toBeDefined();
+
+      const edge = graph.edges.find(
+        (e) => e.source === callerNode?.id && e.target === taskNode?.id,
+      );
+      expect(edge).toBeDefined();
+      expect(edge?.type).toBe('async-dispatch');
+    });
+
+    it('should create async-dispatch edge from instance triggerAndWait', () => {
+      const taskFile = join(TEST_DIR, 'child.ts');
+      writeFileSync(
+        taskFile,
+        `export const childTask = task({
+  id: "child-task",
+  run: async (payload) => { return { result: 42 } }
+})`,
+      );
+
+      const parentFile = join(TEST_DIR, 'parent.ts');
+      writeFileSync(
+        parentFile,
+        `export async function parentRun() {
+  const result = await childTask.triggerAndWait({ data: 1 })
+  return result
+}`,
+      );
+
+      const graph = builder.build([taskFile, parentFile]);
+
+      const taskNode = graph.nodes.find((n) => n.name === 'childTask');
+      const parentNode = graph.nodes.find((n) => n.name === 'parentRun');
+
+      const edge = graph.edges.find(
+        (e) => e.source === parentNode?.id && e.target === taskNode?.id,
+      );
+      expect(edge).toBeDefined();
+      expect(edge?.type).toBe('async-dispatch');
+    });
+
+    it('should detect schemaTask() as a trigger-task entry point', () => {
+      const taskFile = join(TEST_DIR, 'schema-task.ts');
+      writeFileSync(
+        taskFile,
+        `export const createUser = schemaTask({
+  id: "create-user",
+  schema: z.object({ name: z.string() }),
+  run: async (payload) => { return { ok: true } }
+})`,
+      );
+
+      const graph = builder.build([taskFile]);
+
+      const taskNode = graph.nodes.find((n) => n.name === 'createUser');
+      expect(taskNode).toBeDefined();
+      expect(taskNode?.entryType).toBe('trigger-task');
+      expect(taskNode?.metadata?.taskId).toBe('create-user');
+    });
+
+    it('should detect schedules.task() as a trigger-scheduled-task entry point', () => {
+      const taskFile = join(TEST_DIR, 'scheduled.ts');
+      writeFileSync(
+        taskFile,
+        `export const dailyCleanup = schedules.task({
+  id: "daily-cleanup",
+  cron: "0 0 * * *",
+  run: async () => {}
+})`,
+      );
+
+      const graph = builder.build([taskFile]);
+
+      const taskNode = graph.nodes.find((n) => n.name === 'dailyCleanup');
+      expect(taskNode).toBeDefined();
+      expect(taskNode?.entryType).toBe('trigger-scheduled-task');
+      expect(taskNode?.metadata?.taskId).toBe('daily-cleanup');
+      expect(taskNode?.metadata?.cronSchedule).toBe('0 0 * * *');
+    });
+
+    it('should resolve instance trigger to a scheduled task', () => {
+      const taskFile = join(TEST_DIR, 'sync-task.ts');
+      writeFileSync(
+        taskFile,
+        `export const syncTask = schedules.task({
+  id: "user-sync",
+  run: async (payload) => {}
+})`,
+      );
+
+      const callerFile = join(TEST_DIR, 'admin.ts');
+      writeFileSync(
+        callerFile,
+        `export async function forceSync() {
+  await syncTask.trigger({ force: true })
+}`,
+      );
+
+      const graph = builder.build([taskFile, callerFile]);
+
+      const taskNode = graph.nodes.find((n) => n.name === 'syncTask');
+      const callerNode = graph.nodes.find((n) => n.name === 'forceSync');
+
+      const edge = graph.edges.find(
+        (e) => e.source === callerNode?.id && e.target === taskNode?.id,
+      );
+      expect(edge).toBeDefined();
+      expect(edge?.type).toBe('async-dispatch');
+    });
+
+    it('should not create false-positive edges for non-task objects with .trigger()', () => {
+      const taskFile = join(TEST_DIR, 'real-task.ts');
+      writeFileSync(
+        taskFile,
+        `export const realTask = task({
+  id: "real-task",
+  run: async () => {}
+})`,
+      );
+
+      const callerFile = join(TEST_DIR, 'ui.ts');
+      writeFileSync(
+        callerFile,
+        `export function handleClick() {
+  eventEmitter.trigger("click")
+}`,
+      );
+
+      const graph = builder.build([taskFile, callerFile]);
+
+      const callerNode = graph.nodes.find((n) => n.name === 'handleClick');
+      // eventEmitter doesn't match any task node, so no edge should be created
+      const edges = graph.edges.filter((e) => e.source === callerNode?.id);
+      expect(edges).toHaveLength(0);
+    });
   });
 });
 
