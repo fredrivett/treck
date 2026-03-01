@@ -6,7 +6,7 @@
 @import "@fontsource/geist-mono/500.css";
 @import "@fontsource/geist-mono/700.css";
 
-@variant dark (&:where(.dark, .dark *));
+@import "./dark-variant.css";
 
 @theme {
   --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;

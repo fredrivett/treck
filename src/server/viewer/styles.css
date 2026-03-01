@@ -1,8 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./dark-variant.css";
 @plugin "@tailwindcss/typography";
-
-@variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --color-background: var(--background);
