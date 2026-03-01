@@ -14,6 +14,7 @@ import { registerCheckCommand } from './commands/check.js';
 import { registerInitCommand } from './commands/init.js';
 import { registerJsDocCommand } from './commands/jsdoc.js';
 import { registerServeCommand } from './commands/serve.js';
+import { registerShowCommand } from './commands/show.js';
 import { registerStatusCommand } from './commands/status.js';
 import { registerSyncCommand } from './commands/sync.js';
 
@@ -22,6 +23,7 @@ registerSyncCommand(cli);
 registerCheckCommand(cli);
 registerJsDocCommand(cli);
 registerServeCommand(cli);
+registerShowCommand(cli);
 registerStatusCommand(cli);
 
 /** Parsed CLI arguments and options. */

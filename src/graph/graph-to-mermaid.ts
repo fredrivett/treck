@@ -4,69 +4,60 @@
  * Replaces AI-generated mermaid with accurate, graph-derived diagrams.
  */
 
+import { connectedSubgraph } from './graph-query.js';
 import type { FlowGraph, GraphEdge, GraphNode } from './types.js';
 
 /**
- * Generate a mermaid flowchart for a specific node and its immediate connections.
- * Used in per-symbol documentation.
+ * Generate a mermaid flowchart for a specific node and its connections.
+ *
+ * Traverses callers and callees up to `depth` hops from the target node
+ * and renders them as a mermaid flowchart with the target highlighted.
+ *
+ * @param graph - The full flow graph
+ * @param nodeId - The node to center the diagram on
+ * @param depth - Traversal depth (default: 1 for immediate neighbors)
  */
 export function nodeToMermaid(graph: FlowGraph, nodeId: string, depth = 1): string {
   const nodeMap = new Map(graph.nodes.map((n) => [n.id, n]));
-  const rootNode = nodeMap.get(nodeId);
-  if (!rootNode) return '';
+  if (!nodeMap.has(nodeId)) return '';
 
-  // Collect nodes within the specified depth
-  const included = new Set<string>([nodeId]);
-  let frontier = new Set<string>([nodeId]);
+  const { nodes, edges } = connectedSubgraph(graph, [nodeId], depth);
+  const included = new Set(nodes.map((n) => n.id));
 
-  for (let d = 0; d < depth; d++) {
-    const nextFrontier = new Set<string>();
-    for (const id of frontier) {
-      // Outgoing edges
-      for (const edge of graph.edges) {
-        if (edge.source === id && !included.has(edge.target)) {
-          included.add(edge.target);
-          nextFrontier.add(edge.target);
-        }
-      }
-      // Incoming edges (callers)
-      for (const edge of graph.edges) {
-        if (edge.target === id && !included.has(edge.source)) {
-          included.add(edge.source);
-          nextFrontier.add(edge.source);
-        }
-      }
-    }
-    frontier = nextFrontier;
-  }
-
-  const relevantEdges = graph.edges.filter((e) => included.has(e.source) && included.has(e.target));
-
-  return buildMermaid(nodeId, included, relevantEdges, nodeMap);
+  return buildMermaid(new Set([nodeId]), included, edges, nodeMap);
 }
 
 /**
- * Generate a mermaid flowchart for an entire flow (from an entry point).
- * Shows all nodes reachable from the entry point.
+ * Generate a mermaid flowchart for an entire flow.
+ *
+ * Renders all provided nodes and edges as a mermaid flowchart.
+ * Optionally highlights specific nodes (e.g. entry points or targets).
+ *
+ * @param nodes - The nodes to include in the diagram
+ * @param edges - The edges connecting the nodes
+ * @param entryNodeId - Deprecated: use highlightIds instead. Kept for backwards compatibility.
+ * @param highlightIds - Set of node IDs to highlight (blue styling)
  */
 export function flowToMermaid(
   nodes: GraphNode[],
   edges: GraphEdge[],
   entryNodeId?: string,
+  highlightIds?: Set<string>,
 ): string {
   const nodeMap = new Map(nodes.map((n) => [n.id, n]));
   const included = new Set(nodes.map((n) => n.id));
-  return buildMermaid(entryNodeId || '', included, edges, nodeMap);
+  const highlights = highlightIds ?? (entryNodeId ? new Set([entryNodeId]) : new Set<string>());
+  return buildMermaid(highlights, included, edges, nodeMap);
 }
 
 /**
  * Build a mermaid flowchart string from a set of nodes and edges.
  *
- * Groups nodes into subgraphs by file path, applies styling to the
- * highlighted node and entry points, and renders edge arrows based on type.
+ * Groups nodes into subgraphs by file path, applies styling to
+ * highlighted nodes and entry points, and renders edge arrows based on type.
  */
 function buildMermaid(
-  highlightId: string,
+  highlightIds: Set<string>,
   includedIds: Set<string>,
   edges: GraphEdge[],
   nodeMap: Map<string, GraphNode>,
@@ -112,16 +103,18 @@ function buildMermaid(
     lines.push(`  ${sourceId} ${arrow}${label} ${targetId}`);
   }
 
-  // Style the highlighted node
-  if (highlightId && includedIds.has(highlightId)) {
-    const nodeId = sanitizeId(highlightId);
-    lines.push(`  style ${nodeId} fill:#dbeafe,stroke:#3b82f6,stroke-width:2px`);
+  // Style highlighted nodes
+  for (const id of highlightIds) {
+    if (includedIds.has(id)) {
+      const nodeId = sanitizeId(id);
+      lines.push(`  style ${nodeId} fill:#dbeafe,stroke:#3b82f6,stroke-width:2px`);
+    }
   }
 
-  // Style entry point nodes
+  // Style entry point nodes (unless already highlighted)
   for (const id of includedIds) {
     const node = nodeMap.get(id);
-    if (node?.entryType && id !== highlightId) {
+    if (node?.entryType && !highlightIds.has(id)) {
       const nodeId = sanitizeId(id);
       lines.push(`  style ${nodeId} fill:#e0e7ff,stroke:#6366f1,stroke-width:2px`);
     }

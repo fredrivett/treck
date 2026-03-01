@@ -90,7 +90,60 @@ export function pathsBetween(
 }
 
 /**
- * Build an adjacency list from graph edges (source → [targets])
+ * Find all nodes connected to the start nodes via bidirectional BFS.
+ *
+ * Traverses both callers (incoming edges) and callees (outgoing edges)
+ * up to `depth` hops from any start node. Returns the subgraph of all
+ * reachable nodes and their connecting edges.
+ *
+ * @param graph - The full flow graph
+ * @param startNodeIds - One or more node IDs to start traversal from
+ * @param depth - Maximum traversal depth (default: Infinity for full connected flow)
+ * @returns Subgraph containing all connected nodes and edges
+ */
+export function connectedSubgraph(
+  graph: FlowGraph,
+  startNodeIds: string[],
+  depth = Number.POSITIVE_INFINITY,
+): { nodes: GraphNode[]; edges: GraphEdge[] } {
+  const forward = buildAdjacencyList(graph);
+  const reverse = buildReverseAdjacencyList(graph);
+
+  const visited = new Set<string>(startNodeIds);
+  let frontier = new Set<string>(startNodeIds);
+
+  for (let d = 0; d < depth; d++) {
+    const nextFrontier = new Set<string>();
+    for (const id of frontier) {
+      for (const neighbor of forward.get(id) || []) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          nextFrontier.add(neighbor);
+        }
+      }
+      for (const neighbor of reverse.get(id) || []) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          nextFrontier.add(neighbor);
+        }
+      }
+    }
+    if (nextFrontier.size === 0) break;
+    frontier = nextFrontier;
+  }
+
+  const nodeMap = new Map(graph.nodes.map((n) => [n.id, n]));
+  const nodes = [...visited]
+    .map((id) => nodeMap.get(id))
+    .filter((n): n is GraphNode => n !== undefined);
+
+  const edges = graph.edges.filter((e) => visited.has(e.source) && visited.has(e.target));
+
+  return { nodes, edges };
+}
+
+/**
+ * Build a forward adjacency list from graph edges (source → [targets]).
  */
 function buildAdjacencyList(graph: FlowGraph): Map<string, string[]> {
   const adjacency = new Map<string, string[]>();
@@ -98,6 +151,19 @@ function buildAdjacencyList(graph: FlowGraph): Map<string, string[]> {
     const neighbors = adjacency.get(edge.source) || [];
     neighbors.push(edge.target);
     adjacency.set(edge.source, neighbors);
+  }
+  return adjacency;
+}
+
+/**
+ * Build a reverse adjacency list from graph edges (target → [sources]).
+ */
+function buildReverseAdjacencyList(graph: FlowGraph): Map<string, string[]> {
+  const adjacency = new Map<string, string[]>();
+  for (const edge of graph.edges) {
+    const neighbors = adjacency.get(edge.target) || [];
+    neighbors.push(edge.source);
+    adjacency.set(edge.target, neighbors);
   }
   return adjacency;
 }
