@@ -17,11 +17,20 @@ export interface EntryPointMatch {
   metadata: EntryPointMetadata;
 }
 
+/** Known runtime connection types detected by framework matchers. */
+export type ConnectionType =
+  | 'inngest-send'
+  | 'inngest-invoke'
+  | 'task-trigger'
+  | 'task-trigger-ref'
+  | 'fetch'
+  | 'navigation';
+
 /**
  * A runtime connection detected by pattern matching (not yet resolved)
  */
 export interface RuntimeConnection {
-  type: string; // "inngest-send", "task-trigger", "fetch"
+  type: ConnectionType;
   targetHint: string; // "image/analyze", "process-image", "/api/foo"
   sourceLocation: [number, number]; // line range in source
 }
@@ -58,9 +67,14 @@ export interface FrameworkMatcher {
   /**
    * Resolve a detected connection to a target symbol in the codebase.
    * Returns null if the target cannot be found.
+   *
+   * @param connection - The runtime connection to resolve
+   * @param projectFiles - All project source file paths
+   * @param projectFileSet - Set of project file paths for O(1) membership checks
    */
   resolveConnection(
     connection: RuntimeConnection,
     projectFiles: string[],
+    projectFileSet?: Set<string>,
   ): ResolvedConnection | null;
 }

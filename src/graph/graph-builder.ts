@@ -12,15 +12,15 @@ import type { CallSite, ImportInfo, SymbolInfo } from '../extractors/types.js';
 import { TypeScriptExtractor } from '../extractors/typescript/index.js';
 import { ContentHasher } from '../hasher/index.js';
 import { matchers } from '../matchers/index.js';
-import type { RuntimeConnection } from '../matchers/types.js';
+import type { ConnectionType, RuntimeConnection } from '../matchers/types.js';
 import { resolveImportPath } from './resolve-import/index.js';
 import type { EdgeType, FlowGraph, GraphEdge, GraphNode } from './types.js';
 
 /**
- * Map a RuntimeConnection type string to a GraphEdge EdgeType.
+ * Map a RuntimeConnection type to a GraphEdge EdgeType.
  * Falls back to 'async-dispatch' for unknown connection types.
  */
-function connectionTypeToEdgeType(type: string): EdgeType {
+function connectionTypeToEdgeType(type: ConnectionType): EdgeType {
   switch (type) {
     case 'inngest-send':
       return 'event-emit';
@@ -67,6 +67,9 @@ export class GraphBuilder {
 
     // Map from filePath → SymbolInfo[] for cross-file resolution
     const fileSymbolsMap = new Map<string, SymbolInfo[]>();
+
+    // Set for O(1) membership checks during edge resolution
+    const sourceFileSet = new Set(sourceFiles);
 
     // ── Phase 1: Extract symbols and create nodes ──────────────────────
 
@@ -143,7 +146,7 @@ export class GraphBuilder {
             filePath,
             symbols,
             imports,
-            sourceFiles,
+            sourceFileSet,
             nodeMap,
           );
 
@@ -169,7 +172,7 @@ export class GraphBuilder {
           const connections = matcher.detectConnections(symbol, filePath);
 
           for (const connection of connections) {
-            const resolved = matcher.resolveConnection(connection, sourceFiles);
+            const resolved = matcher.resolveConnection(connection, sourceFiles, sourceFileSet);
             if (resolved) {
               const targetRelPath = getRelativePath(resolved.targetFilePath);
               const targetId = `${targetRelPath}:${resolved.targetSymbol.name}`;
@@ -225,7 +228,7 @@ export class GraphBuilder {
     filePath: string,
     sameFileSymbols: SymbolInfo[],
     imports: ImportInfo[],
-    sourceFiles: string[],
+    sourceFileSet: Set<string>,
     nodeMap: Map<string, GraphNode>,
   ): string | null {
     const { name } = callSite;
@@ -245,7 +248,7 @@ export class GraphBuilder {
     if (!resolvedPath) return null;
 
     // Only consider files that are part of the project
-    if (!sourceFiles.includes(resolvedPath)) return null;
+    if (!sourceFileSet.has(resolvedPath)) return null;
 
     const targetRelPath = getRelativePath(resolvedPath);
     const symbolName = importMatch.originalName;
@@ -258,7 +261,7 @@ export class GraphBuilder {
 
     // 3. Follow re-exports — the resolved file may be a barrel that re-exports
     //    the symbol from another file
-    return this.followReExport(resolvedPath, symbolName, sourceFiles, nodeMap);
+    return this.followReExport(resolvedPath, symbolName, sourceFileSet, nodeMap);
   }
 
   /**
@@ -268,7 +271,7 @@ export class GraphBuilder {
   private followReExport(
     barrelPath: string,
     symbolName: string,
-    sourceFiles: string[],
+    sourceFileSet: Set<string>,
     nodeMap: Map<string, GraphNode>,
     depth = 0,
   ): string | null {
@@ -280,7 +283,7 @@ export class GraphBuilder {
     if (!match) return null;
 
     const resolvedPath = resolveImportPath(barrelPath, match.source);
-    if (!resolvedPath || !sourceFiles.includes(resolvedPath)) return null;
+    if (!resolvedPath || !sourceFileSet.has(resolvedPath)) return null;
 
     const targetRelPath = getRelativePath(resolvedPath);
     const targetId = `${targetRelPath}:${match.originalName}`;
@@ -290,7 +293,7 @@ export class GraphBuilder {
     }
 
     // The target might itself be another barrel — follow recursively
-    return this.followReExport(resolvedPath, match.originalName, sourceFiles, nodeMap, depth + 1);
+    return this.followReExport(resolvedPath, match.originalName, sourceFileSet, nodeMap, depth + 1);
   }
 
   /**

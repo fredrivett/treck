@@ -27,10 +27,11 @@ export function reachableFrom(
   const adjacency = buildAdjacencyList(graph);
   const visited = new Set<string>();
   const queue: string[] = [startNodeId];
+  let head = 0;
   visited.add(startNodeId);
 
-  while (queue.length > 0) {
-    const current = queue.shift() as string;
+  while (head < queue.length) {
+    const current = queue[head++];
     const neighbors = adjacency.get(current) || [];
     for (const neighbor of neighbors) {
       if (!visited.has(neighbor)) {

@@ -10,6 +10,7 @@
 
 import { readFileSync } from 'node:fs';
 import type { SymbolInfo } from '../extractors/types.js';
+import { TypeScriptExtractor } from '../extractors/typescript/index.js';
 import type {
   EntryPointMatch,
   FrameworkMatcher,
@@ -22,6 +23,9 @@ const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'
 const API_ROUTE_PATTERN = /app\/api\/(.+)\/route\.(ts|tsx|js|jsx)$/;
 const PAGE_PATTERN = /app\/(.+)\/page\.(ts|tsx|js|jsx)$/;
 const MIDDLEWARE_PATTERN = /middleware\.(ts|tsx|js|jsx)$/;
+
+/** Cache of file path → whether the file starts with "use server" directive. */
+const useServerCache = new Map<string, boolean>();
 
 /**
  * Extract route path from file path.
@@ -41,6 +45,79 @@ function extractPagePath(filePath: string): string {
   const match = filePath.match(/app\/(.*?)\/page\.(ts|tsx|js|jsx)$/);
   if (!match) return '/';
   return `/${match[1]}`;
+}
+
+/**
+ * Find a route file among project files for a given API route path.
+ * Tries `{prefix}/app/{routePath}/route.{ext}` for common prefixes.
+ */
+function findRouteFile(routePath: string, fileSet: Set<string>): string | null {
+  for (const file of fileSet) {
+    if (API_ROUTE_PATTERN.test(file) && extractRoutePath(file) === `/${routePath}`) {
+      return file;
+    }
+  }
+  return null;
+}
+
+/**
+ * Find a page file among project files for a given page path.
+ * Tries `{prefix}/app/{pagePath}/page.{ext}` for common prefixes.
+ */
+function findPageFile(pagePath: string, fileSet: Set<string>): string | null {
+  for (const file of fileSet) {
+    if (PAGE_PATTERN.test(file) && extractPagePath(file) === `/${pagePath}`) {
+      return file;
+    }
+  }
+  return null;
+}
+
+/** Shared extractor instance for resolving connections. */
+let sharedExtractor: TypeScriptExtractor | null = null;
+
+/**
+ * Resolve a fetch connection to an API route handler symbol.
+ * Extracts symbols from the route file and finds the matching HTTP method.
+ */
+function resolveRouteFile(
+  routePath: string,
+  fileSet: Set<string>,
+  defaultMethod: string,
+): ResolvedConnection | null {
+  const routeFile = findRouteFile(routePath, fileSet);
+  if (!routeFile) return null;
+
+  if (!sharedExtractor) sharedExtractor = new TypeScriptExtractor();
+  const { symbols } = sharedExtractor.extractSymbols(routeFile);
+  const handler = symbols.find((s) => s.name === defaultMethod);
+  if (!handler) return null;
+
+  return {
+    targetSymbol: handler,
+    targetFilePath: routeFile,
+    edgeType: 'http-request',
+  };
+}
+
+/**
+ * Resolve a navigation connection to a page component.
+ * Extracts symbols from the page file and finds the default export.
+ */
+function resolvePageFile(pagePath: string, fileSet: Set<string>): ResolvedConnection | null {
+  const pageFile = findPageFile(pagePath, fileSet);
+  if (!pageFile) return null;
+
+  if (!sharedExtractor) sharedExtractor = new TypeScriptExtractor();
+  const { symbols } = sharedExtractor.extractSymbols(pageFile);
+  const pageComponent = symbols.find((s) => s.name === 'default');
+  if (!pageComponent) return null;
+
+  return {
+    targetSymbol: pageComponent,
+    targetFilePath: pageFile,
+    edgeType: 'http-request',
+  };
 }
 
 export const nextjsMatcher: FrameworkMatcher = {
@@ -78,19 +155,23 @@ export const nextjsMatcher: FrameworkMatcher = {
 
     // Server actions — check for "use server" directive in the file
     if (symbol.kind === 'function' || symbol.kind === 'const') {
-      try {
-        const content = readFileSync(filePath, 'utf-8');
-        const hasUseServer =
-          content.trimStart().startsWith("'use server'") ||
-          content.trimStart().startsWith('"use server"');
-        if (hasUseServer) {
-          return {
-            entryType: 'server-action',
-            metadata: {},
-          };
+      let hasUseServer = useServerCache.get(filePath);
+      if (hasUseServer === undefined) {
+        try {
+          const content = readFileSync(filePath, 'utf-8');
+          hasUseServer =
+            content.trimStart().startsWith("'use server'") ||
+            content.trimStart().startsWith('"use server"');
+        } catch {
+          hasUseServer = false;
         }
-      } catch {
-        // File read error, skip
+        useServerCache.set(filePath, hasUseServer);
+      }
+      if (hasUseServer) {
+        return {
+          entryType: 'server-action',
+          metadata: {},
+        };
       }
     }
 
@@ -127,11 +208,32 @@ export const nextjsMatcher: FrameworkMatcher = {
     return connections;
   },
 
-  /** Resolve a Next.js runtime connection to a concrete graph edge. Not yet implemented. */
+  /**
+   * Resolve a Next.js runtime connection to a concrete graph edge.
+   *
+   * For `fetch` connections, matches the URL path to an API route file and
+   * resolves to the GET handler (the most common default for fetch calls).
+   * For `navigation` connections, matches to a page component.
+   */
   resolveConnection(
-    _connection: RuntimeConnection,
-    _projectFiles: string[],
+    connection: RuntimeConnection,
+    projectFiles: string[],
+    projectFileSet?: Set<string>,
   ): ResolvedConnection | null {
+    const fileSet = projectFileSet ?? new Set(projectFiles);
+
+    if (connection.type === 'fetch') {
+      // Match /api/foo/bar to app/api/foo/bar/route.{ts,tsx,js,jsx}
+      const routePath = connection.targetHint.replace(/^\//, '');
+      return resolveRouteFile(routePath, fileSet, 'GET');
+    }
+
+    if (connection.type === 'navigation') {
+      // Match /dashboard to app/dashboard/page.{ts,tsx,js,jsx}
+      const pagePath = connection.targetHint.replace(/^\//, '');
+      return resolvePageFile(pagePath, fileSet);
+    }
+
     return null;
   },
 };
