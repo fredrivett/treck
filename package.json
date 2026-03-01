@@ -2,6 +2,7 @@
   "name": "treck",
   "version": "0.2.3",
   "type": "module",
+  "packageManager": "pnpm@10.29.3",
   "main": "dist/index.js",
   "bin": {
     "treck": "./dist/index.mjs"
