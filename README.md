@@ -47,15 +47,6 @@ Check graph freshness. Compares current code hashes against the hashes stored in
 treck check        # report stale nodes
 ```
 
-### `treck status [--verbose]`
-
-Show JSDoc coverage for your project.
-
-```bash
-treck status            # coverage summary
-treck status --verbose  # include full list of symbols missing JSDoc
-```
-
 ### `treck show <targets> [--docs] [--depth <n>] [--beautify]`
 
 Show graph data for symbols in your codebase. Outputs a mermaid flowchart by default, or full markdown documentation with `--docs`.
