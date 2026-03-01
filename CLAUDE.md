@@ -8,6 +8,7 @@ Find the way through your code.
 - `npm run build` — build
 - `npm test` — run tests
 - `npm run format` — format with biome
+- This repo uses pnpm — do not commit `package-lock.json`
 
 ## Changesets
 
