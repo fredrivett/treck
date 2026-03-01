@@ -38,7 +38,7 @@ Examples:
  * @param node - The graph node to describe
  * @returns Formatted metadata string (e.g. "`src/api/route.ts` · async function · lines 10–25")
  */
-function buildMetadataLine(node: {
+export function buildMetadataLine(node: {
   filePath: string;
   kind: string;
   isAsync: boolean;
@@ -123,48 +123,52 @@ export function registerShowCommand(cli: CAC) {
 
       const depth = options.depth ? Number(options.depth) : Number.POSITIVE_INFINITY;
 
-      if (options.docs) {
-        outputDocs(nodeIds, graph, depth);
-      } else {
-        outputMermaid(nodeIds, graph, depth);
-      }
+      const output = options.docs
+        ? formatDocsOutput(nodeIds, graph, depth)
+        : formatMermaidOutput(nodeIds, graph, depth);
+      process.stdout.write(`${output}\n`);
     });
 }
 
 /**
- * Output mermaid graph to stdout for the given node IDs.
+ * Format mermaid graph output for the given node IDs.
  *
  * Single target produces a per-node diagram. Multiple targets produce
  * a combined diagram with all targets highlighted.
+ *
+ * @param nodeIds - Resolved node IDs to include
+ * @param graph - The full flow graph
+ * @param depth - Traversal depth for neighbor collection
+ * @returns Mermaid flowchart string
  */
-function outputMermaid(
+export function formatMermaidOutput(
   nodeIds: string[],
   graph: import('../../graph/types.js').FlowGraph,
   depth: number,
-): void {
-  let output: string;
-
+): string {
   if (nodeIds.length === 1) {
-    output = nodeToMermaid(graph, nodeIds[0], depth);
-  } else {
-    const { nodes, edges } = connectedSubgraph(graph, nodeIds, depth);
-    output = flowToMermaid(nodes, edges, undefined, new Set(nodeIds));
+    return nodeToMermaid(graph, nodeIds[0], depth);
   }
-
-  process.stdout.write(`${output}\n`);
+  const { nodes, edges } = connectedSubgraph(graph, nodeIds, depth);
+  return flowToMermaid(nodes, edges, undefined, new Set(nodeIds));
 }
 
 /**
- * Output markdown documentation to stdout for the given node IDs.
+ * Format markdown documentation output for the given node IDs.
  *
  * Each symbol gets a metadata header, rendered markdown body, and
  * an embedded mermaid diagram. Multiple symbols are separated by `---`.
+ *
+ * @param nodeIds - Resolved node IDs to include
+ * @param graph - The full flow graph
+ * @param depth - Traversal depth for mermaid diagrams
+ * @returns Markdown string
  */
-function outputDocs(
+export function formatDocsOutput(
   nodeIds: string[],
   graph: import('../../graph/types.js').FlowGraph,
   depth: number,
-): void {
+): string {
   const nodeMap = new Map(graph.nodes.map((n) => [n.id, n]));
   const sections: string[] = [];
 
@@ -201,5 +205,5 @@ function outputDocs(
     sections.push(lines.join('\n'));
   }
 
-  process.stdout.write(sections.join('\n---\n\n'));
+  return sections.join('\n---\n\n');
 }
