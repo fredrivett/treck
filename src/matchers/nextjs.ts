@@ -208,10 +208,20 @@ export const nextjsMatcher: FrameworkMatcher = {
     while (match !== null) {
       const url = match[1].startsWith('/') ? match[1] : `/${match[1]}`;
 
-      // Look ahead from the match position for a method option
-      const lookAhead = symbol.body.substring(match.index, match.index + 300);
-      const methodMatch = methodPattern.exec(lookAhead);
-      const method = methodMatch ? methodMatch[1].toUpperCase() : 'GET';
+      // Check for a method option in the fetch's options argument.
+      // Only look if a comma follows the URL (indicating an options arg exists),
+      // and stop before the next `fetch(` to avoid cross-contamination.
+      let method = 'GET';
+      const afterUrl = symbol.body.substring(match.index + match[0].length);
+      if (afterUrl.trimStart().startsWith(',')) {
+        const nextFetchIdx = afterUrl.indexOf('fetch');
+        const searchWindow =
+          nextFetchIdx > 0 ? afterUrl.substring(0, nextFetchIdx) : afterUrl.substring(0, 200);
+        const methodMatch = methodPattern.exec(searchWindow);
+        if (methodMatch) {
+          method = methodMatch[1].toUpperCase();
+        }
+      }
       const type = HTTP_METHODS.includes(method) ? `fetch:${method}` : 'fetch:GET';
 
       connections.push({

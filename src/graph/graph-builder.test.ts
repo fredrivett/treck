@@ -668,6 +668,95 @@ export function handle(req: any) {
       const edges = graph.edges.filter((e) => e.source === callerNode?.id);
       expect(edges).toHaveLength(0);
     });
+
+    it('should not bleed method from one fetch into another', () => {
+      const dataDir = join(TEST_DIR, 'app', 'api', 'data');
+      const updateDir = join(TEST_DIR, 'app', 'api', 'update');
+      mkdirSync(dataDir, { recursive: true });
+      mkdirSync(updateDir, { recursive: true });
+
+      const dataRoute = join(dataDir, 'route.ts');
+      writeFileSync(
+        dataRoute,
+        `export async function GET(req: Request) {
+  return Response.json({ items: [] })
+}`,
+      );
+
+      const updateRoute = join(updateDir, 'route.ts');
+      writeFileSync(
+        updateRoute,
+        `export async function PUT(req: Request) {
+  return Response.json({ updated: true })
+}`,
+      );
+
+      // Two fetches in the same function — the PUT method must not bleed into the first
+      const callerFile = join(TEST_DIR, 'actions.ts');
+      writeFileSync(
+        callerFile,
+        `export async function refreshAndUpdate() {
+  const data = await fetch("/api/data")
+  await fetch("/api/update", { method: "PUT", body: "{}" })
+  return data.json()
+}`,
+      );
+
+      const graph = builder.build([dataRoute, updateRoute, callerFile]);
+
+      const callerNode = graph.nodes.find((n) => n.name === 'refreshAndUpdate');
+      const getNode = graph.nodes.find((n) => n.name === 'GET');
+      const putNode = graph.nodes.find((n) => n.name === 'PUT');
+      expect(callerNode).toBeDefined();
+
+      // First fetch (bare) → GET handler
+      const getEdge = graph.edges.find(
+        (e) => e.source === callerNode?.id && e.target === getNode?.id,
+      );
+      expect(getEdge).toBeDefined();
+      expect(getEdge?.type).toBe('http-request');
+
+      // Second fetch (PUT) → PUT handler
+      const putEdge = graph.edges.find(
+        (e) => e.source === callerNode?.id && e.target === putNode?.id,
+      );
+      expect(putEdge).toBeDefined();
+      expect(putEdge?.type).toBe('http-request');
+    });
+
+    it('should handle router.replace() the same as router.push()', () => {
+      const pageDir = join(TEST_DIR, 'app', 'settings');
+      mkdirSync(pageDir, { recursive: true });
+
+      const pageFile = join(pageDir, 'page.tsx');
+      writeFileSync(
+        pageFile,
+        `export default function SettingsPage() {
+  return '<div>Settings</div>'
+}`,
+      );
+
+      const callerFile = join(TEST_DIR, 'redirect.ts');
+      writeFileSync(
+        callerFile,
+        `export function redirectToSettings() {
+  router.replace("/settings")
+}`,
+      );
+
+      const graph = builder.build([pageFile, callerFile]);
+
+      const pageNode = graph.nodes.find((n) => n.name === 'SettingsPage');
+      const callerNode = graph.nodes.find((n) => n.name === 'redirectToSettings');
+      expect(pageNode).toBeDefined();
+      expect(callerNode).toBeDefined();
+
+      const edge = graph.edges.find(
+        (e) => e.source === callerNode?.id && e.target === pageNode?.id,
+      );
+      expect(edge).toBeDefined();
+      expect(edge?.type).toBe('http-request');
+    });
   });
 });
 
