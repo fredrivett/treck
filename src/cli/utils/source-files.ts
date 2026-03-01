@@ -109,8 +109,7 @@ export async function findSourceFilesAsync(
 
 /** Convert an absolute path to a path relative to the current working directory. */
 export function getRelativePath(absolutePath: string): string {
-  const cwd = process.cwd();
-  return absolutePath.startsWith(cwd) ? absolutePath.substring(cwd.length + 1) : absolutePath;
+  return relative(process.cwd(), absolutePath);
 }
 
 /**

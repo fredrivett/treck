@@ -6,7 +6,7 @@
  * runtime connections (event dispatches, task triggers, HTTP calls).
  */
 
-import { relative } from 'node:path';
+import { getRelativePath } from '../cli/utils/source-files.js';
 import { isTrivialBody } from '../extractors/trivial.js';
 import type { CallSite, ImportInfo, SymbolInfo } from '../extractors/types.js';
 import { TypeScriptExtractor } from '../extractors/typescript/index.js';
@@ -15,14 +15,6 @@ import { matchers } from '../matchers/index.js';
 import type { RuntimeConnection } from '../matchers/types.js';
 import { resolveImportPath } from './resolve-import/index.js';
 import type { EdgeType, FlowGraph, GraphEdge, GraphNode } from './types.js';
-
-/**
- * Compute a path relative to `process.cwd()`.
- * Keeps node IDs deterministic and human-readable.
- */
-function getRelativePath(absolutePath: string): string {
-  return relative(process.cwd(), absolutePath);
-}
 
 /**
  * Map a RuntimeConnection type string to a GraphEdge EdgeType.
