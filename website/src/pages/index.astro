@@ -1,4 +1,5 @@
 ---
+import { Check, Copy } from '@lucide/astro';
 import Base from '../layouts/Base.astro';
 ---
 
@@ -27,9 +28,20 @@ import Base from '../layouts/Base.astro';
 
 				<!-- Install -->
 				<div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-					<code class="bg-zinc-900 border border-zinc-800 px-5 py-3 text-sm font-mono text-zinc-300">
-						npm install treck
-					</code>
+					<div class="flex items-center bg-zinc-900 border border-zinc-800">
+						<code class="px-5 py-3 text-sm font-mono text-zinc-300">
+							npm install treck
+						</code>
+						<button
+							id="copy-install"
+							type="button"
+							class="px-3 py-3 border-l border-zinc-800 text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer"
+							aria-label="Copy install command"
+						>
+							<Copy class="copy-icon" size={16} />
+							<Check class="check-icon hidden" size={16} />
+						</button>
+					</div>
 				</div>
 
 				<!-- Feature pills -->
@@ -107,4 +119,20 @@ import Base from '../layouts/Base.astro';
 			<p>MIT License &middot; Built by <a href="https://github.com/fredrivett" class="text-zinc-500 hover:text-zinc-300 transition-colors">@fredrivett</a></p>
 		</footer>
 	</div>
+<script>
+	const button = document.getElementById('copy-install');
+	if (button) {
+		button.addEventListener('click', async () => {
+			await navigator.clipboard.writeText('npm install treck');
+			const copyIcon = button.querySelector('.copy-icon') as HTMLElement;
+			const checkIcon = button.querySelector('.check-icon') as HTMLElement;
+			copyIcon.classList.add('hidden');
+			checkIcon.classList.remove('hidden');
+			setTimeout(() => {
+				copyIcon.classList.remove('hidden');
+				checkIcon.classList.add('hidden');
+			}, 2000);
+		});
+	}
+</script>
 </Base>
