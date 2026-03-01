@@ -28,6 +28,8 @@ function connectionTypeToEdgeType(type: string): EdgeType {
       return 'async-dispatch';
     case 'task-trigger':
       return 'async-dispatch';
+    case 'task-trigger-ref':
+      return 'async-dispatch';
     case 'fetch':
       return 'http-request';
     case 'navigation':
@@ -320,7 +322,12 @@ export class GraphBuilder {
           connection.type === 'task-trigger' && node.metadata.taskId === connection.targetHint;
       }
 
-      if (isEventMatch || isTaskMatch || isInvokeMatch) {
+      const isTaskRefMatch =
+        connection.type === 'task-trigger-ref' &&
+        (node.entryType === 'trigger-task' || node.entryType === 'trigger-scheduled-task') &&
+        node.name === connection.targetHint;
+
+      if (isEventMatch || isTaskMatch || isInvokeMatch || isTaskRefMatch) {
         edges.push({
           id: `${sourceId}->${nodeId}`,
           source: sourceId,

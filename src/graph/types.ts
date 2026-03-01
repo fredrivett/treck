@@ -31,6 +31,7 @@ export type EntryType =
   | 'page'
   | 'inngest-function'
   | 'trigger-task'
+  | 'trigger-scheduled-task'
   | 'middleware'
   | 'server-action';
 
@@ -39,6 +40,7 @@ export interface EntryPointMetadata {
   route?: string;
   eventTrigger?: string;
   taskId?: string;
+  cronSchedule?: string;
 }
 
 export type EdgeType =
