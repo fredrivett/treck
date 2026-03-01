@@ -39,6 +39,12 @@
           }
         }
       }
+    },
+    {
+      "includes": ["website/**/*.astro"],
+      "linter": {
+        "enabled": false
+      }
     }
   ],
   "javascript": {
