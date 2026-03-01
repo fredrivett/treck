@@ -5,7 +5,7 @@ import { GraphBuilder } from '../../graph/graph-builder.js';
 import { entryPoints } from '../../graph/graph-query.js';
 import { GraphStore } from '../../graph/graph-store.js';
 import { loadConfig } from '../utils/config.js';
-import { findSourceFiles } from '../utils/next-suggestion.js';
+import { findSourceFiles } from '../utils/source-files.js';
 
 /**
  * Register the `treck sync` CLI command.

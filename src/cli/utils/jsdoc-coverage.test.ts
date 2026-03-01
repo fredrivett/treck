@@ -1,7 +1,8 @@
 import * as p from '@clack/prompts';
 import { describe, expect, it, vi } from 'vitest';
-import type { ProjectScan } from './next-suggestion.js';
-import { isTrivialBody, renderMissingJsDocList } from './next-suggestion.js';
+import { isTrivialBody } from '../../extractors/trivial.js';
+import type { ProjectScan } from './jsdoc-coverage.js';
+import { renderMissingJsDocList } from './jsdoc-coverage.js';
 
 vi.mock('@clack/prompts', () => ({
   log: {

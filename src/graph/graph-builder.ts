@@ -7,7 +7,7 @@
  */
 
 import { relative } from 'node:path';
-import { isTrivialBody } from '../cli/utils/next-suggestion.js';
+import { isTrivialBody } from '../extractors/trivial.js';
 import type { CallSite, ImportInfo, SymbolInfo } from '../extractors/types.js';
 import { TypeScriptExtractor } from '../extractors/typescript/index.js';
 import { ContentHasher } from '../hasher/index.js';

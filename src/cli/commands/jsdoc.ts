@@ -6,7 +6,7 @@ import {
   renderJsDocCoverageStats,
   renderMissingJsDocList,
   scanProjectAsync,
-} from '../utils/next-suggestion.js';
+} from '../utils/jsdoc-coverage.js';
 
 interface JsDocOptions {
   verbose?: boolean;
