@@ -1,5 +1,7 @@
+import { Menu } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { BrowserRouter, Route, Routes, useSearchParams } from 'react-router';
+import { BrowserRouter, Route, Routes, useLocation, useSearchParams } from 'react-router';
+import { useMediaQuery } from 'usehooks-ts';
 import type { FlowGraph as FlowGraphData } from '../../graph/types.js';
 import { DocsTree } from './components/DocsTree';
 import { DocsViewer } from './components/DocsViewer';
@@ -7,6 +9,7 @@ import { FlowControls } from './components/FlowControls';
 import { FlowGraph, getNodeCategory, type NodeCategory } from './components/FlowGraph';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { Sidebar } from './components/Sidebar';
+import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from './components/ui/drawer';
 import { ViewNav } from './components/ViewNav';
 
 interface GraphViewProps {
@@ -80,6 +83,20 @@ function Layout() {
   const [graph, setGraph] = useState<FlowGraphData | null>(null);
   const [graphError, setGraphError] = useState<string | null>(null);
   const [graphLoading, setGraphLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const isDesktop = useMediaQuery('(min-width: 768px)', {
+    defaultValue: true,
+    initializeWithValue: false,
+  });
+
+  const location = useLocation();
+
+  /** Close the mobile sidebar when the route changes. */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally reacts to pathname changes
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -207,29 +224,55 @@ function Layout() {
     return new Set(filteredGraph.nodes.map((n) => n.name));
   }, [graph, hasFilter, filteredGraph]);
 
+  const sidebarContent = (
+    <>
+      <ViewNav />
+      <FlowControls
+        loading={graphLoading}
+        searchQuery={searchQuery}
+        onSearch={setSearchQuery}
+        nodeCount={filteredGraph.nodes.length}
+        edgeCount={filteredGraph.edges.length}
+        availableTypes={availableTypes}
+        enabledTypes={enabledTypes}
+        onToggleType={onToggleType}
+        onSoloType={(category) => setParam('types', category)}
+        onResetTypes={() => setParam('types', null)}
+        showConditionals={showConditionals}
+        onToggleConditionals={() => setParam('conditionals', showConditionals ? null : 'true')}
+        hasConditionalEdges={hasConditionalEdges}
+      />
+      <div className="border-t border-border" />
+      <DocsTree visibleNames={visibleNames} />
+    </>
+  );
+
   return (
     <div className="flex h-full">
-      <Sidebar>
-        <ViewNav />
-        <FlowControls
-          loading={graphLoading}
-          searchQuery={searchQuery}
-          onSearch={setSearchQuery}
-          nodeCount={filteredGraph.nodes.length}
-          edgeCount={filteredGraph.edges.length}
-          availableTypes={availableTypes}
-          enabledTypes={enabledTypes}
-          onToggleType={onToggleType}
-          onSoloType={(category) => setParam('types', category)}
-          onResetTypes={() => setParam('types', null)}
-          showConditionals={showConditionals}
-          onToggleConditionals={() => setParam('conditionals', showConditionals ? null : 'true')}
-          hasConditionalEdges={hasConditionalEdges}
-        />
-        <div className="border-t border-border" />
-        <DocsTree visibleNames={visibleNames} />
-      </Sidebar>
+      {isDesktop ? (
+        <Sidebar>{sidebarContent}</Sidebar>
+      ) : (
+        <Drawer direction="left" open={sidebarOpen} onOpenChange={setSidebarOpen}>
+          <DrawerContent className="w-[280px] max-w-[80vw]">
+            <DrawerTitle className="sr-only">Navigation</DrawerTitle>
+            <DrawerDescription className="sr-only">
+              Sidebar navigation and graph controls
+            </DrawerDescription>
+            <div className="flex flex-col h-full overflow-hidden">{sidebarContent}</div>
+          </DrawerContent>
+        </Drawer>
+      )}
       <main className="flex-1 relative overflow-hidden">
+        {!isDesktop && (
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            className="absolute top-3 left-3 z-10 rounded-md p-2 bg-background border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+            aria-label="Open sidebar"
+          >
+            <Menu size={18} />
+          </button>
+        )}
         <Routes>
           <Route
             path="/"
