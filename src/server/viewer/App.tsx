@@ -1,16 +1,14 @@
-import { Menu } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { BrowserRouter, Route, Routes, useLocation, useSearchParams } from 'react-router';
-import { useMediaQuery } from 'usehooks-ts';
 import type { FlowGraph as FlowGraphData } from '../../graph/types.js';
 import { DocsTree } from './components/DocsTree';
 import { DocsViewer } from './components/DocsViewer';
 import { FlowControls } from './components/FlowControls';
-import { FlowGraph, getNodeCategory, type NodeCategory } from './components/FlowGraph';
+import { FlowGraph, type NodeCategory } from './components/FlowGraph';
 import { LoadingSpinner } from './components/LoadingSpinner';
-import { Sidebar } from './components/Sidebar';
-import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from './components/ui/drawer';
+import { ViewerShell } from './components/ViewerShell';
 import { ViewNav } from './components/ViewNav';
+import { useGraphFilters } from './hooks/useGraphFilters';
 
 interface GraphViewProps {
   graph: FlowGraphData | null;
@@ -83,21 +81,8 @@ function Layout() {
   const [graph, setGraph] = useState<FlowGraphData | null>(null);
   const [graphError, setGraphError] = useState<string | null>(null);
   const [graphLoading, setGraphLoading] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const isDesktop = useMediaQuery('(min-width: 768px)', {
-    defaultValue: true,
-    initializeWithValue: false,
-  });
 
   const location = useLocation();
-
-  /** Close the mobile sidebar when the route changes. */
-  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally reacts to pathname changes
-  useEffect(() => {
-    setSidebarOpen(false);
-  }, [location.pathname]);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   /** Set or delete a single URL search param. */
@@ -123,6 +108,12 @@ function Layout() {
 
   const showConditionals = searchParams.get('conditionals') === 'true';
 
+  /** Serialize enabled types to a URL param. */
+  const setEnabledTypes = useCallback(
+    (types: Set<NodeCategory> | null) => setParam('types', types ? [...types].join(',') : null),
+    [setParam],
+  );
+
   useEffect(() => {
     fetch('/api/graph')
       .then((res) => {
@@ -139,82 +130,14 @@ function Layout() {
       });
   }, []);
 
-  const availableTypes = useMemo(() => {
-    if (!graph) return new Map<NodeCategory, number>();
-    const counts = new Map<NodeCategory, number>();
-    for (const node of graph.nodes) {
-      const cat = getNodeCategory(node);
-      counts.set(cat, (counts.get(cat) || 0) + 1);
-    }
-    return counts;
-  }, [graph]);
-
-  const hasConditionalEdges = useMemo(
-    () => !!graph?.edges.some((e) => e.type === 'conditional-call'),
-    [graph],
-  );
-
-  // Compute filtered graph for sidebar stats (type + search filters, no entry highlight)
-  const filteredGraph = useMemo(() => {
-    if (!graph) return { nodes: [], edges: [] };
-    let filtered: Pick<FlowGraphData, 'nodes' | 'edges'> = graph;
-
-    if (enabledTypes) {
-      const typeMatchIds = new Set(
-        filtered.nodes.filter((n) => enabledTypes.has(getNodeCategory(n))).map((n) => n.id),
-      );
-      filtered = {
-        nodes: filtered.nodes.filter((n) => typeMatchIds.has(n.id)),
-        edges: filtered.edges.filter(
-          (e) => typeMatchIds.has(e.source) && typeMatchIds.has(e.target),
-        ),
-      };
-    }
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      const matchingIds = new Set(
-        filtered.nodes
-          .filter(
-            (n) =>
-              n.name.toLowerCase().includes(q) ||
-              n.filePath.toLowerCase().includes(q) ||
-              n.metadata?.route?.toLowerCase().includes(q) ||
-              n.metadata?.eventTrigger?.toLowerCase().includes(q) ||
-              n.metadata?.taskId?.toLowerCase().includes(q),
-          )
-          .map((n) => n.id),
-      );
-      filtered = {
-        nodes: filtered.nodes.filter((n) => matchingIds.has(n.id)),
-        edges: filtered.edges.filter((e) => matchingIds.has(e.source) && matchingIds.has(e.target)),
-      };
-    }
-
-    return filtered;
-  }, [graph, searchQuery, enabledTypes]);
-
-  const onToggleType = useCallback(
-    (category: NodeCategory) => {
-      const current = enabledTypes;
-      let next: Set<NodeCategory> | null;
-      if (!current) {
-        const all = new Set(availableTypes.keys());
-        all.delete(category);
-        next = all;
-      } else {
-        next = new Set(current);
-        if (next.has(category)) {
-          next.delete(category);
-        } else {
-          next.add(category);
-        }
-        if (next.size === availableTypes.size) next = null;
-      }
-      setParam('types', next ? [...next].join(',') : null);
-    },
-    [enabledTypes, availableTypes, setParam],
-  );
+  const {
+    availableTypes,
+    hasConditionalEdges,
+    filteredGraph,
+    onToggleType,
+    onSoloType,
+    onResetTypes,
+  } = useGraphFilters({ graph, searchQuery, enabledTypes, setEnabledTypes });
 
   // Set of visible symbol names from the filtered graph, used to sync tree with graph filters.
   // null means "show all" (no filters active or graph not loaded yet).
@@ -236,8 +159,8 @@ function Layout() {
         availableTypes={availableTypes}
         enabledTypes={enabledTypes}
         onToggleType={onToggleType}
-        onSoloType={(category) => setParam('types', category)}
-        onResetTypes={() => setParam('types', null)}
+        onSoloType={onSoloType}
+        onResetTypes={onResetTypes}
         showConditionals={showConditionals}
         onToggleConditionals={() => setParam('conditionals', showConditionals ? null : 'true')}
         hasConditionalEdges={hasConditionalEdges}
@@ -248,50 +171,25 @@ function Layout() {
   );
 
   return (
-    <div className="flex h-full">
-      {isDesktop ? (
-        <Sidebar>{sidebarContent}</Sidebar>
-      ) : (
-        <Drawer direction="left" open={sidebarOpen} onOpenChange={setSidebarOpen}>
-          <DrawerContent className="w-[280px] max-w-[80vw]">
-            <DrawerTitle className="sr-only">Navigation</DrawerTitle>
-            <DrawerDescription className="sr-only">
-              Sidebar navigation and graph controls
-            </DrawerDescription>
-            <div className="flex flex-col h-full overflow-hidden">{sidebarContent}</div>
-          </DrawerContent>
-        </Drawer>
-      )}
-      <main className="flex-1 relative overflow-hidden">
-        {!isDesktop && (
-          <button
-            type="button"
-            onClick={() => setSidebarOpen(true)}
-            className="absolute top-3 left-3 z-10 rounded-md p-2 bg-background border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
-            aria-label="Open sidebar"
-          >
-            <Menu size={18} />
-          </button>
-        )}
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <GraphView
-                graph={graph}
-                loading={graphLoading}
-                error={graphError}
-                searchQuery={searchQuery}
-                enabledTypes={enabledTypes}
-                showConditionals={showConditionals}
-              />
-            }
-          />
-          <Route path="/docs" element={<DocsViewer />} />
-          <Route path="/docs/*" element={<DocsViewer />} />
-        </Routes>
-      </main>
-    </div>
+    <ViewerShell sidebarContent={sidebarContent} closeTrigger={location.pathname}>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <GraphView
+              graph={graph}
+              loading={graphLoading}
+              error={graphError}
+              searchQuery={searchQuery}
+              enabledTypes={enabledTypes}
+              showConditionals={showConditionals}
+            />
+          }
+        />
+        <Route path="/docs" element={<DocsViewer />} />
+        <Route path="/docs/*" element={<DocsViewer />} />
+      </Routes>
+    </ViewerShell>
   );
 }
 
