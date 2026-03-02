@@ -3,8 +3,16 @@ import { FlowControls } from '@viewer/components/FlowControls';
 import { FlowGraph, getNodeCategory, type NodeCategory } from '@viewer/components/FlowGraph';
 import { LoadingSpinner } from '@viewer/components/LoadingSpinner';
 import { Sidebar } from '@viewer/components/Sidebar';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
+} from '@viewer/components/ui/drawer';
+import { Menu } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { MemoryRouter } from 'react-router';
+import { useMediaQuery } from 'usehooks-ts';
 
 interface ShowcaseViewerProps {
   /** Pre-loaded graph data for the showcased project. */
@@ -27,6 +35,12 @@ function ShowcaseViewerInner({ graph, projectName }: ShowcaseViewerProps) {
   const [enabledTypes, setEnabledTypes] = useState<Set<NodeCategory> | null>(null);
   const [showConditionals, setShowConditionals] = useState(false);
   const [layoutReady, setLayoutReady] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const isDesktop = useMediaQuery('(min-width: 768px)', {
+    defaultValue: true,
+    initializeWithValue: false,
+  });
 
   const onLayoutReady = useCallback(() => {
     setLayoutReady(true);
@@ -105,32 +119,56 @@ function ShowcaseViewerInner({ graph, projectName }: ShowcaseViewerProps) {
     [availableTypes],
   );
 
+  const sidebarContent = (
+    <>
+      <div className="p-4 border-b border-border">
+        <h2 className="text-sm font-semibold text-foreground">{projectName}</h2>
+        <p className="text-[11px] text-muted-foreground mt-0.5">
+          Analysed with <span className="font-medium">treck</span>
+        </p>
+      </div>
+      <FlowControls
+        loading={false}
+        searchQuery={searchQuery}
+        onSearch={setSearchQuery}
+        nodeCount={filteredGraph.nodes.length}
+        edgeCount={filteredGraph.edges.length}
+        availableTypes={availableTypes}
+        enabledTypes={enabledTypes}
+        onToggleType={onToggleType}
+        onSoloType={(category) => setEnabledTypes(new Set([category]))}
+        onResetTypes={() => setEnabledTypes(null)}
+        showConditionals={showConditionals}
+        onToggleConditionals={() => setShowConditionals((prev) => !prev)}
+        hasConditionalEdges={hasConditionalEdges}
+      />
+    </>
+  );
+
   return (
     <div className="dark flex h-full font-sans">
-      <Sidebar>
-        <div className="p-4 border-b border-border">
-          <h2 className="text-sm font-semibold text-foreground">{projectName}</h2>
-          <p className="text-[11px] text-muted-foreground mt-0.5">
-            Analysed with <span className="font-medium">treck</span>
-          </p>
-        </div>
-        <FlowControls
-          loading={false}
-          searchQuery={searchQuery}
-          onSearch={setSearchQuery}
-          nodeCount={filteredGraph.nodes.length}
-          edgeCount={filteredGraph.edges.length}
-          availableTypes={availableTypes}
-          enabledTypes={enabledTypes}
-          onToggleType={onToggleType}
-          onSoloType={(category) => setEnabledTypes(new Set([category]))}
-          onResetTypes={() => setEnabledTypes(null)}
-          showConditionals={showConditionals}
-          onToggleConditionals={() => setShowConditionals((prev) => !prev)}
-          hasConditionalEdges={hasConditionalEdges}
-        />
-      </Sidebar>
+      {isDesktop ? (
+        <Sidebar>{sidebarContent}</Sidebar>
+      ) : (
+        <Drawer direction="left" open={sidebarOpen} onOpenChange={setSidebarOpen}>
+          <DrawerContent className="w-[280px] max-w-[80vw]">
+            <DrawerTitle className="sr-only">{projectName}</DrawerTitle>
+            <DrawerDescription className="sr-only">Graph controls and filters</DrawerDescription>
+            <div className="flex flex-col h-full overflow-hidden">{sidebarContent}</div>
+          </DrawerContent>
+        </Drawer>
+      )}
       <main className="flex-1 relative overflow-hidden">
+        {!isDesktop && (
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            className="absolute top-3 left-3 z-10 rounded-md p-2 bg-background border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+            aria-label="Open sidebar"
+          >
+            <Menu size={18} />
+          </button>
+        )}
         <div className="w-full h-full relative">
           {!layoutReady && (
             <div className="absolute inset-0 z-20 bg-background">
