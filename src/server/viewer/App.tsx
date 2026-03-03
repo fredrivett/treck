@@ -38,7 +38,7 @@ function GraphView({
         <div className="font-semibold">Error loading graph</div>
         <div className="text-muted-foreground text-sm">{error}</div>
         <div className="text-muted-foreground text-[13px] mt-2">
-          Make sure you've run <code className="bg-muted px-1.5 rounded">treck graph</code> first.
+          Make sure you've run <code className="bg-muted px-1.5 rounded">treck sync</code> first.
         </div>
       </div>
     );
@@ -49,7 +49,7 @@ function GraphView({
       <div className="flex flex-col items-center justify-center h-full font-sans text-muted-foreground gap-2">
         <div className="font-semibold text-base">No graph data</div>
         <div className="text-sm">
-          Run <code className="bg-muted px-1.5 rounded">treck graph</code> to build the project call
+          Run <code className="bg-muted px-1.5 rounded">treck sync</code> to build the project call
           graph.
         </div>
       </div>
