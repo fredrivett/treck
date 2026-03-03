@@ -1,17 +1,12 @@
 ---
+import Nav from '../../components/Nav.astro';
 import Base from '../../layouts/Base.astro';
 import { showcases } from '../../showcases';
 ---
 
 <Base title="Showcases — Treck" description="See treck in action on popular TypeScript projects.">
 	<div class="min-h-screen flex flex-col">
-		<nav class="flex items-center justify-between px-6 py-4 max-w-5xl mx-auto w-full">
-			<a href="/" class="font-mono text-lg font-medium tracking-tight text-zinc-100">treck</a>
-			<div class="flex items-center gap-6 text-sm font-mono text-zinc-500">
-				<a href="/showcases" class="text-zinc-300">Showcases</a>
-				<a href="https://github.com/fredrivett/treck" class="hover:text-zinc-300 transition-colors">GitHub</a>
-			</div>
-		</nav>
+		<Nav active="showcases" />
 
 		<main class="flex-1 px-6 pt-12 sm:pt-16 max-w-3xl mx-auto w-full">
 			<h1 class="font-mono text-3xl font-bold tracking-tight mb-3">Showcases</h1>
