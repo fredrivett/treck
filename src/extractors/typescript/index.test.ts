@@ -1243,9 +1243,9 @@ function route(req: any) {
 
       const calls = extractor.extractCallSites(TEST_FILE, 'route');
 
-      // foo() is in then + else but NOT else-if — it's still conditional
+      // foo() is in then + else but NOT else-if — still conditional, both occurrences returned
       const fooCalls = calls.filter((c) => c.name === 'foo');
-      expect(fooCalls).toHaveLength(1);
+      expect(fooCalls).toHaveLength(2);
       expect(fooCalls[0].conditions).toBeDefined();
       expect(fooCalls[0].conditions?.length).toBeGreaterThan(0);
 
@@ -1275,7 +1275,7 @@ function route(req: any) {
       expect(logCall?.conditions).toBeUndefined();
     });
 
-    it('should keep first occurrence when same function in different if blocks', () => {
+    it('should return all occurrences when same function is called in different if blocks', () => {
       const code = `
 function process(req: any) {
   if (req.a) {
@@ -1290,12 +1290,11 @@ function process(req: any) {
 
       const calls = extractor.extractCallSites(TEST_FILE, 'process');
 
-      // Should be deduped to 1 call
+      // Both conditional occurrences should be returned so callers can merge conditions
       const handleCalls = calls.filter((c) => c.name === 'handle');
-      expect(handleCalls).toHaveLength(1);
-      // Should keep the first conditional occurrence
-      expect(handleCalls[0].conditions).toHaveLength(1);
+      expect(handleCalls).toHaveLength(2);
       expect(handleCalls[0].conditions?.[0].condition).toContain('req.a');
+      expect(handleCalls[1].conditions?.[0].condition).toContain('req.b');
     });
 
     it('should promote ternary to unconditional when called in both branches', () => {

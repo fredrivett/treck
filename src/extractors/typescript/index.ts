@@ -325,8 +325,10 @@ export class TypeScriptExtractor {
       if (isEffectivelyUnconditional) {
         result.push({ name: sites[0].name, expression: sites[0].expression });
       } else {
-        // Keep first occurrence
-        result.push(sites[0]);
+        // Keep all occurrences so callers can merge the distinct conditions
+        for (const site of sites) {
+          result.push(site);
+        }
       }
     }
 

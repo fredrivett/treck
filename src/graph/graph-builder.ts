@@ -370,20 +370,31 @@ export class GraphBuilder {
   }
 
   /**
-   * Deduplicate edges by source+target, keeping the first occurrence.
+   * Deduplicate edges by source+target, merging conditions where necessary.
+   *
+   * The extractor guarantees that if any call is unconditional, only that one
+   * call site is returned — so duplicates reaching here are always conditional.
+   * Both occurrences get their labels merged as `(A) or (B)`.
    */
   private deduplicateEdges(edges: GraphEdge[]): GraphEdge[] {
-    const seen = new Set<string>();
-    const result: GraphEdge[] = [];
+    const seen = new Map<string, GraphEdge>();
 
     for (const edge of edges) {
       const key = `${edge.source}->${edge.target}`;
-      if (!seen.has(key)) {
-        seen.add(key);
-        result.push(edge);
+      const existing = seen.get(key);
+
+      if (!existing) {
+        seen.set(key, { ...edge });
+        continue;
       }
+
+      // Both conditional — merge labels and drop the conditions array
+      const existingLabel = existing.label ?? '';
+      const newLabel = edge.label ?? '';
+      existing.label = `(${existingLabel}) or (${newLabel})`;
+      delete existing.conditions;
     }
 
-    return result;
+    return [...seen.values()];
   }
 }
