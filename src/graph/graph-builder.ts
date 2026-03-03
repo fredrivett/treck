@@ -370,20 +370,42 @@ export class GraphBuilder {
   }
 
   /**
-   * Deduplicate edges by source+target, keeping the first occurrence.
+   * Deduplicate edges by source+target, merging conditions where necessary.
+   *
+   * Rules:
+   * - If either occurrence is unconditional (`direct-call`), the merged edge is unconditional.
+   * - If both occurrences are conditional, the merged edge keeps `conditional-call` type
+   *   with a combined label `(A) or (B)` and no conditions array (since it no longer
+   *   represents a single condition chain).
    */
   private deduplicateEdges(edges: GraphEdge[]): GraphEdge[] {
-    const seen = new Set<string>();
-    const result: GraphEdge[] = [];
+    const seen = new Map<string, GraphEdge>();
 
     for (const edge of edges) {
       const key = `${edge.source}->${edge.target}`;
-      if (!seen.has(key)) {
-        seen.add(key);
-        result.push(edge);
+      const existing = seen.get(key);
+
+      if (!existing) {
+        seen.set(key, { ...edge });
+        continue;
       }
+
+      // Unconditional wins — upgrade existing to direct-call and clear conditions
+      if (edge.type === 'direct-call') {
+        seen.set(key, { ...edge });
+        continue;
+      }
+
+      // Existing is already unconditional — keep it, discard the conditional duplicate
+      if (existing.type === 'direct-call') continue;
+
+      // Both conditional — merge labels and drop the conditions array
+      const existingLabel = existing.label ?? '';
+      const newLabel = edge.label ?? '';
+      existing.label = `(${existingLabel}) or (${newLabel})`;
+      delete existing.conditions;
     }
 
-    return result;
+    return [...seen.values()];
   }
 }

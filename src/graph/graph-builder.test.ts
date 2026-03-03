@@ -287,6 +287,61 @@ export function handle(req: any) {
       expect(edge?.label).toContain('\u2192'); // → character joining nested conditions
       expect(edge?.conditions).toHaveLength(2);
     });
+
+    it('should upgrade to direct-call when same target is called conditionally and unconditionally', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function save() { return true }
+export function handle(req: any) {
+  if (req.valid) {
+    save()
+  }
+  save()
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const handleNode = graph.nodes.find((n) => n.name === 'handle');
+      const saveNode = graph.nodes.find((n) => n.name === 'save');
+
+      const edges = graph.edges.filter(
+        (e) => e.source === handleNode?.id && e.target === saveNode?.id,
+      );
+
+      expect(edges).toHaveLength(1);
+      expect(edges[0].type).toBe('direct-call');
+      expect(edges[0].conditions).toBeUndefined();
+    });
+
+    it('should merge labels when same target is called under two different conditions', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function save() { return true }
+export function handle(req: any) {
+  if (req.type === 'image') {
+    save()
+  }
+  if (req.type === 'doc') {
+    save()
+  }
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const handleNode = graph.nodes.find((n) => n.name === 'handle');
+      const saveNode = graph.nodes.find((n) => n.name === 'save');
+
+      const edges = graph.edges.filter(
+        (e) => e.source === handleNode?.id && e.target === saveNode?.id,
+      );
+
+      expect(edges).toHaveLength(1);
+      expect(edges[0].type).toBe('conditional-call');
+      expect(edges[0].label).toMatch(/or/);
+      expect(edges[0].conditions).toBeUndefined();
+    });
   });
 
   describe('trigger task dispatch edges', () => {
