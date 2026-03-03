@@ -7,4 +7,5 @@ set -e
 # picks up the same environment variables.
 cp "$(git worktree list --porcelain | head -1 | cut -d' ' -f2)/.env" .env 2>/dev/null || true
 
-npm install
+pnpm install
+cd website && pnpm install
