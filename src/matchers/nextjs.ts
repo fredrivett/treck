@@ -81,9 +81,12 @@ export const nextjsMatcher: FrameworkMatcher = {
       };
     }
 
-    // Page components (default export — check fullText since the extractor
+    // Page components (default export — check name first, then fullText since the extractor
     // uses the actual function name, not "default", for named default exports)
-    if (PAGE_PATTERN.test(filePath) && symbol.fullText.trimStart().startsWith('export default')) {
+    if (
+      PAGE_PATTERN.test(filePath) &&
+      (symbol.name === 'default' || symbol.fullText.trimStart().startsWith('export default'))
+    ) {
       return {
         entryType: 'page',
         metadata: {

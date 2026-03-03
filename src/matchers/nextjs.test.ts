@@ -195,6 +195,7 @@ describe('nextjsMatcher', () => {
           type: 'fetch',
           targetHint: '/api/users',
           sourceLocation: [5, 10],
+          httpMethod: 'GET',
         });
       });
 
