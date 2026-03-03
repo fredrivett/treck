@@ -58,11 +58,14 @@ export class TypeScriptExtractor {
     try {
       const { sourceFile } = this.getSourceFile(filePath);
 
+      // Detect file-level directives ("use server", "use client")
+      const directives = this.extractDirectives(sourceFile);
+
       const visit = (node: ts.Node) => {
         try {
           // Function declarations: function foo() {}
           if (ts.isFunctionDeclaration(node) && node.name) {
-            symbols.push(this.extractFunction(node, sourceFile));
+            symbols.push(this.withDirectives(this.extractFunction(node, sourceFile), directives));
           }
 
           // Arrow functions: const foo = () => {}
@@ -73,20 +76,24 @@ export class TypeScriptExtractor {
               decl.initializer &&
               (ts.isArrowFunction(decl.initializer) || ts.isFunctionExpression(decl.initializer))
             ) {
-              symbols.push(this.extractArrowFunction(decl, sourceFile));
+              symbols.push(
+                this.withDirectives(this.extractArrowFunction(decl, sourceFile), directives),
+              );
             } else if (
               decl.initializer &&
               ts.isCallExpression(decl.initializer) &&
               ts.isIdentifier(decl.name) &&
               this.isTopLevelVariable(node, sourceFile)
             ) {
-              symbols.push(this.extractCallExpression(decl, sourceFile));
+              symbols.push(
+                this.withDirectives(this.extractCallExpression(decl, sourceFile), directives),
+              );
             }
           }
 
           // Class declarations: class Foo {}
           if (ts.isClassDeclaration(node) && node.name) {
-            symbols.push(this.extractClass(node, sourceFile));
+            symbols.push(this.withDirectives(this.extractClass(node, sourceFile), directives));
           }
 
           // Recurse into child nodes
@@ -719,6 +726,34 @@ export class TypeScriptExtractor {
       isExported,
       jsDoc,
     };
+  }
+
+  /**
+   * Extract file-level directives like `"use server"` or `"use client"`.
+   * These are string-literal expression statements at the top of the file.
+   */
+  private extractDirectives(sourceFile: ts.SourceFile): string[] {
+    const directives: string[] = [];
+    for (const statement of sourceFile.statements) {
+      if (ts.isExpressionStatement(statement) && ts.isStringLiteral(statement.expression)) {
+        directives.push(statement.expression.text);
+      } else {
+        // Directives must appear before any non-directive statement
+        break;
+      }
+    }
+    return directives;
+  }
+
+  /**
+   * Attach file-level directives to a symbol, if any exist.
+   * @param symbol - the extracted symbol
+   * @param directives - directives detected from the file's leading statements
+   * @returns the symbol with directives attached (or unchanged if none)
+   */
+  private withDirectives(symbol: SymbolInfo, directives: string[]): SymbolInfo {
+    if (directives.length === 0) return symbol;
+    return { ...symbol, directives };
   }
 
   /**

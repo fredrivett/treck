@@ -41,6 +41,8 @@ export interface SymbolInfo {
   returnType?: string;
   isExported?: boolean;
   jsDoc?: JsDocInfo;
+  /** File-level directives like `"use server"` or `"use client"`. */
+  directives?: string[];
 }
 
 export interface CallSite {

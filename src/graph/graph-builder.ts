@@ -24,7 +24,14 @@ function connectionTypeToEdgeType(type: ConnectionType): EdgeType {
   switch (type) {
     case 'inngest-send':
       return 'event-emit';
+    case 'inngest-invoke':
+      return 'async-dispatch';
+    case 'task-trigger':
+      return 'async-dispatch';
+    case 'task-trigger-ref':
+      return 'async-dispatch';
     case 'fetch':
+      return 'http-request';
     case 'navigation':
       return 'http-request';
     default:
@@ -168,7 +175,7 @@ export class GraphBuilder {
             const resolved = matcher.resolveConnection(connection, sourceFiles, sourceFileSet);
             if (resolved) {
               const targetRelPath = getRelativePath(resolved.targetFilePath);
-              const targetId = `${targetRelPath}:${resolved.targetSymbol.name}`;
+              const targetId = `${targetRelPath}:${resolved.targetName}`;
 
               if (nodeMap.has(targetId)) {
                 edges.push({
@@ -179,6 +186,9 @@ export class GraphBuilder {
                   label: connection.targetHint,
                   isAsync: true,
                 });
+              } else {
+                // Resolved target not in graph — fall through to metadata matching
+                this.addUnresolvedConnectionEdge(sourceId, connection, edges, nodeMap);
               }
             } else {
               // Even if the matcher can't resolve, record the connection
@@ -326,7 +336,26 @@ export class GraphBuilder {
         (node.entryType === 'trigger-task' || node.entryType === 'trigger-scheduled-task') &&
         node.name === connection.targetHint;
 
-      if (isEventMatch || isTaskMatch || isInvokeMatch || isTaskRefMatch) {
+      // For Next.js fetch/navigation, match by route metadata
+      const isFetchMatch =
+        connection.type === 'fetch' &&
+        node.entryType === 'api-route' &&
+        node.metadata?.route === connection.targetHint &&
+        node.metadata?.httpMethod === connection.httpMethod;
+
+      const isNavigationMatch =
+        connection.type === 'navigation' &&
+        node.entryType === 'page' &&
+        node.metadata?.route === connection.targetHint;
+
+      if (
+        isEventMatch ||
+        isTaskMatch ||
+        isInvokeMatch ||
+        isTaskRefMatch ||
+        isFetchMatch ||
+        isNavigationMatch
+      ) {
         edges.push({
           id: `${sourceId}->${nodeId}`,
           source: sourceId,
