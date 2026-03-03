@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "setup": "cp $(git worktree list --porcelain | head -1 | cut -d' ' -f2)/.env .env 2>/dev/null; npm install",
+    "setup": "bash scripts/setup.sh",
     "run": "bash scripts/run.sh"
   }
 }
