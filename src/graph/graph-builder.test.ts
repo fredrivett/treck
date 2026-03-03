@@ -342,6 +342,38 @@ export function handle(req: any) {
       expect(edges[0].label).toMatch(/or/);
       expect(edges[0].conditions).toBeUndefined();
     });
+
+    it('should merge labels across three or more different conditions', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function save() { return true }
+export function handle(req: any) {
+  if (req.type === 'image') {
+    save()
+  }
+  if (req.type === 'doc') {
+    save()
+  }
+  if (req.type === 'video') {
+    save()
+  }
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const handleNode = graph.nodes.find((n) => n.name === 'handle');
+      const saveNode = graph.nodes.find((n) => n.name === 'save');
+
+      const edges = graph.edges.filter(
+        (e) => e.source === handleNode?.id && e.target === saveNode?.id,
+      );
+
+      expect(edges).toHaveLength(1);
+      expect(edges[0].type).toBe('conditional-call');
+      expect(edges[0].label).toMatch(/or.*or/);
+      expect(edges[0].conditions).toBeUndefined();
+    });
   });
 
   describe('trigger task dispatch edges', () => {
