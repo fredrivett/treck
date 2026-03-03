@@ -17,7 +17,11 @@ import type { FlowGraph, GraphEdge, GraphNode } from './types.js';
  * @param nodeId - The node to center the diagram on
  * @param depth - Traversal depth (default: Infinity for full connected flow)
  */
-export function nodeToMermaid(graph: FlowGraph, nodeId: string, depth = Number.POSITIVE_INFINITY): string {
+export function nodeToMermaid(
+  graph: FlowGraph,
+  nodeId: string,
+  depth = Number.POSITIVE_INFINITY,
+): string {
   const nodeMap = new Map(graph.nodes.map((n) => [n.id, n]));
   if (!nodeMap.has(nodeId)) return '';
 
