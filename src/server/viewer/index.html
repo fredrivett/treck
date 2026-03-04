@@ -5,8 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>treck</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'%3E%3Crect width='32' height='32' rx='6' fill='%2309090b'/%3E%3Cpath d='M8 12h16M8 12l4-4M8 12l4 4M24 20H8M24 20l-4-4M24 20l-4 4' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+    <script>
+      // Apply stored theme preference before first paint to prevent FOUC
+      (() => {
+        var p = 'auto';
+        try { p = localStorage.getItem('treck:theme-preference') || 'auto'; } catch {}
+        var dark = p === 'dark' || (p === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+        var r = document.documentElement;
+        if (dark) r.classList.add('dark');
+        r.setAttribute('data-theme', dark ? 'dark' : 'light');
+        r.setAttribute('data-theme-preference', p);
+        r.style.setProperty('color-scheme', dark ? 'dark' : 'light');
+      })();
+    </script>
   </head>
-  <body class="h-full font-sans">
+  <body class="h-full font-sans bg-background text-foreground">
     <div id="root" class="h-full"></div>
     <script type="module" src="./main.tsx"></script>
   </body>

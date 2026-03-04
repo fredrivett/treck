@@ -11,9 +11,7 @@ interface ShowcaseViewerProps {
 export function ShowcaseViewer({ graph }: ShowcaseViewerProps) {
   return (
     <MemoryRouter>
-      <div className="dark h-full">
-        <GraphExplorer graph={graph} />
-      </div>
+      <GraphExplorer graph={graph} />
     </MemoryRouter>
   );
 }

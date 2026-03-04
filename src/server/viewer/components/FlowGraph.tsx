@@ -161,18 +161,25 @@ interface FlowGraphProps {
 }
 
 /**
- * Detect dark mode by checking for a `.dark` ancestor in the DOM.
+ * Detect dark mode by checking for a `.dark` class on the document root.
  *
- * @param ref - Ref to a mounted DOM element
+ * Observes class mutations on `<html>` so the value updates when the
+ * theme is toggled at runtime.
  */
-function useDarkMode(ref: React.RefObject<HTMLElement | null>): boolean {
-  const [isDark, setIsDark] = useState(false);
+function useDarkMode(): boolean {
+  const [isDark, setIsDark] = useState(
+    () => typeof document !== 'undefined' && document.documentElement.classList.contains('dark'),
+  );
 
   useEffect(() => {
-    if (ref.current) {
-      setIsDark(ref.current.closest('.dark') !== null);
-    }
-  }, [ref]);
+    const root = document.documentElement;
+    const check = () => setIsDark(root.classList.contains('dark'));
+    check();
+
+    const observer = new MutationObserver(check);
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
 
   return isDark;
 }
@@ -185,7 +192,7 @@ function FlowGraphInner({
   showConditionals,
 }: FlowGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const darkMode = useDarkMode(containerRef);
+  const darkMode = useDarkMode();
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [searchParams, setSearchParams] = useSearchParams();
