@@ -1,0 +1,156 @@
+/*
+ * Styles for dynamically-generated HTML content (markdown rendering,
+ * dependency graphs, related links). These target elements created at
+ * runtime via dangerouslySetInnerHTML or DOM APIs, so they can't be
+ * expressed as inline Tailwind classes.
+ */
+
+/* ---- Dependency graph (injected as HTML string) ---- */
+
+.doc-view .dep-graph {
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.doc-view .dep-graph h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.doc-view .dep-graph .dep-graph-svg svg {
+  max-width: 100%;
+  --_text-sec: #475569;
+  --_group-hdr: color-mix(in srgb, var(--fg) 7%, var(--bg));
+  --_inner-stroke: color-mix(in srgb, var(--fg) 25%, var(--bg));
+}
+
+/* ---- Rendered markdown content (dangerouslySetInnerHTML) ---- */
+
+.doc-view #doc-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.doc-view #doc-content th {
+  text-align: left;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--border);
+}
+
+.doc-view #doc-content td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-view #doc-content tr:last-child td {
+  border-bottom: none;
+}
+
+.doc-view #doc-content h2 {
+  font-size: 20px;
+  margin-top: 24px;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-view #doc-content h3 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.doc-view #doc-content p {
+  margin-bottom: 12px;
+}
+
+.doc-view #doc-content ul,
+.doc-view #doc-content ol {
+  margin-bottom: 12px;
+  padding-left: 24px;
+}
+
+.doc-view #doc-content li {
+  margin-bottom: 4px;
+}
+
+.doc-view #doc-content code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--muted);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.doc-view #doc-content pre {
+  background: var(--muted);
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  margin-bottom: 16px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.doc-view #doc-content pre code {
+  background: none;
+  padding: 0;
+}
+
+.doc-view #doc-content details {
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.doc-view #doc-content details summary {
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  background: var(--muted);
+}
+
+.doc-view #doc-content details summary:hover {
+  background: var(--border);
+}
+
+.doc-view #doc-content details[open] summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-view #doc-content details > :not(summary) {
+  padding: 0 16px;
+}
+
+.doc-view #doc-content details > p:first-of-type,
+.doc-view #doc-content details > h2:first-of-type,
+.doc-view #doc-content details > h3:first-of-type,
+.doc-view #doc-content details > ul:first-of-type,
+.doc-view #doc-content details > ol:first-of-type,
+.doc-view #doc-content details > pre:first-of-type {
+  margin-top: 12px;
+}
+
+/* ---- Related links (created via DOM API) ---- */
+
+.related-link {
+  color: oklch(55% 0.2 250);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.related-link:hover {
+  text-decoration: underline;
+}

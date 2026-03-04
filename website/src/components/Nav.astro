@@ -1,5 +1,6 @@
 ---
 import { Github } from '@lucide/astro';
+import { ThemeToggle } from '@viewer/components/ThemeToggle';
 
 interface Props {
   /** The currently active nav link, highlighted instead of using hover style. */
@@ -10,19 +11,20 @@ const { active } = Astro.props;
 ---
 
 <nav class="flex items-center justify-between px-6 py-4 max-w-5xl mx-auto w-full">
-	<a href="/" class="font-mono text-lg font-medium tracking-tight text-zinc-100">treck</a>
-	<div class="flex items-center gap-6 text-sm font-mono text-zinc-500">
+	<a href="/" class="font-mono text-lg font-medium tracking-tight text-foreground">treck</a>
+	<div class="flex items-center gap-6 text-sm font-mono text-muted-foreground">
+		<ThemeToggle client:load />
 		<a
 			href="/showcases"
 			class:list={[
-				active === 'showcases' ? 'text-zinc-300' : 'hover:text-zinc-300 transition-colors',
+				active === 'showcases' ? 'text-foreground/80' : 'hover:text-foreground transition-colors',
 			]}
 		>
 			Showcases
 		</a>
-		<a href="https://www.npmjs.com/package/treck" class="hover:text-zinc-300 transition-colors" aria-label="npm">
+		<a href="https://www.npmjs.com/package/treck" class="hover:text-foreground transition-colors" aria-label="npm">
 			<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"><path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z"/></svg>
 		</a>
-		<a href="https://github.com/fredrivett/treck" class="hover:text-zinc-300 transition-colors" aria-label="GitHub"><Github size={18} /></a>
+		<a href="https://github.com/fredrivett/treck" class="hover:text-foreground transition-colors" aria-label="GitHub"><Github size={18} /></a>
 	</div>
 </nav>

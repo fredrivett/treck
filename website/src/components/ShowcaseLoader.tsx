@@ -5,12 +5,10 @@ import { ShowcaseViewer } from './ShowcaseViewer';
 interface ShowcaseLoaderProps {
   /** URL to the graph.json file (e.g. /showcases/tldraw.json). */
   graphUrl: string;
-  /** Display name for the project. */
-  projectName: string;
 }
 
 /** Fetches graph data from a URL and renders the ShowcaseViewer once loaded. */
-export function ShowcaseLoader({ graphUrl, projectName }: ShowcaseLoaderProps) {
+export function ShowcaseLoader({ graphUrl }: ShowcaseLoaderProps) {
   const [graph, setGraph] = useState<FlowGraphData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,11 +38,11 @@ export function ShowcaseLoader({ graphUrl, projectName }: ShowcaseLoaderProps) {
       <div className="flex items-center justify-center h-full font-sans text-zinc-500">
         <div className="flex items-center gap-3">
           <div className="w-5 h-5 border-2 border-zinc-700 border-t-zinc-400 rounded-full animate-spin" />
-          <span className="text-sm">Loading {projectName} graph...</span>
+          <span className="text-sm">Loading graph...</span>
         </div>
       </div>
     );
   }
 
-  return <ShowcaseViewer graph={graph} projectName={projectName} />;
+  return <ShowcaseViewer graph={graph} />;
 }

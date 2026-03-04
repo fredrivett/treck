@@ -20,8 +20,21 @@ const {
 		<meta name="description" content={description} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<title>{title}</title>
+		<script is:inline>
+			// Apply stored theme preference before first paint to prevent FOUC
+			(function () {
+				var p = 'auto';
+				try { p = localStorage.getItem('treck:theme-preference') || 'auto'; } catch {}
+				var dark = p === 'dark' || (p === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+				var r = document.documentElement;
+				if (dark) r.classList.add('dark');
+				r.setAttribute('data-theme', dark ? 'dark' : 'light');
+				r.setAttribute('data-theme-preference', p);
+				r.style.setProperty('color-scheme', dark ? 'dark' : 'light');
+			})();
+		</script>
 	</head>
-	<body class="bg-zinc-950 text-zinc-100 antialiased font-sans">
+	<body class="bg-background text-foreground antialiased font-sans">
 		<slot />
 	</body>
 </html>
