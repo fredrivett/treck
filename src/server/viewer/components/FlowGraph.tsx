@@ -212,6 +212,12 @@ function FlowGraphInner({
   const sizeCache = useRef<SizeCache>(new Map());
   const [initialMeasureDone, setInitialMeasureDone] = useState(false);
 
+  // Refs for current selection state (used in async layout callbacks)
+  const selectedEntriesRef = useRef(selectedEntries);
+  selectedEntriesRef.current = selectedEntries;
+  const focusedEntriesRef = useRef(focusedEntries);
+  focusedEntriesRef.current = focusedEntries;
+
   // Sync selection state to URL query params
   useEffect(() => {
     setSearchParams((prev) => {
@@ -232,14 +238,20 @@ function FlowGraphInner({
   // Shared helper: apply ELK positions to nodes and fit the view
   const applyPositionsAndFit = useCallback(
     (positions: Map<string, { x: number; y: number }>, initialNodes?: Node[]) => {
+      const sel = selectedEntriesRef.current;
+      const foc = focusedEntriesRef.current;
+      const hasActive = sel.size > 0 || foc.size > 0;
       const apply = (node: Node): Node => {
         const pos = positions.get(node.id);
         if (!pos) return node;
         const cached = sizeCache.current.get(node.id);
+        const isSelected = sel.has(node.id);
+        const dimmed = hasActive ? !(isSelected || foc.has(node.id)) : false;
         return {
           ...node,
           position: pos,
           ...(cached && { width: cached.width, height: cached.height }),
+          data: { ...node.data, selected: isSelected, dimmed },
         };
       };
       if (initialNodes) {
@@ -368,17 +380,18 @@ function FlowGraphInner({
 
   // Update node data (selected/dimmed) without triggering re-layout
   useEffect(() => {
+    const hasActive = selectedEntries.size > 0 || focusedEntries.size > 0;
     setNodes((prev) =>
       prev.map((node) => {
         const isSelected = selectedEntries.has(node.id);
-        const dimmed = selectedEntries.size > 0 ? !isSelected : false;
+        const dimmed = hasActive ? !(isSelected || focusedEntries.has(node.id)) : false;
         return {
           ...node,
           data: { ...node.data, selected: isSelected, dimmed },
         };
       }),
     );
-  }, [selectedEntries, setNodes]);
+  }, [selectedEntries, focusedEntries, setNodes]);
 
   // Pass 2: once nodes are measured, cache sizes and run ELK with real dimensions
   // biome-ignore lint/correctness/useExhaustiveDependencies: initialMeasureDone is write-only here
