@@ -10,24 +10,24 @@ import { showcases } from '../../showcases';
 
 		<main class="flex-1 px-6 pt-12 sm:pt-16 max-w-3xl mx-auto w-full">
 			<h1 class="font-mono text-3xl font-bold tracking-tight mb-3">Showcases</h1>
-			<p class="text-zinc-500 text-sm mb-10 max-w-lg">
+			<p class="text-muted-foreground text-sm mb-10 max-w-lg">
 				See how treck maps real-world TypeScript projects. Click a project to explore its interactive flow graph.
 			</p>
 
-			<div class="grid gap-px bg-zinc-800">
+			<div class="grid gap-px bg-border">
 				{showcases.map((project) => (
 					<a
 						href={`/showcases/${project.slug}`}
-						class="block bg-zinc-950 p-6 hover:bg-zinc-900/50 transition-colors group"
+						class="block bg-background p-6 hover:bg-muted/50 transition-colors group"
 					>
 						<div class="flex items-start justify-between">
 							<div>
-								<h2 class="font-mono font-medium text-base text-zinc-200 group-hover:text-white transition-colors">
+								<h2 class="font-mono font-medium text-base text-foreground/90 group-hover:text-foreground transition-colors">
 									{project.name}
 								</h2>
-								<p class="text-sm text-zinc-500 mt-1">{project.description}</p>
+								<p class="text-sm text-muted-foreground mt-1">{project.description}</p>
 							</div>
-							<span class="font-mono text-xs text-zinc-600 group-hover:text-zinc-400 transition-colors mt-1">
+							<span class="font-mono text-xs text-muted-foreground/60 group-hover:text-muted-foreground transition-colors mt-1">
 								&rarr;
 							</span>
 						</div>
@@ -36,8 +36,8 @@ import { showcases } from '../../showcases';
 			</div>
 		</main>
 
-		<footer class="py-8 text-center text-xs font-mono text-zinc-700">
-			<p>MIT License &middot; Built by <a href="https://github.com/fredrivett" class="text-zinc-500 hover:text-zinc-300 transition-colors">@fredrivett</a></p>
+		<footer class="py-8 text-center text-xs font-mono text-muted-foreground/40">
+			<p>MIT License &middot; Built by <a href="https://github.com/fredrivett" class="text-muted-foreground hover:text-foreground transition-colors">@fredrivett</a></p>
 		</footer>
 	</div>
 </Base>
