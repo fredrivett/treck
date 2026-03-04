@@ -166,7 +166,7 @@ export const nextjsMatcher: FrameworkMatcher = {
   resolveConnection(
     connection: RuntimeConnection,
     projectFiles: string[],
-    projectFileSet?: Set<string>,
+    _projectFileSet?: Set<string>,
   ): ResolvedConnection | null {
     if (connection.type === 'fetch') {
       const routeFile = getRouteMap(projectFiles).get(connection.targetHint) ?? null;

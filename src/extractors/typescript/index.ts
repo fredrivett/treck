@@ -64,13 +64,17 @@ export class TypeScriptExtractor {
       const visit = (node: ts.Node) => {
         try {
           // Function declarations: function foo() {}
-          if (ts.isFunctionDeclaration(node) && node.name) {
+          if (ts.isFunctionDeclaration(node) && node.name && node.parent === sourceFile) {
             symbols.push(this.withDirectives(this.extractFunction(node, sourceFile), directives));
           }
 
           // Arrow functions: const foo = () => {}
           // Call expressions: const foo = task({...})
-          if (ts.isVariableStatement(node) && node.declarationList.declarations.length > 0) {
+          if (
+            ts.isVariableStatement(node) &&
+            this.isTopLevelVariable(node, sourceFile) &&
+            node.declarationList.declarations.length > 0
+          ) {
             const decl = node.declarationList.declarations[0];
             if (
               decl.initializer &&
@@ -82,8 +86,7 @@ export class TypeScriptExtractor {
             } else if (
               decl.initializer &&
               ts.isCallExpression(decl.initializer) &&
-              ts.isIdentifier(decl.name) &&
-              this.isTopLevelVariable(node, sourceFile)
+              ts.isIdentifier(decl.name)
             ) {
               symbols.push(
                 this.withDirectives(this.extractCallExpression(decl, sourceFile), directives),
@@ -92,7 +95,7 @@ export class TypeScriptExtractor {
           }
 
           // Class declarations: class Foo {}
-          if (ts.isClassDeclaration(node) && node.name) {
+          if (ts.isClassDeclaration(node) && node.name && node.parent === sourceFile) {
             symbols.push(this.withDirectives(this.extractClass(node, sourceFile), directives));
           }
 
