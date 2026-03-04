@@ -2165,4 +2165,125 @@ export function Counter() { return 1 }
       expect(result.symbols[0].directives).toBeUndefined();
     });
   });
+
+  describe('Top-level only extraction', () => {
+    it('should not extract nested function declarations', () => {
+      const code = `
+function outer() {
+  function inner() {
+    return 1;
+  }
+  return inner();
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols).toHaveLength(1);
+      expect(result.symbols[0].name).toBe('outer');
+    });
+
+    it('should not extract nested arrow functions', () => {
+      const code = `
+function outer() {
+  const helper = () => {
+    return 1;
+  };
+  return helper();
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols).toHaveLength(1);
+      expect(result.symbols[0].name).toBe('outer');
+    });
+
+    it('should not extract arrow functions nested inside arrow functions', () => {
+      const code = `
+const outer = () => {
+  const inner = () => 'hello';
+  return inner();
+};
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols).toHaveLength(1);
+      expect(result.symbols[0].name).toBe('outer');
+    });
+
+    it('should not extract functions nested inside class methods', () => {
+      const code = `
+class MyClass {
+  process() {
+    const visit = (node: any) => {
+      return node;
+    };
+    return visit(this);
+  }
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols).toHaveLength(1);
+      expect(result.symbols[0].name).toBe('MyClass');
+    });
+
+    it('should extract multiple top-level symbols but not nested ones', () => {
+      const code = `
+function foo() {
+  const nested = () => 1;
+  function alsoNested() { return 2; }
+  return nested() + alsoNested();
+}
+
+const bar = () => {
+  const innerHelper = () => 'hi';
+  return innerHelper();
+};
+
+class Baz {
+  run() {
+    const visitor = (x: any) => x;
+    return visitor(null);
+  }
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols).toHaveLength(3);
+      const names = result.symbols.map((s) => s.name);
+      expect(names).toContain('foo');
+      expect(names).toContain('bar');
+      expect(names).toContain('Baz');
+    });
+
+    it('should not extract function expressions nested inside functions', () => {
+      const code = `
+function outer() {
+  const handler = function process() {
+    return 42;
+  };
+  return handler();
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols).toHaveLength(1);
+      expect(result.symbols[0].name).toBe('outer');
+    });
+
+    it('should not extract classes nested inside functions', () => {
+      const code = `
+function factory() {
+  class InnerClass {
+    getValue() { return 1; }
+  }
+  return new InnerClass();
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols).toHaveLength(1);
+      expect(result.symbols[0].name).toBe('factory');
+    });
+  });
 });
