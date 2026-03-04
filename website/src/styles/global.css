@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Scan viewer components so Tailwind generates their utility classes */
+@source "../../../src/server/viewer";
 
 @import "@fontsource/geist-sans/400.css";
 @import "@fontsource/geist-sans/500.css";
@@ -7,8 +9,9 @@
 @import "@fontsource/geist-mono/700.css";
 
 @import "./dark-variant.css";
+@import "@viewer/components.css";
 
-@theme {
+@theme inline {
   --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
   --color-background: var(--background);

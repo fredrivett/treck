@@ -158,8 +158,23 @@ interface FlowGraphProps {
   searchQuery: string;
   enabledTypes: Set<NodeCategory> | null;
   showConditionals: boolean;
-  /** When true, ReactFlow renders with its built-in dark colour scheme. */
-  darkMode?: boolean;
+}
+
+/**
+ * Detect dark mode by checking for a `.dark` ancestor in the DOM.
+ *
+ * @param ref - Ref to a mounted DOM element
+ */
+function useDarkMode(ref: React.RefObject<HTMLElement | null>): boolean {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    if (ref.current) {
+      setIsDark(ref.current.closest('.dark') !== null);
+    }
+  }, [ref]);
+
+  return isDark;
 }
 
 function FlowGraphInner({
@@ -168,8 +183,9 @@ function FlowGraphInner({
   searchQuery,
   enabledTypes,
   showConditionals,
-  darkMode,
 }: FlowGraphProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const darkMode = useDarkMode(containerRef);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -432,7 +448,7 @@ function FlowGraphInner({
   }, [clearSelection]);
 
   return (
-    <div className="w-full h-full relative">
+    <div ref={containerRef} className="w-full h-full relative">
       <LayoutSettings options={layoutOptions} onChange={setLayoutOptions} />
       {(selectedEntries.size > 0 || focusedEntries.size > 0) && (
         <div className="absolute top-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-background/90 backdrop-blur border border-border rounded-full px-3 py-1.5 shadow-sm text-xs text-muted-foreground">
@@ -498,7 +514,6 @@ export function FlowGraph({
   searchQuery,
   enabledTypes,
   showConditionals,
-  darkMode,
 }: FlowGraphProps) {
   return (
     <ReactFlowProvider>
@@ -508,7 +523,6 @@ export function FlowGraph({
         searchQuery={searchQuery}
         enabledTypes={enabledTypes}
         showConditionals={showConditionals}
-        darkMode={darkMode}
       />
     </ReactFlowProvider>
   );

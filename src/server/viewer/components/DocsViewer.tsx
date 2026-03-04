@@ -1,31 +1,14 @@
 import { marked } from 'marked';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { buildDocResponse } from '../../../graph/symbol-index.js';
 import { docPathToUrl, escapeHtml, urlToDocPath } from '../docs-utils';
+import { useGraphExplorer } from './GraphExplorerContext';
 import { MissingJsDocBanner, TrivialSymbolInfo } from './MissingJsDocBanner';
 import { Badge, type BadgeVariant, variantLabels } from './ui/badge';
 
-interface DocData {
-  name: string;
-  sourcePath: string;
-  markdown: string;
-  treckVersion?: string;
-  generated?: string;
-  dependencyGraph?: string;
-  related?: Array<{ name: string; docPath: string | null }>;
-  kind?: string;
-  exported?: boolean;
-  isAsync?: boolean;
-  hasJsDoc?: boolean;
-  isTrivial?: boolean;
-  deprecated?: string | boolean;
-  lineRange?: string;
-  entryType?: string;
-  httpMethod?: string;
-  route?: string;
-  eventTrigger?: string;
-  taskId?: string;
-}
+/** Shape of a resolved doc response. */
+type DocData = NonNullable<ReturnType<typeof buildDocResponse>>;
 
 function makeRelatedLinksClickable(
   container: HTMLElement,
@@ -55,10 +38,9 @@ function makeRelatedLinksClickable(
   });
 }
 
+/** Full-page documentation reader, computing docs client-side from graph context. */
 export function DocsViewer() {
-  const [doc, setDoc] = useState<DocData | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const ctx = useGraphExplorer();
   const containerRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
@@ -66,31 +48,11 @@ export function DocsViewer() {
 
   const docPath = useMemo(() => urlToDocPath(location.pathname), [location.pathname]);
 
-  useEffect(() => {
-    if (!docPath) {
-      setDoc(null);
-      setLoading(false);
-      setError(null);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    fetch(`/api/doc?path=${encodeURIComponent(docPath)}`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Document not found');
-        return res.json();
-      })
-      .then((data: DocData) => {
-        setDoc(data);
-        setLoading(false);
-      })
-      .catch((err: Error) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [docPath]);
+  // Compute doc data client-side from graph context
+  const doc = useMemo<DocData | null>(() => {
+    if (!docPath || !ctx) return null;
+    return buildDocResponse(docPath, ctx.symbolIndex, ctx.graph);
+  }, [docPath, ctx]);
 
   // Post-process rendered HTML (related links, auto-expand)
   useEffect(() => {
@@ -128,25 +90,6 @@ export function DocsViewer() {
       <div className="flex flex-col items-center justify-center h-full font-sans text-muted-foreground gap-2">
         <div className="font-semibold text-base">treck viewer</div>
         <div className="text-sm">Select a symbol from the sidebar to view its documentation.</div>
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-sm text-muted-foreground">Loading...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full font-sans text-muted-foreground gap-2">
-        <div className="font-semibold text-base">Document not found</div>
-        <div className="text-sm">
-          Run <code className="bg-muted px-1.5 rounded">treck sync</code> to generate documentation.
-        </div>
       </div>
     );
   }
@@ -225,9 +168,9 @@ export function DocsViewer() {
         className="doc-view px-12 py-8 max-w-[900px]"
         onClick={handleContentClick}
       >
-        <h1>{doc.name}</h1>
+        <h1 className="text-[28px] font-semibold mb-1">{doc.name}</h1>
         {doc.sourcePath && (
-          <div className="source-path">
+          <div className="text-[13px] text-muted-foreground mb-1 font-mono">
             {doc.sourcePath}
             {doc.lineRange && `:${doc.lineRange}`}
           </div>
@@ -250,9 +193,11 @@ export function DocsViewer() {
         {doc.hasJsDoc === false &&
           doc.exported &&
           (doc.isTrivial ? <TrivialSymbolInfo /> : <MissingJsDocBanner />)}
-        <div className="doc-meta">
+        <div className="text-xs text-muted-foreground mb-4 flex gap-4">
           {metaParts.map((part) => (
-            <span key={part}>{part}</span>
+            <span key={part} className="whitespace-nowrap">
+              {part}
+            </span>
           ))}
         </div>
         <div

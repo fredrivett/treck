@@ -2,6 +2,7 @@ import { ChevronsDownUp, ChevronsUpDown } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { docPathToUrl, urlToDocPath } from '../docs-utils';
+import { useGraphExplorer } from './GraphExplorerContext';
 
 export type DocsIndex = Record<
   string,
@@ -47,14 +48,19 @@ export function buildTree(index: DocsIndex, visibleNames: Set<string> | null): T
   return root;
 }
 
+const guideBase = 'w-4 shrink-0 relative self-stretch';
+const guideLine = `${guideBase} before:content-[''] before:absolute before:left-[7px] before:top-0 before:bottom-0 before:border-l before:border-border`;
+const guideTee = `${guideBase} before:content-[''] before:absolute before:left-[7px] before:top-0 before:bottom-0 before:border-l before:border-border after:content-[''] after:absolute after:left-[7px] after:top-1/2 after:right-0 after:border-t after:border-border`;
+const guideCorner = `${guideBase} before:content-[''] before:absolute before:left-[7px] before:top-0 before:h-1/2 before:border-l before:border-border after:content-[''] after:absolute after:left-[7px] after:top-1/2 after:right-0 after:border-t after:border-border`;
+
 function Guides({ guides, isLast }: { guides: boolean[]; isLast: boolean }) {
   return (
     <>
       {guides.map((hasLine, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: guides are positional and never reorder
-        <span key={i} className={hasLine ? 'guide guide-line' : 'guide'} />
+        <span key={i} className={hasLine ? guideLine : guideBase} />
       ))}
-      <span className={isLast ? 'guide guide-corner' : 'guide guide-tee'} />
+      <span className={isLast ? guideCorner : guideTee} />
     </>
   );
 }
@@ -110,16 +116,23 @@ function TreeDir({
   }
 
   return (
-    <div className="tree-dir">
-      <button type="button" className="tree-dir-label" onClick={() => onToggleDir(dirPath)}>
+    <div>
+      <button
+        type="button"
+        className="flex items-center w-full h-[26px] text-[13px] font-medium text-foreground cursor-pointer bg-transparent border-none p-0 text-left font-[inherit] hover:bg-muted"
+        onClick={() => onToggleDir(dirPath)}
+      >
         {depth > 0 && <Guides guides={guides} isLast={isLast} />}
-        <span className="chevron" style={isCollapsed ? { transform: 'rotate(-90deg)' } : undefined}>
+        <span
+          className="w-4 h-4 inline-flex items-center justify-center text-[10px] text-muted-foreground shrink-0 transition-transform duration-150 ease-in-out"
+          style={isCollapsed ? { transform: 'rotate(-90deg)' } : undefined}
+        >
           &#9660;
         </span>
-        <span className="dir-name">{name}</span>
+        <span className="overflow-hidden text-ellipsis whitespace-nowrap ml-0.5">{name}</span>
       </button>
       {!isCollapsed && (
-        <div className="tree-children">
+        <div>
           {allItems.map((item, i) => {
             const itemIsLast = i === allItems.length - 1;
             if (item.type === 'dir') {
@@ -143,10 +156,10 @@ function TreeDir({
               <Link
                 key={`sym-${item.sym.docPath}`}
                 to={docPathToUrl(item.sym.docPath)}
-                className={`tree-item ${isActive ? 'active' : ''}`}
+                className={`flex items-center h-[26px] text-[13px] text-foreground no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis hover:bg-muted ${isActive ? 'bg-border font-medium' : ''}`}
               >
                 <Guides guides={childGuides} isLast={itemIsLast} />
-                <span className="item-name">{item.sym.name}</span>
+                <span className="ml-0.5 overflow-hidden text-ellipsis">{item.sym.name}</span>
                 {item.sym.hasJsDoc === false && !item.sym.isTrivial && (
                   <span
                     className="ml-auto text-[10px] text-amber-500 opacity-70"
@@ -170,7 +183,8 @@ interface DocsTreeProps {
 
 /** File tree navigation for browsing documented symbols. */
 export function DocsTree({ visibleNames }: DocsTreeProps) {
-  const [index, setIndex] = useState<DocsIndex | null>(null);
+  const ctx = useGraphExplorer();
+  const index: DocsIndex | null = ctx?.docsIndex ?? null;
   const [collapsedDirs, setCollapsedDirs] = useState<Set<string>>(new Set());
   const location = useLocation();
 
@@ -182,12 +196,6 @@ export function DocsTree({ visibleNames }: DocsTreeProps) {
       setCollapsedDirs(new Set());
     }
   }, [visibleNames]);
-
-  useEffect(() => {
-    fetch('/api/index')
-      .then((r) => r.json())
-      .then(setIndex);
-  }, []);
 
   const tree = useMemo(() => {
     if (!index) return null;

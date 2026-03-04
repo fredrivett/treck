@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 import { GraphStore } from '../graph/graph-store.js';
 import type { FlowGraph } from '../graph/types.js';
 import {
-  buildDocResponse,
+  buildDocResponseWithSVG,
   buildIndexResponse,
   buildSymbolIndexFromGraph,
   type SymbolIndex,
@@ -133,7 +133,7 @@ export async function startServer(outputDir: string, port: number) {
         return;
       }
 
-      const doc = buildDocResponse(decodeURIComponent(docPath), index, graph);
+      const doc = buildDocResponseWithSVG(decodeURIComponent(docPath), index, graph);
       if (!doc) {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: 'Document not found' }));
