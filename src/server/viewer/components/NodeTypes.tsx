@@ -136,7 +136,7 @@ function ComponentNode({ data }: NodeProps) {
     <div
       className={nodeClass(
         d,
-        'border-[1.5px] rounded-[10px] px-3 py-2 min-w-[140px] border-orange-600 bg-orange-50 dark:bg-orange-950 shadow',
+        'border-[1.5px] rounded-[10px] px-3 py-2 min-w-[140px] border-orange-600 bg-orange-50 dark:bg-orange-900/20 shadow',
         d.selected ? 'ring-2 ring-orange-500/25' : '',
       )}
     >
