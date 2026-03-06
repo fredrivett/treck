@@ -51,6 +51,8 @@ function saveSettings(settings: ChatSettings): void {
 interface ChatPanelProps {
   /** Called when the panel should close. */
   onClose: () => void;
+  /** Chat API endpoint URL. Defaults to `/api/chat`. */
+  apiUrl?: string;
 }
 
 /** Renders markdown content from assistant messages. */
@@ -113,7 +115,7 @@ function CloseIcon() {
 }
 
 /** AI chat panel for code navigation questions. */
-export function ChatPanel({ onClose }: ChatPanelProps) {
+export function ChatPanel({ onClose, apiUrl = '/api/chat' }: ChatPanelProps) {
   const isDesktop = useMediaQuery('(min-width: 768px)', {
     defaultValue: true,
     initializeWithValue: false,
@@ -134,13 +136,13 @@ export function ChatPanel({ onClose }: ChatPanelProps) {
   const transport = useMemo(
     () =>
       new DefaultChatTransport({
-        api: '/api/chat',
+        api: apiUrl,
         body: () => ({
           apiKey: settingsRef.current.apiKey,
           model: settingsRef.current.model || undefined,
         }),
       }),
-    [],
+    [apiUrl],
   );
 
   /** Apply selected node IDs to the URL params (same as clicking nodes). */

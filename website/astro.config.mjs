@@ -1,9 +1,12 @@
 import { resolve } from 'node:path';
 import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
+  output: 'static',
+  adapter: vercel(),
   site: 'https://treck.dev',
   integrations: [react()],
   vite: {

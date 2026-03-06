@@ -36,6 +36,7 @@ const { slug, name, description, repo } = Astro.props;
 			<ShowcaseLoader
 				client:only="react"
 				graphUrl={`/showcases/${slug}.json`}
+				project={slug}
 			/>
 		</div>
 	</div>

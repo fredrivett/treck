@@ -10,7 +10,11 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.58",
     "@astrojs/react": "^4.4.2",
+    "@astrojs/vercel": "^8.0.0",
+    "ai": "^6.0.116",
+    "zod": "^4.3.6",
     "@fontsource/geist-mono": "^5.2.7",
     "@fontsource/geist-sans": "^5.2.5",
     "@lucide/astro": "^0.575.0",

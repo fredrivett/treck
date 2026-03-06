@@ -28,10 +28,12 @@ interface GraphExplorerProps {
   loading?: boolean;
   /** Error message if the graph failed to load. */
   error?: string | null;
+  /** Override the chat API URL. Defaults to `/api/chat`. Use in contexts where the endpoint differs (e.g. website showcases). */
+  chatApiUrl?: string;
 }
 
 /** Standalone graph explorer — renders sidebar, graph, and docs from a single graph prop. */
-export function GraphExplorer({ graph, loading = false, error = null }: GraphExplorerProps) {
+export function GraphExplorer({ graph, loading = false, error = null, chatApiUrl }: GraphExplorerProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const [layoutReady, setLayoutReady] = useState(false);
@@ -258,7 +260,7 @@ export function GraphExplorer({ graph, loading = false, error = null }: GraphExp
           </button>
         )}
       </main>
-      {chatOpen && <ChatPanel onClose={() => setChatOpen(false)} />}
+      {chatOpen && <ChatPanel onClose={() => setChatOpen(false)} apiUrl={chatApiUrl} />}
     </div>
   );
 
