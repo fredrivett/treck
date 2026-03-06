@@ -1,10 +1,11 @@
 /**
- * POST /api/chat?project=<slug>
+ * POST /api/chat
  *
  * Serverless chat endpoint for website showcases. Mirrors the local treck
  * server's `/api/chat` handler but runs as a Vercel serverless function.
- * Loads the showcase graph from the public CDN, then streams an AI response
- * using the same tools as the local viewer.
+ * Reads `project` from the request body, loads the showcase graph from the
+ * public CDN, then streams an AI response using the same tools as the local
+ * viewer.
  */
 
 import { createAnthropic } from '@ai-sdk/anthropic';
@@ -24,9 +25,19 @@ export const prerender = false;
 /** Valid showcase slugs — used to prevent path traversal. */
 const VALID_SLUGS = new Set(showcases.map((s) => s.slug));
 
-/** POST /api/chat?project=<slug> */
+/** POST /api/chat */
 export const POST: APIRoute = async (context) => {
-  const project = context.url.searchParams.get('project');
+  let body: { messages: UIMessage[]; apiKey: string; model?: string; project?: string };
+  try {
+    body = await context.request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: 'Invalid JSON body' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  const { project } = body;
 
   if (!project || !VALID_SLUGS.has(project)) {
     return new Response(JSON.stringify({ error: 'Invalid or missing project' }), {
@@ -46,16 +57,6 @@ export const POST: APIRoute = async (context) => {
     const message = err instanceof Error ? err.message : 'Unknown error';
     return new Response(JSON.stringify({ error: `Failed to load graph: ${message}` }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  let body: { messages: UIMessage[]; apiKey: string; model?: string };
-  try {
-    body = await context.request.json();
-  } catch {
-    return new Response(JSON.stringify({ error: 'Invalid JSON body' }), {
-      status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
   }

@@ -51,8 +51,8 @@ function saveSettings(settings: ChatSettings): void {
 interface ChatPanelProps {
   /** Called when the panel should close. */
   onClose: () => void;
-  /** Chat API endpoint URL. Defaults to `/api/chat`. */
-  apiUrl?: string;
+  /** Extra fields merged into every chat request body (e.g. `{ project: 'tldraw' }`). */
+  chatExtraBody?: Record<string, unknown>;
 }
 
 /** Renders markdown content from assistant messages. */
@@ -115,7 +115,7 @@ function CloseIcon() {
 }
 
 /** AI chat panel for code navigation questions. */
-export function ChatPanel({ onClose, apiUrl = '/api/chat' }: ChatPanelProps) {
+export function ChatPanel({ onClose, chatExtraBody }: ChatPanelProps) {
   const isDesktop = useMediaQuery('(min-width: 768px)', {
     defaultValue: true,
     initializeWithValue: false,
@@ -132,17 +132,22 @@ export function ChatPanel({ onClose, apiUrl = '/api/chat' }: ChatPanelProps) {
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
 
-  // Stable transport instance — body is resolved per-request via ref
+  // Ref so chatExtraBody changes don't recreate the transport
+  const chatExtraBodyRef = useRef(chatExtraBody);
+  chatExtraBodyRef.current = chatExtraBody;
+
+  // Stable transport instance — body is resolved per-request via refs
   const transport = useMemo(
     () =>
       new DefaultChatTransport({
-        api: apiUrl,
+        api: '/api/chat',
         body: () => ({
           apiKey: settingsRef.current.apiKey,
           model: settingsRef.current.model || undefined,
+          ...chatExtraBodyRef.current,
         }),
       }),
-    [apiUrl],
+    [],
   );
 
   /** Apply selected node IDs to the URL params (same as clicking nodes). */

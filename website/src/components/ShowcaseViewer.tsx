@@ -13,7 +13,7 @@ interface ShowcaseViewerProps {
 export function ShowcaseViewer({ graph, project }: ShowcaseViewerProps) {
   return (
     <MemoryRouter>
-      <GraphExplorer graph={graph} chatApiUrl={`/api/chat?project=${project}`} />
+      <GraphExplorer graph={graph} chatExtraBody={{ project }} />
     </MemoryRouter>
   );
 }
