@@ -28,6 +28,14 @@ export interface JsDocInfo {
   see: string[];
 }
 
+/** Structured info about the call expression used to initialize a const symbol. */
+export interface InitializerCallInfo {
+  /** The function/method name (e.g. "task", "createFunction"). */
+  functionName: string;
+  /** The full callee expression (e.g. "inngest.createFunction", "schedules.task", "task"). */
+  expression: string;
+}
+
 export interface SymbolInfo {
   name: string;
   kind: 'function' | 'class' | 'const' | 'method' | 'component';
@@ -41,6 +49,8 @@ export interface SymbolInfo {
   returnType?: string;
   isExported?: boolean;
   jsDoc?: JsDocInfo;
+  /** Structured info about the initializer call for const symbols (e.g. `task(...)`, `inngest.createFunction(...)`). */
+  initializerCall?: InitializerCallInfo;
   /** File-level directives like `"use server"` or `"use client"`. */
   directives?: string[];
 }

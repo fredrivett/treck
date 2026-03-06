@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-06T00:35:53.060Z",
+  "generatedAt": "2026-03-06T03:21:27.102Z",
   "nodes": [
     {
       "id": "scripts/generate-showcase.ts:generateConfig",
@@ -1658,10 +1658,10 @@
       "kind": "class",
       "filePath": "src/extractors/typescript/index.ts",
       "isAsync": false,
-      "hash": "e3d8436036645ba458d06dc9e4e6efb522084430f92c762ba420f6d9c1263290",
+      "hash": "ae91ae06c32060ce72406fa19e93749e8536c2ca336fc8e0e10c60b67dfff927",
       "lineRange": [
         18,
-        899
+        903
       ],
       "hasJsDoc": true,
       "description": "Extracts symbols (functions, classes, arrow functions, call expressions) from TypeScript/JavaScript files using the TS Compiler API.",
@@ -1721,10 +1721,10 @@
       "kind": "class",
       "filePath": "src/graph/graph-builder.ts",
       "isAsync": false,
-      "hash": "9aceb29eb63ecb236609fd4543a24b6d0a0eb4fd5215e13aa9ab3e5e7d00fbe2",
+      "hash": "6677f9707ba87b2f04b59193ee26d7b79cf0e83bac5cbf3922375b8aeceb649f",
       "lineRange": [
         51,
-        400
+        406
       ],
       "hasJsDoc": true,
       "description": "/** Builds a {@link FlowGraph}from TypeScript source files by extracting symbols, detecting entry points, and resolving call edges. ",
@@ -2567,12 +2567,11 @@
       "kind": "const",
       "filePath": "src/matchers/inngest.ts",
       "isAsync": false,
-      "hash": "529e3c81a26094cd44a4a4c6c0d6035c3f94255bac4fd56163e819e712390fb1",
+      "hash": "56c0db60f36bd150eed5297f2d32083057d856b90e81dbc7fb4454619187bd44",
       "lineRange": [
         37,
-        111
+        120
       ],
-      "entryType": "inngest-function",
       "hasJsDoc": false,
       "isExported": true
     },
@@ -2655,10 +2654,10 @@
       "kind": "const",
       "filePath": "src/matchers/nextjs.ts",
       "isAsync": false,
-      "hash": "76f95500720dbd1a14761a7dc49c766bc256f6b65c7673c6e2a8b450a87f424e",
+      "hash": "6c054c3b46a436d267ab61a1f2cc0e889e851f23f201a459c9a72909fc9d9585",
       "lineRange": [
         69,
-        183
+        187
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -2717,10 +2716,10 @@
       "kind": "const",
       "filePath": "src/matchers/trigger-dev.ts",
       "isAsync": false,
-      "hash": "d1a02c9c6a2b1b072f8c853cba3ed5b6d0d0d9921ac43731b52f7b22062cdc56",
+      "hash": "a2372111f8004c1ef29da3ff06afb56a8a6bd13b8b2312c87cf338ca07d93f12",
       "lineRange": [
         66,
-        180
+        196
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -6146,7 +6145,7 @@
         {
           "condition": "if (isEventMatch ||\n        isTaskMatch ||\n        isInvokeMatch)",
           "branch": "then",
-          "branchGroup": "branch:348"
+          "branchGroup": "branch:354"
         }
       ],
       "label": "if (isEventMatch ||\n        isTaskMatch ||\n        isInvokeMatch)",
@@ -6346,12 +6345,12 @@
       "type": "conditional-call",
       "conditions": [
         {
-          "condition": "if (symbol.kind === 'const' && /createFunction\\s*\\(/.test(symbol)",
+          "condition": "if (symbol.kind === 'const' &&\n      symbol.initializerCall?.fun)",
           "branch": "then",
-          "branchGroup": "branch:40"
+          "branchGroup": "branch:44"
         }
       ],
-      "label": "if (symbol.kind === 'const' && /createFunction\\s*\\(/.test(symbol)",
+      "label": "if (symbol.kind === 'const' &&\n      symbol.initializerCall?.fun)",
       "isAsync": false,
       "order": 0
     },
@@ -6362,12 +6361,12 @@
       "type": "conditional-call",
       "conditions": [
         {
-          "condition": "if (symbol.kind === 'const' && /createFunction\\s*\\(/.test(symbol)",
+          "condition": "if (symbol.kind === 'const' &&\n      symbol.initializerCall?.fun)",
           "branch": "then",
-          "branchGroup": "branch:40"
+          "branchGroup": "branch:44"
         }
       ],
-      "label": "if (symbol.kind === 'const' && /createFunction\\s*\\(/.test(symbol)",
+      "label": "if (symbol.kind === 'const' &&\n      symbol.initializerCall?.fun)",
       "isAsync": false,
       "order": 1
     },
@@ -6396,7 +6395,7 @@
         {
           "condition": "if (API_ROUTE_PATTERN.test(filePath) && HTTP_METHODS.includes(sy)",
           "branch": "then",
-          "branchGroup": "branch:72"
+          "branchGroup": "branch:76"
         }
       ],
       "label": "if (API_ROUTE_PATTERN.test(filePath) && HTTP_METHODS.includes(sy)",
@@ -6412,7 +6411,7 @@
         {
           "condition": "if (PAGE_PATTERN.test(filePath) &&\n      (symbol.name === 'defau)",
           "branch": "then",
-          "branchGroup": "branch:81"
+          "branchGroup": "branch:85"
         }
       ],
       "label": "if (PAGE_PATTERN.test(filePath) &&\n      (symbol.name === 'defau)",
@@ -6428,7 +6427,7 @@
         {
           "condition": "if (connection.type === 'fetch')",
           "branch": "then",
-          "branchGroup": "branch:169"
+          "branchGroup": "branch:173"
         }
       ],
       "label": "if (connection.type === 'fetch')",
@@ -6440,7 +6439,7 @@
       "source": "src/matchers/trigger-dev.ts:triggerDevMatcher",
       "target": "src/matchers/trigger-dev.ts:extractTaskId",
       "type": "conditional-call",
-      "label": "(if (/^schedules\\.task\\s*\\(/.test(symbol.body))) or (if (/^(?:schema)?[Tt]ask\\s*\\(/.test(symbol.body)))",
+      "label": "(if (functionName === 'task' && expression === 'schedules.task')) or (if (['task', 'Task', 'schemaTask'].includes(functionName)))",
       "isAsync": false,
       "order": 0
     },
@@ -6451,12 +6450,12 @@
       "type": "conditional-call",
       "conditions": [
         {
-          "condition": "if (/^schedules\\.task\\s*\\(/.test(symbol.body))",
+          "condition": "if (functionName === 'task' && expression === 'schedules.task')",
           "branch": "then",
-          "branchGroup": "branch:74"
+          "branchGroup": "branch:82"
         }
       ],
-      "label": "if (/^schedules\\.task\\s*\\(/.test(symbol.body))",
+      "label": "if (functionName === 'task' && expression === 'schedules.task')",
       "isAsync": false,
       "order": 2
     },

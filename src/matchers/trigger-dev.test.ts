@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { SymbolInfo } from '../extractors/types.js';
+import type { ImportInfo, SymbolInfo } from '../extractors/types.js';
 import { triggerDevMatcher } from './trigger-dev.js';
 
 /** Helper to create a minimal SymbolInfo for testing */
@@ -17,6 +17,11 @@ function makeSymbol(overrides: Partial<SymbolInfo>): SymbolInfo {
   };
 }
 
+/** Standard Trigger.dev imports for tests */
+const triggerImports: ImportInfo[] = [
+  { name: 'task', originalName: 'task', source: '@trigger.dev/sdk/v3', isDefault: false },
+];
+
 describe('triggerDevMatcher', () => {
   // ═══════════════════════════════════════════════════════════════════════
   // detectEntryPoint
@@ -30,9 +35,14 @@ describe('triggerDevMatcher', () => {
         const symbol = makeSymbol({
           kind: 'const',
           body: 'task({ id: "analyze-image", run: async () => {} })',
+          initializerCall: { functionName: 'task', expression: 'task' },
         });
 
-        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/analyze.ts');
+        const result = triggerDevMatcher.detectEntryPoint(
+          symbol,
+          'tasks/analyze.ts',
+          triggerImports,
+        );
 
         expect(result).toEqual({
           entryType: 'trigger-task',
@@ -44,9 +54,10 @@ describe('triggerDevMatcher', () => {
         const symbol = makeSymbol({
           kind: 'const',
           body: "task({ id: 'my-task', run: async () => {} })",
+          initializerCall: { functionName: 'task', expression: 'task' },
         });
 
-        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/my.ts');
+        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/my.ts', triggerImports);
 
         expect(result?.metadata?.taskId).toBe('my-task');
       });
@@ -55,9 +66,10 @@ describe('triggerDevMatcher', () => {
         const symbol = makeSymbol({
           kind: 'const',
           body: 'task({ id: `my-task`, run: async () => {} })',
+          initializerCall: { functionName: 'task', expression: 'task' },
         });
 
-        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/my.ts');
+        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/my.ts', triggerImports);
 
         expect(result?.metadata?.taskId).toBe('my-task');
       });
@@ -66,9 +78,10 @@ describe('triggerDevMatcher', () => {
         const symbol = makeSymbol({
           kind: 'const',
           body: 'createClient({ url: "..." })',
+          initializerCall: { functionName: 'createClient', expression: 'createClient' },
         });
 
-        expect(triggerDevMatcher.detectEntryPoint(symbol, 'lib/db.ts')).toBeNull();
+        expect(triggerDevMatcher.detectEntryPoint(symbol, 'lib/db.ts', triggerImports)).toBeNull();
       });
 
       it('should return null for functions', () => {
@@ -77,20 +90,111 @@ describe('triggerDevMatcher', () => {
           body: '{ task() }',
         });
 
-        expect(triggerDevMatcher.detectEntryPoint(symbol, 'test.ts')).toBeNull();
+        expect(triggerDevMatcher.detectEntryPoint(symbol, 'test.ts', triggerImports)).toBeNull();
+      });
+
+      it('should return null when task is imported from a non-trigger.dev source', () => {
+        const symbol = makeSymbol({
+          kind: 'const',
+          body: 'task({ id: "my-task", run: async () => {} })',
+          initializerCall: { functionName: 'task', expression: 'task' },
+        });
+
+        const imports: ImportInfo[] = [
+          { name: 'task', originalName: 'task', source: './local-utils', isDefault: false },
+        ];
+
+        expect(triggerDevMatcher.detectEntryPoint(symbol, 'tasks/my.ts', imports)).toBeNull();
+      });
+
+      it('should match task imported from @trigger.dev/sdk', () => {
+        const symbol = makeSymbol({
+          kind: 'const',
+          body: 'task({ id: "my-task", run: async () => {} })',
+          initializerCall: { functionName: 'task', expression: 'task' },
+        });
+
+        const imports: ImportInfo[] = [
+          { name: 'task', originalName: 'task', source: '@trigger.dev/sdk', isDefault: false },
+        ];
+
+        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/my.ts', imports);
+
+        expect(result?.entryType).toBe('trigger-task');
+      });
+
+      it('should return null when no initializerCall is present', () => {
+        const symbol = makeSymbol({
+          kind: 'const',
+          body: '{ something }',
+        });
+
+        expect(triggerDevMatcher.detectEntryPoint(symbol, 'test.ts', triggerImports)).toBeNull();
+      });
+
+      it('should return null when task is imported with a renamed identifier', () => {
+        // import { task as createMyTask } from '@trigger.dev/sdk/v3'
+        // const myTask = createMyTask({ id: "my-task" })
+        // The functionName would be 'createMyTask', which is not in the allow-list.
+        const symbol = makeSymbol({
+          kind: 'const',
+          body: 'createMyTask({ id: "my-task", run: async () => {} })',
+          initializerCall: { functionName: 'createMyTask', expression: 'createMyTask' },
+        });
+
+        const imports: ImportInfo[] = [
+          {
+            name: 'createMyTask',
+            originalName: 'task',
+            source: '@trigger.dev/sdk/v3',
+            isDefault: false,
+          },
+        ];
+
+        expect(triggerDevMatcher.detectEntryPoint(symbol, 'tasks/my.ts', imports)).toBeNull();
+      });
+
+      it('should return null when task is re-exported through a barrel file', () => {
+        // import { task } from './lib/trigger' (barrel re-exports @trigger.dev/sdk)
+        // The import source is the barrel path, not @trigger.dev/*.
+        const symbol = makeSymbol({
+          kind: 'const',
+          body: 'task({ id: "my-task", run: async () => {} })',
+          initializerCall: { functionName: 'task', expression: 'task' },
+        });
+
+        const imports: ImportInfo[] = [
+          { name: 'task', originalName: 'task', source: './lib/trigger', isDefault: false },
+        ];
+
+        expect(triggerDevMatcher.detectEntryPoint(symbol, 'tasks/my.ts', imports)).toBeNull();
       });
     });
 
     // ── schemaTask() ────────────────────────────────────────────────────
 
     describe('schemaTask()', () => {
+      const schemaTaskImports: ImportInfo[] = [
+        {
+          name: 'schemaTask',
+          originalName: 'schemaTask',
+          source: '@trigger.dev/sdk/v3',
+          isDefault: false,
+        },
+      ];
+
       it('should detect a schemaTask() definition', () => {
         const symbol = makeSymbol({
           kind: 'const',
           body: 'schemaTask({ id: "create-user", schema: z.object({ name: z.string() }), run: async () => {} })',
+          initializerCall: { functionName: 'schemaTask', expression: 'schemaTask' },
         });
 
-        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/user.ts');
+        const result = triggerDevMatcher.detectEntryPoint(
+          symbol,
+          'tasks/user.ts',
+          schemaTaskImports,
+        );
 
         expect(result).toEqual({
           entryType: 'trigger-task',
@@ -111,9 +215,14 @@ describe('triggerDevMatcher', () => {
     return { valid: true };
   },
 })`,
+          initializerCall: { functionName: 'schemaTask', expression: 'schemaTask' },
         });
 
-        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/order.ts');
+        const result = triggerDevMatcher.detectEntryPoint(
+          symbol,
+          'tasks/order.ts',
+          schemaTaskImports,
+        );
 
         expect(result?.entryType).toBe('trigger-task');
         expect(result?.metadata?.taskId).toBe('validate-order');
@@ -125,7 +234,7 @@ describe('triggerDevMatcher', () => {
           body: '{ const x = schemaTask({}) }',
         });
 
-        expect(triggerDevMatcher.detectEntryPoint(symbol, 'test.ts')).toBeNull();
+        expect(triggerDevMatcher.detectEntryPoint(symbol, 'test.ts', schemaTaskImports)).toBeNull();
       });
     });
 
@@ -136,9 +245,14 @@ describe('triggerDevMatcher', () => {
         const symbol = makeSymbol({
           kind: 'const',
           body: 'schedules.task({ id: "daily-cleanup", cron: "0 0 * * *", run: async () => {} })',
+          initializerCall: { functionName: 'task', expression: 'schedules.task' },
         });
 
-        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/cleanup.ts');
+        const result = triggerDevMatcher.detectEntryPoint(
+          symbol,
+          'tasks/cleanup.ts',
+          triggerImports,
+        );
 
         expect(result).toEqual({
           entryType: 'trigger-scheduled-task',
@@ -154,9 +268,14 @@ describe('triggerDevMatcher', () => {
   cron: { pattern: "0 5 * * *", timezone: "Asia/Tokyo" },
   run: async (payload) => {}
 })`,
+          initializerCall: { functionName: 'task', expression: 'schedules.task' },
         });
 
-        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/report.ts');
+        const result = triggerDevMatcher.detectEntryPoint(
+          symbol,
+          'tasks/report.ts',
+          triggerImports,
+        );
 
         expect(result).toEqual({
           entryType: 'trigger-scheduled-task',
@@ -168,9 +287,10 @@ describe('triggerDevMatcher', () => {
         const symbol = makeSymbol({
           kind: 'const',
           body: 'schedules.task({ id: "per-user-sync", run: async (payload) => {} })',
+          initializerCall: { functionName: 'task', expression: 'schedules.task' },
         });
 
-        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/sync.ts');
+        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/sync.ts', triggerImports);
 
         expect(result).toEqual({
           entryType: 'trigger-scheduled-task',
@@ -182,9 +302,10 @@ describe('triggerDevMatcher', () => {
         const symbol = makeSymbol({
           kind: 'const',
           body: `schedules.task({ id: "poll-api", cron: "0 */2 * * *", run: async () => {} })`,
+          initializerCall: { functionName: 'task', expression: 'schedules.task' },
         });
 
-        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/poll.ts');
+        const result = triggerDevMatcher.detectEntryPoint(symbol, 'tasks/poll.ts', triggerImports);
 
         expect(result?.metadata?.cronSchedule).toBe('0 */2 * * *');
       });

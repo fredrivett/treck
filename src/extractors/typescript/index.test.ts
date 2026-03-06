@@ -2499,4 +2499,102 @@ function factory() {
       expect(result.symbols[0].name).toBe('factory');
     });
   });
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // initializerCall
+  // ═══════════════════════════════════════════════════════════════════════
+
+  describe('initializerCall', () => {
+    it('should populate initializerCall for a simple call expression', () => {
+      const code = `const myTask = task({ id: "my-task", run: async () => {} })`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+
+      expect(result.symbols[0].initializerCall).toEqual({
+        functionName: 'task',
+        expression: 'task',
+      });
+    });
+
+    it('should populate initializerCall for a dotted call expression', () => {
+      const code = `const fn = inngest.createFunction({ id: "my-fn" }, { event: "test" }, handler)`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+
+      expect(result.symbols[0].initializerCall).toEqual({
+        functionName: 'createFunction',
+        expression: 'inngest.createFunction',
+      });
+    });
+
+    it('should populate initializerCall for schedules.task()', () => {
+      const code = `const job = schedules.task({ id: "cron-job", cron: "* * * * *", run: async () => {} })`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+
+      expect(result.symbols[0].initializerCall).toEqual({
+        functionName: 'task',
+        expression: 'schedules.task',
+      });
+    });
+
+    it('should not have initializerCall for arrow function consts', () => {
+      const code = `const add = (a: number, b: number) => a + b`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+
+      expect(result.symbols[0].initializerCall).toBeUndefined();
+    });
+
+    it('should not have initializerCall for regular functions', () => {
+      const code = `function greet(name: string) { return "hello " + name }`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+
+      expect(result.symbols[0].initializerCall).toBeUndefined();
+    });
+
+    it('should not have initializerCall for object literal consts', () => {
+      const code = `const config = { detect() { return true }, name: "test" }`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+
+      expect(result.symbols[0].initializerCall).toBeUndefined();
+    });
+
+    it('should populate initializerCall independently for multiple call expressions', () => {
+      const code = `
+const taskA = task({ id: "a", run: async () => {} })
+const taskB = task({ id: "b", run: async () => {} })
+const fn = inngest.createFunction({ id: "c" }, { event: "test" }, handler)
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+
+      expect(result.symbols).toHaveLength(3);
+      expect(result.symbols[0].initializerCall).toEqual({
+        functionName: 'task',
+        expression: 'task',
+      });
+      expect(result.symbols[1].initializerCall).toEqual({
+        functionName: 'task',
+        expression: 'task',
+      });
+      expect(result.symbols[2].initializerCall).toEqual({
+        functionName: 'createFunction',
+        expression: 'inngest.createFunction',
+      });
+    });
+
+    it('should populate initializerCall for calls with type arguments', () => {
+      const code = `const result = createHandler<MyType>({ path: "/api" })`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+
+      expect(result.symbols[0].initializerCall).toEqual({
+        functionName: 'createHandler',
+        expression: 'createHandler',
+      });
+    });
+  });
 });

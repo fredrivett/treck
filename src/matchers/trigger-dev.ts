@@ -26,7 +26,7 @@
  * - batch.triggerByTaskAndWait([{ task: myTask, ... }])
  */
 
-import type { SymbolInfo } from '../extractors/types.js';
+import type { ImportInfo, SymbolInfo } from '../extractors/types.js';
 import type {
   EntryPointMatch,
   FrameworkMatcher,
@@ -70,12 +70,20 @@ export const triggerDevMatcher: FrameworkMatcher = {
    * Detect task definitions as Trigger.dev entry points.
    *
    * Recognises `task(...)`, `schemaTask(...)`, and `schedules.task(...)`.
+   * Uses structured `initializerCall` info and verifies the import source
+   * when available.
    */
-  detectEntryPoint(symbol: SymbolInfo, _filePath: string): EntryPointMatch | null {
-    if (symbol.kind !== 'const') return null;
+  detectEntryPoint(
+    symbol: SymbolInfo,
+    _filePath: string,
+    imports?: ImportInfo[],
+  ): EntryPointMatch | null {
+    if (symbol.kind !== 'const' || !symbol.initializerCall) return null;
+
+    const { functionName, expression } = symbol.initializerCall;
 
     // schedules.task({ id: "...", cron: "..." })
-    if (/^schedules\.task\s*\(/.test(symbol.body)) {
+    if (functionName === 'task' && expression === 'schedules.task') {
       const taskId = extractTaskId(symbol.body);
       const cronSchedule = extractCronSchedule(symbol.body);
 
@@ -88,8 +96,16 @@ export const triggerDevMatcher: FrameworkMatcher = {
       };
     }
 
-    // task({ id: "..." }) or schemaTask({ id: "..." })
-    if (/^(?:schema)?[Tt]ask\s*\(/.test(symbol.body)) {
+    // task({ id: "..." }), Task({ id: "..." }), or schemaTask({ id: "..." })
+    if (['task', 'Task', 'schemaTask'].includes(functionName)) {
+      // Verify import source when imports are available
+      if (imports) {
+        const hasTriggerImport = imports.some(
+          (imp) => imp.name === functionName && imp.source.startsWith('@trigger.dev/'),
+        );
+        if (!hasTriggerImport) return null;
+      }
+
       const taskId = extractTaskId(symbol.body);
 
       return {
