@@ -51,8 +51,8 @@ function saveSettings(settings: ChatSettings): void {
 interface ChatPanelProps {
   /** Called when the panel should close. */
   onClose: () => void;
-  /** Extra fields merged into every chat request body (e.g. `{ project: 'tldraw' }`). */
-  chatExtraBody?: Record<string, unknown>;
+  /** Showcase project slug — passed to the chat API so it can load the correct graph. */
+  project?: string;
 }
 
 /** Renders markdown content from assistant messages. */
@@ -115,7 +115,7 @@ function CloseIcon() {
 }
 
 /** AI chat panel for code navigation questions. */
-export function ChatPanel({ onClose, chatExtraBody }: ChatPanelProps) {
+export function ChatPanel({ onClose, project }: ChatPanelProps) {
   const isDesktop = useMediaQuery('(min-width: 768px)', {
     defaultValue: true,
     initializeWithValue: false,
@@ -132,9 +132,9 @@ export function ChatPanel({ onClose, chatExtraBody }: ChatPanelProps) {
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
 
-  // Ref so chatExtraBody changes don't recreate the transport
-  const chatExtraBodyRef = useRef(chatExtraBody);
-  chatExtraBodyRef.current = chatExtraBody;
+  // Ref so project changes don't recreate the transport
+  const projectRef = useRef(project);
+  projectRef.current = project;
 
   // Stable transport instance — body is resolved per-request via refs
   const transport = useMemo(
@@ -144,7 +144,7 @@ export function ChatPanel({ onClose, chatExtraBody }: ChatPanelProps) {
         body: () => ({
           apiKey: settingsRef.current.apiKey,
           model: settingsRef.current.model || undefined,
-          ...chatExtraBodyRef.current,
+          ...(projectRef.current ? { project: projectRef.current } : {}),
         }),
       }),
     [],

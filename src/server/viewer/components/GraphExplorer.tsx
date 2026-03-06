@@ -28,12 +28,12 @@ interface GraphExplorerProps {
   loading?: boolean;
   /** Error message if the graph failed to load. */
   error?: string | null;
-  /** Extra fields merged into every chat request body (e.g. `{ project: 'tldraw' }`). */
-  chatExtraBody?: Record<string, unknown>;
+  /** Showcase project slug — passed through to the chat panel so requests load the correct graph. */
+  project?: string;
 }
 
 /** Standalone graph explorer — renders sidebar, graph, and docs from a single graph prop. */
-export function GraphExplorer({ graph, loading = false, error = null, chatExtraBody }: GraphExplorerProps) {
+export function GraphExplorer({ graph, loading = false, error = null, project }: GraphExplorerProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const [layoutReady, setLayoutReady] = useState(false);
@@ -260,7 +260,7 @@ export function GraphExplorer({ graph, loading = false, error = null, chatExtraB
           </button>
         )}
       </main>
-      {chatOpen && <ChatPanel onClose={() => setChatOpen(false)} chatExtraBody={chatExtraBody} />}
+      {chatOpen && <ChatPanel onClose={() => setChatOpen(false)} project={project} />}
     </div>
   );
 
