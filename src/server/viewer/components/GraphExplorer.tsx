@@ -7,7 +7,7 @@
  * website showcases.
  */
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { Route, Routes, useLocation, useSearchParams } from 'react-router';
 import { buildIndexResponse, buildSymbolIndexFromGraph } from '../../../graph/symbol-index.js';
 import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
@@ -43,6 +43,8 @@ export function GraphExplorer({
   const location = useLocation();
   const [layoutReady, setLayoutReady] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
+  const [isOffCenter, setIsOffCenter] = useState(false);
+  const recenterRef = useRef<(() => void) | null>(null);
   const isGraphView = location.pathname === '/';
 
   const onLayoutReady = useCallback(() => {
@@ -208,6 +210,8 @@ export function GraphExplorer({
           searchQuery={searchQuery}
           enabledTypes={enabledTypes}
           showConditionals={showConditionals}
+          recenterRef={recenterRef}
+          onOffCenterChange={setIsOffCenter}
         />
       )}
     </div>
@@ -242,27 +246,52 @@ export function GraphExplorer({
           <Route path="/docs/*" element={<DocsViewer />} />
         </Routes>
         {isGraphView && (
-          <button
-            type="button"
-            onClick={() => setChatOpen(!chatOpen)}
-            className="absolute top-4 right-4 z-10 flex items-center gap-1.5 rounded-md border border-border bg-background/90 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted shadow-sm"
-            title={chatOpen ? 'Close AI chat' : 'Open AI chat'}
-          >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
+          <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 items-end">
+            <button
+              type="button"
+              onClick={() => setChatOpen(!chatOpen)}
+              className="flex items-center gap-1.5 rounded-md border border-border bg-background/90 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted shadow-sm"
+              title={chatOpen ? 'Close AI chat' : 'Open AI chat'}
             >
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-            Chat
-          </button>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              Chat
+            </button>
+            {isOffCenter && (
+              <button
+                type="button"
+                onClick={() => recenterRef.current?.()}
+                className="flex items-center gap-1.5 rounded-md border border-border bg-background/90 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted shadow-sm"
+                title="Recenter view on nodes"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                </svg>
+                Recenter
+              </button>
+            )}
+          </div>
         )}
       </main>
       {chatOpen && <ChatPanel onClose={() => setChatOpen(false)} project={project} />}
