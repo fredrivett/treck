@@ -33,7 +33,12 @@ interface GraphExplorerProps {
 }
 
 /** Standalone graph explorer — renders sidebar, graph, and docs from a single graph prop. */
-export function GraphExplorer({ graph, loading = false, error = null, project }: GraphExplorerProps) {
+export function GraphExplorer({
+  graph,
+  loading = false,
+  error = null,
+  project,
+}: GraphExplorerProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const [layoutReady, setLayoutReady] = useState(false);

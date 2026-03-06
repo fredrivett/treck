@@ -9,15 +9,15 @@
  */
 
 import { createAnthropic } from '@ai-sdk/anthropic';
-import type { APIRoute } from 'astro';
-import { convertToModelMessages, stepCountIs, streamText, tool, type UIMessage } from 'ai';
-import { z } from 'zod';
 import {
   buildSystemPrompt,
   executeSearchNodes,
   executeSelectNodes,
 } from '@treck/graph/chat-helpers.js';
 import type { FlowGraph } from '@treck/graph/types.js';
+import { convertToModelMessages, stepCountIs, streamText, tool, type UIMessage } from 'ai';
+import type { APIRoute } from 'astro';
+import { z } from 'zod';
 import { showcases } from '../../showcases';
 
 export const prerender = false;
