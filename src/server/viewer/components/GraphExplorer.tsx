@@ -7,6 +7,7 @@
  * website showcases.
  */
 
+import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { Route, Routes, useLocation, useSearchParams } from 'react-router';
 import { buildIndexResponse, buildSymbolIndexFromGraph } from '../../../graph/symbol-index.js';
@@ -268,29 +269,36 @@ export function GraphExplorer({
               </svg>
               Chat
             </button>
-            {isOffCenter && (
-              <button
-                type="button"
-                onClick={() => recenterRef.current?.()}
-                className="flex items-center gap-1.5 rounded-md border border-border bg-background/90 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted shadow-sm"
-                title="Recenter view on nodes"
-              >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
+            <AnimatePresence>
+              {isOffCenter && (
+                <motion.button
+                  key="recenter"
+                  type="button"
+                  onClick={() => recenterRef.current?.()}
+                  className="flex items-center gap-1.5 rounded-md border border-border bg-background/90 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted shadow-sm"
+                  title="Recenter view on nodes"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
                 >
-                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-                </svg>
-                Recenter
-              </button>
-            )}
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                  </svg>
+                  Recenter
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
         )}
       </main>

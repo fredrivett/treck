@@ -293,9 +293,7 @@ function FlowGraphInner({
       requestAnimationFrame(() => {
         fitView({ padding: 0.15 });
         requestAnimationFrame(() => {
-          const vp = getViewport();
-          console.log('[recenter] fitView done, saving viewport (next rAF):', vp);
-          fittedViewportRef.current = vp;
+          fittedViewportRef.current = getViewport();
           onOffCenterChange?.(false);
           onLayoutReady?.();
         });
@@ -309,9 +307,7 @@ function FlowGraphInner({
     fitView({ padding: 0.15 });
     onOffCenterChange?.(false);
     requestAnimationFrame(() => {
-      const vp = getViewport();
-      console.log('[recenter] manual recenter, saving viewport (next rAF):', vp);
-      fittedViewportRef.current = vp;
+      fittedViewportRef.current = getViewport();
     });
   }, [fitView, getViewport, onOffCenterChange]);
 
@@ -327,11 +323,10 @@ function FlowGraphInner({
     const fitted = fittedViewportRef.current;
     if (!fitted) return;
     const current = getViewport();
-    const dx = Math.abs(current.x - fitted.x);
-    const dy = Math.abs(current.y - fitted.y);
-    const dz = Math.abs(current.zoom - fitted.zoom);
-    const offCenter = dx > 1 || dy > 1 || dz > 0.01;
-    console.log('[recenter] onMoveEnd — fitted:', fitted, 'current:', current, 'deltas:', { dx, dy, dz }, 'offCenter:', offCenter);
+    const offCenter =
+      Math.abs(current.x - fitted.x) > 1 ||
+      Math.abs(current.y - fitted.y) > 1 ||
+      Math.abs(current.zoom - fitted.zoom) > 0.01;
     onOffCenterChange?.(offCenter);
   }, [getViewport, onOffCenterChange]);
 
