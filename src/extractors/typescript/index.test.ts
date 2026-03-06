@@ -275,6 +275,38 @@ class Person {
     });
   });
 
+  describe('Object Literal Extraction', () => {
+    it('should extract object literals with methods', () => {
+      const code = `
+const matcher = {
+  name: 'test',
+  detect(symbol: any) {
+    return symbol.name
+  }
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols).toHaveLength(1);
+      expect(result.symbols[0]).toMatchObject({
+        name: 'matcher',
+        kind: 'const',
+      });
+    });
+
+    it('should not extract object literals without methods', () => {
+      const code = `
+const CONFIG = {
+  port: 3000,
+  host: 'localhost',
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const result = extractor.extractSymbols(TEST_FILE);
+      expect(result.symbols).toHaveLength(0);
+    });
+  });
+
   describe('Multiple Symbols', () => {
     it('should extract all symbols from a file', () => {
       const code = `
@@ -547,6 +579,187 @@ const analyzeImageTask = task({
       expect(names).toContain('task');
       expect(names).toContain('getConfig');
       expect(names).toContain('analyzeImage');
+    });
+
+    it('should detect calls in if condition expressions', () => {
+      const code = `
+function isReady() { return true }
+function doStuff() {}
+function main() {
+  if (isReady()) {
+    doStuff()
+  }
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const calls = extractor.extractCallSites(TEST_FILE, 'main');
+      const names = calls.map((c) => c.name);
+      expect(names).toContain('isReady');
+      expect(names).toContain('doStuff');
+      // isReady is called unconditionally (the condition always runs)
+      const isReadyCall = calls.find((c) => c.name === 'isReady');
+      expect(isReadyCall?.conditions).toBeUndefined();
+    });
+
+    it('should detect calls in negated if conditions', () => {
+      const code = `
+function isDomAvailable() { return true }
+function doWork() {}
+function applyTheme() {
+  if (!isDomAvailable()) return;
+  doWork()
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const calls = extractor.extractCallSites(TEST_FILE, 'applyTheme');
+      const names = calls.map((c) => c.name);
+      expect(names).toContain('isDomAvailable');
+    });
+
+    it('should detect calls in switch expression', () => {
+      const code = `
+function getType() { return 'a' }
+function handleA() {}
+function handleDefault() {}
+function route() {
+  switch (getType()) {
+    case 'a': handleA(); break;
+    default: handleDefault();
+  }
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const calls = extractor.extractCallSites(TEST_FILE, 'route');
+      const names = calls.map((c) => c.name);
+      expect(names).toContain('getType');
+      // getType is unconditional (switch expression always evaluates)
+      const getTypeCall = calls.find((c) => c.name === 'getType');
+      expect(getTypeCall?.conditions).toBeUndefined();
+    });
+
+    it('should detect calls in ternary condition expressions', () => {
+      const code = `
+function isValid() { return true }
+function getA() { return 'a' }
+function getB() { return 'b' }
+function choose() {
+  return isValid() ? getA() : getB()
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const calls = extractor.extractCallSites(TEST_FILE, 'choose');
+      const names = calls.map((c) => c.name);
+      expect(names).toContain('isValid');
+      // isValid is unconditional
+      const isValidCall = calls.find((c) => c.name === 'isValid');
+      expect(isValidCall?.conditions).toBeUndefined();
+    });
+
+    it('should detect JSX self-closing elements as call sites', () => {
+      const code = `
+function LoadingSpinner() { return <div>Loading...</div> }
+function App() {
+  return <LoadingSpinner />
+}
+`;
+      writeFileSync(TEST_TSX_FILE, code);
+      const calls = extractor.extractCallSites(TEST_TSX_FILE, 'App');
+      expect(calls).toHaveLength(1);
+      expect(calls[0].name).toBe('LoadingSpinner');
+    });
+
+    it('should detect JSX elements with children as call sites', () => {
+      const code = `
+function Sidebar({ children }: { children: any }) { return <div>{children}</div> }
+function Layout() {
+  return <Sidebar><div>content</div></Sidebar>
+}
+`;
+      writeFileSync(TEST_TSX_FILE, code);
+      const calls = extractor.extractCallSites(TEST_TSX_FILE, 'Layout');
+      const names = calls.map((c) => c.name);
+      expect(names).toContain('Sidebar');
+    });
+
+    it('should not detect lowercase HTML elements as call sites', () => {
+      const code = `
+function App() {
+  return <div><span>hello</span></div>
+}
+`;
+      writeFileSync(TEST_TSX_FILE, code);
+      const calls = extractor.extractCallSites(TEST_TSX_FILE, 'App');
+      expect(calls).toHaveLength(0);
+    });
+
+    it('should not detect dotted JSX names as call sites', () => {
+      const code = `
+const Primitive = { Root: (props: any) => <div {...props} /> }
+function Sheet() {
+  return <Primitive.Root />
+}
+`;
+      writeFileSync(TEST_TSX_FILE, code);
+      const calls = extractor.extractCallSites(TEST_TSX_FILE, 'Sheet');
+      expect(calls).toHaveLength(0);
+    });
+
+    it('should detect new expressions as call sites', () => {
+      const code = `
+class ContentHasher { hash() { return '' } }
+function build() {
+  const hasher = new ContentHasher()
+  return hasher.hash()
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const calls = extractor.extractCallSites(TEST_FILE, 'build');
+      const names = calls.map((c) => c.name);
+      expect(names).toContain('ContentHasher');
+      expect(names).toContain('hash');
+    });
+
+    it('should detect throw new expressions as call sites', () => {
+      const code = `
+class ConfigError extends Error {}
+function validate(input: string) {
+  if (!input) throw new ConfigError('bad')
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const calls = extractor.extractCallSites(TEST_FILE, 'validate');
+      const names = calls.map((c) => c.name);
+      expect(names).toContain('ConfigError');
+    });
+
+    it('should detect calls inside object literal methods', () => {
+      const code = `
+function extractId(body: string) { return body }
+const matcher = {
+  detect(symbol: any) {
+    const id = extractId(symbol.body)
+    return id
+  }
+}
+`;
+      writeFileSync(TEST_FILE, code);
+      const calls = extractor.extractCallSites(TEST_FILE, 'matcher');
+      const names = calls.map((c) => c.name);
+      expect(names).toContain('extractId');
+    });
+
+    it('should detect extends as a call site', () => {
+      const code = `
+class BaseError extends Error {
+  code: string
+  constructor(message: string) { super(message); this.code = 'ERR' }
+}
+class ConfigError extends BaseError {}
+`;
+      writeFileSync(TEST_FILE, code);
+      const calls = extractor.extractCallSites(TEST_FILE, 'ConfigError');
+      const names = calls.map((c) => c.name);
+      expect(names).toContain('BaseError');
     });
   });
 

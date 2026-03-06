@@ -91,6 +91,15 @@ export class TypeScriptExtractor {
               symbols.push(
                 this.withDirectives(this.extractCallExpression(decl, sourceFile), directives),
               );
+            } else if (
+              decl.initializer &&
+              ts.isObjectLiteralExpression(decl.initializer) &&
+              ts.isIdentifier(decl.name) &&
+              this.hasMethodProperties(decl.initializer)
+            ) {
+              symbols.push(
+                this.withDirectives(this.extractObjectLiteral(decl, sourceFile), directives),
+              );
             }
           }
 
@@ -153,6 +162,10 @@ export class TypeScriptExtractor {
       branchGroup: string,
       isFirst = true,
     ) => {
+      // Walk the condition expression for call sites (e.g., if (isReady()) ...)
+      // The condition always evaluates, so it inherits the parent's conditions.
+      walk(node.expression, conditions);
+
       const condText = node.expression.getText(sourceFile).slice(0, 60);
 
       // Walk the "then" branch (first in chain is "if", rest are "else if")
@@ -190,6 +203,8 @@ export class TypeScriptExtractor {
 
       // --- switch/case (with fall-through for empty cases) ---
       if (ts.isSwitchStatement(node)) {
+        // Walk switch expression for call sites (e.g., switch (getType()) { ... })
+        walk(node.expression, conditions);
         const switchExpr = node.expression.getText(sourceFile).slice(0, 40);
         const group = `branch:${getLine(node)}`;
         let pendingLabels: string[] = [];
@@ -226,6 +241,8 @@ export class TypeScriptExtractor {
 
       // --- ternary: cond ? a : b ---
       if (ts.isConditionalExpression(node)) {
+        // Walk ternary condition for call sites (e.g., isReady() ? a : b)
+        walk(node.condition, conditions);
         const condText = node.condition.getText(sourceFile).slice(0, 60);
         const group = `branch:${getLine(node)}`;
         countBranch(group);
@@ -266,6 +283,49 @@ export class TypeScriptExtractor {
           allCallSites.push({
             name,
             expression,
+            ...(conditions.length > 0 && { conditions: [...conditions] }),
+          });
+        }
+      }
+
+      // JSX elements: <Component /> or <Component>...</Component>
+      if (ts.isJsxSelfClosingElement(node) || ts.isJsxOpeningElement(node)) {
+        const tagName = node.tagName;
+        // Only track PascalCase identifiers (React components from the project).
+        // Skip dotted names (e.g. SheetPrimitive.Root) and lowercase HTML elements.
+        if (ts.isIdentifier(tagName)) {
+          const name = tagName.getText(sourceFile);
+          if (/^[A-Z]/.test(name)) {
+            allCallSites.push({
+              name,
+              expression: name,
+              ...(conditions.length > 0 && { conditions: [...conditions] }),
+            });
+          }
+        }
+      }
+
+      // Class inheritance: class Foo extends Bar { ... }
+      if (ts.isHeritageClause(node) && node.token === ts.SyntaxKind.ExtendsKeyword) {
+        for (const type of node.types) {
+          const name = this.extractCallName(type.expression, sourceFile);
+          if (name) {
+            allCallSites.push({
+              name,
+              expression: type.expression.getText(sourceFile),
+              ...(conditions.length > 0 && { conditions: [...conditions] }),
+            });
+          }
+        }
+      }
+
+      // new expressions: new Foo(), new Bar(args)
+      if (ts.isNewExpression(node)) {
+        const name = this.extractCallName(node.expression, sourceFile);
+        if (name) {
+          allCallSites.push({
+            name,
+            expression: node.expression.getText(sourceFile),
             ...(conditions.length > 0 && { conditions: [...conditions] }),
           });
         }
@@ -444,6 +504,11 @@ export class TypeScriptExtractor {
           }
           // Handle call expressions: const foo = task({...}), const bar = inngest.createFunction({...})
           if (ts.isCallExpression(decl.initializer)) {
+            body = decl.initializer;
+            return;
+          }
+          // Handle object literals with methods: const matcher = { detect() { ... } }
+          if (ts.isObjectLiteralExpression(decl.initializer)) {
             body = decl.initializer;
             return;
           }
@@ -713,6 +778,46 @@ export class TypeScriptExtractor {
 
     const fullText = decl.getText(sourceFile);
     const body = call.getText(sourceFile);
+    const { line: startLine } = sourceFile.getLineAndCharacterOfPosition(decl.pos);
+    const { line: endLine } = sourceFile.getLineAndCharacterOfPosition(decl.end);
+
+    const jsDoc = extractJsDoc(decl, sourceFile);
+    const isExported = this.isNodeExported(decl.parent.parent);
+
+    return {
+      name,
+      kind: 'const',
+      filePath: sourceFile.fileName,
+      params: '',
+      body,
+      fullText,
+      startLine: startLine + 1,
+      endLine: endLine + 1,
+      isExported,
+      jsDoc,
+    };
+  }
+
+  /**
+   * Check if an object literal has at least one shorthand method property.
+   * Used to filter out pure data objects (e.g. config maps) from extraction.
+   */
+  private hasMethodProperties(node: ts.ObjectLiteralExpression): boolean {
+    return node.properties.some((p) => ts.isMethodDeclaration(p));
+  }
+
+  /**
+   * Extract an object literal variable: const matcher = { detect() { ... } }
+   * Only extracted when the object has method properties (see hasMethodProperties).
+   */
+  private extractObjectLiteral(
+    decl: ts.VariableDeclaration,
+    sourceFile: ts.SourceFile,
+  ): SymbolInfo {
+    const name = decl.name.getText(sourceFile);
+    const fullText = decl.getText(sourceFile);
+    // biome-ignore lint/style/noNonNullAssertion: caller guarantees initializer exists
+    const body = decl.initializer!.getText(sourceFile);
     const { line: startLine } = sourceFile.getLineAndCharacterOfPosition(decl.pos);
     const { line: endLine } = sourceFile.getLineAndCharacterOfPosition(decl.end);
 
