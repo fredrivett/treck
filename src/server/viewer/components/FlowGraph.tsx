@@ -235,6 +235,30 @@ function FlowGraphInner({
     });
   }, [selectedEntries, focusedEntries, setSearchParams]);
 
+  // Sync URL query params back to selection state (for external updates like chat)
+  useEffect(() => {
+    const selectedParam = searchParams.get('selected');
+    const urlSelected = selectedParam
+      ? new Set(selectedParam.split(',').map(decodeURIComponent))
+      : new Set<string>();
+
+    const focusedParam = searchParams.get('focused');
+    const urlFocused = focusedParam
+      ? new Set(focusedParam.split(',').map(decodeURIComponent))
+      : new Set<string>();
+
+    // Only update if different from current state to avoid loops
+    const selectedChanged =
+      urlSelected.size !== selectedEntriesRef.current.size ||
+      [...urlSelected].some((id) => !selectedEntriesRef.current.has(id));
+    const focusedChanged =
+      urlFocused.size !== focusedEntriesRef.current.size ||
+      [...urlFocused].some((id) => !focusedEntriesRef.current.has(id));
+
+    if (selectedChanged) setSelectedEntries(urlSelected);
+    if (focusedChanged) setFocusedEntries(urlFocused);
+  }, [searchParams]);
+
   // Shared helper: apply ELK positions to nodes and fit the view
   const applyPositionsAndFit = useCallback(
     (positions: Map<string, { x: number; y: number }>, initialNodes?: Node[]) => {
