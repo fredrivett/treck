@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-04T05:03:52.218Z",
+  "generatedAt": "2026-03-06T00:35:53.060Z",
   "nodes": [
     {
       "id": "scripts/generate-showcase.ts:generateConfig",
@@ -1125,37 +1125,6 @@
       "isExported": true
     },
     {
-      "id": "src/cli/utils/paths.ts:toRelativePath",
-      "name": "toRelativePath",
-      "kind": "function",
-      "filePath": "src/cli/utils/paths.ts",
-      "isAsync": false,
-      "hash": "785789f67ee52181b4612bfe6a65d578e5979bbcafa4f2dfabd5ad7cdad89fa0",
-      "lineRange": [
-        10,
-        36
-      ],
-      "hasJsDoc": true,
-      "description": "Convert an absolute or foreign-worktree file path to a relative path.\nUsed when writing dependency paths into doc frontmatter.",
-      "structuredParams": [
-        {
-          "name": "filePath",
-          "type": "string",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "cwd",
-          "type": "unknown",
-          "isOptional": true,
-          "isRest": false,
-          "defaultValue": "process.cwd()"
-        }
-      ],
-      "returnType": "string",
-      "isExported": true
-    },
-    {
       "id": "src/cli/utils/paths.ts:resolveSourcePath",
       "name": "resolveSourcePath",
       "kind": "function",
@@ -1163,8 +1132,8 @@
       "isAsync": false,
       "hash": "fdbb7f89d70caad703c655c0923d66c5da28eec8ea230836885ab57bf4a3dbfe",
       "lineRange": [
-        36,
-        67
+        10,
+        41
       ],
       "hasJsDoc": true,
       "description": "Resolve a source file path from doc frontmatter to an absolute path\nin the current working directory. Used when reading source files.",
@@ -1689,10 +1658,10 @@
       "kind": "class",
       "filePath": "src/extractors/typescript/index.ts",
       "isAsync": false,
-      "hash": "5731bbf20aa2121bba1f7259fa83116f4d1b0eeeaecd2a31dfa94959fee11dee",
+      "hash": "e3d8436036645ba458d06dc9e4e6efb522084430f92c762ba420f6d9c1263290",
       "lineRange": [
         18,
-        794
+        899
       ],
       "hasJsDoc": true,
       "description": "Extracts symbols (functions, classes, arrow functions, call expressions) from TypeScript/JavaScript files using the TS Compiler API.",
@@ -1752,10 +1721,10 @@
       "kind": "class",
       "filePath": "src/graph/graph-builder.ts",
       "isAsync": false,
-      "hash": "f9c5d8f9805e550a2ea92a6ce192e2cea7188c240a8e85b156745ecb47806e4e",
+      "hash": "9aceb29eb63ecb236609fd4543a24b6d0a0eb4fd5215e13aa9ab3e5e7d00fbe2",
       "lineRange": [
         51,
-        402
+        400
       ],
       "hasJsDoc": true,
       "description": "/** Builds a {@link FlowGraph}from TypeScript source files by extracting symbols, detecting entry points, and resolving call edges. ",
@@ -2593,6 +2562,21 @@
       "isExported": false
     },
     {
+      "id": "src/matchers/inngest.ts:inngestMatcher",
+      "name": "inngestMatcher",
+      "kind": "const",
+      "filePath": "src/matchers/inngest.ts",
+      "isAsync": false,
+      "hash": "529e3c81a26094cd44a4a4c6c0d6035c3f94255bac4fd56163e819e712390fb1",
+      "lineRange": [
+        37,
+        111
+      ],
+      "entryType": "inngest-function",
+      "hasJsDoc": false,
+      "isExported": true
+    },
+    {
       "id": "src/matchers/nextjs.ts:extractRoutePath",
       "name": "extractRoutePath",
       "kind": "function",
@@ -2666,6 +2650,20 @@
       "isExported": false
     },
     {
+      "id": "src/matchers/nextjs.ts:nextjsMatcher",
+      "name": "nextjsMatcher",
+      "kind": "const",
+      "filePath": "src/matchers/nextjs.ts",
+      "isAsync": false,
+      "hash": "76f95500720dbd1a14761a7dc49c766bc256f6b65c7673c6e2a8b450a87f424e",
+      "lineRange": [
+        69,
+        183
+      ],
+      "hasJsDoc": false,
+      "isExported": true
+    },
+    {
       "id": "src/matchers/trigger-dev.ts:extractTaskId",
       "name": "extractTaskId",
       "kind": "function",
@@ -2712,6 +2710,20 @@
       ],
       "returnType": "string | null",
       "isExported": false
+    },
+    {
+      "id": "src/matchers/trigger-dev.ts:triggerDevMatcher",
+      "name": "triggerDevMatcher",
+      "kind": "const",
+      "filePath": "src/matchers/trigger-dev.ts",
+      "isAsync": false,
+      "hash": "d1a02c9c6a2b1b072f8c853cba3ed5b6d0d0d9921ac43731b52f7b22062cdc56",
+      "lineRange": [
+        66,
+        180
+      ],
+      "hasJsDoc": false,
+      "isExported": true
     },
     {
       "id": "src/server/index.ts:serveStaticFile",
@@ -2815,23 +2827,6 @@
           "description": "The flow graph for rendering and mermaid generation"
         }
       ],
-      "isExported": true
-    },
-    {
-      "id": "src/server/template.ts:getTemplate",
-      "name": "getTemplate",
-      "kind": "function",
-      "filePath": "src/server/template.ts",
-      "isAsync": true,
-      "hash": "b63073310a6dd2c97b621922d414d2d5eea687d948f8288fdf3d3cc0c93745b6",
-      "lineRange": [
-        1,
-        828
-      ],
-      "hasJsDoc": true,
-      "isTrivial": true,
-      "description": "Return the HTML template for the legacy documentation viewer SPA.\n\nThis is a self-contained single-page app with inline CSS and JavaScript\nthat renders a sidebar tree, search, and markdown doc content.",
-      "returnType": "string",
       "isExported": true
     },
     {
@@ -3592,10 +3587,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": true,
-      "hash": "3e4a1a9221e257639d442cc0625b1e51cc744513ce107268d6c2d14a5d16c096",
+      "hash": "9a2411ddd6af8cc61ea99b70b33cac4b20561e0bf1715ad582331d900c508652",
       "lineRange": [
         185,
-        563
+        528
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -3640,8 +3635,8 @@
       "isAsync": false,
       "hash": "529a79637b22ba96cdbe57d1199ea08435af418777384114bafe3bbe7bed8ead",
       "lineRange": [
-        563,
-        584
+        528,
+        549
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -5257,12 +5252,36 @@
   ],
   "edges": [
     {
+      "id": "src/checker/index.ts:StaleChecker->src/extractors/typescript/index.ts:TypeScriptExtractor",
+      "source": "src/checker/index.ts:StaleChecker",
+      "target": "src/extractors/typescript/index.ts:TypeScriptExtractor",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/checker/index.ts:StaleChecker->src/hasher/index.ts:ContentHasher",
+      "source": "src/checker/index.ts:StaleChecker",
+      "target": "src/hasher/index.ts:ContentHasher",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/checker/index.ts:StaleChecker->src/graph/graph-store.ts:GraphStore",
+      "source": "src/checker/index.ts:StaleChecker",
+      "target": "src/graph/graph-store.ts:GraphStore",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
       "id": "src/checker/index.ts:StaleChecker->src/cli/utils/paths.ts:resolveSourcePath",
       "source": "src/checker/index.ts:StaleChecker",
       "target": "src/cli/utils/paths.ts:resolveSourcePath",
       "type": "direct-call",
       "isAsync": false,
-      "order": 0
+      "order": 3
     },
     {
       "id": "src/cli/commands/check.ts:registerCheckCommand->src/cli/utils/config.ts:loadConfig",
@@ -5271,6 +5290,14 @@
       "type": "direct-call",
       "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "src/cli/commands/check.ts:registerCheckCommand->src/checker/index.ts:StaleChecker",
+      "source": "src/cli/commands/check.ts:registerCheckCommand",
+      "target": "src/checker/index.ts:StaleChecker",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
     },
     {
       "id": "src/cli/commands/check.ts:registerCheckCommand->src/cli/commands/check.ts:formatStaleReason",
@@ -5286,7 +5313,7 @@
       ],
       "label": "else",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "src/cli/commands/init.ts:registerInitCommand->src/cli/utils/detect-sources.ts:detectIncludePatterns",
@@ -5406,12 +5433,20 @@
       "order": 0
     },
     {
+      "id": "src/cli/commands/show.ts:registerShowCommand->src/graph/graph-store.ts:GraphStore",
+      "source": "src/cli/commands/show.ts:registerShowCommand",
+      "target": "src/graph/graph-store.ts:GraphStore",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "src/cli/commands/show.ts:registerShowCommand->src/cli/utils/resolve-targets.ts:resolveFocusTargets",
       "source": "src/cli/commands/show.ts:registerShowCommand",
       "target": "src/cli/utils/resolve-targets.ts:resolveFocusTargets",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "src/cli/commands/show.ts:registerShowCommand->src/cli/utils/resolve-targets.ts:explainUnresolved",
@@ -5427,7 +5462,7 @@
       ],
       "label": "if (unresolved.length > 0)",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "src/cli/commands/show.ts:registerShowCommand->src/cli/commands/show.ts:formatDocsOutput",
@@ -5443,7 +5478,7 @@
       ],
       "label": "if (options.docs)",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "src/cli/commands/show.ts:registerShowCommand->src/cli/commands/show.ts:formatMermaidOutput",
@@ -5459,7 +5494,7 @@
       ],
       "label": "else",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "src/cli/commands/show.ts:registerShowCommand->src/cli/commands/show.ts:beautifyMermaid",
@@ -5475,7 +5510,7 @@
       ],
       "label": "if (options.beautify && !options.docs)",
       "isAsync": true,
-      "order": 5
+      "order": 6
     },
     {
       "id": "src/cli/commands/show.ts:formatMermaidOutput->src/graph/graph-to-mermaid.ts:nodeToMermaid",
@@ -5550,12 +5585,28 @@
       "order": 1
     },
     {
+      "id": "src/cli/commands/sync.ts:registerSyncCommand->src/graph/graph-builder.ts:GraphBuilder",
+      "source": "src/cli/commands/sync.ts:registerSyncCommand",
+      "target": "src/graph/graph-builder.ts:GraphBuilder",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
+      "id": "src/cli/commands/sync.ts:registerSyncCommand->src/graph/graph-store.ts:GraphStore",
+      "source": "src/cli/commands/sync.ts:registerSyncCommand",
+      "target": "src/graph/graph-store.ts:GraphStore",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 3
+    },
+    {
       "id": "src/cli/commands/sync.ts:registerSyncCommand->src/graph/graph-query.ts:entryPoints",
       "source": "src/cli/commands/sync.ts:registerSyncCommand",
       "target": "src/graph/graph-query.ts:entryPoints",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 4
     },
     {
       "id": "src/cli/utils/config.ts:loadConfig->src/cli/utils/config.ts:stripQuotes",
@@ -5606,6 +5657,22 @@
       "order": 0
     },
     {
+      "id": "src/cli/utils/detect-sources.ts:detectIncludePatterns->src/cli/utils/detect-sources.ts:containsSourceFiles",
+      "source": "src/cli/utils/detect-sources.ts:detectIncludePatterns",
+      "target": "src/cli/utils/detect-sources.ts:containsSourceFiles",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/cli/utils/detect-sources.ts:detectIncludePatterns->src/cli/utils/detect-sources.ts:hasRootLevelSourceFiles",
+      "source": "src/cli/utils/detect-sources.ts:detectIncludePatterns",
+      "target": "src/cli/utils/detect-sources.ts:hasRootLevelSourceFiles",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
       "id": "src/cli/utils/detect-sources.ts:detectWorkspacePatterns->src/cli/utils/detect-sources.ts:readWorkspacePackages",
       "source": "src/cli/utils/detect-sources.ts:detectWorkspacePatterns",
       "target": "src/cli/utils/detect-sources.ts:readWorkspacePackages",
@@ -5654,6 +5721,38 @@
       "order": 0
     },
     {
+      "id": "src/cli/utils/detect-sources.ts:scanDirectory->src/cli/utils/detect-sources.ts:isSourceFile",
+      "source": "src/cli/utils/detect-sources.ts:scanDirectory",
+      "target": "src/cli/utils/detect-sources.ts:isSourceFile",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "entry.isFile() &&",
+          "branch": "&&",
+          "branchGroup": "branch:226"
+        }
+      ],
+      "label": "entry.isFile() &&",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/cli/utils/detect-sources.ts:scanDirectory->src/cli/utils/detect-sources.ts:scanDirectory",
+      "source": "src/cli/utils/detect-sources.ts:scanDirectory",
+      "target": "src/cli/utils/detect-sources.ts:scanDirectory",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "entry.isDirectory() &&\n      remainingDepth > 0 &&\n      !IG &&",
+          "branch": "&&",
+          "branchGroup": "branch:230"
+        }
+      ],
+      "label": "entry.isDirectory() &&\n      remainingDepth > 0 &&\n      !IG &&",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "src/cli/utils/detect-sources.ts:hasRootLevelSourceFiles->src/cli/utils/detect-sources.ts:isSourceFile",
       "source": "src/cli/utils/detect-sources.ts:hasRootLevelSourceFiles",
       "target": "src/cli/utils/detect-sources.ts:isSourceFile",
@@ -5666,6 +5765,22 @@
         }
       ],
       "label": "entry.isFile() &&",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/cli/utils/errors.ts:ConfigError->src/cli/utils/errors.ts:TreckError",
+      "source": "src/cli/utils/errors.ts:ConfigError",
+      "target": "src/cli/utils/errors.ts:TreckError",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/cli/utils/errors.ts:ExtractionError->src/cli/utils/errors.ts:TreckError",
+      "source": "src/cli/utils/errors.ts:ExtractionError",
+      "target": "src/cli/utils/errors.ts:TreckError",
+      "type": "direct-call",
       "isAsync": false,
       "order": 0
     },
@@ -5686,9 +5801,9 @@
       "order": 0
     },
     {
-      "id": "src/cli/utils/jsdoc-coverage.ts:scanProject->src/cli/utils/jsdoc-coverage.ts:extractFileSymbols",
+      "id": "src/cli/utils/jsdoc-coverage.ts:scanProject->src/extractors/typescript/index.ts:TypeScriptExtractor",
       "source": "src/cli/utils/jsdoc-coverage.ts:scanProject",
-      "target": "src/cli/utils/jsdoc-coverage.ts:extractFileSymbols",
+      "target": "src/extractors/typescript/index.ts:TypeScriptExtractor",
       "type": "conditional-call",
       "conditions": [
         {
@@ -5702,12 +5817,28 @@
       "order": 1
     },
     {
+      "id": "src/cli/utils/jsdoc-coverage.ts:scanProject->src/cli/utils/jsdoc-coverage.ts:extractFileSymbols",
+      "source": "src/cli/utils/jsdoc-coverage.ts:scanProject",
+      "target": "src/cli/utils/jsdoc-coverage.ts:extractFileSymbols",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (sourceFiles.length > 0)",
+          "branch": "then",
+          "branchGroup": "branch:74"
+        }
+      ],
+      "label": "if (sourceFiles.length > 0)",
+      "isAsync": false,
+      "order": 2
+    },
+    {
       "id": "src/cli/utils/jsdoc-coverage.ts:scanProject->src/cli/utils/jsdoc-coverage.ts:buildScanResult",
       "source": "src/cli/utils/jsdoc-coverage.ts:scanProject",
       "target": "src/cli/utils/jsdoc-coverage.ts:buildScanResult",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "src/cli/utils/jsdoc-coverage.ts:scanProjectAsync->src/cli/utils/source-files.ts:findSourceFilesAsync",
@@ -5727,9 +5858,9 @@
       "order": 1
     },
     {
-      "id": "src/cli/utils/jsdoc-coverage.ts:scanProjectAsync->src/cli/utils/jsdoc-coverage.ts:extractFileSymbols",
+      "id": "src/cli/utils/jsdoc-coverage.ts:scanProjectAsync->src/extractors/typescript/index.ts:TypeScriptExtractor",
       "source": "src/cli/utils/jsdoc-coverage.ts:scanProjectAsync",
-      "target": "src/cli/utils/jsdoc-coverage.ts:extractFileSymbols",
+      "target": "src/extractors/typescript/index.ts:TypeScriptExtractor",
       "type": "conditional-call",
       "conditions": [
         {
@@ -5743,12 +5874,28 @@
       "order": 3
     },
     {
+      "id": "src/cli/utils/jsdoc-coverage.ts:scanProjectAsync->src/cli/utils/jsdoc-coverage.ts:extractFileSymbols",
+      "source": "src/cli/utils/jsdoc-coverage.ts:scanProjectAsync",
+      "target": "src/cli/utils/jsdoc-coverage.ts:extractFileSymbols",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (sourceFiles.length > 0)",
+          "branch": "then",
+          "branchGroup": "branch:100"
+        }
+      ],
+      "label": "if (sourceFiles.length > 0)",
+      "isAsync": false,
+      "order": 4
+    },
+    {
       "id": "src/cli/utils/jsdoc-coverage.ts:scanProjectAsync->src/cli/utils/jsdoc-coverage.ts:buildScanResult",
       "source": "src/cli/utils/jsdoc-coverage.ts:scanProjectAsync",
       "target": "src/cli/utils/jsdoc-coverage.ts:buildScanResult",
       "type": "direct-call",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "src/cli/utils/jsdoc-coverage.ts:renderMissingJsDocList->src/cli/utils/source-files.ts:getRelativePath",
@@ -5927,12 +6074,36 @@
       "order": 0
     },
     {
+      "id": "src/extractors/typescript/index.ts:TypeScriptExtractor->src/cli/utils/errors.ts:ExtractionError",
+      "source": "src/extractors/typescript/index.ts:TypeScriptExtractor",
+      "target": "src/cli/utils/errors.ts:ExtractionError",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "src/extractors/typescript/index.ts:TypeScriptExtractor->src/extractors/jsdoc/index.ts:extractJsDoc",
       "source": "src/extractors/typescript/index.ts:TypeScriptExtractor",
       "target": "src/extractors/jsdoc/index.ts:extractJsDoc",
       "type": "direct-call",
       "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/graph/graph-builder.ts:GraphBuilder->src/extractors/typescript/index.ts:TypeScriptExtractor",
+      "source": "src/graph/graph-builder.ts:GraphBuilder",
+      "target": "src/extractors/typescript/index.ts:TypeScriptExtractor",
+      "type": "direct-call",
+      "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "src/graph/graph-builder.ts:GraphBuilder->src/hasher/index.ts:ContentHasher",
+      "source": "src/graph/graph-builder.ts:GraphBuilder",
+      "target": "src/hasher/index.ts:ContentHasher",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
     },
     {
       "id": "src/graph/graph-builder.ts:GraphBuilder->src/cli/utils/source-files.ts:getRelativePath",
@@ -5940,7 +6111,7 @@
       "target": "src/cli/utils/source-files.ts:getRelativePath",
       "type": "direct-call",
       "isAsync": false,
-      "order": 0
+      "order": 2
     },
     {
       "id": "src/graph/graph-builder.ts:GraphBuilder->src/graph/graph-builder.ts:isAsyncSymbol",
@@ -5948,7 +6119,7 @@
       "target": "src/graph/graph-builder.ts:isAsyncSymbol",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 3
     },
     {
       "id": "src/graph/graph-builder.ts:GraphBuilder->src/extractors/trivial.ts:isTrivialBody",
@@ -5956,7 +6127,7 @@
       "target": "src/extractors/trivial.ts:isTrivialBody",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 4
     },
     {
       "id": "src/graph/graph-builder.ts:GraphBuilder->src/graph/resolve-import/index.ts:resolveImportPath",
@@ -5964,7 +6135,7 @@
       "target": "src/graph/resolve-import/index.ts:resolveImportPath",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 5
     },
     {
       "id": "src/graph/graph-builder.ts:GraphBuilder->src/graph/graph-builder.ts:connectionTypeToEdgeType",
@@ -5975,12 +6146,12 @@
         {
           "condition": "if (isEventMatch ||\n        isTaskMatch ||\n        isInvokeMatch)",
           "branch": "then",
-          "branchGroup": "branch:350"
+          "branchGroup": "branch:348"
         }
       ],
       "label": "if (isEventMatch ||\n        isTaskMatch ||\n        isInvokeMatch)",
       "isAsync": false,
-      "order": 4
+      "order": 6
     },
     {
       "id": "src/graph/graph-query.ts:reachableFrom->src/graph/graph-query.ts:buildAdjacencyList",
@@ -6169,6 +6340,38 @@
       "order": 1
     },
     {
+      "id": "src/matchers/inngest.ts:inngestMatcher->src/matchers/inngest.ts:extractEventTrigger",
+      "source": "src/matchers/inngest.ts:inngestMatcher",
+      "target": "src/matchers/inngest.ts:extractEventTrigger",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (symbol.kind === 'const' && /createFunction\\s*\\(/.test(symbol)",
+          "branch": "then",
+          "branchGroup": "branch:40"
+        }
+      ],
+      "label": "if (symbol.kind === 'const' && /createFunction\\s*\\(/.test(symbol)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/matchers/inngest.ts:inngestMatcher->src/matchers/inngest.ts:extractFunctionId",
+      "source": "src/matchers/inngest.ts:inngestMatcher",
+      "target": "src/matchers/inngest.ts:extractFunctionId",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (symbol.kind === 'const' && /createFunction\\s*\\(/.test(symbol)",
+          "branch": "then",
+          "branchGroup": "branch:40"
+        }
+      ],
+      "label": "if (symbol.kind === 'const' && /createFunction\\s*\\(/.test(symbol)",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "src/matchers/nextjs.ts:getRouteMap->src/matchers/nextjs.ts:extractRoutePath",
       "source": "src/matchers/nextjs.ts:getRouteMap",
       "target": "src/matchers/nextjs.ts:extractRoutePath",
@@ -6185,13 +6388,94 @@
       "order": 0
     },
     {
+      "id": "src/matchers/nextjs.ts:nextjsMatcher->src/matchers/nextjs.ts:extractRoutePath",
+      "source": "src/matchers/nextjs.ts:nextjsMatcher",
+      "target": "src/matchers/nextjs.ts:extractRoutePath",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (API_ROUTE_PATTERN.test(filePath) && HTTP_METHODS.includes(sy)",
+          "branch": "then",
+          "branchGroup": "branch:72"
+        }
+      ],
+      "label": "if (API_ROUTE_PATTERN.test(filePath) && HTTP_METHODS.includes(sy)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/matchers/nextjs.ts:nextjsMatcher->src/matchers/nextjs.ts:extractPagePath",
+      "source": "src/matchers/nextjs.ts:nextjsMatcher",
+      "target": "src/matchers/nextjs.ts:extractPagePath",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (PAGE_PATTERN.test(filePath) &&\n      (symbol.name === 'defau)",
+          "branch": "then",
+          "branchGroup": "branch:81"
+        }
+      ],
+      "label": "if (PAGE_PATTERN.test(filePath) &&\n      (symbol.name === 'defau)",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/matchers/nextjs.ts:nextjsMatcher->src/matchers/nextjs.ts:getRouteMap",
+      "source": "src/matchers/nextjs.ts:nextjsMatcher",
+      "target": "src/matchers/nextjs.ts:getRouteMap",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (connection.type === 'fetch')",
+          "branch": "then",
+          "branchGroup": "branch:169"
+        }
+      ],
+      "label": "if (connection.type === 'fetch')",
+      "isAsync": false,
+      "order": 2
+    },
+    {
+      "id": "src/matchers/trigger-dev.ts:triggerDevMatcher->src/matchers/trigger-dev.ts:extractTaskId",
+      "source": "src/matchers/trigger-dev.ts:triggerDevMatcher",
+      "target": "src/matchers/trigger-dev.ts:extractTaskId",
+      "type": "conditional-call",
+      "label": "(if (/^schedules\\.task\\s*\\(/.test(symbol.body))) or (if (/^(?:schema)?[Tt]ask\\s*\\(/.test(symbol.body)))",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/matchers/trigger-dev.ts:triggerDevMatcher->src/matchers/trigger-dev.ts:extractCronSchedule",
+      "source": "src/matchers/trigger-dev.ts:triggerDevMatcher",
+      "target": "src/matchers/trigger-dev.ts:extractCronSchedule",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (/^schedules\\.task\\s*\\(/.test(symbol.body))",
+          "branch": "then",
+          "branchGroup": "branch:74"
+        }
+      ],
+      "label": "if (/^schedules\\.task\\s*\\(/.test(symbol.body))",
+      "isAsync": false,
+      "order": 2
+    },
+    {
+      "id": "src/server/index.ts:startServer->src/graph/graph-store.ts:GraphStore",
+      "source": "src/server/index.ts:startServer",
+      "target": "src/graph/graph-store.ts:GraphStore",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "src/server/index.ts:startServer->src/graph/symbol-index.ts:buildSymbolIndexFromGraph",
       "source": "src/server/index.ts:startServer",
       "target": "src/graph/symbol-index.ts:buildSymbolIndexFromGraph",
       "type": "conditional-call",
       "label": "(if (graph)) or (if (graph))",
       "isAsync": false,
-      "order": 0
+      "order": 1
     },
     {
       "id": "src/server/index.ts:startServer->src/graph/symbol-index.ts:buildIndexResponse",
@@ -6207,7 +6491,7 @@
       ],
       "label": "if (url.pathname === '/api/index')",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "src/server/index.ts:startServer->src/server/symbol-index.ts:buildDocResponseWithSVG",
@@ -6223,12 +6507,36 @@
       ],
       "label": "if (url.pathname === '/api/doc')",
       "isAsync": false,
-      "order": 3
+      "order": 4
+    },
+    {
+      "id": "src/server/index.ts:startServer->src/server/index.ts:serveStaticFile",
+      "source": "src/server/index.ts:startServer",
+      "target": "src/server/index.ts:serveStaticFile",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 5
     },
     {
       "id": "src/server/symbol-index.ts:buildDocResponseWithSVG->src/graph/symbol-index.ts:buildDocResponse",
       "source": "src/server/symbol-index.ts:buildDocResponseWithSVG",
       "target": "src/graph/symbol-index.ts:buildDocResponse",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/App.tsx:GraphExplorerWithData->src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "source": "src/server/viewer/App.tsx:GraphExplorerWithData",
+      "target": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/App.tsx:App->src/server/viewer/App.tsx:GraphExplorerWithData",
+      "source": "src/server/viewer/App.tsx:App",
+      "target": "src/server/viewer/App.tsx:GraphExplorerWithData",
       "type": "direct-call",
       "isAsync": false,
       "order": 0
@@ -6282,6 +6590,38 @@
       "order": 2
     },
     {
+      "id": "src/server/viewer/components/DocContent.tsx:DocContent->src/server/viewer/components/ui/badge.tsx:Badge",
+      "source": "src/server/viewer/components/DocContent.tsx:DocContent",
+      "target": "src/server/viewer/components/ui/badge.tsx:Badge",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "badges.length > 0 &&",
+          "branch": "&&",
+          "branchGroup": "branch:106"
+        }
+      ],
+      "label": "badges.length > 0 &&",
+      "isAsync": false,
+      "order": 3
+    },
+    {
+      "id": "src/server/viewer/components/DocContent.tsx:DocContent->src/server/viewer/components/MissingJsDocBanner.tsx:MissingJsDocBanner",
+      "source": "src/server/viewer/components/DocContent.tsx:DocContent",
+      "target": "src/server/viewer/components/MissingJsDocBanner.tsx:MissingJsDocBanner",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "hasJsDoc === false && exported &&",
+          "branch": "&&",
+          "branchGroup": "branch:121"
+        }
+      ],
+      "label": "hasJsDoc === false && exported &&",
+      "isAsync": false,
+      "order": 4
+    },
+    {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/DocPanel.tsx:nodeToDocPath",
       "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
       "target": "src/server/viewer/components/DocPanel.tsx:nodeToDocPath",
@@ -6290,13 +6630,131 @@
       "order": 0
     },
     {
+      "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer",
+      "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerContent",
+      "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerContent",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
+      "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerHeader",
+      "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerHeader",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 3
+    },
+    {
+      "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerTitle",
+      "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerTitle",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 4
+    },
+    {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/DocPanel.tsx:docPathToUrl",
       "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
       "target": "src/server/viewer/components/DocPanel.tsx:docPathToUrl",
       "type": "conditional-call",
       "label": "(doc &&) or (doc &&)",
       "isAsync": false,
-      "order": 1
+      "order": 5
+    },
+    {
+      "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerClose",
+      "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerClose",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 7
+    },
+    {
+      "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerDescription",
+      "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerDescription",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 8
+    },
+    {
+      "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerBody",
+      "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerBody",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 9
+    },
+    {
+      "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/DocContent.tsx:DocContent",
+      "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "target": "src/server/viewer/components/DocContent.tsx:DocContent",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "doc &&",
+          "branch": "&&",
+          "branchGroup": "branch:161"
+        }
+      ],
+      "label": "doc &&",
+      "isAsync": false,
+      "order": 10
+    },
+    {
+      "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerFooter",
+      "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerFooter",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "doc &&",
+          "branch": "&&",
+          "branchGroup": "branch:182"
+        }
+      ],
+      "label": "doc &&",
+      "isAsync": false,
+      "order": 11
+    },
+    {
+      "id": "src/server/viewer/components/DocsTree.tsx:TreeDir->src/server/viewer/components/DocsTree.tsx:Guides",
+      "source": "src/server/viewer/components/DocsTree.tsx:TreeDir",
+      "target": "src/server/viewer/components/DocsTree.tsx:Guides",
+      "type": "conditional-call",
+      "label": "(depth > 0 &&) or (!isCollapsed &&)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/DocsTree.tsx:TreeDir->src/server/viewer/components/DocsTree.tsx:TreeDir",
+      "source": "src/server/viewer/components/DocsTree.tsx:TreeDir",
+      "target": "src/server/viewer/components/DocsTree.tsx:TreeDir",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "!isCollapsed &&",
+          "branch": "&&",
+          "branchGroup": "branch:133"
+        },
+        {
+          "condition": "if (item.type === 'dir')",
+          "branch": "then",
+          "branchGroup": "branch:136"
+        }
+      ],
+      "label": "!isCollapsed && → if (item.type === 'dir')",
+      "isAsync": false,
+      "order": 2
     },
     {
       "id": "src/server/viewer/components/DocsTree.tsx:TreeDir->src/server/viewer/docs-utils.ts:docPathToUrl",
@@ -6312,7 +6770,7 @@
       ],
       "label": "!isCollapsed &&",
       "isAsync": false,
-      "order": 0
+      "order": 3
     },
     {
       "id": "src/server/viewer/components/DocsTree.tsx:DocsTree->src/server/viewer/components/GraphExplorerContext.tsx:useGraphExplorer",
@@ -6337,6 +6795,22 @@
       "type": "direct-call",
       "isAsync": false,
       "order": 2
+    },
+    {
+      "id": "src/server/viewer/components/DocsTree.tsx:DocsTree->src/server/viewer/components/DocsTree.tsx:TreeDir",
+      "source": "src/server/viewer/components/DocsTree.tsx:DocsTree",
+      "target": "src/server/viewer/components/DocsTree.tsx:TreeDir",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "tree &&",
+          "branch": "&&",
+          "branchGroup": "branch:265"
+        }
+      ],
+      "label": "tree &&",
+      "isAsync": false,
+      "order": 3
     },
     {
       "id": "src/server/viewer/components/DocsViewer.tsx:makeRelatedLinksClickable->src/server/viewer/docs-utils.ts:docPathToUrl",
@@ -6403,6 +6877,64 @@
       "order": 4
     },
     {
+      "id": "src/server/viewer/components/DocsViewer.tsx:DocsViewer->src/server/viewer/components/ui/badge.tsx:Badge",
+      "source": "src/server/viewer/components/DocsViewer.tsx:DocsViewer",
+      "target": "src/server/viewer/components/ui/badge.tsx:Badge",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "badges.length > 0 &&",
+          "branch": "&&",
+          "branchGroup": "branch:177"
+        }
+      ],
+      "label": "badges.length > 0 &&",
+      "isAsync": false,
+      "order": 5
+    },
+    {
+      "id": "src/server/viewer/components/DocsViewer.tsx:DocsViewer->src/server/viewer/components/MissingJsDocBanner.tsx:TrivialSymbolInfo",
+      "source": "src/server/viewer/components/DocsViewer.tsx:DocsViewer",
+      "target": "src/server/viewer/components/MissingJsDocBanner.tsx:TrivialSymbolInfo",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "doc.hasJsDoc === false &&\n          doc.exported &&",
+          "branch": "&&",
+          "branchGroup": "branch:192"
+        },
+        {
+          "condition": "if (doc.isTrivial)",
+          "branch": "then",
+          "branchGroup": "branch:194"
+        }
+      ],
+      "label": "doc.hasJsDoc === false &&\n          doc.exported && → if (doc.isTrivial)",
+      "isAsync": false,
+      "order": 6
+    },
+    {
+      "id": "src/server/viewer/components/DocsViewer.tsx:DocsViewer->src/server/viewer/components/MissingJsDocBanner.tsx:MissingJsDocBanner",
+      "source": "src/server/viewer/components/DocsViewer.tsx:DocsViewer",
+      "target": "src/server/viewer/components/MissingJsDocBanner.tsx:MissingJsDocBanner",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "doc.hasJsDoc === false &&\n          doc.exported &&",
+          "branch": "&&",
+          "branchGroup": "branch:192"
+        },
+        {
+          "condition": "else",
+          "branch": "else",
+          "branchGroup": "branch:194"
+        }
+      ],
+      "label": "doc.hasJsDoc === false &&\n          doc.exported && → else",
+      "isAsync": false,
+      "order": 7
+    },
+    {
       "id": "src/server/viewer/components/FlowControls.tsx:FlowControls->src/server/viewer/components/FlowGraph.tsx:getCategoryLabel",
       "source": "src/server/viewer/components/FlowControls.tsx:FlowControls",
       "target": "src/server/viewer/components/FlowGraph.tsx:getCategoryLabel",
@@ -6451,7 +6983,7 @@
         {
           "condition": "if (enabledTypes)",
           "branch": "then",
-          "branchGroup": "branch:332"
+          "branchGroup": "branch:305"
         }
       ],
       "label": "if (enabledTypes)",
@@ -6490,6 +7022,30 @@
       "label": "(if (node.measured?.width && node.measured?.height)) or (if (node.measured?.width && node.measured?.height))",
       "isAsync": false,
       "order": 5
+    },
+    {
+      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/LayoutSettings.tsx:LayoutSettings",
+      "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
+      "target": "src/server/viewer/components/LayoutSettings.tsx:LayoutSettings",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 7
+    },
+    {
+      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
+      "target": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 8
+    },
+    {
+      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraph->src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
+      "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraph",
+      "target": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
+      "type": "direct-call",
+      "isAsync": true,
+      "order": 0
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/FlowGraph.tsx:getNodeCategory",
@@ -6532,12 +7088,92 @@
       "order": 2
     },
     {
+      "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/LoadingSpinner.tsx:LoadingSpinner",
+      "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "target": "src/server/viewer/components/LoadingSpinner.tsx:LoadingSpinner",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "!layoutReady &&",
+          "branch": "&&",
+          "branchGroup": "branch:169"
+        }
+      ],
+      "label": "!layoutReady &&",
+      "isAsync": false,
+      "order": 3
+    },
+    {
+      "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/FlowGraph.tsx:FlowGraph",
+      "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "target": "src/server/viewer/components/FlowGraph.tsx:FlowGraph",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "graph &&",
+          "branch": "&&",
+          "branchGroup": "branch:192"
+        }
+      ],
+      "label": "graph &&",
+      "isAsync": false,
+      "order": 4
+    },
+    {
+      "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/Sidebar.tsx:Sidebar",
+      "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "target": "src/server/viewer/components/Sidebar.tsx:Sidebar",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 5
+    },
+    {
+      "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ViewNav.tsx:ViewNav",
+      "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "target": "src/server/viewer/components/ViewNav.tsx:ViewNav",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 6
+    },
+    {
+      "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/FlowControls.tsx:FlowControls",
+      "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "target": "src/server/viewer/components/FlowControls.tsx:FlowControls",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 7
+    },
+    {
+      "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/DocsTree.tsx:DocsTree",
+      "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "target": "src/server/viewer/components/DocsTree.tsx:DocsTree",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 8
+    },
+    {
+      "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/DocsViewer.tsx:DocsViewer",
+      "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "target": "src/server/viewer/components/DocsViewer.tsx:DocsViewer",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 9
+    },
+    {
       "id": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode->src/server/viewer/components/NodeTypes.tsx:nodeClass",
       "source": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode",
       "target": "src/server/viewer/components/NodeTypes.tsx:nodeClass",
       "type": "direct-call",
       "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode->src/server/viewer/components/ui/badge.tsx:Badge",
+      "source": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode",
+      "target": "src/server/viewer/components/ui/badge.tsx:Badge",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:ComponentNode->src/server/viewer/components/NodeTypes.tsx:nodeClass",
@@ -6548,12 +7184,28 @@
       "order": 0
     },
     {
+      "id": "src/server/viewer/components/NodeTypes.tsx:ComponentNode->src/server/viewer/components/ui/badge.tsx:Badge",
+      "source": "src/server/viewer/components/NodeTypes.tsx:ComponentNode",
+      "target": "src/server/viewer/components/ui/badge.tsx:Badge",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "src/server/viewer/components/NodeTypes.tsx:HookNode->src/server/viewer/components/NodeTypes.tsx:nodeClass",
       "source": "src/server/viewer/components/NodeTypes.tsx:HookNode",
       "target": "src/server/viewer/components/NodeTypes.tsx:nodeClass",
       "type": "direct-call",
       "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/NodeTypes.tsx:HookNode->src/server/viewer/components/ui/badge.tsx:Badge",
+      "source": "src/server/viewer/components/NodeTypes.tsx:HookNode",
+      "target": "src/server/viewer/components/ui/badge.tsx:Badge",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:FunctionNode->src/server/viewer/components/NodeTypes.tsx:nodeClass",
@@ -6564,12 +7216,37 @@
       "order": 0
     },
     {
+      "id": "src/server/viewer/components/NodeTypes.tsx:FunctionNode->src/server/viewer/components/ui/badge.tsx:Badge",
+      "source": "src/server/viewer/components/NodeTypes.tsx:FunctionNode",
+      "target": "src/server/viewer/components/ui/badge.tsx:Badge",
+      "type": "conditional-call",
+      "label": "(d.isAsync &&) or (d.hasJsDoc === false &&)",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "src/server/viewer/components/ThemeToggle.tsx:ThemeToggle->src/server/viewer/lib/use-theme-preference.ts:useThemePreference",
       "source": "src/server/viewer/components/ThemeToggle.tsx:ThemeToggle",
       "target": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference",
       "type": "direct-call",
       "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ViewNav.tsx:ViewNav->src/server/viewer/components/ThemeToggle.tsx:ThemeToggle",
+      "source": "src/server/viewer/components/ViewNav.tsx:ViewNav",
+      "target": "src/server/viewer/components/ThemeToggle.tsx:ThemeToggle",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ViewNav.tsx:ViewNav->src/server/viewer/components/ViewNav.tsx:NavLink",
+      "source": "src/server/viewer/components/ViewNav.tsx:ViewNav",
+      "target": "src/server/viewer/components/ViewNav.tsx:NavLink",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
     },
     {
       "id": "src/server/viewer/components/ui/drawer.tsx:DrawerOverlay->src/server/viewer/lib/utils.ts:cn",
@@ -6580,12 +7257,28 @@
       "order": 0
     },
     {
+      "id": "src/server/viewer/components/ui/drawer.tsx:DrawerContent->src/server/viewer/components/ui/drawer.tsx:DrawerPortal",
+      "source": "src/server/viewer/components/ui/drawer.tsx:DrawerContent",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerPortal",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ui/drawer.tsx:DrawerContent->src/server/viewer/components/ui/drawer.tsx:DrawerOverlay",
+      "source": "src/server/viewer/components/ui/drawer.tsx:DrawerContent",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerOverlay",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "src/server/viewer/components/ui/drawer.tsx:DrawerContent->src/server/viewer/lib/utils.ts:cn",
       "source": "src/server/viewer/components/ui/drawer.tsx:DrawerContent",
       "target": "src/server/viewer/lib/utils.ts:cn",
       "type": "direct-call",
       "isAsync": false,
-      "order": 0
+      "order": 2
     },
     {
       "id": "src/server/viewer/components/ui/drawer.tsx:DrawerHeader->src/server/viewer/lib/utils.ts:cn",
@@ -6628,6 +7321,198 @@
       "order": 0
     },
     {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer->src/server/viewer/components/ui/sheet.tsx:Sheet",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer",
+      "target": "src/server/viewer/components/ui/sheet.tsx:Sheet",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (isDesktop)",
+          "branch": "then",
+          "branchGroup": "branch:33"
+        }
+      ],
+      "label": "if (isDesktop)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer->src/server/viewer/components/ui/drawer.tsx:Drawer",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer",
+      "target": "src/server/viewer/components/ui/drawer.tsx:Drawer",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerContent->src/server/viewer/components/ui/sheet.tsx:SheetContent",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerContent",
+      "target": "src/server/viewer/components/ui/sheet.tsx:SheetContent",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (isDesktop)",
+          "branch": "then",
+          "branchGroup": "branch:50"
+        }
+      ],
+      "label": "if (isDesktop)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerContent->src/server/viewer/components/ui/drawer.tsx:DrawerContent",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerContent",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerContent",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerHeader->src/server/viewer/components/ui/sheet.tsx:SheetHeader",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerHeader",
+      "target": "src/server/viewer/components/ui/sheet.tsx:SheetHeader",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (isDesktop)",
+          "branch": "then",
+          "branchGroup": "branch:71"
+        }
+      ],
+      "label": "if (isDesktop)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerHeader->src/server/viewer/components/ui/drawer.tsx:DrawerHeader",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerHeader",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerHeader",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerBody->src/server/viewer/components/ui/sheet.tsx:SheetBody",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerBody",
+      "target": "src/server/viewer/components/ui/sheet.tsx:SheetBody",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (isDesktop)",
+          "branch": "then",
+          "branchGroup": "branch:84"
+        }
+      ],
+      "label": "if (isDesktop)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerBody->src/server/viewer/components/ui/drawer.tsx:DrawerBody",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerBody",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerBody",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerFooter->src/server/viewer/components/ui/sheet.tsx:SheetFooter",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerFooter",
+      "target": "src/server/viewer/components/ui/sheet.tsx:SheetFooter",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (isDesktop)",
+          "branch": "then",
+          "branchGroup": "branch:97"
+        }
+      ],
+      "label": "if (isDesktop)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerFooter->src/server/viewer/components/ui/drawer.tsx:DrawerFooter",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerFooter",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerFooter",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerTitle->src/server/viewer/components/ui/sheet.tsx:SheetTitle",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerTitle",
+      "target": "src/server/viewer/components/ui/sheet.tsx:SheetTitle",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (isDesktop)",
+          "branch": "then",
+          "branchGroup": "branch:110"
+        }
+      ],
+      "label": "if (isDesktop)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerTitle->src/server/viewer/components/ui/drawer.tsx:DrawerTitle",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerTitle",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerTitle",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerDescription->src/server/viewer/components/ui/sheet.tsx:SheetDescription",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerDescription",
+      "target": "src/server/viewer/components/ui/sheet.tsx:SheetDescription",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (isDesktop)",
+          "branch": "then",
+          "branchGroup": "branch:126"
+        }
+      ],
+      "label": "if (isDesktop)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerDescription->src/server/viewer/components/ui/drawer.tsx:DrawerDescription",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerDescription",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerDescription",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerClose->src/server/viewer/components/ui/sheet.tsx:SheetClose",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerClose",
+      "target": "src/server/viewer/components/ui/sheet.tsx:SheetClose",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (isDesktop)",
+          "branch": "then",
+          "branchGroup": "branch:139"
+        }
+      ],
+      "label": "if (isDesktop)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerClose->src/server/viewer/components/ui/drawer.tsx:DrawerClose",
+      "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerClose",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerClose",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "src/server/viewer/components/ui/sheet.tsx:SheetOverlay->src/server/viewer/lib/utils.ts:cn",
       "source": "src/server/viewer/components/ui/sheet.tsx:SheetOverlay",
       "target": "src/server/viewer/lib/utils.ts:cn",
@@ -6636,12 +7521,36 @@
       "order": 0
     },
     {
+      "id": "src/server/viewer/components/ui/sheet.tsx:SheetContent->src/server/viewer/components/ui/sheet.tsx:SheetPortal",
+      "source": "src/server/viewer/components/ui/sheet.tsx:SheetContent",
+      "target": "src/server/viewer/components/ui/sheet.tsx:SheetPortal",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ui/sheet.tsx:SheetContent->src/server/viewer/components/ui/sheet.tsx:SheetOverlay",
+      "source": "src/server/viewer/components/ui/sheet.tsx:SheetContent",
+      "target": "src/server/viewer/components/ui/sheet.tsx:SheetOverlay",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "overlay &&",
+          "branch": "&&",
+          "branchGroup": "branch:51"
+        }
+      ],
+      "label": "overlay &&",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "src/server/viewer/components/ui/sheet.tsx:SheetContent->src/server/viewer/lib/utils.ts:cn",
       "source": "src/server/viewer/components/ui/sheet.tsx:SheetContent",
       "target": "src/server/viewer/lib/utils.ts:cn",
       "type": "direct-call",
       "isAsync": false,
-      "order": 0
+      "order": 2
     },
     {
       "id": "src/server/viewer/components/ui/sheet.tsx:SheetHeader->src/server/viewer/lib/utils.ts:cn",
@@ -6684,9 +7593,41 @@
       "order": 0
     },
     {
+      "id": "src/server/viewer/lib/theme.ts:applyThemePreference->src/server/viewer/lib/theme.ts:isDomAvailable",
+      "source": "src/server/viewer/lib/theme.ts:applyThemePreference",
+      "target": "src/server/viewer/lib/theme.ts:isDomAvailable",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "src/server/viewer/lib/theme.ts:applyThemePreference->src/server/viewer/lib/theme.ts:resolveMode",
       "source": "src/server/viewer/lib/theme.ts:applyThemePreference",
       "target": "src/server/viewer/lib/theme.ts:resolveMode",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/lib/theme.ts:getActiveTheme->src/server/viewer/lib/theme.ts:isDomAvailable",
+      "source": "src/server/viewer/lib/theme.ts:getActiveTheme",
+      "target": "src/server/viewer/lib/theme.ts:isDomAvailable",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/lib/theme.ts:getCurrentPreference->src/server/viewer/lib/theme.ts:isDomAvailable",
+      "source": "src/server/viewer/lib/theme.ts:getCurrentPreference",
+      "target": "src/server/viewer/lib/theme.ts:isDomAvailable",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/lib/theme.ts:getStoredThemePreference->src/server/viewer/lib/theme.ts:isDomAvailable",
+      "source": "src/server/viewer/lib/theme.ts:getStoredThemePreference",
+      "target": "src/server/viewer/lib/theme.ts:isDomAvailable",
       "type": "direct-call",
       "isAsync": false,
       "order": 0
@@ -6695,6 +7636,14 @@
       "id": "src/server/viewer/lib/theme.ts:getStoredThemePreference->src/server/viewer/lib/theme.ts:parseStoredPreference",
       "source": "src/server/viewer/lib/theme.ts:getStoredThemePreference",
       "target": "src/server/viewer/lib/theme.ts:parseStoredPreference",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/lib/theme.ts:storeThemePreference->src/server/viewer/lib/theme.ts:isDomAvailable",
+      "source": "src/server/viewer/lib/theme.ts:storeThemePreference",
+      "target": "src/server/viewer/lib/theme.ts:isDomAvailable",
       "type": "direct-call",
       "isAsync": false,
       "order": 0
