@@ -146,32 +146,32 @@ export async function handleChatRequest(
   res: import('node:http').ServerResponse,
   graph: FlowGraph,
 ): Promise<void> {
-  // Parse request body
-  const chunks: Buffer[] = [];
-  for await (const chunk of req) {
-    chunks.push(chunk as Buffer);
-  }
-
-  let body: { messages: UIMessage[]; apiKey: string; model?: string };
   try {
-    body = JSON.parse(Buffer.concat(chunks).toString());
-  } catch {
-    res.writeHead(400, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: 'Invalid JSON body' }));
-    return;
-  }
+    // Parse request body
+    const chunks: Buffer[] = [];
+    for await (const chunk of req) {
+      chunks.push(chunk as Buffer);
+    }
 
-  if (!body.apiKey) {
-    res.writeHead(400, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: 'apiKey is required' }));
-    return;
-  }
+    let body: { messages: UIMessage[]; apiKey: string; model?: string };
+    try {
+      body = JSON.parse(Buffer.concat(chunks).toString());
+    } catch {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Invalid JSON body' }));
+      return;
+    }
 
-  const anthropic = createAnthropic({ apiKey: body.apiKey });
-  const model = body.model || 'claude-haiku-4-5-20251001';
-  const systemPrompt = buildSystemPrompt(graph);
+    if (!body.apiKey) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'apiKey is required' }));
+      return;
+    }
 
-  try {
+    const anthropic = createAnthropic({ apiKey: body.apiKey });
+    const model = body.model || 'claude-haiku-4-5-20251001';
+    const systemPrompt = buildSystemPrompt(graph);
+
     const result = streamText({
       model: anthropic(model),
       system: systemPrompt,
@@ -206,7 +206,9 @@ export async function handleChatRequest(
     result.pipeUIMessageStreamToResponse(res);
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
-    res.writeHead(500, { 'Content-Type': 'application/json' });
+    if (!res.headersSent) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+    }
     res.end(JSON.stringify({ error: `Chat request failed: ${message}` }));
   }
 }
