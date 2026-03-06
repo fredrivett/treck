@@ -2,13 +2,16 @@
  * Chat panel for AI-powered code navigation.
  *
  * Renders a right-side Sheet panel where users can ask questions about their
- * codebase. Sends messages to the treck server's /api/chat endpoint, which
- * proxies to an OpenAI-compatible LLM API. When the AI selects nodes, the
- * graph view updates to highlight them.
+ * codebase. Uses the Vercel AI SDK's useChat hook for streaming responses.
+ * When the AI selects nodes via tool calls, the graph view updates to
+ * highlight them.
  */
 
+import { useChat } from '@ai-sdk/react';
+import type { UIMessage } from 'ai';
+import { DefaultChatTransport } from 'ai';
 import { marked } from 'marked';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import {
   SheetOrDrawer,
@@ -19,12 +22,6 @@ import {
   SheetOrDrawerHeader,
   SheetOrDrawerTitle,
 } from './ui/sheet-or-drawer';
-
-interface ChatMessage {
-  role: 'user' | 'assistant';
-  content: string;
-  selectedNodeIds?: string[];
-}
 
 interface ChatSettings {
   apiKey: string;
@@ -73,26 +70,28 @@ function ChatMarkdown({ content }: { content: string }) {
 /** AI chat panel for code navigation questions. */
 export function ChatPanel({ open, onOpenChange }: ChatPanelProps) {
   const [, setSearchParams] = useSearchParams();
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
   const [settings, setSettings] = useState<ChatSettings>(loadSettings);
   const [showSettings, setShowSettings] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-scroll to bottom when messages change
-  // biome-ignore lint/correctness/useExhaustiveDependencies: messages triggers the scroll intentionally
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  // Ref to avoid stale closures in transport body function
+  const settingsRef = useRef(settings);
+  settingsRef.current = settings;
 
-  // Focus input when panel opens
-  useEffect(() => {
-    if (open) {
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
-  }, [open]);
+  // Stable transport instance — body is resolved per-request via ref
+  const transport = useMemo(
+    () =>
+      new DefaultChatTransport({
+        api: '/api/chat',
+        body: () => ({
+          apiKey: settingsRef.current.apiKey,
+          model: settingsRef.current.model || undefined,
+        }),
+      }),
+    [],
+  );
 
   /** Apply selected node IDs to the URL params (same as clicking nodes). */
   const applySelection = useCallback(
@@ -108,71 +107,71 @@ export function ChatPanel({ open, onOpenChange }: ChatPanelProps) {
     [setSearchParams],
   );
 
-  /** Send a message to the chat API. */
-  const sendMessage = useCallback(async () => {
+  const { messages, sendMessage, status } = useChat({
+    transport,
+  });
+
+  const isLoading = status === 'submitted' || status === 'streaming';
+
+  // Apply node selection when select_nodes tool results arrive
+  const appliedToolCallsRef = useRef(new Set<string>());
+  useEffect(() => {
+    for (const msg of messages) {
+      if (msg.role !== 'assistant') continue;
+      for (const part of msg.parts) {
+        const typedPart = part as { type: string; toolCallId?: string; state?: string; output?: unknown };
+        if (
+          typedPart.type === 'tool-select_nodes' &&
+          typedPart.state === 'output-available' &&
+          typedPart.toolCallId &&
+          !appliedToolCallsRef.current.has(typedPart.toolCallId)
+        ) {
+          appliedToolCallsRef.current.add(typedPart.toolCallId);
+          const output = typedPart.output as { selected?: string[] };
+          if (output?.selected && output.selected.length > 0) {
+            applySelection(output.selected);
+          }
+        }
+      }
+    }
+  }, [messages, applySelection]);
+
+  // Auto-scroll to bottom when messages change
+  // biome-ignore lint/correctness/useExhaustiveDependencies: messages triggers the scroll intentionally
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  // Focus input when panel opens
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [open]);
+
+  /** Send the current input as a message. */
+  const handleSend = useCallback(() => {
     const text = input.trim();
-    if (!text || loading) return;
+    if (!text || isLoading) return;
 
     if (!settings.apiKey) {
       setShowSettings(true);
       return;
     }
 
-    const userMessage: ChatMessage = { role: 'user', content: text };
-    const newMessages = [...messages, userMessage];
-    setMessages(newMessages);
     setInput('');
-    setLoading(true);
-
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: newMessages.map((m) => ({ role: m.role, content: m.content })),
-          apiKey: settings.apiKey,
-          model: settings.model || undefined,
-        }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        setMessages([
-          ...newMessages,
-          { role: 'assistant', content: `Error: ${error.error || 'Request failed'}` },
-        ]);
-        return;
-      }
-
-      const data = await response.json();
-      const assistantMessage: ChatMessage = {
-        role: 'assistant',
-        content: data.message,
-        selectedNodeIds: data.selectedNodeIds?.length > 0 ? data.selectedNodeIds : undefined,
-      };
-      setMessages([...newMessages, assistantMessage]);
-
-      // Apply node selection to the graph
-      if (data.selectedNodeIds?.length > 0) {
-        applySelection(data.selectedNodeIds);
-      }
-    } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : 'Unknown error';
-      setMessages([...newMessages, { role: 'assistant', content: `Error: ${errorMsg}` }]);
-    } finally {
-      setLoading(false);
-    }
-  }, [input, loading, messages, settings, applySelection]);
+    sendMessage({ text });
+  }, [input, isLoading, settings.apiKey, sendMessage]);
 
   /** Handle keyboard shortcuts in the input. */
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
-        sendMessage();
+        handleSend();
       }
     },
-    [sendMessage],
+    [handleSend],
   );
 
   /** Update and persist a settings field. */
@@ -184,6 +183,21 @@ export function ChatPanel({ open, onOpenChange }: ChatPanelProps) {
     },
     [settings],
   );
+
+  /** Extract selected node IDs from a message's tool parts. */
+  const getSelectedNodeIds = useCallback((msg: UIMessage): string[] => {
+    const ids: string[] = [];
+    for (const part of msg.parts) {
+      const typedPart = part as { type: string; state?: string; output?: unknown };
+      if (typedPart.type === 'tool-select_nodes' && typedPart.state === 'output-available') {
+        const output = typedPart.output as { selected?: string[] };
+        if (output?.selected) {
+          ids.push(...output.selected);
+        }
+      }
+    }
+    return ids;
+  }, []);
 
   return (
     <SheetOrDrawer open={open} onOpenChange={onOpenChange}>
@@ -284,45 +298,57 @@ export function ChatPanel({ open, onOpenChange }: ChatPanelProps) {
           {/* Messages */}
           {settings.apiKey && (
             <div className="space-y-4">
-              {messages.length === 0 && !loading && (
+              {messages.length === 0 && !isLoading && (
                 <div className="py-12 text-center text-sm text-muted-foreground">
                   Ask a question about your codebase to get started.
                 </div>
               )}
-              {messages.map((msg, i) => (
-                <div
-                  key={`${msg.role}-${i}`}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
+              {messages.map((msg) => {
+                const selectedNodeIds = msg.role === 'assistant' ? getSelectedNodeIds(msg) : [];
+                const textContent = msg.parts
+                  .filter((p): p is { type: 'text'; text: string } => p.type === 'text')
+                  .map((p) => p.text)
+                  .join('\n');
+
+                // Skip messages with no visible content
+                if (!textContent && selectedNodeIds.length === 0) return null;
+
+                return (
                   <div
-                    className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
-                      msg.role === 'user' ? 'bg-blue-600 text-white' : 'bg-muted text-foreground'
-                    }`}
+                    key={msg.id}
+                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
-                    {msg.role === 'user' ? (
-                      <div className="whitespace-pre-wrap">{msg.content}</div>
-                    ) : (
-                      <ChatMarkdown content={msg.content} />
-                    )}
-                    {msg.selectedNodeIds && msg.selectedNodeIds.length > 0 && (
-                      <div className="mt-2 flex flex-wrap gap-1">
-                        {msg.selectedNodeIds.map((id) => (
-                          <button
-                            key={id}
-                            type="button"
-                            onClick={() => applySelection([id])}
-                            className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2 py-0.5 text-xs text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800"
-                            title={id}
-                          >
-                            {id.split(':').pop()}
-                          </button>
+                    <div
+                      className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
+                        msg.role === 'user' ? 'bg-blue-600 text-white' : 'bg-muted text-foreground'
+                      }`}
+                    >
+                      {textContent &&
+                        (msg.role === 'user' ? (
+                          <div className="whitespace-pre-wrap">{textContent}</div>
+                        ) : (
+                          <ChatMarkdown content={textContent} />
                         ))}
-                      </div>
-                    )}
+                      {selectedNodeIds.length > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-1">
+                          {selectedNodeIds.map((id) => (
+                            <button
+                              key={id}
+                              type="button"
+                              onClick={() => applySelection([id])}
+                              className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2 py-0.5 text-xs text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800"
+                              title={id}
+                            >
+                              {id.split(':').pop()}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-              {loading && (
+                );
+              })}
+              {status === 'submitted' && (
                 <div className="flex justify-start">
                   <div className="max-w-[85%] rounded-lg bg-muted px-3 py-2 text-sm text-muted-foreground">
                     Thinking...
@@ -346,12 +372,12 @@ export function ChatPanel({ open, onOpenChange }: ChatPanelProps) {
                 placeholder="Ask about your code..."
                 rows={1}
                 className="flex-1 resize-none rounded-md border border-border bg-background px-2.5 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
-                disabled={loading}
+                disabled={isLoading}
               />
               <button
                 type="button"
-                onClick={sendMessage}
-                disabled={loading || !input.trim()}
+                onClick={handleSend}
+                disabled={isLoading || !input.trim()}
                 className="rounded-md bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Send

@@ -1,61 +1,16 @@
 /**
  * Chat endpoint handler for the treck viewer.
  *
- * Proxies chat messages to the Anthropic Messages API, injecting graph
- * context as a system prompt. Provides `search_nodes` and `select_nodes`
- * tools so the AI can discover and highlight relevant nodes in the graph.
+ * Uses the Vercel AI SDK to stream responses from the Anthropic API,
+ * injecting graph context as a system prompt. Provides `search_nodes`
+ * and `select_nodes` tools so the AI can discover and highlight
+ * relevant nodes in the graph.
  */
 
+import { createAnthropic } from '@ai-sdk/anthropic';
+import { convertToModelMessages, stepCountIs, streamText, tool, type UIMessage } from 'ai';
+import { z } from 'zod';
 import type { FlowGraph, GraphNode } from '../graph/types.js';
-
-/** Incoming request body from the viewer chat panel. */
-interface ChatRequest {
-  messages: Array<{ role: 'user' | 'assistant'; content: string }>;
-  apiKey: string;
-  model?: string;
-}
-
-/** Response sent back to the viewer. */
-interface ChatResponse {
-  message: string;
-  selectedNodeIds: string[];
-}
-
-/** Anthropic tool definition. */
-const TOOLS = [
-  {
-    name: 'search_nodes',
-    description:
-      'Search for functions, classes, components, and other symbols in the codebase. Returns matching nodes with their IDs, names, kinds, file paths, and descriptions. Use this to discover what exists before selecting nodes to show the user.',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        query: {
-          type: 'string',
-          description:
-            'Search query to match against node names, file paths, and descriptions (case-insensitive substring match)',
-        },
-      },
-      required: ['query'],
-    },
-  },
-  {
-    name: 'select_nodes',
-    description:
-      'Select nodes in the graph visualization to show the user. This highlights the selected nodes and filters the view to show only their connected subgraph (upstream callers and downstream callees). Use this after searching to show relevant code flow.',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        node_ids: {
-          type: 'array',
-          items: { type: 'string' },
-          description: 'Array of node IDs to select (e.g. ["src/api/route.ts:POST"])',
-        },
-      },
-      required: ['node_ids'],
-    },
-  },
-];
 
 /**
  * Pick example nodes for the system prompt.
@@ -133,11 +88,11 @@ Node IDs follow the format "filePath:symbolName" (e.g. "src/api/route.ts:POST").
  *
  * @param query - Search query string
  * @param graph - The full flow graph
- * @returns JSON string of matching nodes (up to 20)
+ * @returns Array of matching nodes (up to 20)
  */
-function executeSearchNodes(query: string, graph: FlowGraph): string {
+function executeSearchNodes(query: string, graph: FlowGraph) {
   const q = query.toLowerCase();
-  const matches = graph.nodes
+  return graph.nodes
     .filter(
       (n) =>
         n.name.toLowerCase().includes(q) ||
@@ -154,8 +109,6 @@ function executeSearchNodes(query: string, graph: FlowGraph): string {
       entryType: n.entryType || undefined,
       description: n.description || undefined,
     }));
-
-  return JSON.stringify(matches);
 }
 
 /**
@@ -163,9 +116,9 @@ function executeSearchNodes(query: string, graph: FlowGraph): string {
  *
  * @param nodeIds - Array of node IDs to validate
  * @param graph - The full flow graph
- * @returns JSON string with validated IDs and any that weren't found
+ * @returns Object with validated IDs and any that weren't found
  */
-function executeSelectNodes(nodeIds: string[], graph: FlowGraph): string {
+function executeSelectNodes(nodeIds: string[], graph: FlowGraph) {
   const validIds = new Set(graph.nodes.map((n) => n.id));
   const valid = nodeIds.filter((id) => validIds.has(id));
   const invalid = nodeIds.filter((id) => !validIds.has(id));
@@ -174,32 +127,15 @@ function executeSelectNodes(nodeIds: string[], graph: FlowGraph): string {
   if (invalid.length > 0) {
     result.not_found = invalid;
   }
-  return JSON.stringify(result);
-}
-
-/** Anthropic Messages API message content block. */
-interface AnthropicContentBlock {
-  type: 'text' | 'tool_use' | 'tool_result';
-  text?: string;
-  id?: string;
-  name?: string;
-  input?: Record<string, unknown>;
-  tool_use_id?: string;
-  content?: string;
-}
-
-/** Anthropic Messages API message. */
-interface AnthropicMessage {
-  role: 'user' | 'assistant';
-  content: string | AnthropicContentBlock[];
+  return result;
 }
 
 /**
  * Handle a POST /api/chat request.
  *
- * Proxies user messages to the Anthropic Messages API with graph context,
- * handles the tool-use loop for search_nodes and select_nodes, and returns
- * the final text response along with any selected node IDs.
+ * Streams responses from the Anthropic API with graph context,
+ * automatically handling the tool-use loop for search_nodes and
+ * select_nodes via the AI SDK.
  *
  * @param req - Incoming HTTP request
  * @param res - HTTP response
@@ -216,7 +152,7 @@ export async function handleChatRequest(
     chunks.push(chunk as Buffer);
   }
 
-  let body: ChatRequest;
+  let body: { messages: UIMessage[]; apiKey: string; model?: string };
   try {
     body = JSON.parse(Buffer.concat(chunks).toString());
   } catch {
@@ -231,117 +167,43 @@ export async function handleChatRequest(
     return;
   }
 
+  const anthropic = createAnthropic({ apiKey: body.apiKey });
   const model = body.model || 'claude-haiku-4-5-20251001';
   const systemPrompt = buildSystemPrompt(graph);
 
-  // Convert chat messages to Anthropic format
-  const messages: AnthropicMessage[] = body.messages.map((m) => ({
-    role: m.role,
-    content: m.content,
-  }));
-
-  let selectedNodeIds: string[] = [];
-  const maxToolRounds = 10;
-
   try {
-    for (let round = 0; round < maxToolRounds; round++) {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': body.apiKey,
-          'anthropic-version': '2023-06-01',
-        },
-        body: JSON.stringify({
-          model,
-          max_tokens: 1024,
-          system: systemPrompt,
-          messages,
-          tools: TOOLS,
+    const result = streamText({
+      model: anthropic(model),
+      system: systemPrompt,
+      messages: await convertToModelMessages(body.messages),
+      tools: {
+        search_nodes: tool({
+          description:
+            'Search for functions, classes, components, and other symbols in the codebase. Returns matching nodes with their IDs, names, kinds, file paths, and descriptions. Use this to discover what exists before selecting nodes to show the user.',
+          inputSchema: z.object({
+            query: z
+              .string()
+              .describe(
+                'Search query to match against node names, file paths, and descriptions (case-insensitive substring match)',
+              ),
+          }),
+          execute: async ({ query }) => executeSearchNodes(query, graph),
         }),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        res.writeHead(response.status, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: `Anthropic API error: ${errorText}` }));
-        return;
-      }
-
-      const data = await response.json();
-
-      // Extract text and tool_use blocks from the response
-      const contentBlocks: AnthropicContentBlock[] = data.content || [];
-      const textParts: string[] = [];
-      const toolUseBlocks: AnthropicContentBlock[] = [];
-
-      for (const block of contentBlocks) {
-        if (block.type === 'text' && block.text) {
-          textParts.push(block.text);
-        } else if (block.type === 'tool_use') {
-          toolUseBlocks.push(block);
-        }
-      }
-
-      // If no tool calls, we're done
-      if (toolUseBlocks.length === 0 || data.stop_reason === 'end_turn') {
-        const result: ChatResponse = {
-          message: textParts.join('\n') || '',
-          selectedNodeIds,
-        };
-        res.writeHead(200, {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        });
-        res.end(JSON.stringify(result));
-        return;
-      }
-
-      // Add the assistant's response (with tool_use blocks) to conversation
-      messages.push({ role: 'assistant', content: contentBlocks });
-
-      // Process tool calls and build tool_result blocks
-      const toolResults: AnthropicContentBlock[] = [];
-
-      for (const block of toolUseBlocks) {
-        const name = block.name ?? '';
-        const input = block.input ?? {};
-        let toolResult: string;
-
-        if (name === 'search_nodes') {
-          toolResult = executeSearchNodes(input.query as string, graph);
-        } else if (name === 'select_nodes') {
-          toolResult = executeSelectNodes(input.node_ids as string[], graph);
-          const parsed = JSON.parse(toolResult);
-          if (parsed.selected) {
-            selectedNodeIds = parsed.selected;
-          }
-        } else {
-          toolResult = JSON.stringify({ error: `Unknown tool: ${name}` });
-        }
-
-        toolResults.push({
-          type: 'tool_result',
-          tool_use_id: block.id,
-          content: toolResult,
-        });
-      }
-
-      // Add tool results as a user message (Anthropic format)
-      messages.push({ role: 'user', content: toolResults });
-    }
-
-    // If we hit max rounds, return what we have
-    const result: ChatResponse = {
-      message:
-        'I explored the codebase but reached the maximum number of steps. Here is what I found so far.',
-      selectedNodeIds,
-    };
-    res.writeHead(200, {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+        select_nodes: tool({
+          description:
+            'Select nodes in the graph visualization to show the user. This highlights the selected nodes and filters the view to show only their connected subgraph (upstream callers and downstream callees). Use this after searching to show relevant code flow.',
+          inputSchema: z.object({
+            node_ids: z
+              .array(z.string())
+              .describe('Array of node IDs to select (e.g. ["src/api/route.ts:POST"])'),
+          }),
+          execute: async ({ node_ids }) => executeSelectNodes(node_ids, graph),
+        }),
+      },
+      stopWhen: stepCountIs(10),
     });
-    res.end(JSON.stringify(result));
+
+    result.pipeUIMessageStreamToResponse(res);
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     res.writeHead(500, { 'Content-Type': 'application/json' });
