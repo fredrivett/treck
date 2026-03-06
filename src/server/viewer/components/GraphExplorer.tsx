@@ -228,7 +228,7 @@ export function GraphExplorer({ graph, loading = false, error = null }: GraphExp
         <div className="border-t border-border" />
         <DocsTree visibleNames={visibleNames} />
       </Sidebar>
-      <main className="flex-1 relative overflow-hidden">
+      <main className="flex-1 relative overflow-hidden min-w-0">
         <Routes>
           <Route path="/" element={graphView} />
           <Route path="/docs" element={<DocsViewer />} />
@@ -237,9 +237,9 @@ export function GraphExplorer({ graph, loading = false, error = null }: GraphExp
         {isGraphView && (
           <button
             type="button"
-            onClick={() => setChatOpen(true)}
+            onClick={() => setChatOpen(!chatOpen)}
             className="absolute top-4 right-4 z-10 flex items-center gap-1.5 rounded-md border border-border bg-background/90 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted shadow-sm"
-            title="Open AI chat"
+            title={chatOpen ? 'Close AI chat' : 'Open AI chat'}
           >
             <svg
               width="14"
@@ -257,8 +257,8 @@ export function GraphExplorer({ graph, loading = false, error = null }: GraphExp
             Chat
           </button>
         )}
-        <ChatPanel open={chatOpen} onOpenChange={setChatOpen} />
       </main>
+      {chatOpen && <ChatPanel onClose={() => setChatOpen(false)} />}
     </div>
   );
 
