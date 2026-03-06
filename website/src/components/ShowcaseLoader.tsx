@@ -5,10 +5,12 @@ import { ShowcaseViewer } from './ShowcaseViewer';
 interface ShowcaseLoaderProps {
   /** URL to the graph.json file (e.g. /showcases/tldraw.json). */
   graphUrl: string;
+  /** Showcase project slug, passed through to enable the chat feature. */
+  project: string;
 }
 
 /** Fetches graph data from a URL and renders the ShowcaseViewer once loaded. */
-export function ShowcaseLoader({ graphUrl }: ShowcaseLoaderProps) {
+export function ShowcaseLoader({ graphUrl, project }: ShowcaseLoaderProps) {
   const [graph, setGraph] = useState<FlowGraphData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,5 +46,5 @@ export function ShowcaseLoader({ graphUrl }: ShowcaseLoaderProps) {
     );
   }
 
-  return <ShowcaseViewer graph={graph} />;
+  return <ShowcaseViewer graph={graph} project={project} />;
 }

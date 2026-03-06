@@ -28,10 +28,17 @@ interface GraphExplorerProps {
   loading?: boolean;
   /** Error message if the graph failed to load. */
   error?: string | null;
+  /** Showcase project slug — passed through to the chat panel so requests load the correct graph. */
+  project?: string;
 }
 
 /** Standalone graph explorer — renders sidebar, graph, and docs from a single graph prop. */
-export function GraphExplorer({ graph, loading = false, error = null }: GraphExplorerProps) {
+export function GraphExplorer({
+  graph,
+  loading = false,
+  error = null,
+  project,
+}: GraphExplorerProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const [layoutReady, setLayoutReady] = useState(false);
@@ -258,7 +265,7 @@ export function GraphExplorer({ graph, loading = false, error = null }: GraphExp
           </button>
         )}
       </main>
-      {chatOpen && <ChatPanel onClose={() => setChatOpen(false)} />}
+      {chatOpen && <ChatPanel onClose={() => setChatOpen(false)} project={project} />}
     </div>
   );
 

@@ -51,6 +51,8 @@ function saveSettings(settings: ChatSettings): void {
 interface ChatPanelProps {
   /** Called when the panel should close. */
   onClose: () => void;
+  /** Showcase project slug — passed to the chat API so it can load the correct graph. */
+  project?: string;
 }
 
 /** Renders markdown content from assistant messages. */
@@ -113,7 +115,7 @@ function CloseIcon() {
 }
 
 /** AI chat panel for code navigation questions. */
-export function ChatPanel({ onClose }: ChatPanelProps) {
+export function ChatPanel({ onClose, project }: ChatPanelProps) {
   const isDesktop = useMediaQuery('(min-width: 768px)', {
     defaultValue: true,
     initializeWithValue: false,
@@ -130,7 +132,11 @@ export function ChatPanel({ onClose }: ChatPanelProps) {
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
 
-  // Stable transport instance — body is resolved per-request via ref
+  // Ref so project changes don't recreate the transport
+  const projectRef = useRef(project);
+  projectRef.current = project;
+
+  // Stable transport instance — body is resolved per-request via refs
   const transport = useMemo(
     () =>
       new DefaultChatTransport({
@@ -138,6 +144,7 @@ export function ChatPanel({ onClose }: ChatPanelProps) {
         body: () => ({
           apiKey: settingsRef.current.apiKey,
           model: settingsRef.current.model || undefined,
+          project: projectRef.current ?? undefined,
         }),
       }),
     [],
