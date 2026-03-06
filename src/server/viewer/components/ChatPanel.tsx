@@ -144,7 +144,7 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
         body: () => ({
           apiKey: settingsRef.current.apiKey,
           model: settingsRef.current.model || undefined,
-          ...(projectRef.current ? { project: projectRef.current } : {}),
+          project: projectRef.current ?? undefined,
         }),
       }),
     [],

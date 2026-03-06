@@ -46,6 +46,13 @@ export const POST: APIRoute = async (context) => {
     });
   }
 
+  if (!body.apiKey) {
+    return new Response(JSON.stringify({ error: 'apiKey is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
   // Fetch the graph JSON from the public static URL (served by Vercel CDN)
   const graphUrl = new URL(`/showcases/${project}.json`, context.url);
   let graph: FlowGraph;
@@ -57,13 +64,6 @@ export const POST: APIRoute = async (context) => {
     const message = err instanceof Error ? err.message : 'Unknown error';
     return new Response(JSON.stringify({ error: `Failed to load graph: ${message}` }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  if (!body.apiKey) {
-    return new Response(JSON.stringify({ error: 'apiKey is required' }), {
-      status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
   }
