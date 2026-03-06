@@ -784,6 +784,9 @@ export class TypeScriptExtractor {
     const jsDoc = extractJsDoc(decl, sourceFile);
     const isExported = this.isNodeExported(decl.parent.parent);
 
+    const callName = this.extractCallName(call.expression, sourceFile);
+    const callExpression = call.expression.getText(sourceFile);
+
     return {
       name,
       kind: 'const',
@@ -795,6 +798,7 @@ export class TypeScriptExtractor {
       endLine: endLine + 1,
       isExported,
       jsDoc,
+      ...(callName && { initializerCall: { functionName: callName, expression: callExpression } }),
     };
   }
 

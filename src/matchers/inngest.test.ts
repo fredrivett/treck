@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { SymbolInfo } from '../extractors/types.js';
+import type { ImportInfo, SymbolInfo } from '../extractors/types.js';
 import { inngestMatcher } from './inngest.js';
 
 /** Helper to create a minimal SymbolInfo for testing */
@@ -17,15 +17,25 @@ function makeSymbol(overrides: Partial<SymbolInfo>): SymbolInfo {
   };
 }
 
+/** Standard inngest import for tests */
+const inngestImports: ImportInfo[] = [
+  { name: 'inngest', originalName: 'inngest', source: './lib/inngest', isDefault: false },
+];
+
 describe('inngestMatcher', () => {
   describe('detectEntryPoint', () => {
     it('should detect inngest.createFunction() with event trigger and id', () => {
       const symbol = makeSymbol({
         kind: 'const',
         body: 'inngest.createFunction({ id: "analyze-image" }, { event: "image/uploaded" }, async ({ event, step }) => {})',
+        initializerCall: { functionName: 'createFunction', expression: 'inngest.createFunction' },
       });
 
-      const result = inngestMatcher.detectEntryPoint(symbol, 'inngest/functions.ts');
+      const result = inngestMatcher.detectEntryPoint(
+        symbol,
+        'inngest/functions.ts',
+        inngestImports,
+      );
 
       expect(result).toEqual({
         entryType: 'inngest-function',
@@ -37,9 +47,14 @@ describe('inngestMatcher', () => {
       const symbol = makeSymbol({
         kind: 'const',
         body: "inngest.createFunction({ id: 'my-fn' }, { event: 'user/created' }, handler)",
+        initializerCall: { functionName: 'createFunction', expression: 'inngest.createFunction' },
       });
 
-      const result = inngestMatcher.detectEntryPoint(symbol, 'inngest/functions.ts');
+      const result = inngestMatcher.detectEntryPoint(
+        symbol,
+        'inngest/functions.ts',
+        inngestImports,
+      );
 
       expect(result?.metadata?.eventTrigger).toBe('user/created');
     });
@@ -48,9 +63,14 @@ describe('inngestMatcher', () => {
       const symbol = makeSymbol({
         kind: 'const',
         body: 'inngest.createFunction({ id: "process-order" }, { event: "order/placed" }, handler)',
+        initializerCall: { functionName: 'createFunction', expression: 'inngest.createFunction' },
       });
 
-      const result = inngestMatcher.detectEntryPoint(symbol, 'inngest/functions.ts');
+      const result = inngestMatcher.detectEntryPoint(
+        symbol,
+        'inngest/functions.ts',
+        inngestImports,
+      );
 
       expect(result?.metadata?.taskId).toBe('process-order');
     });
@@ -59,9 +79,14 @@ describe('inngestMatcher', () => {
       const symbol = makeSymbol({
         kind: 'const',
         body: 'inngest.createFunction({ id: "daily-cleanup" }, { cron: "0 0 * * *" }, handler)',
+        initializerCall: { functionName: 'createFunction', expression: 'inngest.createFunction' },
       });
 
-      const result = inngestMatcher.detectEntryPoint(symbol, 'inngest/functions.ts');
+      const result = inngestMatcher.detectEntryPoint(
+        symbol,
+        'inngest/functions.ts',
+        inngestImports,
+      );
 
       expect(result).toEqual({
         entryType: 'inngest-function',
@@ -69,13 +94,46 @@ describe('inngestMatcher', () => {
       });
     });
 
+    it('should match when inngest is imported from the package directly', () => {
+      const symbol = makeSymbol({
+        kind: 'const',
+        body: 'client.createFunction({ id: "my-fn" }, { event: "test/event" }, handler)',
+        initializerCall: { functionName: 'createFunction', expression: 'client.createFunction' },
+      });
+
+      const imports: ImportInfo[] = [
+        { name: 'Inngest', originalName: 'Inngest', source: 'inngest', isDefault: false },
+      ];
+
+      const result = inngestMatcher.detectEntryPoint(symbol, 'functions.ts', imports);
+
+      expect(result?.entryType).toBe('inngest-function');
+    });
+
+    it('should match when inngest is imported from a nested local path', () => {
+      const symbol = makeSymbol({
+        kind: 'const',
+        body: 'client.createFunction({ id: "my-fn" }, { event: "test/event" }, handler)',
+        initializerCall: { functionName: 'createFunction', expression: 'client.createFunction' },
+      });
+
+      const imports: ImportInfo[] = [
+        { name: 'client', originalName: 'client', source: '../inngest/client', isDefault: false },
+      ];
+
+      const result = inngestMatcher.detectEntryPoint(symbol, 'functions.ts', imports);
+
+      expect(result?.entryType).toBe('inngest-function');
+    });
+
     it('should return null for non-createFunction consts', () => {
       const symbol = makeSymbol({
         kind: 'const',
         body: 'createClient({ url: "..." })',
+        initializerCall: { functionName: 'createClient', expression: 'createClient' },
       });
 
-      expect(inngestMatcher.detectEntryPoint(symbol, 'lib/db.ts')).toBeNull();
+      expect(inngestMatcher.detectEntryPoint(symbol, 'lib/db.ts', inngestImports)).toBeNull();
     });
 
     it('should return null for function kind', () => {
@@ -84,7 +142,40 @@ describe('inngestMatcher', () => {
         body: '{ createFunction() }',
       });
 
-      expect(inngestMatcher.detectEntryPoint(symbol, 'test.ts')).toBeNull();
+      expect(inngestMatcher.detectEntryPoint(symbol, 'test.ts', inngestImports)).toBeNull();
+    });
+
+    it('should return null when no initializerCall is present', () => {
+      const symbol = makeSymbol({
+        kind: 'const',
+        body: '{ something }',
+      });
+
+      expect(inngestMatcher.detectEntryPoint(symbol, 'test.ts', inngestImports)).toBeNull();
+    });
+
+    it('should return null when no inngest-related imports exist', () => {
+      const symbol = makeSymbol({
+        kind: 'const',
+        body: 'client.createFunction({ id: "my-fn" }, { event: "test/event" }, handler)',
+        initializerCall: { functionName: 'createFunction', expression: 'client.createFunction' },
+      });
+
+      const imports: ImportInfo[] = [
+        { name: 'client', originalName: 'client', source: './some-other-lib', isDefault: false },
+      ];
+
+      expect(inngestMatcher.detectEntryPoint(symbol, 'functions.ts', imports)).toBeNull();
+    });
+
+    it('should return null when createFunction is called without a receiver (bare call)', () => {
+      const symbol = makeSymbol({
+        kind: 'const',
+        body: 'createFunction({ id: "my-fn" }, { event: "test/event" }, handler)',
+        initializerCall: { functionName: 'createFunction', expression: 'createFunction' },
+      });
+
+      expect(inngestMatcher.detectEntryPoint(symbol, 'functions.ts', inngestImports)).toBeNull();
     });
   });
 

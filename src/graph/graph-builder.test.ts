@@ -381,7 +381,8 @@ export function handle(req: any) {
       const taskFile = join(TEST_DIR, 'my-task.ts');
       writeFileSync(
         taskFile,
-        `export const myTask = task({
+        `import { task } from "@trigger.dev/sdk/v3"
+export const myTask = task({
   id: "my-task",
   run: async () => { return 1 }
 })`,
@@ -413,7 +414,8 @@ export function handle(req: any) {
       const taskFile = join(TEST_DIR, 'analyze.ts');
       writeFileSync(
         taskFile,
-        `export const analyzeTask = task({
+        `import { task } from "@trigger.dev/sdk/v3"
+export const analyzeTask = task({
   id: "analyze",
   run: async () => { return 1 }
 })`,
@@ -445,7 +447,8 @@ export function handle(req: any) {
       const taskFile = join(TEST_DIR, 'process.ts');
       writeFileSync(
         taskFile,
-        `export const processData = task({
+        `import { task } from "@trigger.dev/sdk/v3"
+export const processData = task({
   id: "process-data",
   run: async (payload) => { return { done: true } }
 })`,
@@ -477,7 +480,8 @@ export function handle(req: any) {
       const taskFile = join(TEST_DIR, 'child.ts');
       writeFileSync(
         taskFile,
-        `export const childTask = task({
+        `import { task } from "@trigger.dev/sdk/v3"
+export const childTask = task({
   id: "child-task",
   run: async (payload) => { return { result: 42 } }
 })`,
@@ -508,7 +512,8 @@ export function handle(req: any) {
       const taskFile = join(TEST_DIR, 'schema-task.ts');
       writeFileSync(
         taskFile,
-        `export const createUser = schemaTask({
+        `import { schemaTask } from "@trigger.dev/sdk/v3"
+export const createUser = schemaTask({
   id: "create-user",
   schema: z.object({ name: z.string() }),
   run: async (payload) => { return { ok: true } }
@@ -573,11 +578,43 @@ export function handle(req: any) {
       expect(edge?.type).toBe('async-dispatch');
     });
 
+    it('should not detect inngest matcher code as an inngest entry point', () => {
+      // Regression: the inngest matcher previously matched itself because its
+      // JSDoc/body text contained "inngest.createFunction(...)". With structured
+      // initializerCall + import verification, this should no longer happen.
+      const matcherFile = join(TEST_DIR, 'inngest-matcher.ts');
+      writeFileSync(
+        matcherFile,
+        `import type { SymbolInfo } from '../extractors/types.js'
+
+/**
+ * Inngest framework matcher
+ * Detects inngest.createFunction() calls as entry points.
+ */
+export const inngestMatcher = {
+  name: 'inngest',
+  detectEntryPoint(symbol: SymbolInfo) {
+    if (symbol.kind === 'const' && /\\w\\.createFunction\\s*\\(/.test(symbol.body)) {
+      return { entryType: 'inngest-function' }
+    }
+    return null
+  },
+}`,
+      );
+
+      const graph = builder.build([matcherFile]);
+
+      const matcherNode = graph.nodes.find((n) => n.name === 'inngestMatcher');
+      expect(matcherNode).toBeDefined();
+      expect(matcherNode?.entryType).toBeUndefined();
+    });
+
     it('should not create false-positive edges for non-task objects with .trigger()', () => {
       const taskFile = join(TEST_DIR, 'real-task.ts');
       writeFileSync(
         taskFile,
-        `export const realTask = task({
+        `import { task } from "@trigger.dev/sdk/v3"
+export const realTask = task({
   id: "real-task",
   run: async () => {}
 })`,

@@ -8,7 +8,7 @@
  * - Server actions ("use server" directive)
  */
 
-import type { SymbolInfo } from '../extractors/types.js';
+import type { ImportInfo, SymbolInfo } from '../extractors/types.js';
 import type {
   EntryPointMatch,
   FrameworkMatcher,
@@ -70,7 +70,11 @@ export const nextjsMatcher: FrameworkMatcher = {
   name: 'nextjs',
 
   /** Detect Next.js API routes, page components, middleware, and server actions. */
-  detectEntryPoint(symbol: SymbolInfo, filePath: string): EntryPointMatch | null {
+  detectEntryPoint(
+    symbol: SymbolInfo,
+    filePath: string,
+    _imports?: ImportInfo[],
+  ): EntryPointMatch | null {
     if (API_ROUTE_PATTERN.test(filePath) && HTTP_METHODS.includes(symbol.name)) {
       return {
         entryType: 'api-route',

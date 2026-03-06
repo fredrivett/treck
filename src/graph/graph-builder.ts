@@ -68,6 +68,9 @@ export class GraphBuilder {
     // Map from filePath → SymbolInfo[] for cross-file resolution
     const fileSymbolsMap = new Map<string, SymbolInfo[]>();
 
+    // Map from filePath → ImportInfo[] for entry point detection and edge resolution
+    const fileImportsMap = new Map<string, ImportInfo[]>();
+
     // Set for O(1) membership checks during edge resolution
     const sourceFileSet = new Set(sourceFiles);
 
@@ -76,6 +79,9 @@ export class GraphBuilder {
     for (const filePath of sourceFiles) {
       const { symbols } = this.extractor.extractSymbols(filePath);
       fileSymbolsMap.set(filePath, symbols);
+
+      const imports = this.extractor.extractImports(filePath);
+      fileImportsMap.set(filePath, imports);
 
       for (const symbol of symbols) {
         const relPath = getRelativePath(filePath);
@@ -86,7 +92,7 @@ export class GraphBuilder {
         let metadata: GraphNode['metadata'];
 
         for (const matcher of matchers) {
-          const match = matcher.detectEntryPoint(symbol, filePath);
+          const match = matcher.detectEntryPoint(symbol, filePath, imports);
           if (match) {
             entryType = match.entryType;
             metadata = match.metadata;
@@ -130,7 +136,7 @@ export class GraphBuilder {
       const symbols = fileSymbolsMap.get(filePath);
       if (!symbols) continue;
 
-      const imports = this.extractor.extractImports(filePath);
+      const imports = fileImportsMap.get(filePath) ?? [];
 
       for (const symbol of symbols) {
         const sourceRelPath = getRelativePath(filePath);

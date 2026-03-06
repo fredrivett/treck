@@ -7,7 +7,7 @@
  * - Function invocations (step.invoke)
  */
 
-import type { SymbolInfo } from '../extractors/types.js';
+import type { ImportInfo, SymbolInfo } from '../extractors/types.js';
 import type {
   EntryPointMatch,
   FrameworkMatcher,
@@ -37,9 +37,18 @@ function extractFunctionId(body: string): string | null {
 export const inngestMatcher: FrameworkMatcher = {
   name: 'inngest',
 
-  /** Detect `inngest.createFunction(...)` assignments as Inngest function entry points. */
-  detectEntryPoint(symbol: SymbolInfo, _filePath: string): EntryPointMatch | null {
-    if (symbol.kind === 'const' && /createFunction\s*\(/.test(symbol.body)) {
+  /** Detect Inngest function definitions (via `createFunction`) as entry points. */
+  detectEntryPoint(
+    symbol: SymbolInfo,
+    _filePath: string,
+    imports?: ImportInfo[],
+  ): EntryPointMatch | null {
+    if (
+      symbol.kind === 'const' &&
+      symbol.initializerCall?.functionName === 'createFunction' &&
+      symbol.initializerCall.expression.includes('.') &&
+      imports?.some((imp) => imp.source.includes('inngest'))
+    ) {
       const eventTrigger = extractEventTrigger(symbol.body);
       const taskId = extractFunctionId(symbol.body);
 

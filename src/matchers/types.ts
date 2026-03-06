@@ -6,6 +6,7 @@
  * - Runtime connections (event dispatches, task triggers, HTTP calls)
  */
 
+import type { ImportInfo, SymbolInfo } from '../extractors/types.js';
 import type { EdgeType, EntryPointMetadata, EntryType } from '../graph/types.js';
 
 /**
@@ -56,8 +57,16 @@ export interface FrameworkMatcher {
   /**
    * Detect if a symbol is an entry point for this framework.
    * Returns null if the symbol is not an entry point.
+   *
+   * @param symbol - The symbol to check
+   * @param filePath - The file path containing the symbol
+   * @param imports - Imports from the file, for verifying framework package usage
    */
-  detectEntryPoint(symbol: SymbolInfo, filePath: string): EntryPointMatch | null;
+  detectEntryPoint(
+    symbol: SymbolInfo,
+    filePath: string,
+    imports?: ImportInfo[],
+  ): EntryPointMatch | null;
 
   /**
    * Detect runtime connections within a symbol's body.
