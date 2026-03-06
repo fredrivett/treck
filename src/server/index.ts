@@ -12,6 +12,7 @@ import { dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { GraphStore } from '../graph/graph-store.js';
 import type { FlowGraph } from '../graph/types.js';
+import { handleChatRequest } from './chat.js';
 import {
   buildDocResponseWithSVG,
   buildIndexResponse,
@@ -116,6 +117,30 @@ export async function startServer(outputDir: string, port: number) {
         'Access-Control-Allow-Origin': '*',
       });
       res.end(JSON.stringify(buildIndexResponse(index)));
+      return;
+    }
+
+    // CORS preflight for POST endpoints
+    if (req.method === 'OPTIONS' && url.pathname === '/api/chat') {
+      res.writeHead(204, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      });
+      res.end();
+      return;
+    }
+
+    if (url.pathname === '/api/chat' && req.method === 'POST') {
+      if (!graph) {
+        res.writeHead(404, {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        });
+        res.end(JSON.stringify({ error: 'Graph not found. Run: treck sync' }));
+        return;
+      }
+      handleChatRequest(req, res, graph);
       return;
     }
 

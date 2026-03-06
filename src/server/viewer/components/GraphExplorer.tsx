@@ -8,9 +8,10 @@
  */
 
 import { useCallback, useMemo, useState } from 'react';
-import { Route, Routes, useSearchParams } from 'react-router';
+import { Route, Routes, useLocation, useSearchParams } from 'react-router';
 import { buildIndexResponse, buildSymbolIndexFromGraph } from '../../../graph/symbol-index.js';
 import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
+import { ChatPanel } from './ChatPanel';
 import { DocsTree } from './DocsTree';
 import { DocsViewer } from './DocsViewer';
 import { FlowControls } from './FlowControls';
@@ -32,7 +33,10 @@ interface GraphExplorerProps {
 /** Standalone graph explorer — renders sidebar, graph, and docs from a single graph prop. */
 export function GraphExplorer({ graph, loading = false, error = null }: GraphExplorerProps) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
   const [layoutReady, setLayoutReady] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const isGraphView = location.pathname === '/';
 
   const onLayoutReady = useCallback(() => {
     setLayoutReady(true);
@@ -230,6 +234,30 @@ export function GraphExplorer({ graph, loading = false, error = null }: GraphExp
           <Route path="/docs" element={<DocsViewer />} />
           <Route path="/docs/*" element={<DocsViewer />} />
         </Routes>
+        {isGraphView && (
+          <button
+            type="button"
+            onClick={() => setChatOpen(true)}
+            className="absolute top-4 right-4 z-10 flex items-center gap-1.5 rounded-md border border-border bg-background/90 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted shadow-sm"
+            title="Open AI chat"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            Chat
+          </button>
+        )}
+        <ChatPanel open={chatOpen} onOpenChange={setChatOpen} />
       </main>
     </div>
   );
