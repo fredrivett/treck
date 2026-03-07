@@ -65,6 +65,7 @@
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.58",
     "@clack/prompts": "^1.0.0",
+    "@modelcontextprotocol/sdk": "^1.27.1",
     "ai": "^6.0.116",
     "cac": "^6.7.14",
     "motion": "^12.35.0",
