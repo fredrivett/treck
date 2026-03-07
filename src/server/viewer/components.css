@@ -154,3 +154,57 @@
 .related-link:hover {
   text-decoration: underline;
 }
+
+/* ---- Loading ellipsis animation ---- */
+
+@keyframes ellipsis-dot1 {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  25%,
+  75% {
+    opacity: 1;
+  }
+}
+
+@keyframes ellipsis-dot2 {
+  0%,
+  50%,
+  100% {
+    opacity: 0;
+  }
+  51%,
+  75% {
+    opacity: 1;
+  }
+}
+
+@keyframes ellipsis-dot3 {
+  0%,
+  74%,
+  100% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+}
+
+.loading-dot {
+  position: relative;
+  display: inline-block;
+  opacity: 0;
+}
+
+.loading-dot-1 {
+  animation: ellipsis-dot1 2s steps(1, end) infinite;
+}
+
+.loading-dot-2 {
+  animation: ellipsis-dot2 2s steps(1, end) infinite;
+}
+
+.loading-dot-3 {
+  animation: ellipsis-dot3 2s steps(1, end) infinite;
+}

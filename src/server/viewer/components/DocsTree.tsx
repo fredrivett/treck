@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { docPathToUrl, urlToDocPath } from '../docs-utils';
 import { useGraphExplorer } from './GraphExplorerContext';
+import { LoadingEllipsis } from './LoadingEllipsis';
 
 export type DocsIndex = Record<
   string,
@@ -235,7 +236,10 @@ export function DocsTree({ visibleNames }: DocsTreeProps) {
   if (!index) {
     return (
       <div className="p-4 flex-1 overflow-auto">
-        <div className="text-sm text-muted-foreground">Loading...</div>
+        <div className="text-sm text-muted-foreground">
+          Loading
+          <LoadingEllipsis />
+        </div>
       </div>
     );
   }
