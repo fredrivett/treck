@@ -1,6 +1,6 @@
 {
   "name": "treck",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "type": "module",
   "packageManager": "pnpm@10.29.3",
   "main": "dist/index.mjs",
