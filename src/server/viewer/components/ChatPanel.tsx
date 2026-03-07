@@ -14,6 +14,7 @@ import { marked } from 'marked';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { useMediaQuery } from 'usehooks-ts';
+import { LoadingEllipsis } from './LoadingEllipsis';
 import {
   Drawer,
   DrawerBody,
@@ -390,7 +391,8 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
           {status === 'submitted' && (
             <div className="flex justify-start">
               <div className="max-w-[85%] rounded-lg bg-muted px-3 py-2 text-sm text-muted-foreground">
-                Thinking...
+                Thinking
+                <LoadingEllipsis />
               </div>
             </div>
           )}

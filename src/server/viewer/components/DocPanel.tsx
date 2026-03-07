@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import type { GraphNode } from '../../../graph/types.js';
 import { DocContent } from './DocContent';
+import { LoadingEllipsis } from './LoadingEllipsis';
 import {
   SheetOrDrawer,
   SheetOrDrawerBody,
@@ -147,7 +148,10 @@ export function DocPanel({ node, onClose }: DocPanelProps) {
 
         <SheetOrDrawerBody>
           {loading && (
-            <div className="py-8 text-center text-sm text-muted-foreground">Loading...</div>
+            <div className="py-8 text-center text-sm text-muted-foreground">
+              Loading
+              <LoadingEllipsis />
+            </div>
           )}
           {error && (
             <div className="py-8 text-center text-sm text-muted-foreground">
