@@ -21,6 +21,14 @@ Every PR must include a changeset. Run `npx changeset` before committing.
 
 Build the machine that builds the machine — write real, thorough tests. Every new feature or change should have comprehensive test coverage including happy paths, edge cases, and error conditions. Tests are a first-class concern, not an afterthought.
 
+## CLI changes
+
+When modifying CLI commands (adding/removing/renaming flags, changing descriptions, etc.), update **all** places the CLI text appears:
+- Command description in `.command()` call
+- USAGE string (the manual help text shown when no targets are provided)
+- `.option()` and `.example()` registrations
+- Then rebuild (`npm run build`) and verify with `treck <command>` and `treck <command> --help`
+
 ## Code style
 
 - Don't re-export types from wrapper files — update imports to point to the source directly, unless there's a good reason not to

@@ -8,6 +8,7 @@ import {
   beautifyMermaid,
   buildMetadataLine,
   formatDocsOutput,
+  formatJsonOutput,
   formatMermaidOutput,
 } from './show.js';
 
@@ -256,6 +257,121 @@ describe('formatDocsOutput', () => {
     const output = formatDocsOutput(['a.ts:A'], graph, 1);
     expect(output).toContain('**Calls:**');
     expect(output).toContain('`B`');
+  });
+});
+
+describe('formatJsonOutput', () => {
+  it('returns valid JSON with correct structure', () => {
+    const nodeA = makeNode({ id: 'a.ts:A', name: 'A', filePath: 'a.ts' });
+    const nodeB = makeNode({ id: 'b.ts:B', name: 'B', filePath: 'b.ts' });
+    const graph = makeGraph(
+      [nodeA, nodeB],
+      [{ id: 'e1', source: 'a.ts:A', target: 'b.ts:B', type: 'direct-call', isAsync: false }],
+    );
+
+    const output = formatJsonOutput(['a.ts:A'], graph, Number.POSITIVE_INFINITY);
+    const parsed = JSON.parse(output);
+
+    expect(parsed.targets).toEqual(['a.ts:A']);
+    expect(parsed.depth).toBeNull();
+    expect(parsed.nodes).toBeInstanceOf(Array);
+    expect(parsed.edges).toBeInstanceOf(Array);
+  });
+
+  it('includes multiple targets in the combined subgraph', () => {
+    const nodeA = makeNode({ id: 'a.ts:A', name: 'A', filePath: 'a.ts' });
+    const nodeB = makeNode({ id: 'b.ts:B', name: 'B', filePath: 'b.ts' });
+    const nodeC = makeNode({ id: 'c.ts:C', name: 'C', filePath: 'c.ts' });
+    const graph = makeGraph(
+      [nodeA, nodeB, nodeC],
+      [
+        { id: 'e1', source: 'a.ts:A', target: 'b.ts:B', type: 'direct-call', isAsync: false },
+        { id: 'e2', source: 'b.ts:B', target: 'c.ts:C', type: 'direct-call', isAsync: false },
+      ],
+    );
+
+    const output = formatJsonOutput(['a.ts:A', 'c.ts:C'], graph, Number.POSITIVE_INFINITY);
+    const parsed = JSON.parse(output);
+
+    expect(parsed.targets).toEqual(['a.ts:A', 'c.ts:C']);
+    expect(parsed.nodes).toHaveLength(3);
+    expect(parsed.edges).toHaveLength(2);
+  });
+
+  it('sets depth to number when finite', () => {
+    const node = makeNode({ id: 'a.ts:A', name: 'A', filePath: 'a.ts' });
+    const graph = makeGraph([node]);
+
+    const output = formatJsonOutput(['a.ts:A'], graph, 2);
+    const parsed = JSON.parse(output);
+
+    expect(parsed.depth).toBe(2);
+  });
+
+  it('preserves all GraphNode fields', () => {
+    const node = makeNode({
+      id: 'src/api/route.ts:GET',
+      name: 'GET',
+      filePath: 'src/api/route.ts',
+      kind: 'function',
+      isAsync: true,
+      hash: 'abc123',
+      lineRange: [10, 45] as [number, number],
+      description: 'Handles GET requests',
+      returnType: 'Promise<Response>',
+      hasJsDoc: true,
+      isExported: true,
+      entryType: 'api-route',
+      metadata: { httpMethod: 'GET', route: '/api/analyze' },
+    });
+    const graph = makeGraph([node]);
+
+    const output = formatJsonOutput(['src/api/route.ts:GET'], graph, Number.POSITIVE_INFINITY);
+    const parsed = JSON.parse(output);
+    const jsonNode = parsed.nodes[0];
+
+    expect(jsonNode.id).toBe('src/api/route.ts:GET');
+    expect(jsonNode.kind).toBe('function');
+    expect(jsonNode.isAsync).toBe(true);
+    expect(jsonNode.hash).toBe('abc123');
+    expect(jsonNode.lineRange).toEqual([10, 45]);
+    expect(jsonNode.description).toBe('Handles GET requests');
+    expect(jsonNode.returnType).toBe('Promise<Response>');
+    expect(jsonNode.hasJsDoc).toBe(true);
+    expect(jsonNode.isExported).toBe(true);
+    expect(jsonNode.entryType).toBe('api-route');
+    expect(jsonNode.metadata).toEqual({ httpMethod: 'GET', route: '/api/analyze' });
+  });
+
+  it('preserves all GraphEdge fields', () => {
+    const nodeA = makeNode({ id: 'a.ts:A', name: 'A', filePath: 'a.ts' });
+    const nodeB = makeNode({ id: 'b.ts:B', name: 'B', filePath: 'b.ts' });
+    const graph = makeGraph(
+      [nodeA, nodeB],
+      [
+        {
+          id: 'e1',
+          source: 'a.ts:A',
+          target: 'b.ts:B',
+          type: 'direct-call',
+          isAsync: true,
+          order: 0,
+          label: 'calls B',
+        },
+      ],
+    );
+
+    const output = formatJsonOutput(['a.ts:A'], graph, Number.POSITIVE_INFINITY);
+    const parsed = JSON.parse(output);
+    const edge = parsed.edges[0];
+
+    expect(edge.id).toBe('e1');
+    expect(edge.source).toBe('a.ts:A');
+    expect(edge.target).toBe('b.ts:B');
+    expect(edge.type).toBe('direct-call');
+    expect(edge.isAsync).toBe(true);
+    expect(edge.order).toBe(0);
+    expect(edge.label).toBe('calls B');
   });
 });
 

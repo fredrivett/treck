@@ -7,9 +7,8 @@ import { loadConfig } from '../utils/config.js';
 import { explainUnresolved, resolveFocusTargets } from '../utils/resolve-targets.js';
 
 interface ShowOptions {
-  docs?: boolean;
+  format?: 'mermaid' | 'markdown' | 'json' | 'ascii';
   depth?: number;
-  beautify?: boolean;
 }
 
 const USAGE = `Show graph data for symbols in your codebase.
@@ -22,16 +21,16 @@ Targets: file:symbol or file path (comma-separated)
   src/api/route.ts:GET,src/lib/db.ts  multiple targets
 
 Options:
-  --docs        Output full markdown documentation instead of mermaid graph
+  --format <f>  Output format: mermaid (default), markdown, json, ascii
   --depth <n>   Limit traversal depth (default: full connected flow)
-  --beautify    Render mermaid as Unicode box-drawing art for the terminal
 
 Tip: If file paths contain parentheses or brackets, wrap the target in quotes:
   treck show "src/app/(dashboard)/page.tsx:Home"
 
 Examples:
   treck show src/api/route.ts:GET
-  treck show src/api/route.ts:GET --docs
+  treck show src/api/route.ts:GET --format markdown
+  treck show src/api/route.ts:GET --format json
   treck show src/api/route.ts:GET --depth 1
 `;
 
@@ -80,19 +79,18 @@ export function buildMetadataLine(node: {
 /**
  * Register the `treck show` CLI command.
  *
- * Outputs graph data to stdout in mermaid (default) or markdown format.
+ * Outputs graph data to stdout in the chosen format (mermaid, markdown, json, or ascii).
  * Targets are required positional args specifying which symbols to show.
  */
 export function registerShowCommand(cli: CAC) {
   cli
-    .command('show [targets]', 'Show graph data for symbols (mermaid or markdown)')
-    .option('--docs', 'Output full markdown documentation instead of mermaid graph')
+    .command('show [targets]', 'Show graph data for symbols')
+    .option('--format <format>', 'Output format: mermaid (default), markdown, json, ascii')
     .option('--depth <n>', 'Limit traversal depth (default: full connected flow)')
-    .option('--beautify', 'Render mermaid as Unicode box-drawing art for the terminal')
     .example('treck show src/api/route.ts:GET')
-    .example('treck show src/api/route.ts:GET --docs')
+    .example('treck show src/api/route.ts:GET --format markdown')
+    .example('treck show src/api/route.ts:GET --format json')
     .example('treck show src/api/route.ts:GET --depth 1')
-    .example('treck show src/api/route.ts:GET --beautify')
     .action(async (targets: string | undefined, options: ShowOptions) => {
       if (!targets) {
         process.stderr.write(USAGE);
@@ -129,16 +127,27 @@ export function registerShowCommand(cli: CAC) {
       }
 
       const depth = options.depth ? Number(options.depth) : Number.POSITIVE_INFINITY;
+      const format = options.format ?? 'mermaid';
 
-      const mermaidSource = options.docs
-        ? formatDocsOutput(nodeIds, graph, depth)
-        : formatMermaidOutput(nodeIds, graph, depth);
-
-      if (options.beautify && !options.docs) {
-        const ascii = await beautifyMermaid(mermaidSource);
-        process.stdout.write(`${ascii}\n`);
-      } else {
-        process.stdout.write(`${mermaidSource}\n`);
+      switch (format) {
+        case 'json': {
+          process.stdout.write(`${formatJsonOutput(nodeIds, graph, depth)}\n`);
+          return;
+        }
+        case 'markdown': {
+          process.stdout.write(`${formatDocsOutput(nodeIds, graph, depth)}\n`);
+          return;
+        }
+        case 'ascii': {
+          const mermaid = formatMermaidOutput(nodeIds, graph, depth);
+          const ascii = await beautifyMermaid(mermaid);
+          process.stdout.write(`${ascii}\n`);
+          return;
+        }
+        default: {
+          process.stdout.write(`${formatMermaidOutput(nodeIds, graph, depth)}\n`);
+          return;
+        }
       }
     });
 }
@@ -177,6 +186,32 @@ export function formatMermaidOutput(
   }
   const { nodes, edges } = connectedSubgraph(graph, nodeIds, depth);
   return flowToMermaid(nodes, edges, new Set(nodeIds));
+}
+
+/**
+ * Format structured JSON output for the given node IDs.
+ *
+ * Returns the connected subgraph as a JSON string with targets, depth,
+ * nodes, and edges. All `GraphNode` and `GraphEdge` fields are preserved.
+ *
+ * @param nodeIds - Resolved node IDs to include
+ * @param graph - The full flow graph
+ * @param depth - Traversal depth for neighbor collection
+ * @returns Pretty-printed JSON string
+ */
+export function formatJsonOutput(
+  nodeIds: string[],
+  graph: import('../../graph/types.js').FlowGraph,
+  depth: number,
+): string {
+  const { nodes, edges } = connectedSubgraph(graph, nodeIds, depth);
+  const result = {
+    targets: nodeIds,
+    depth: depth === Number.POSITIVE_INFINITY ? null : depth,
+    nodes,
+    edges,
+  };
+  return JSON.stringify(result, null, 2);
 }
 
 /**
