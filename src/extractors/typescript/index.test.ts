@@ -1209,7 +1209,7 @@ function classify(item: any) {
       expect(handleC?.conditions?.[0].branch).toBe('else-if');
       expect(handleC?.conditions?.[0].condition).toContain('else if (');
       expect(handleDefault?.conditions?.[0].branch).toBe('else');
-      expect(handleDefault?.conditions?.[0].condition).toBe('else');
+      expect(handleDefault?.conditions?.[0].condition).toBe("else (item.type === 'c')");
     });
 
     it('should handle nested if inside if with condition chain', () => {

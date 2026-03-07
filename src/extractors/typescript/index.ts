@@ -188,7 +188,7 @@ export class TypeScriptExtractor {
         countBranch(branchGroup);
         walk(node.elseStatement, [
           ...conditions,
-          { condition: 'else', branch: 'else', branchGroup },
+          { condition: `else (${condText})`, branch: 'else', branchGroup },
         ]);
       }
     };
@@ -253,7 +253,7 @@ export class TypeScriptExtractor {
         countBranch(group);
         walk(node.whenFalse, [
           ...conditions,
-          { condition: 'else', branch: 'else', branchGroup: group },
+          { condition: `else (${condText})`, branch: 'else', branchGroup: group },
         ]);
         return;
       }
