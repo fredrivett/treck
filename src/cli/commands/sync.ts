@@ -1,11 +1,8 @@
-import { resolve } from 'node:path';
 import * as p from '@clack/prompts';
 import type { CAC } from 'cac';
-import { GraphBuilder } from '../../graph/graph-builder.js';
 import { entryPoints } from '../../graph/graph-query.js';
-import { GraphStore } from '../../graph/graph-store.js';
+import { syncGraph } from '../../graph/sync.js';
 import { loadConfig } from '../utils/config.js';
-import { findSourceFiles } from '../utils/source-files.js';
 
 /**
  * Register the `treck sync` CLI command.
@@ -30,28 +27,16 @@ export function registerSyncCommand(cli: CAC) {
 
         const spinner = p.spinner();
 
-        // Find source files
-        spinner.start('Finding source files');
+        spinner.start('Building graph');
 
-        let sourceFiles = findSourceFiles(process.cwd(), config.scope);
+        const result = syncGraph(config, target);
 
-        // If a target path is provided, filter to files under that path
-        if (target) {
-          const targetPath = resolve(process.cwd(), target);
-          sourceFiles = sourceFiles.filter((f) => f.startsWith(targetPath));
-
-          if (sourceFiles.length === 0) {
-            spinner.stop('No source files found');
+        if (!result) {
+          spinner.stop('No source files found');
+          if (target) {
             p.cancel(`No source files found under: ${target}`);
             process.exit(1);
           }
-        }
-
-        spinner.stop(
-          `Found ${sourceFiles.length} source file${sourceFiles.length === 1 ? '' : 's'}`,
-        );
-
-        if (sourceFiles.length === 0 && !target) {
           if (config.scope.include.length === 0) {
             p.log.warn(
               'No include patterns configured.\nCheck scope.include in _treck/config.yaml',
@@ -65,32 +50,18 @@ export function registerSyncCommand(cli: CAC) {
           process.exit(0);
         }
 
-        // Build graph
-        spinner.start(`Analyzing ${sourceFiles.length} files`);
-
-        const builder = new GraphBuilder();
-        const graph = builder.build(sourceFiles);
-
-        spinner.stop(`Graph built: ${graph.nodes.length} nodes, ${graph.edges.length} edges`);
-
-        // Write graph.json
-        spinner.start('Writing graph.json');
-
-        const store = new GraphStore(config.outputDir);
-        store.write(graph);
-
-        spinner.stop('Graph saved');
+        spinner.stop(`Graph built: ${result.nodeCount} nodes, ${result.edgeCount} edges`);
 
         // Report stats
-        const entries = entryPoints(graph);
+        const entries = entryPoints(result.graph);
         const edgesByType = new Map<string, number>();
-        for (const edge of graph.edges) {
+        for (const edge of result.graph.edges) {
           edgesByType.set(edge.type, (edgesByType.get(edge.type) || 0) + 1);
         }
 
         const stats = [
-          `Nodes: ${graph.nodes.length}`,
-          `Edges: ${graph.edges.length}`,
+          `Nodes: ${result.nodeCount}`,
+          `Edges: ${result.edgeCount}`,
           `Entry points: ${entries.length}`,
         ];
 
@@ -101,11 +72,11 @@ export function registerSyncCommand(cli: CAC) {
           }
         }
 
-        const withJsDoc = graph.nodes.filter((n) => n.hasJsDoc).length;
-        const withoutJsDoc = graph.nodes.length - withJsDoc;
+        const withJsDoc = result.graph.nodes.filter((n) => n.hasJsDoc).length;
+        const withoutJsDoc = result.graph.nodes.length - withJsDoc;
         stats.push('');
         stats.push(
-          `\u2713 Synced ${graph.nodes.length} symbols (${withJsDoc} with JSDoc, ${withoutJsDoc} missing)`,
+          `\u2713 Synced ${result.nodeCount} symbols (${withJsDoc} with JSDoc, ${withoutJsDoc} missing)`,
         );
 
         p.log.message(stats.join('\n'));

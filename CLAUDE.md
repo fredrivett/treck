@@ -17,6 +17,10 @@ Every PR must include a changeset. Run `npx changeset` before committing.
 - Default to `patch` for all changes
 - If you believe a change warrants a `minor` or `major` bump (new features, breaking changes), pause and suggest it to the user — do not select minor/major without explicit approval
 
+## Testing
+
+Build the machine that builds the machine — write real, thorough tests. Every new feature or change should have comprehensive test coverage including happy paths, edge cases, and error conditions. Tests are a first-class concern, not an afterthought.
+
 ## Code style
 
 - Don't re-export types from wrapper files — update imports to point to the source directly, unless there's a good reason not to
