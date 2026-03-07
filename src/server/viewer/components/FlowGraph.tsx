@@ -158,6 +158,10 @@ interface FlowGraphProps {
   searchQuery: string;
   enabledTypes: Set<NodeCategory> | null;
   showConditionals: boolean;
+  /** Ref that receives a function to recenter the viewport on the current nodes. */
+  recenterRef?: React.RefObject<(() => void) | null>;
+  /** Called when the viewport drifts away from (or snaps back to) the fitted view. */
+  onOffCenterChange?: (offCenter: boolean) => void;
 }
 
 /**
@@ -190,6 +194,8 @@ function FlowGraphInner({
   searchQuery,
   enabledTypes,
   showConditionals,
+  recenterRef,
+  onOffCenterChange,
 }: FlowGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const darkMode = useDarkMode();
@@ -206,7 +212,8 @@ function FlowGraphInner({
   });
   const [layoutOptions, setLayoutOptions] = useState<LayoutOptions>(defaultLayoutOptions);
   const [needsLayout, setNeedsLayout] = useState(false);
-  const { fitView } = useReactFlow();
+  const { fitView, getViewport } = useReactFlow();
+  const fittedViewportRef = useRef<{ x: number; y: number; zoom: number } | null>(null);
   const nodesInitialized = useNodesInitialized();
   const visibleGraphRef = useRef<FlowGraphData | null>(null);
   const sizeCache = useRef<SizeCache>(new Map());
@@ -286,12 +293,42 @@ function FlowGraphInner({
       requestAnimationFrame(() => {
         fitView({ padding: 0.15 });
         requestAnimationFrame(() => {
+          fittedViewportRef.current = getViewport();
+          onOffCenterChange?.(false);
           onLayoutReady?.();
         });
       });
     },
-    [setNodes, fitView, onLayoutReady],
+    [setNodes, fitView, getViewport, onLayoutReady, onOffCenterChange],
   );
+
+  /** Recenter the viewport on the current nodes. */
+  const recenter = useCallback(() => {
+    fitView({ padding: 0.15 });
+    onOffCenterChange?.(false);
+    requestAnimationFrame(() => {
+      fittedViewportRef.current = getViewport();
+    });
+  }, [fitView, getViewport, onOffCenterChange]);
+
+  // Expose recenter function to parent
+  useEffect(() => {
+    if (recenterRef) {
+      recenterRef.current = recenter;
+    }
+  }, [recenter, recenterRef]);
+
+  /** Detect when the user pans or zooms away from the fitted viewport. */
+  const handleMoveEnd = useCallback(() => {
+    const fitted = fittedViewportRef.current;
+    if (!fitted) return;
+    const current = getViewport();
+    const offCenter =
+      Math.abs(current.x - fitted.x) > 1 ||
+      Math.abs(current.y - fitted.y) > 1 ||
+      Math.abs(current.zoom - fitted.zoom) > 0.01;
+    onOffCenterChange?.(offCenter);
+  }, [getViewport, onOffCenterChange]);
 
   // Compute visible node IDs: union of connected subgraphs from all focused entries
   const visibleIds = useMemo(() => {
@@ -522,6 +559,7 @@ function FlowGraphInner({
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeClick={onNodeClick}
+        onMoveEnd={handleMoveEnd}
         nodeTypes={nodeTypes}
         colorMode={darkMode ? 'dark' : 'light'}
         fitView
@@ -558,6 +596,8 @@ export function FlowGraph({
   searchQuery,
   enabledTypes,
   showConditionals,
+  recenterRef,
+  onOffCenterChange,
 }: FlowGraphProps) {
   return (
     <ReactFlowProvider>
@@ -567,6 +607,8 @@ export function FlowGraph({
         searchQuery={searchQuery}
         enabledTypes={enabledTypes}
         showConditionals={showConditionals}
+        recenterRef={recenterRef}
+        onOffCenterChange={onOffCenterChange}
       />
     </ReactFlowProvider>
   );
