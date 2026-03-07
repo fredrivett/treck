@@ -2,9 +2,10 @@
  * Tests for MCP tool handler functions
  */
 
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import type { FlowGraph, GraphNode } from '../../graph/types.js';
 import {
+  handleDiffGraph,
   handleFindCallees,
   handleFindCallers,
   handleGetGraphSummary,
@@ -13,6 +14,10 @@ import {
   handleSearchNodes,
   handleShowSymbol,
 } from './mcp.js';
+
+vi.mock('../utils/git.js', () => ({
+  loadGraphAtRef: vi.fn(),
+}));
 
 function makeNode(overrides: Partial<GraphNode> & { id: string; name: string }): GraphNode {
   return {
@@ -350,5 +355,103 @@ describe('handleGetGraphSummary', () => {
     expect(parsed.entryPointCount).toBe(0);
     expect(parsed.kindCounts).toEqual({});
     expect(parsed.entryTypeCounts).toEqual({});
+  });
+});
+
+describe('handleDiffGraph', () => {
+  it('returns diff result with changes and impact', async () => {
+    const { loadGraphAtRef } = await import('../utils/git.js');
+    const mockLoad = vi.mocked(loadGraphAtRef);
+
+    const baseGraph = makeGraph([
+      makeNode({ id: 'src/a.ts:funcA', name: 'funcA', hash: 'old', filePath: 'src/a.ts' }),
+      makeNode({ id: 'src/b.ts:funcB', name: 'funcB', hash: 'same', filePath: 'src/b.ts' }),
+    ]);
+    mockLoad.mockReturnValue(baseGraph);
+
+    const currentGraph = makeGraph([
+      makeNode({ id: 'src/a.ts:funcA', name: 'funcA', hash: 'new', filePath: 'src/a.ts' }),
+      makeNode({ id: 'src/b.ts:funcB', name: 'funcB', hash: 'same', filePath: 'src/b.ts' }),
+    ]);
+
+    const result = handleDiffGraph('main', undefined, '_treck/graph.json', currentGraph);
+    const parsed = JSON.parse(result.content[0].text);
+
+    expect(result.isError).toBeUndefined();
+    expect(parsed.base).toBe('main');
+    expect(parsed.head).toBe('HEAD');
+    expect(parsed.changes.modified).toEqual(['src/a.ts:funcA']);
+    expect(parsed.changes.added).toEqual([]);
+    expect(parsed.changes.removed).toEqual([]);
+  });
+
+  it('returns isError when base graph cannot be loaded', async () => {
+    const { loadGraphAtRef } = await import('../utils/git.js');
+    const mockLoad = vi.mocked(loadGraphAtRef);
+    mockLoad.mockImplementation(() => {
+      throw new Error('No graph.json found at bad-ref:_treck/graph.json');
+    });
+
+    const result = handleDiffGraph('bad-ref', undefined, '_treck/graph.json', emptyGraph);
+
+    expect(result.isError).toBe(true);
+    expect(result.content[0].text).toContain('No graph.json found');
+  });
+
+  it('returns empty diff when base and current are identical', async () => {
+    const { loadGraphAtRef } = await import('../utils/git.js');
+    const mockLoad = vi.mocked(loadGraphAtRef);
+
+    const graph = makeGraph([
+      makeNode({ id: 'src/a.ts:funcA', name: 'funcA', filePath: 'src/a.ts' }),
+    ]);
+    mockLoad.mockReturnValue(graph);
+
+    const result = handleDiffGraph('main', undefined, '_treck/graph.json', graph);
+    const parsed = JSON.parse(result.content[0].text);
+
+    expect(parsed.changes.modified).toEqual([]);
+    expect(parsed.changes.added).toEqual([]);
+    expect(parsed.changes.removed).toEqual([]);
+    expect(parsed.nodes).toEqual([]);
+  });
+
+  it('respects depth parameter', async () => {
+    const { loadGraphAtRef } = await import('../utils/git.js');
+    const mockLoad = vi.mocked(loadGraphAtRef);
+
+    // Chain: C -> B -> A (changed)
+    const baseGraph = makeGraph(
+      [
+        makeNode({ id: 'a.ts:A', name: 'A', hash: 'old' }),
+        makeNode({ id: 'b.ts:B', name: 'B' }),
+        makeNode({ id: 'c.ts:C', name: 'C' }),
+      ],
+      [
+        { id: 'e1', source: 'b.ts:B', target: 'a.ts:A', type: 'direct-call', isAsync: false },
+        { id: 'e2', source: 'c.ts:C', target: 'b.ts:B', type: 'direct-call', isAsync: false },
+      ],
+    );
+    mockLoad.mockReturnValue(baseGraph);
+
+    const currentGraph = makeGraph(
+      [
+        makeNode({ id: 'a.ts:A', name: 'A', hash: 'new' }),
+        makeNode({ id: 'b.ts:B', name: 'B' }),
+        makeNode({ id: 'c.ts:C', name: 'C' }),
+      ],
+      [
+        { id: 'e1', source: 'b.ts:B', target: 'a.ts:A', type: 'direct-call', isAsync: false },
+        { id: 'e2', source: 'c.ts:C', target: 'b.ts:B', type: 'direct-call', isAsync: false },
+      ],
+    );
+
+    const result = handleDiffGraph('main', 1, '_treck/graph.json', currentGraph);
+    const parsed = JSON.parse(result.content[0].text);
+
+    const nodeIds = parsed.nodes.map((n: { id: string }) => n.id);
+    expect(nodeIds).toContain('a.ts:A');
+    expect(nodeIds).toContain('b.ts:B'); // depth 1 neighbor
+    expect(nodeIds).not.toContain('c.ts:C'); // depth 2, should be excluded
   });
 });

@@ -5,11 +5,13 @@ import { z } from 'zod';
 import { version } from '../../../package.json';
 import { StaleChecker } from '../../checker/index.js';
 import { executeSearchNodes } from '../../graph/chat-helpers.js';
+import { diffGraphs } from '../../graph/diff.js';
 import { connectedSubgraph, entryPoints, pathsBetween } from '../../graph/graph-query.js';
 import { GraphStore } from '../../graph/graph-store.js';
 import { syncGraph } from '../../graph/sync.js';
 import type { FlowGraph, GraphNode } from '../../graph/types.js';
 import { loadConfig } from '../utils/config.js';
+import { loadGraphAtRef } from '../utils/git.js';
 import { resolveFocusTargets } from '../utils/resolve-targets.js';
 
 /** MCP response content for a text result. */
@@ -261,6 +263,39 @@ export function handleGetGraphSummary(graph: FlowGraph): McpTextResponse {
 }
 
 /**
+ * Handle `diff_graph` tool — compare current graph against a base git ref.
+ *
+ * Loads graph.json from the base ref via `git show` and diffs it against
+ * the current in-memory graph by node hash.
+ *
+ * @param baseRef - Git ref to compare against (branch, tag, or commit)
+ * @param depth - Max traversal depth for impact zone, or undefined for full flow
+ * @param graphPath - Relative path to graph.json from repo root
+ * @param currentGraph - The current in-memory graph
+ */
+export function handleDiffGraph(
+  baseRef: string,
+  depth: number | undefined,
+  graphPath: string,
+  currentGraph: FlowGraph,
+): McpTextResponse {
+  let baseGraph: FlowGraph;
+  try {
+    baseGraph = loadGraphAtRef(baseRef, graphPath);
+  } catch (err) {
+    return {
+      content: [{ type: 'text', text: (err as Error).message }],
+      isError: true,
+    };
+  }
+
+  const result = diffGraphs(baseGraph, currentGraph, { baseRef, depth });
+  return {
+    content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
+  };
+}
+
+/**
  * Register the `treck mcp` CLI command.
  *
  * Starts an MCP server over stdio, exposing graph queries as tools
@@ -373,6 +408,22 @@ export function registerMcpCommand(cli: CAC) {
         'Get an overview of the project graph — total symbols, edges, entry points, and counts by kind',
         {},
         async () => handleGetGraphSummary(graph),
+      );
+
+      server.tool(
+        'diff_graph',
+        'Compare current graph against a base branch or commit. Shows which symbols changed, were added or removed, and the full impact zone with call chain context.',
+        {
+          base: z
+            .string()
+            .describe('Git ref to compare against (e.g. "main", a commit hash, "HEAD~3")'),
+          depth: z
+            .number()
+            .optional()
+            .describe('Max traversal depth for impact zone. Omit for full connected flow.'),
+        },
+        async ({ base, depth }) =>
+          handleDiffGraph(base, depth, `${config.outputDir}/graph.json`, graph),
       );
 
       server.tool(
