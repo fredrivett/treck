@@ -33,6 +33,11 @@
   --graph-edge-label: #6b7280;
   --graph-minimap-border: #e5e7eb;
   --graph-minimap-mask: rgba(0, 0, 0, 0.05);
+  --dep-highlight-fill: #dbeafe;
+  --dep-highlight-stroke: #3b82f6;
+  --dep-entry-fill: #e0e7ff;
+  --dep-entry-stroke: #6366f1;
+  --dep-node-fill: oklch(96.7% 0.003 264.54);
 }
 
 .dark {
@@ -48,4 +53,9 @@
   --graph-edge-label: #9ca3af;
   --graph-minimap-border: #374151;
   --graph-minimap-mask: rgba(255, 255, 255, 0.08);
+  --dep-highlight-fill: #1e3a5f;
+  --dep-highlight-stroke: #3b82f6;
+  --dep-entry-fill: #272554;
+  --dep-entry-stroke: #818cf8;
+  --dep-node-fill: oklch(30% 0.01 264.54);
 }

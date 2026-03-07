@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.58",
+    "beautiful-mermaid": "^1.0.2",
     "@astrojs/react": "^4.4.2",
     "@astrojs/vercel": "^8.0.0",
     "ai": "^6.0.116",

@@ -1,3 +1,4 @@
+import { renderMermaidSVG } from 'beautiful-mermaid';
 import { marked } from 'marked';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
@@ -101,9 +102,24 @@ export function DocsViewer() {
 
   let bodyHtml = '';
   if (doc.dependencyGraph) {
+    let graphContent = doc.dependencyGraph;
+    try {
+      graphContent = renderMermaidSVG(doc.dependencyGraph, {
+        bg: 'var(--background)',
+        fg: 'var(--foreground)',
+        line: 'var(--border)',
+        muted: 'var(--foreground)',
+        surface: 'var(--dep-node-fill)',
+        border: 'var(--border)',
+        transparent: true,
+      });
+    } catch {
+      // Fall back to raw mermaid wrapped in a code block
+      graphContent = `<pre><code>${escapeHtml(doc.dependencyGraph)}</code></pre>`;
+    }
     bodyHtml += '<div class="dep-graph">';
     bodyHtml += '<h3>Dependencies</h3>';
-    bodyHtml += `<div class="dep-graph-svg">${doc.dependencyGraph}</div>`;
+    bodyHtml += `<div class="dep-graph-svg">${graphContent}</div>`;
     bodyHtml += '</div>';
   }
   bodyHtml += `<div id="doc-content">${renderedMarkdown}</div>`;
