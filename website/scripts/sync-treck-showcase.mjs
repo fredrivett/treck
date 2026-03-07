@@ -5,8 +5,8 @@
  * and copies the resulting graph.json into the website's public showcases.
  */
 
-import { cpSync, existsSync, mkdirSync } from 'node:fs';
 import { execSync } from 'node:child_process';
+import { cpSync, existsSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const rootDir = resolve(import.meta.dirname, '../..');
