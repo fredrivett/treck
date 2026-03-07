@@ -14,6 +14,7 @@ const treckBin = resolve(rootDir, 'dist/index.mjs');
 const graphSrc = resolve(rootDir, '_treck/graph.json');
 const graphDest = resolve(import.meta.dirname, '../public/showcases/treck.json');
 
+/** Logs and executes a shell command synchronously. */
 function run(cmd, cwd) {
   console.log(`  $ ${cmd}`);
   execSync(cmd, { cwd, stdio: 'inherit' });
