@@ -23,6 +23,7 @@ import { GRID_SIZE, snapCeil } from '../grid';
 import { DocPanel } from './DocPanel';
 import { defaultLayoutOptions, type LayoutOptions, LayoutSettings } from './LayoutSettings';
 import { nodeTypes } from './NodeTypes';
+import { Kbd } from './ui/kbd';
 
 const elk = new ELK();
 
@@ -520,13 +521,20 @@ function FlowGraphInner({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
       if (e.key === 'Escape') {
         clearSelection();
+      }
+      if (e.key === 'f' && selectedEntries.size > 0) {
+        e.preventDefault();
+        setFocusedEntries(new Set(selectedEntries));
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [clearSelection]);
+  }, [clearSelection, selectedEntries]);
 
   return (
     <div ref={containerRef} className="w-full h-full relative">
@@ -539,17 +547,17 @@ function FlowGraphInner({
             <button
               type="button"
               onClick={() => setFocusedEntries(new Set(selectedEntries))}
-              className="text-blue-600 hover:text-blue-800 font-medium"
+              className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center gap-1"
             >
-              Focus
+              Focus <Kbd>F</Kbd>
             </button>
           )}
           <button
             type="button"
             onClick={clearSelection}
-            className="text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
           >
-            Clear
+            Clear <Kbd>Esc</Kbd>
           </button>
         </div>
       )}
