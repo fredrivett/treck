@@ -12,10 +12,11 @@ import { GraphStore } from '../../graph/graph-store.js';
 import type { FlowGraph } from '../../graph/types.js';
 import { loadConfig } from '../utils/config.js';
 import { detectBaseRef, loadGraphAtRef } from '../utils/git.js';
+import { beautifyMermaid } from './show.js';
 
 interface DiffOptions {
   base?: string;
-  format?: 'mermaid' | 'json';
+  format?: 'mermaid' | 'json' | 'ascii';
   depth?: number;
 }
 
@@ -28,7 +29,7 @@ to ensure graph.json is up to date.
 
 Options:
   --base <ref>    Base git ref to compare against (default: auto-detect remote default branch)
-  --format <f>    Output format: mermaid (default), json
+  --format <f>    Output format: mermaid (default), json, ascii
   --depth <n>     Limit impact zone depth (default: full connected flow)
 
 Examples:
@@ -36,6 +37,7 @@ Examples:
   treck diff --base main
   treck diff --base abc123
   treck diff --format json
+  treck diff --format ascii
   treck diff --depth 2
 `;
 
@@ -75,11 +77,12 @@ export function registerDiffCommand(cli: CAC) {
   cli
     .command('diff', 'Compare graph changes between git refs')
     .option('--base <ref>', 'Base git ref to compare against (default: auto-detect)')
-    .option('--format <format>', 'Output format: mermaid (default), json')
+    .option('--format <format>', 'Output format: mermaid (default), json, ascii')
     .option('--depth <n>', 'Limit impact zone depth (default: full connected flow)')
     .example('treck diff')
     .example('treck diff --base main')
     .example('treck diff --format json')
+    .example('treck diff --format ascii')
     .example('treck diff --depth 2')
     .action(async (options: DiffOptions) => {
       const config = loadConfig();
@@ -143,6 +146,37 @@ export function registerDiffCommand(cli: CAC) {
       switch (format) {
         case 'json': {
           process.stdout.write(`${formatDiffJson(diff)}\n`);
+          return;
+        }
+        case 'ascii': {
+          const MAX_ASCII_NODES = 80;
+
+          // If graph fits, render directly
+          if (diff.nodes.length <= MAX_ASCII_NODES) {
+            const mermaid = formatDiffMermaid(diff);
+            const ascii = await beautifyMermaid(mermaid);
+            process.stdout.write(`${ascii}\n`);
+            return;
+          }
+
+          // Try progressively smaller depths to fit within the limit
+          for (const tryDepth of [3, 2, 1, 0]) {
+            const smaller = diffGraphs(baseGraph, headGraph, { baseRef, depth: tryDepth });
+            if (smaller.nodes.length <= MAX_ASCII_NODES) {
+              process.stderr.write(
+                `\x1b[1;33m⚠ Graph too large at full depth (${diff.nodes.length} nodes). Showing depth ${tryDepth} (${smaller.nodes.length} nodes).\x1b[0m\n`,
+              );
+              const mermaid = formatDiffMermaid(smaller);
+              const ascii = await beautifyMermaid(mermaid);
+              process.stdout.write(`${ascii}\n`);
+              return;
+            }
+          }
+
+          // Even depth 0 (changed nodes only) is too large
+          process.stderr.write(
+            `\x1b[1;33m⚠ Graph too large for ASCII rendering even at depth 0. Use --format mermaid or --format json instead.\x1b[0m\n`,
+          );
           return;
         }
         default: {
