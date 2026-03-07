@@ -53,7 +53,7 @@ describe('nodeToMermaid', () => {
     expect(mermaid).toContain('funcA');
     expect(mermaid).toContain('funcB');
     // Target should be highlighted (blue style)
-    expect(mermaid).toContain('style src_a_ts_funcA fill:#dbeafe');
+    expect(mermaid).toContain('style src_a_ts_funcA fill:var(--dep-highlight-fill)');
   });
 
   it('uses connectedSubgraph for traversal at given depth', () => {
@@ -133,10 +133,10 @@ describe('flowToMermaid', () => {
     const mermaid = flowToMermaid([nodeA, nodeB, nodeC], edges, new Set(['a.ts:A', 'c.ts:C']));
 
     // Both A and C should have the highlight style
-    expect(mermaid).toContain('style a_ts_A fill:#dbeafe');
-    expect(mermaid).toContain('style c_ts_C fill:#dbeafe');
+    expect(mermaid).toContain('style a_ts_A fill:var(--dep-highlight-fill)');
+    expect(mermaid).toContain('style c_ts_C fill:var(--dep-highlight-fill)');
     // B should NOT be highlighted
-    expect(mermaid).not.toContain('style b_ts_B fill:#dbeafe');
+    expect(mermaid).not.toContain('style b_ts_B fill:var(--dep-highlight-fill)');
   });
 
   it('styles entry points differently from highlights', () => {
@@ -151,9 +151,9 @@ describe('flowToMermaid', () => {
     const mermaid = flowToMermaid([nodeA, nodeB], [], new Set(['b.ts:B']));
 
     // B is highlighted (blue)
-    expect(mermaid).toContain('style b_ts_B fill:#dbeafe');
+    expect(mermaid).toContain('style b_ts_B fill:var(--dep-highlight-fill)');
     // A is an entry point (purple) but not highlighted
-    expect(mermaid).toContain('style a_ts_A fill:#e0e7ff');
+    expect(mermaid).toContain('style a_ts_A fill:var(--dep-entry-fill)');
   });
 
   it('does not double-style entry points that are also highlighted', () => {
@@ -167,7 +167,7 @@ describe('flowToMermaid', () => {
     const mermaid = flowToMermaid([nodeA], [], new Set(['a.ts:A']));
 
     // Should have the highlight style, NOT the entry point style
-    expect(mermaid).toContain('style a_ts_A fill:#dbeafe');
-    expect(mermaid).not.toContain('style a_ts_A fill:#e0e7ff');
+    expect(mermaid).toContain('style a_ts_A fill:var(--dep-highlight-fill)');
+    expect(mermaid).not.toContain('style a_ts_A fill:var(--dep-entry-fill)');
   });
 });

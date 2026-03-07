@@ -108,7 +108,9 @@ function buildMermaid(
   for (const id of highlightIds) {
     if (includedIds.has(id)) {
       const nodeId = sanitizeId(id);
-      lines.push(`  style ${nodeId} fill:#dbeafe,stroke:#3b82f6,stroke-width:2px`);
+      lines.push(
+        `  style ${nodeId} fill:var(--dep-highlight-fill),stroke:var(--dep-highlight-stroke),stroke-width:2px`,
+      );
     }
   }
 
@@ -117,7 +119,9 @@ function buildMermaid(
     const node = nodeMap.get(id);
     if (node?.entryType && !highlightIds.has(id)) {
       const nodeId = sanitizeId(id);
-      lines.push(`  style ${nodeId} fill:#e0e7ff,stroke:#6366f1,stroke-width:2px`);
+      lines.push(
+        `  style ${nodeId} fill:var(--dep-entry-fill),stroke:var(--dep-entry-stroke),stroke-width:2px`,
+      );
     }
   }
 

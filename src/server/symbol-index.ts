@@ -34,8 +34,13 @@ export function buildDocResponseWithSVG(docPath: string, index: SymbolIndex, gra
   if (response.dependencyGraph) {
     try {
       response.dependencyGraph = renderMermaidSVG(response.dependencyGraph, {
-        bg: '#ffffff',
-        fg: '#1e293b',
+        bg: 'var(--background)',
+        fg: 'var(--foreground)',
+        line: 'var(--border)',
+        muted: 'var(--foreground)',
+        surface: 'var(--dep-node-fill)',
+        border: 'var(--border)',
+        transparent: true,
       });
     } catch {
       // Keep raw mermaid string if rendering fails

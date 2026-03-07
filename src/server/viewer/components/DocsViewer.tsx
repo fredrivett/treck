@@ -104,7 +104,15 @@ export function DocsViewer() {
   if (doc.dependencyGraph) {
     let graphContent = doc.dependencyGraph;
     try {
-      graphContent = renderMermaidSVG(doc.dependencyGraph);
+      graphContent = renderMermaidSVG(doc.dependencyGraph, {
+        bg: 'var(--background)',
+        fg: 'var(--foreground)',
+        line: 'var(--border)',
+        muted: 'var(--foreground)',
+        surface: 'var(--dep-node-fill)',
+        border: 'var(--border)',
+        transparent: true,
+      });
     } catch {
       // Fall back to raw mermaid wrapped in a code block
       graphContent = `<pre><code>${escapeHtml(doc.dependencyGraph)}</code></pre>`;

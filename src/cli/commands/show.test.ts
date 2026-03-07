@@ -140,8 +140,8 @@ describe('formatMermaidOutput', () => {
     const output = formatMermaidOutput(['a.ts:A', 'c.ts:C'], graph, 1);
     expect(output).toContain('flowchart TD');
     // Both targets should be highlighted
-    expect(output).toContain('style a_ts_A fill:#dbeafe');
-    expect(output).toContain('style c_ts_C fill:#dbeafe');
+    expect(output).toContain('style a_ts_A fill:var(--dep-highlight-fill)');
+    expect(output).toContain('style c_ts_C fill:var(--dep-highlight-fill)');
   });
 
   it('respects depth parameter', () => {
