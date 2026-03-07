@@ -186,10 +186,10 @@ function ConditionNode({ data }: NodeProps) {
       className={`relative ${d.dimmed ? 'opacity-50' : ''} transition-all duration-200`}
       style={{ minWidth: 80, maxWidth: 300 }}
     >
-      <Handle type="target" position={Position.Top} style={{ background: '#f59e0b' }} />
+      <Handle type="target" position={Position.Top} style={{ background: '#eab308' }} />
       {/* Outer shape (border) */}
       <div
-        className="absolute inset-0 bg-amber-500"
+        className="absolute inset-0 bg-yellow-500"
         style={{
           clipPath:
             'polygon(12px 0%, calc(100% - 12px) 0%, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0% 50%)',
@@ -197,7 +197,7 @@ function ConditionNode({ data }: NodeProps) {
       />
       {/* Inner shape (fill) inset by 2px for border effect */}
       <div
-        className="absolute bg-amber-50 dark:bg-amber-950/80"
+        className="absolute bg-yellow-50 dark:bg-yellow-950/80"
         style={{
           inset: 2,
           clipPath:
@@ -207,7 +207,7 @@ function ConditionNode({ data }: NodeProps) {
       <div className="relative z-10 py-1.5 text-[11px] text-foreground font-medium text-center leading-tight" style={{ paddingLeft: 20, paddingRight: 20 }}>
         {d.label}
       </div>
-      <Handle type="source" position={Position.Bottom} style={{ background: '#f59e0b' }} />
+      <Handle type="source" position={Position.Bottom} style={{ background: '#eab308' }} />
     </div>
   );
 }

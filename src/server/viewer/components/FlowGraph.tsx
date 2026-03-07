@@ -31,7 +31,7 @@ const edgeStyleByType: Record<string, React.CSSProperties> = {
   'async-dispatch': { stroke: '#ec4899' },
   'event-emit': { stroke: '#ec4899', strokeDasharray: '4 4' },
   'http-request': { stroke: '#f97316', strokeDasharray: '8 4' },
-  'conditional-call': { stroke: '#f59e0b' },
+  'conditional-call': { stroke: '#eab308' },
   'error-handler': { stroke: '#ef4444' },
   'middleware-chain': { stroke: '#06b6d4', strokeDasharray: '4 2' },
 };
@@ -116,6 +116,50 @@ function toReactFlowEdges(graphEdges: FlowGraphData['edges'], showConditionals: 
 }
 
 /**
+ * Strip `if (...)` wrapper, trailing `&&`/`||`, and other noise from a
+ * condition string to produce a clean expression for display.
+ *
+ * For `else (expr)` conditions (else-only branches), negates the expression
+ * so the condition node reads as the actual guard, e.g. `staleDocs.length > 0`.
+ */
+function cleanConditionText(raw: string): string {
+  let text = raw.trim();
+  // Handle "else (expr)" — negate the expression
+  const elseMatch = text.match(/^else\s+\((.+)\)$/s);
+  if (elseMatch) return negateExpression(elseMatch[1].trim());
+  // Strip "if (...)" or "else if (...)" wrapper
+  const ifMatch = text.match(/^(?:else\s+)?if\s*\((.+)\)$/s);
+  if (ifMatch) return ifMatch[1].trim();
+  // Strip trailing && or ||
+  text = text.replace(/\s*[&|]{2}\s*$/, '').trim();
+  return text;
+}
+
+/** Negate a simple comparison expression, or wrap in `!(...)`. */
+function negateExpression(expr: string): string {
+  // Strip leading ! or unwrap !(...)
+  if (expr.startsWith('!')) return expr.slice(1).replace(/^\((.+)\)$/, '$1');
+  // Only flip comparisons in simple expressions (no logical operators that
+  // could cause greedy regex to match an inner comparison incorrectly)
+  if (!/&&|\|\|/.test(expr)) {
+    const comparisons: [RegExp, string][] = [
+      [/^(.+)\s*===\s*(.+)$/, '$1 !== $2'],
+      [/^(.+)\s*!==\s*(.+)$/, '$1 === $2'],
+      [/^(.+)\s*==\s*(.+)$/, '$1 != $2'],
+      [/^(.+)\s*!=\s*(.+)$/, '$1 == $2'],
+      [/^(.+)\s*>=\s*(.+)$/, '$1 < $2'],
+      [/^(.+)\s*<=\s*(.+)$/, '$1 > $2'],
+      [/^(.+)\s*>\s*(.+)$/, '$1 <= $2'],
+      [/^(.+)\s*<\s*(.+)$/, '$1 >= $2'],
+    ];
+    for (const [pattern, replacement] of comparisons) {
+      if (pattern.test(expr)) return expr.replace(pattern, replacement);
+    }
+  }
+  return `!(${expr})`;
+}
+
+/**
  * Expand conditional edges into diamond condition nodes with split edges.
  *
  * Groups conditional edges by (source, outermost branchGroup) so that
@@ -159,14 +203,30 @@ function expandConditionals(
   for (const [groupKey, edges] of condGroups) {
     const source = edges[0].source;
     const firstCond = edges[0].conditions![0];
+    const condLabel = cleanConditionText(firstCond.condition);
+
+    // If the condition text is just "else" (no corresponding if-branch calls
+    // a function), skip the condition node and render as regular edges.
+    if (condLabel === 'else') {
+      for (const edge of edges) {
+        rfEdges.push({
+          id: edge.id,
+          source: edge.source,
+          target: edge.target,
+          style: edgeStyleByType['conditional-call'],
+        });
+      }
+      continue;
+    }
+
     const condNodeId = `cond::${groupKey}`;
 
-    // Create condition diamond node
+    // Create condition node with cleaned expression text
     rfNodes.push({
       id: condNodeId,
       type: 'conditionNode',
       position: { x: 0, y: 0 },
-      data: { label: firstCond.condition },
+      data: { label: condLabel },
     });
 
     // Edge: source → condition node
@@ -179,20 +239,11 @@ function expandConditionals(
 
     // Edges: condition node → each target
     for (const edge of edges) {
-      // Only label nested conditions (remaining after the outermost)
-      const remaining = edge.conditions!.slice(1);
-      const label =
-        remaining.length > 0
-          ? remaining.map((c) => c.condition).join(' \u2192 ')
-          : undefined;
-
       rfEdges.push({
         id: `${condNodeId}->${edge.target}`,
         source: condNodeId,
         target: edge.target,
-        label,
         style: edgeStyleByType['conditional-call'],
-        labelStyle: label ? { fontSize: 10, fill: 'var(--graph-edge-label)' } : undefined,
       });
     }
   }
