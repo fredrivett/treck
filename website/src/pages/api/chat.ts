@@ -4,10 +4,12 @@
  * Serverless chat endpoint for website showcases. Mirrors the local treck
  * server's `/api/chat` handler but runs as a Vercel serverless function.
  * Reads `project` from the request body, loads the showcase graph from the
- * public CDN, then streams an AI response using the same tools as the local
- * viewer.
+ * bundled JSON files, then streams an AI response using the same tools as
+ * the local viewer.
  */
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import {
   buildSystemPrompt,
@@ -53,13 +55,26 @@ export const POST: APIRoute = async (context) => {
     });
   }
 
-  // Fetch the graph JSON from the public static URL (served by Vercel CDN)
-  const graphUrl = new URL(`/showcases/${project}.json`, context.url);
+  // Read the graph JSON from the filesystem.
+  // In local dev, cwd is the website/ dir; on Vercel, files are at <func-root>/website/.
+  const fileName = `${project}.json`;
   let graph: FlowGraph;
   try {
-    const res = await fetch(graphUrl.toString());
-    if (!res.ok) throw new Error(`Graph fetch failed: ${res.status}`);
-    graph = (await res.json()) as FlowGraph;
+    const candidates = [
+      join(process.cwd(), 'public', 'showcases', fileName),
+      join(process.cwd(), 'website', 'public', 'showcases', fileName),
+    ];
+    let raw: string | undefined;
+    for (const p of candidates) {
+      try {
+        raw = readFileSync(p, 'utf8');
+        break;
+      } catch {
+        // try next candidate
+      }
+    }
+    if (!raw) throw new Error(`Graph file not found (tried ${candidates.join(', ')})`);
+    graph = JSON.parse(raw) as FlowGraph;
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     return new Response(JSON.stringify({ error: `Failed to load graph: ${message}` }), {
