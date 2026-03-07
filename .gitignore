@@ -19,5 +19,8 @@ dist/
 # Showcase generation temp files
 .showcase-tmp/
 
+# Treck self-showcase (regenerated on every website build)
+website/public/showcases/treck.json
+
 # Internal spec (local only)
 .internal_spec/

@@ -1,0 +1,41 @@
+name: Update showcases
+
+on:
+  schedule:
+    - cron: "0 4 * * *" # Daily at 4:00 AM UTC
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  update-showcases:
+    name: Regenerate showcase graphs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build treck CLI
+        run: pnpm exec tsdown src/cli/index.ts
+
+      - name: Generate showcase graphs
+        run: pnpm exec tsx scripts/generate-showcase.ts tldraw
+
+      - name: Commit and push if changed
+        run: |
+          git diff --quiet website/public/showcases/ && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add website/public/showcases/
+          git commit -m "chore: update showcase graphs"
+          git push

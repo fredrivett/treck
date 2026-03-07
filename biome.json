@@ -31,7 +31,7 @@
   },
   "overrides": [
     {
-      "includes": ["scripts/**"],
+      "includes": ["scripts/**", "website/scripts/**"],
       "linter": {
         "rules": {
           "suspicious": {
