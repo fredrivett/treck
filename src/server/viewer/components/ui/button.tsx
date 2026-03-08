@@ -4,6 +4,7 @@ import type * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
+/** Variant class map for the shared button component. */
 const buttonVariants = cva(
   'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
   {
@@ -35,6 +36,7 @@ interface ButtonProps extends React.ComponentProps<'button'>, VariantProps<typeo
   asChild?: boolean;
 }
 
+/** Reusable UI button with shadcn-style variants and sizes. */
 function Button({ className, variant, size, asChild = false, ...props }: ButtonProps) {
   const Comp = asChild ? Slot : 'button';
   const isDisabled = Boolean(props.disabled);
