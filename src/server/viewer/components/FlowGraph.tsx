@@ -18,30 +18,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import '@xyflow/react/dist/style.css';
 
-import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
+import type { FlowGraph as FlowGraphData, GraphNode } from '../../../graph/types.js';
 import { GRID_SIZE, snapCeil } from '../grid';
+import { edgeStyleByType, expandConditionals, toReactFlowNode } from './condition-expansion';
 import { DocPanel } from './DocPanel';
 import { defaultLayoutOptions, type LayoutOptions, LayoutSettings } from './LayoutSettings';
 import { nodeTypes } from './NodeTypes';
 
 const elk = new ELK();
-
-const edgeStyleByType: Record<string, React.CSSProperties> = {
-  'direct-call': { stroke: '#6b7280' },
-  'async-dispatch': { stroke: '#ec4899' },
-  'event-emit': { stroke: '#ec4899', strokeDasharray: '4 4' },
-  'http-request': { stroke: '#f97316', strokeDasharray: '8 4' },
-  'conditional-call': { stroke: '#eab308' },
-  'error-handler': { stroke: '#ef4444' },
-  'middleware-chain': { stroke: '#06b6d4', strokeDasharray: '4 2' },
-};
-
-function getNodeType(node: GraphNode): string {
-  if (node.entryType) return 'entryPoint';
-  if (node.kind === 'component') return 'componentNode';
-  if (node.kind === 'function' && /^use[A-Z]/.test(node.name)) return 'hookNode';
-  return 'functionNode';
-}
 
 export type NodeCategory = string;
 
@@ -72,23 +56,6 @@ export function getCategoryLabel(category: NodeCategory): string {
   return entryTypeCategoryLabels[category] || nonEntryCategoryLabels[category] || category;
 }
 
-function toReactFlowNode(node: GraphNode): Node {
-  return {
-    id: node.id,
-    type: getNodeType(node),
-    position: { x: 0, y: 0 },
-    data: {
-      label: node.name,
-      kind: node.kind,
-      filePath: node.filePath,
-      isAsync: node.isAsync,
-      entryType: node.entryType,
-      metadata: node.metadata,
-      hasJsDoc: node.hasJsDoc,
-    },
-  };
-}
-
 function toReactFlowEdges(graphEdges: FlowGraphData['edges'], showConditionals: boolean): Edge[] {
   return graphEdges.map((edge) => {
     // When conditionals are hidden, render conditional-call edges as direct-call style
@@ -113,142 +80,6 @@ function toReactFlowEdges(graphEdges: FlowGraphData['edges'], showConditionals: 
       labelStyle: { fontSize: 10, fill: 'var(--graph-edge-label)' },
     };
   });
-}
-
-/**
- * Strip `if (...)` wrapper, trailing `&&`/`||`, and other noise from a
- * condition string to produce a clean expression for display.
- *
- * For `else (expr)` conditions (else-only branches), negates the expression
- * so the condition node reads as the actual guard, e.g. `staleDocs.length > 0`.
- */
-function cleanConditionText(raw: string): string {
-  let text = raw.trim();
-  // Handle "else (expr)" — negate the expression
-  const elseMatch = text.match(/^else\s+\((.+)\)$/s);
-  if (elseMatch) return negateExpression(elseMatch[1].trim());
-  // Strip "if (...)" or "else if (...)" wrapper
-  const ifMatch = text.match(/^(?:else\s+)?if\s*\((.+)\)$/s);
-  if (ifMatch) return ifMatch[1].trim();
-  // Strip trailing && or ||
-  text = text.replace(/\s*[&|]{2}\s*$/, '').trim();
-  return text;
-}
-
-/** Negate a simple comparison expression, or wrap in `!(...)`. */
-function negateExpression(expr: string): string {
-  // Strip leading ! or unwrap !(...)
-  if (expr.startsWith('!')) return expr.slice(1).replace(/^\((.+)\)$/, '$1');
-  // Only flip comparisons in simple expressions (no logical operators that
-  // could cause greedy regex to match an inner comparison incorrectly)
-  if (!/&&|\|\|/.test(expr)) {
-    const comparisons: [RegExp, string][] = [
-      [/^(.+)\s*===\s*(.+)$/, '$1 !== $2'],
-      [/^(.+)\s*!==\s*(.+)$/, '$1 === $2'],
-      [/^(.+)\s*==\s*(.+)$/, '$1 != $2'],
-      [/^(.+)\s*!=\s*(.+)$/, '$1 == $2'],
-      [/^(.+)\s*>=\s*(.+)$/, '$1 < $2'],
-      [/^(.+)\s*<=\s*(.+)$/, '$1 > $2'],
-      [/^(.+)\s*>\s*(.+)$/, '$1 <= $2'],
-      [/^(.+)\s*<\s*(.+)$/, '$1 >= $2'],
-    ];
-    for (const [pattern, replacement] of comparisons) {
-      if (pattern.test(expr)) return expr.replace(pattern, replacement);
-    }
-  }
-  return `!(${expr})`;
-}
-
-/**
- * Expand conditional edges into diamond condition nodes with split edges.
- *
- * Groups conditional edges by (source, outermost branchGroup) so that
- * branches of the same if/switch share a single diamond node.
- */
-function expandConditionals(
-  graphNodes: FlowGraphData['nodes'],
-  graphEdges: FlowGraphData['edges'],
-): { rfNodes: Node[]; rfEdges: Edge[] } {
-  const rfNodes: Node[] = graphNodes.map(toReactFlowNode);
-  const rfEdges: Edge[] = [];
-
-  // Group conditional edges by (source, outermost branchGroup)
-  const condGroups = new Map<string, FlowGraphData['edges']>();
-
-  for (const edge of graphEdges) {
-    if (edge.type === 'conditional-call' && edge.conditions?.length) {
-      const key = `${edge.source}::${edge.conditions[0].branchGroup}`;
-      const group = condGroups.get(key) || [];
-      group.push(edge);
-      condGroups.set(key, group);
-    } else {
-      // Non-conditional edge: convert normally
-      const style = edgeStyleByType[edge.type] || { stroke: '#9ca3af' };
-      let label: string | undefined;
-      if (edge.type !== 'direct-call' && edge.type !== 'async-dispatch') {
-        label = edge.label || edge.type;
-      }
-      rfEdges.push({
-        id: edge.id,
-        source: edge.source,
-        target: edge.target,
-        animated: edge.type === 'async-dispatch' || edge.type === 'event-emit',
-        label,
-        style,
-        labelStyle: { fontSize: 10, fill: 'var(--graph-edge-label)' },
-      });
-    }
-  }
-
-  for (const [groupKey, edges] of condGroups) {
-    const source = edges[0].source;
-    const firstCond = edges[0].conditions![0];
-    const condLabel = cleanConditionText(firstCond.condition);
-
-    // If the condition text is just "else" (no corresponding if-branch calls
-    // a function), skip the condition node and render as regular edges.
-    if (condLabel === 'else') {
-      for (const edge of edges) {
-        rfEdges.push({
-          id: edge.id,
-          source: edge.source,
-          target: edge.target,
-          style: edgeStyleByType['conditional-call'],
-        });
-      }
-      continue;
-    }
-
-    const condNodeId = `cond::${groupKey}`;
-
-    // Create condition node with cleaned expression text
-    rfNodes.push({
-      id: condNodeId,
-      type: 'conditionNode',
-      position: { x: 0, y: 0 },
-      data: { label: condLabel },
-    });
-
-    // Edge: source → condition node
-    rfEdges.push({
-      id: `${source}->${condNodeId}`,
-      source,
-      target: condNodeId,
-      style: edgeStyleByType['conditional-call'],
-    });
-
-    // Edges: condition node → each target
-    for (const edge of edges) {
-      rfEdges.push({
-        id: `${condNodeId}->${edge.target}`,
-        source: condNodeId,
-        target: edge.target,
-        style: edgeStyleByType['conditional-call'],
-      });
-    }
-  }
-
-  return { rfNodes, rfEdges };
 }
 
 type SizeCache = Map<string, { width: number; height: number }>;
