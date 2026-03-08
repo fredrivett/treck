@@ -358,6 +358,7 @@ function FlowGraphInner({
   const { fitView, getViewport } = useReactFlow();
   const fittedViewportRef = useRef<{ x: number; y: number; zoom: number } | null>(null);
   const nodesInitialized = useNodesInitialized();
+  const currentNodesRef = useRef<Node[]>([]);
   const visibleGraphRef = useRef<FlowGraphData | null>(null);
   const visualEdgesRef = useRef<Edge[]>([]);
   const sizeCache = useRef<SizeCache>(new Map());
@@ -410,6 +411,10 @@ function FlowGraphInner({
     if (focusedChanged) setFocusedEntries(urlFocused);
   }, [searchParams]);
 
+  useEffect(() => {
+    currentNodesRef.current = nodes;
+  }, [nodes]);
+
   // Shared helper: apply ELK positions to nodes and fit the view
   const applyPositionsAndFit = useCallback(
     (positions: Map<string, { x: number; y: number }>, initialNodes?: Node[]) => {
@@ -429,14 +434,13 @@ function FlowGraphInner({
           data: { ...node.data, selected: isSelected, dimmed },
         };
       };
-      if (initialNodes) {
-        setNodes(initialNodes.map(apply));
-      } else {
-        setNodes((prev) => prev.map(apply));
-      }
+
+      const nextNodes = (initialNodes ?? currentNodesRef.current).map(apply);
+      currentNodesRef.current = nextNodes;
+      setNodes(nextNodes);
+
       requestAnimationFrame(() => {
-        fitView({ padding: 0.15 });
-        requestAnimationFrame(() => {
+        void fitView({ padding: 0.15, nodes: nextNodes }).then(() => {
           fittedViewportRef.current = getViewport();
           onOffCenterChange?.(false);
           onLayoutReady?.();
@@ -448,7 +452,8 @@ function FlowGraphInner({
 
   /** Recenter the viewport on the current nodes. */
   const recenter = useCallback(() => {
-    fitView({ padding: 0.15 });
+    const currentNodes = currentNodesRef.current;
+    void fitView({ padding: 0.15, nodes: currentNodes });
     onOffCenterChange?.(false);
     requestAnimationFrame(() => {
       fittedViewportRef.current = getViewport();
