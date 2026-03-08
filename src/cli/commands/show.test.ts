@@ -2,11 +2,12 @@
  * Tests for `treck show` command output formatting
  */
 
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import type { FlowGraph, GraphNode } from '../../graph/types.js';
 import {
   beautifyMermaid,
   buildMetadataLine,
+  detectDarkMode,
   formatDocsOutput,
   formatJsonOutput,
   formatMermaidOutput,
@@ -398,5 +399,52 @@ describe('beautifyMermaid', () => {
     expect(output).not.toContain('flowchart');
     expect(output).toContain('A');
     expect(output).toContain('B');
+  });
+});
+
+describe('detectDarkMode', () => {
+  const originalEnv = process.env.COLORFGBG;
+
+  afterEach(() => {
+    if (originalEnv === undefined) {
+      delete process.env.COLORFGBG;
+    } else {
+      process.env.COLORFGBG = originalEnv;
+    }
+  });
+
+  it('returns true (dark) when COLORFGBG has low background value', () => {
+    process.env.COLORFGBG = '15;0';
+    expect(detectDarkMode()).toBe(true);
+  });
+
+  it('returns true (dark) when COLORFGBG background is exactly 8', () => {
+    process.env.COLORFGBG = '15;8';
+    expect(detectDarkMode()).toBe(true);
+  });
+
+  it('returns false (light) when COLORFGBG has high background value', () => {
+    process.env.COLORFGBG = '0;15';
+    expect(detectDarkMode()).toBe(false);
+  });
+
+  it('returns false (light) for background value 9', () => {
+    process.env.COLORFGBG = '0;9';
+    expect(detectDarkMode()).toBe(false);
+  });
+
+  it('defaults to dark when COLORFGBG is not set', () => {
+    delete process.env.COLORFGBG;
+    expect(detectDarkMode()).toBe(true);
+  });
+
+  it('defaults to dark when COLORFGBG has non-numeric background', () => {
+    process.env.COLORFGBG = 'invalid';
+    expect(detectDarkMode()).toBe(true);
+  });
+
+  it('handles multi-segment COLORFGBG (uses last value)', () => {
+    process.env.COLORFGBG = '15;0;15';
+    expect(detectDarkMode()).toBe(false);
   });
 });
