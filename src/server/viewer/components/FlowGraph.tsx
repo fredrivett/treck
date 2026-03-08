@@ -24,6 +24,7 @@ import { DocPanel } from './DocPanel';
 import { defaultLayoutOptions, type LayoutOptions, LayoutSettings } from './LayoutSettings';
 import { nodeTypes } from './NodeTypes';
 import { Kbd } from './ui/kbd';
+import { TooltipProvider } from './ui/tooltip';
 
 const elk = new ELK();
 
@@ -73,7 +74,7 @@ export function getCategoryLabel(category: NodeCategory): string {
   return entryTypeCategoryLabels[category] || nonEntryCategoryLabels[category] || category;
 }
 
-function toReactFlowNode(node: GraphNode): Node {
+function toReactFlowNode(node: GraphNode, measuring: boolean): Node {
   return {
     id: node.id,
     type: getNodeType(node),
@@ -86,6 +87,7 @@ function toReactFlowNode(node: GraphNode): Node {
       entryType: node.entryType,
       metadata: node.metadata,
       hasJsDoc: node.hasJsDoc,
+      measuring,
     },
   };
 }
@@ -446,17 +448,18 @@ function FlowGraphInner({
   // When renderGraph changes: use cached sizes for instant layout, or fall back to two-pass measurement
   useEffect(() => {
     visibleGraphRef.current = renderGraph;
-    const rfNodes = renderGraph.nodes.map((n) => toReactFlowNode(n));
     setEdges(toReactFlowEdges(renderGraph.edges, showConditionals));
 
     const allCached = renderGraph.nodes.every((n) => sizeCache.current.has(n.id));
     if (allCached && renderGraph.nodes.length > 0) {
       // Fast path: compute positions before rendering so nodes never appear at origin
+      const rfNodes = renderGraph.nodes.map((n) => toReactFlowNode(n, false));
       runElkLayout(rfNodes, renderGraph.edges, layoutOptions, sizeCache.current).then((positions) =>
         applyPositionsAndFit(positions, rfNodes),
       );
     } else {
-      // Slow path: render at origin so React Flow can measure, then layout in Pass 2
+      // Slow path: hide file paths during measurement so they don't inflate width
+      const rfNodes = renderGraph.nodes.map((n) => toReactFlowNode(n, true));
       setNodes(rfNodes);
       setNeedsLayout(true);
     }
@@ -494,6 +497,14 @@ function FlowGraphInner({
     }
 
     if (!initialMeasureDone) setInitialMeasureDone(true);
+
+    // Show file paths now that measurement is done
+    setNodes((prev) =>
+      prev.map((node) => ({
+        ...node,
+        data: { ...node.data, measuring: false },
+      })),
+    );
 
     const currentGraph = visibleGraphRef.current;
     runElkLayout(nodes, currentGraph.edges, layoutOptions, sizeCache.current).then((positions) =>
@@ -630,16 +641,18 @@ export function FlowGraph({
   onOffCenterChange,
 }: FlowGraphProps) {
   return (
-    <ReactFlowProvider>
-      <FlowGraphInner
-        graph={graph}
-        onLayoutReady={onLayoutReady}
-        searchQuery={searchQuery}
-        enabledTypes={enabledTypes}
-        showConditionals={showConditionals}
-        recenterRef={recenterRef}
-        onOffCenterChange={onOffCenterChange}
-      />
-    </ReactFlowProvider>
+    <TooltipProvider>
+      <ReactFlowProvider>
+        <FlowGraphInner
+          graph={graph}
+          onLayoutReady={onLayoutReady}
+          searchQuery={searchQuery}
+          enabledTypes={enabledTypes}
+          showConditionals={showConditionals}
+          recenterRef={recenterRef}
+          onOffCenterChange={onOffCenterChange}
+        />
+      </ReactFlowProvider>
+    </TooltipProvider>
   );
 }
