@@ -99,7 +99,7 @@ export function ActiveChat({
 
   const { messages, sendMessage, status } = useChat({
     transport,
-    initialMessages,
+    messages: initialMessages,
   });
 
   const isLoading = status === 'submitted' || status === 'streaming';
