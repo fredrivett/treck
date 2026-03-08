@@ -1,5 +1,7 @@
 import { type ChangeEvent, useState } from 'react';
 
+import { Button } from './ui/button';
+
 export interface LayoutOptions {
   'elk.algorithm': string;
   'elk.direction': string;
@@ -73,19 +75,9 @@ export function LayoutSettings({ options, onChange }: LayoutSettingsProps) {
   }
 
   return (
-    <div className="absolute top-3 right-3 z-10">
-      <button
-        type="button"
-        onClick={() => setOpen((prev) => !prev)}
-        className={`border border-border rounded-lg px-3 py-1.5 text-xs font-semibold cursor-pointer shadow-sm ${
-          open ? 'bg-foreground text-background' : 'bg-background text-foreground'
-        }`}
-      >
-        Layout
-      </button>
-
+    <div className="absolute bottom-3 left-3 z-10">
       {open && (
-        <div className="mt-2 bg-background rounded-xl p-3.5 shadow-lg border border-border w-[220px] flex flex-col gap-2.5">
+        <div className="mb-2 bg-background rounded-xl p-3.5 shadow-lg border border-border w-[220px] flex flex-col gap-2.5">
           <div>
             <div className={labelClasses}>Algorithm</div>
             <select
@@ -209,15 +201,23 @@ export function LayoutSettings({ options, onChange }: LayoutSettingsProps) {
             </>
           )}
 
-          <button
-            type="button"
+          <Button
+            variant="outline"
+            size="sm"
             onClick={() => onChange({ ...defaultLayoutOptions })}
-            className="px-2 py-1 border border-border rounded bg-muted text-[11px] text-muted-foreground cursor-pointer mt-0.5"
+            className="mt-0.5 text-[11px] text-muted-foreground"
           >
             Reset defaults
-          </button>
+          </Button>
         </div>
       )}
+      <Button
+        variant={open ? 'inverse' : 'subtle'}
+        size="sm"
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        Layout
+      </Button>
     </div>
   );
 }

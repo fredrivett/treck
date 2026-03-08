@@ -20,6 +20,7 @@ import { FlowGraph, getNodeCategory, type NodeCategory } from './FlowGraph';
 import { type GraphExplorerContextValue, GraphExplorerProvider } from './GraphExplorerContext';
 import { LoadingSpinner } from './LoadingSpinner';
 import { Sidebar } from './Sidebar';
+import { Button, buttonVariants } from './ui/button';
 import { Kbd } from './ui/kbd';
 import { ViewNav } from './ViewNav';
 
@@ -268,11 +269,12 @@ export function GraphExplorer({
         </Routes>
         {isGraphView && (
           <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 items-end">
-            <button
-              type="button"
+            <Button
+              variant="subtle"
+              size="sm"
               onClick={() => setChatOpen(!chatOpen)}
-              className="flex items-center gap-1.5 rounded-md border border-border bg-background/90 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted shadow-sm"
               title={chatOpen ? 'Close AI chat' : 'Open AI chat'}
+              className="gap-1.5"
             >
               <svg
                 width="14"
@@ -289,14 +291,18 @@ export function GraphExplorer({
               </svg>
               Chat
               <Kbd mod>/</Kbd>
-            </button>
+            </Button>
             <AnimatePresence>
               {isOffCenter && (
                 <motion.button
                   key="recenter"
                   type="button"
                   onClick={() => recenterRef.current?.()}
-                  className="flex items-center gap-1.5 rounded-md border border-border bg-background/90 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted shadow-sm"
+                  className={buttonVariants({
+                    variant: 'subtle',
+                    size: 'sm',
+                    className: 'gap-1.5 cursor-pointer',
+                  })}
                   title="Recenter view on nodes"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
