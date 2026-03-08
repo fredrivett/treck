@@ -10,7 +10,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { isApplePlatform } from '../keyboard';
 import { OPEN_SETTINGS_DIALOG_EVENT } from '../lib/settings-dialog-events';
 import type { ThemePreference } from '../lib/theme';
-import { applyThemePreference, storeThemePreference } from '../lib/theme';
 import { useThemePreference } from '../lib/use-theme-preference';
 import {
   DialogOrDrawer,
@@ -99,7 +98,7 @@ interface SettingsDialogProps {
 
 /** Global settings dialog with theme and chat configuration. */
 function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
-  const { preference, mounted } = useThemePreference();
+  const { preference, mounted, setPreference } = useThemePreference();
   const [chatSettings, setChatSettings] = useState<ChatSettings>(loadChatSettings);
 
   // Sync theme preference when dialog opens
@@ -109,10 +108,12 @@ function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
     }
   }, [open, mounted]);
 
-  const setTheme = useCallback((next: ThemePreference) => {
-    applyThemePreference(next);
-    storeThemePreference(next);
-  }, []);
+  const setTheme = useCallback(
+    (next: ThemePreference) => {
+      setPreference(next);
+    },
+    [setPreference],
+  );
 
   const updateChatSetting = useCallback(
     (key: keyof ChatSettings, value: string) => {
