@@ -24,6 +24,7 @@ import { DocPanel } from './DocPanel';
 import { defaultLayoutOptions, type LayoutOptions, LayoutSettings } from './LayoutSettings';
 import { nodeTypes } from './NodeTypes';
 import { Kbd } from './ui/kbd';
+import { TooltipProvider } from './ui/tooltip';
 
 const elk = new ELK();
 
@@ -640,16 +641,18 @@ export function FlowGraph({
   onOffCenterChange,
 }: FlowGraphProps) {
   return (
-    <ReactFlowProvider>
-      <FlowGraphInner
-        graph={graph}
-        onLayoutReady={onLayoutReady}
-        searchQuery={searchQuery}
-        enabledTypes={enabledTypes}
-        showConditionals={showConditionals}
-        recenterRef={recenterRef}
-        onOffCenterChange={onOffCenterChange}
-      />
-    </ReactFlowProvider>
+    <TooltipProvider>
+      <ReactFlowProvider>
+        <FlowGraphInner
+          graph={graph}
+          onLayoutReady={onLayoutReady}
+          searchQuery={searchQuery}
+          enabledTypes={enabledTypes}
+          showConditionals={showConditionals}
+          recenterRef={recenterRef}
+          onOffCenterChange={onOffCenterChange}
+        />
+      </ReactFlowProvider>
+    </TooltipProvider>
   );
 }

@@ -1,5 +1,6 @@
 import { Handle, type NodeProps, Position } from '@xyflow/react';
 import { Badge, type BadgeVariant, variantLabels } from './ui/badge';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
 /** Max width (px) for all graph node shapes — used by ELK layout cap. */
 export const NODE_MAX_WIDTH = 160;
@@ -19,13 +20,17 @@ function FilePath({ path, measuring }: { path: string; measuring?: boolean }) {
     return <div className="text-[10px] text-muted-foreground mt-0.5">{'\u00A0'}</div>;
   }
   return (
-    <div
-      className="text-[10px] text-muted-foreground mt-0.5 truncate"
-      style={{ direction: 'rtl', textAlign: 'left' }}
-      title={path}
-    >
-      {path}
-    </div>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div
+          className="text-[10px] text-muted-foreground mt-0.5 truncate"
+          style={{ direction: 'rtl', textAlign: 'left' }}
+        >
+          {path}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>{path}</TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -147,9 +152,7 @@ function EntryPointNode({ data }: NodeProps) {
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
-      <div className="font-semibold text-[13px] text-foreground">
-        {d.label}
-      </div>
+      <div className="font-semibold text-[13px] text-foreground">{d.label}</div>
       {(route || eventTrigger || taskId) && (
         <div className="text-[11px] text-muted-foreground mt-0.5">
           {route || eventTrigger || taskId}
@@ -178,9 +181,7 @@ function ComponentNode({ data }: NodeProps) {
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
-      <div className="font-medium text-[13px] text-foreground">
-        {d.label}
-      </div>
+      <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
       <Handle type="source" position={Position.Bottom} style={{ background: '#f97316' }} />
     </div>
@@ -204,9 +205,7 @@ function HookNode({ data }: NodeProps) {
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
-      <div className="font-medium text-[13px] text-foreground">
-        {d.label}
-      </div>
+      <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
       <Handle type="source" position={Position.Bottom} style={{ background: '#84cc16' }} />
     </div>
@@ -230,9 +229,7 @@ function FunctionNode({ data }: NodeProps) {
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
-      <div className="font-medium text-[13px] text-foreground">
-        {d.label}
-      </div>
+      <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
       <Handle type="source" position={Position.Bottom} style={{ background: '#9ca3af' }} />
     </div>
