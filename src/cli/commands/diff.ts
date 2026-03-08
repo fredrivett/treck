@@ -7,7 +7,7 @@
 
 import type { CAC } from 'cac';
 import { StaleChecker } from '../../checker/index.js';
-import { type GraphDiff, diffGraphs, diffToMermaid, formatDiffSummary } from '../../graph/diff.js';
+import { diffGraphs, diffToMermaid, formatDiffSummary, type GraphDiff } from '../../graph/diff.js';
 import { GraphStore } from '../../graph/graph-store.js';
 import type { FlowGraph } from '../../graph/types.js';
 import { loadConfig } from '../utils/config.js';
@@ -20,28 +20,6 @@ interface DiffOptions {
   depth?: number;
   theme?: string;
 }
-
-const USAGE = `Compare graph changes between git refs at the symbol level.
-
-Usage: treck diff [options]
-
-Head is always the current working directory graph. Run "treck sync" first
-to ensure graph.json is up to date.
-
-Options:
-  --base <ref>    Base git ref to compare against (default: auto-detect remote default branch)
-  --format <f>    Output format: mermaid (default), json, ascii
-  --depth <n>     Limit impact zone depth (default: full connected flow)
-  --theme <name>  ASCII theme (e.g. zinc-dark, tokyo-night, github-light)
-
-Examples:
-  treck diff
-  treck diff --base main
-  treck diff --base abc123
-  treck diff --format json
-  treck diff --format ascii
-  treck diff --depth 2
-`;
 
 /**
  * Format diff result as pretty-printed JSON.
