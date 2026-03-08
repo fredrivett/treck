@@ -1,5 +1,5 @@
-import type React from 'react';
 import type { Edge, Node } from '@xyflow/react';
+import type React from 'react';
 
 import type { FlowGraph as FlowGraphData, GraphNode } from '../../../graph/types.js';
 
@@ -110,9 +110,7 @@ export function expandConditionals(
       const prefixParts: string[] = [];
 
       for (const condition of edge.conditions) {
-        prefixParts.push(
-          [condition.branchGroup, condition.branch, condition.condition].join('::'),
-        );
+        prefixParts.push([condition.branchGroup, condition.branch, condition.condition].join('::'));
         const condNodeId = `cond::${edge.source}::${prefixParts.join('>>')}`;
 
         if (!seenNodeIds.has(condNodeId)) {

@@ -55,9 +55,7 @@ function makeGraph(): FlowGraph {
         source: 'TreeDir',
         target: 'Guides',
         type: 'conditional-call',
-        conditions: [
-          { condition: '!isCollapsed &&', branch: '&&', branchGroup: 'branch:133' },
-        ],
+        conditions: [{ condition: '!isCollapsed &&', branch: '&&', branchGroup: 'branch:133' }],
         label: '!isCollapsed &&',
         isAsync: false,
       },
@@ -82,9 +80,7 @@ function makeGraph(): FlowGraph {
         source: 'TreeDir',
         target: 'docPathToUrl',
         type: 'conditional-call',
-        conditions: [
-          { condition: '!isCollapsed &&', branch: '&&', branchGroup: 'branch:133' },
-        ],
+        conditions: [{ condition: '!isCollapsed &&', branch: '&&', branchGroup: 'branch:133' }],
         label: '!isCollapsed &&',
         isAsync: false,
       },
@@ -124,8 +120,7 @@ describe('expandConditionals', () => {
     expect(
       rfEdges.find(
         (edge) =>
-          edge.id ===
-          'cond::TreeDir::branch:133::&&::!isCollapsed &&->Guides::TreeDir->Guides',
+          edge.id === 'cond::TreeDir::branch:133::&&::!isCollapsed &&->Guides::TreeDir->Guides',
       ),
     ).toBeDefined();
     expect(
@@ -188,9 +183,7 @@ describe('expandConditionals', () => {
       label: "item.type !== 'dir'",
     });
 
-    expect(
-      rfEdges.find((edge) => edge.id === `${outerNodeId}->${dirBranchNodeId}`),
-    ).toBeDefined();
+    expect(rfEdges.find((edge) => edge.id === `${outerNodeId}->${dirBranchNodeId}`)).toBeDefined();
     expect(
       rfEdges.find((edge) => edge.id === `${outerNodeId}->${nonDirBranchNodeId}`),
     ).toBeDefined();

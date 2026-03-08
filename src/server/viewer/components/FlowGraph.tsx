@@ -447,7 +447,17 @@ function FlowGraphInner({
       setNodes(allNodes);
       setNeedsLayout(true);
     }
-  }, [rfNodes, rfEdges, renderGraph, setNodes, setEdges, layoutOptions, applyPositionsAndFit]);
+  }, [
+    rfNodes,
+    rfEdges,
+    renderGraph,
+    setNodes,
+    setEdges,
+    layoutOptions,
+    applyPositionsAndFit,
+    initialMeasureDone,
+    showConditionals,
+  ]);
 
   // Update node data (selected/dimmed) without triggering re-layout
   useEffect(() => {
@@ -493,9 +503,7 @@ function FlowGraphInner({
       edgeNodeIds.add(edge.source);
       edgeNodeIds.add(edge.target);
     }
-    const displayNodes = nodes.filter(
-      (n) => n.type !== 'conditionNode' || edgeNodeIds.has(n.id),
-    );
+    const displayNodes = nodes.filter((n) => n.type !== 'conditionNode' || edgeNodeIds.has(n.id));
 
     runElkLayout(displayNodes, visualEdgesRef.current, layoutOptions, sizeCache.current).then(
       (positions) => applyPositionsAndFit(positions, displayNodes),

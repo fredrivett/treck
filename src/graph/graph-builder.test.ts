@@ -499,7 +499,9 @@ export function route(req: any) {
       const graph = builder.build([mainFile]);
       const routeNode = graph.nodes.find((n) => n.name === 'route');
       const otherNode = graph.nodes.find((n) => n.name === 'handleOther');
-      const edge = graph.edges.find((e) => e.source === routeNode?.id && e.target === otherNode?.id);
+      const edge = graph.edges.find(
+        (e) => e.source === routeNode?.id && e.target === otherNode?.id,
+      );
 
       expect(edge?.type).toBe('conditional-call');
       expect(edge?.conditions?.map((condition) => condition.condition)).toEqual([

@@ -204,7 +204,10 @@ function ConditionNode({ data }: NodeProps) {
             'polygon(11px 0%, calc(100% - 11px) 0%, 100% 50%, calc(100% - 11px) 100%, 11px 100%, 0% 50%)',
         }}
       />
-      <div className="relative z-10 py-1.5 text-[11px] text-foreground font-medium text-center leading-tight" style={{ paddingLeft: 20, paddingRight: 20 }}>
+      <div
+        className="relative z-10 py-1.5 text-[11px] text-foreground font-medium text-center leading-tight"
+        style={{ paddingLeft: 20, paddingRight: 20 }}
+      >
         {d.label}
       </div>
       <Handle type="source" position={Position.Bottom} style={{ background: '#eab308' }} />
