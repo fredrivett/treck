@@ -143,7 +143,7 @@ function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
           <div className="space-y-6">
             {/* Theme */}
             <div>
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
+              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-muted-foreground">
                 <Palette size={13} aria-hidden />
                 Theme
               </span>
@@ -168,7 +168,7 @@ function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
 
             {/* Chat API settings */}
             <div className="space-y-3">
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
+              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-muted-foreground">
                 <MessageSquare size={13} aria-hidden />
                 Chat
               </span>

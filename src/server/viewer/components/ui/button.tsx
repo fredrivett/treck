@@ -10,6 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        inverse: 'bg-foreground text-background hover:bg-foreground/90',
         destructive: 'bg-red-600 text-white hover:bg-red-600/90',
         outline: 'border border-border bg-background hover:bg-muted',
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
@@ -36,10 +37,19 @@ interface ButtonProps extends React.ComponentProps<'button'>, VariantProps<typeo
 
 function Button({ className, variant, size, asChild = false, ...props }: ButtonProps) {
   const Comp = asChild ? Slot : 'button';
+  const isDisabled = Boolean(props.disabled);
+  const isInteractive = Boolean(
+    asChild || props.onClick || props.type === 'submit' || props.type === 'reset',
+  );
+
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size }), className)}
+      className={cn(
+        buttonVariants({ variant, size }),
+        isInteractive && !isDisabled && 'cursor-pointer',
+        className,
+      )}
       {...props}
     />
   );

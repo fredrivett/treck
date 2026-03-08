@@ -10,6 +10,7 @@
 import { useChat } from '@ai-sdk/react';
 import type { UIMessage } from 'ai';
 import { DefaultChatTransport } from 'ai';
+import { MessageSquare } from 'lucide-react';
 import { marked } from 'marked';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
@@ -238,7 +239,10 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
   // Shared inner content (used by both desktop and mobile)
   const header = (
     <div className="flex items-center justify-between">
-      <h2 className="font-semibold">Chat</h2>
+      <h2 className="inline-flex items-center gap-1.5 font-semibold">
+        <MessageSquare size={13} aria-hidden />
+        Chat
+      </h2>
       {isDesktop ? (
         <button
           type="button"
@@ -270,7 +274,7 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
               <CardDescription>Add an API key in settings to start chatting.</CardDescription>
             </CardHeader>
             <CardFooter>
-              <Button type="button" onClick={requestOpenSettingsDialog} variant="default">
+              <Button type="button" onClick={requestOpenSettingsDialog} variant="inverse">
                 Open settings
               </Button>
             </CardFooter>
