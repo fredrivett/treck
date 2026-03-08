@@ -20,7 +20,7 @@ function getNodeType(node: GraphNode): string {
   return 'functionNode';
 }
 
-export function toReactFlowNode(node: GraphNode): Node {
+export function toReactFlowNode(node: GraphNode, measuring = false): Node {
   return {
     id: node.id,
     type: getNodeType(node),
@@ -33,6 +33,7 @@ export function toReactFlowNode(node: GraphNode): Node {
       entryType: node.entryType,
       metadata: node.metadata,
       hasJsDoc: node.hasJsDoc,
+      measuring,
     },
   };
 }
@@ -91,8 +92,9 @@ function negateExpression(expr: string): string {
 export function expandConditionals(
   graphNodes: FlowGraphData['nodes'],
   graphEdges: FlowGraphData['edges'],
+  measuring = false,
 ): { rfNodes: Node[]; rfEdges: Edge[] } {
-  const rfNodes: Node[] = graphNodes.map(toReactFlowNode);
+  const rfNodes: Node[] = graphNodes.map((node) => toReactFlowNode(node, measuring));
   const rfEdges: Edge[] = [];
   const seenNodeIds = new Set(rfNodes.map((node) => node.id));
   const seenEdgeIds = new Set<string>();

@@ -8,7 +8,7 @@
  */
 
 import { AnimatePresence, motion } from 'motion/react';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Route, Routes, useLocation, useSearchParams } from 'react-router';
 import { buildIndexResponse, buildSymbolIndexFromGraph } from '../../../graph/symbol-index.js';
 import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
@@ -20,6 +20,8 @@ import { FlowGraph, getNodeCategory, type NodeCategory } from './FlowGraph';
 import { type GraphExplorerContextValue, GraphExplorerProvider } from './GraphExplorerContext';
 import { LoadingSpinner } from './LoadingSpinner';
 import { Sidebar } from './Sidebar';
+import { Button, buttonVariants } from './ui/button';
+import { Kbd } from './ui/kbd';
 import { ViewNav } from './ViewNav';
 
 interface GraphExplorerProps {
@@ -47,6 +49,25 @@ export function GraphExplorer({
   const [isOffCenter, setIsOffCenter] = useState(false);
   const recenterRef = useRef<(() => void) | null>(null);
   const isGraphView = location.pathname === '/';
+
+  // Global keyboard shortcuts (Cmd/Ctrl prefixed so they work in inputs too)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const mod = e.metaKey || e.ctrlKey;
+      if (!mod) return;
+
+      if (e.key === '/' && isGraphView) {
+        e.preventDefault();
+        setChatOpen((prev) => !prev);
+      }
+      if (e.key === '.' && isGraphView && isOffCenter) {
+        e.preventDefault();
+        recenterRef.current?.();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isGraphView, isOffCenter]);
 
   const onLayoutReady = useCallback(() => {
     setLayoutReady(true);
@@ -248,11 +269,12 @@ export function GraphExplorer({
         </Routes>
         {isGraphView && (
           <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 items-end">
-            <button
-              type="button"
+            <Button
+              variant="subtle"
+              size="sm"
               onClick={() => setChatOpen(!chatOpen)}
-              className="flex items-center gap-1.5 rounded-md border border-border bg-background/90 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted shadow-sm"
               title={chatOpen ? 'Close AI chat' : 'Open AI chat'}
+              className="gap-1.5"
             >
               <svg
                 width="14"
@@ -268,14 +290,19 @@ export function GraphExplorer({
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
               Chat
-            </button>
+              <Kbd mod>/</Kbd>
+            </Button>
             <AnimatePresence>
               {isOffCenter && (
                 <motion.button
                   key="recenter"
                   type="button"
                   onClick={() => recenterRef.current?.()}
-                  className="flex items-center gap-1.5 rounded-md border border-border bg-background/90 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted shadow-sm"
+                  className={buttonVariants({
+                    variant: 'subtle',
+                    size: 'sm',
+                    className: 'gap-1.5 cursor-pointer',
+                  })}
                   title="Recenter view on nodes"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -296,6 +323,7 @@ export function GraphExplorer({
                     <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
                   </svg>
                   Recenter
+                  <Kbd mod>.</Kbd>
                 </motion.button>
               )}
             </AnimatePresence>

@@ -123,5 +123,6 @@ export function storeThemePreference(preference: ThemePreference): void {
 export type UseThemePreferenceReturn = {
   mounted: boolean;
   preference: ThemePreference;
+  setPreference: (preference: ThemePreference) => void;
   toggle: () => void;
 };

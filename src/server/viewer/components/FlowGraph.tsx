@@ -24,6 +24,7 @@ import { edgeStyleByType, expandConditionals, toReactFlowNode } from './conditio
 import { DocPanel } from './DocPanel';
 import { defaultLayoutOptions, type LayoutOptions, LayoutSettings } from './LayoutSettings';
 import { nodeTypes } from './NodeTypes';
+import { Kbd } from './ui/kbd';
 
 const elk = new ELK();
 
@@ -188,6 +189,7 @@ function FlowGraphInner({
   const [needsLayout, setNeedsLayout] = useState(false);
   const { fitView, getViewport } = useReactFlow();
   const fittedViewportRef = useRef<{ x: number; y: number; zoom: number } | null>(null);
+  const lastContainerSizeRef = useRef<{ width: number; height: number } | null>(null);
   const nodesInitialized = useNodesInitialized();
   const currentNodesRef = useRef<Node[]>([]);
   const visibleGraphRef = useRef<FlowGraphData | null>(null);
@@ -284,10 +286,9 @@ function FlowGraphInner({
   /** Recenter the viewport on the current nodes. */
   const recenter = useCallback(() => {
     const currentNodes = currentNodesRef.current;
-    void fitView({ padding: 0.15, nodes: currentNodes });
-    onOffCenterChange?.(false);
-    requestAnimationFrame(() => {
+    void fitView({ padding: 0.15, duration: 250, nodes: currentNodes }).then(() => {
       fittedViewportRef.current = getViewport();
+      onOffCenterChange?.(false);
     });
   }, [fitView, getViewport, onOffCenterChange]);
 
@@ -297,6 +298,28 @@ function FlowGraphInner({
       recenterRef.current = recenter;
     }
   }, [recenter, recenterRef]);
+
+  // Show recenter when the React Flow panel size changes after initial mount.
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      const width = entry.contentRect.width;
+      const height = entry.contentRect.height;
+      const prev = lastContainerSizeRef.current;
+      lastContainerSizeRef.current = { width, height };
+
+      if (!prev) return;
+      if (Math.abs(width - prev.width) < 1 && Math.abs(height - prev.height) < 1) return;
+      if (!fittedViewportRef.current) return;
+
+      onOffCenterChange?.(true);
+    });
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [onOffCenterChange]);
 
   /** Detect when the user pans or zooms away from the fitted viewport. */
   const handleMoveEnd = useCallback(() => {
@@ -421,6 +444,13 @@ function FlowGraphInner({
     visualEdgesRef.current = rfEdges;
     setEdges(rfEdges);
 
+    let measuringNodes = rfNodes;
+    if (!initialMeasureDone) {
+      measuringNodes = showConditionals
+        ? expandConditionals(renderGraph.nodes, renderGraph.edges, true).rfNodes
+        : renderGraph.nodes.map((node) => toReactFlowNode(node, true));
+    }
+
     // During the initial measurement pass, also expand conditionals so their
     // nodes get measured and cached — but only for sizing, not for display.
     let extraCondNodes: Node[] = [];
@@ -429,13 +459,13 @@ function FlowGraphInner({
         (e) => e.type === 'conditional-call' && e.conditions?.length,
       );
       if (hasConditionals) {
-        const expanded = expandConditionals(renderGraph.nodes, renderGraph.edges);
-        const existingIds = new Set(rfNodes.map((n) => n.id));
+        const expanded = expandConditionals(renderGraph.nodes, renderGraph.edges, true);
+        const existingIds = new Set(measuringNodes.map((node) => node.id));
         extraCondNodes = expanded.rfNodes.filter((n) => !existingIds.has(n.id));
       }
     }
 
-    const allNodes = [...rfNodes, ...extraCondNodes];
+    const allNodes = [...measuringNodes, ...extraCondNodes];
     const allCached = allNodes.every((n) => sizeCache.current.has(n.id));
     if (allCached && rfNodes.length > 0) {
       // Fast path: compute positions before rendering so nodes never appear at origin
@@ -443,7 +473,7 @@ function FlowGraphInner({
         applyPositionsAndFit(positions, rfNodes),
       );
     } else {
-      // Slow path: render at origin so React Flow can measure, then layout in Pass 2
+      // Slow path: render at origin so React Flow can measure with file paths hidden.
       setNodes(allNodes);
       setNeedsLayout(true);
     }
@@ -497,13 +527,19 @@ function FlowGraphInner({
     if (!initialMeasureDone) setInitialMeasureDone(true);
 
     // Strip out measurement-only condition nodes that aren't part of the
-    // current visual edges (added only to cache their sizes).
+    // current visual edges (added only to cache their sizes), and restore
+    // file-path rendering once measurement is complete.
     const edgeNodeIds = new Set<string>();
     for (const edge of visualEdgesRef.current) {
       edgeNodeIds.add(edge.source);
       edgeNodeIds.add(edge.target);
     }
-    const displayNodes = nodes.filter((n) => n.type !== 'conditionNode' || edgeNodeIds.has(n.id));
+    const displayNodes = nodes
+      .map((node) => ({
+        ...node,
+        data: { ...node.data, measuring: false },
+      }))
+      .filter((node) => node.type !== 'conditionNode' || edgeNodeIds.has(node.id));
 
     runElkLayout(displayNodes, visualEdgesRef.current, layoutOptions, sizeCache.current).then(
       (positions) => applyPositionsAndFit(positions, displayNodes),
@@ -552,13 +588,20 @@ function FlowGraphInner({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
       if (e.key === 'Escape') {
         clearSelection();
+      }
+      if (e.key === 'f' && selectedEntries.size > 0) {
+        e.preventDefault();
+        setFocusedEntries(new Set(selectedEntries));
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [clearSelection]);
+  }, [clearSelection, selectedEntries]);
 
   return (
     <div ref={containerRef} className="w-full h-full relative">
@@ -571,17 +614,17 @@ function FlowGraphInner({
             <button
               type="button"
               onClick={() => setFocusedEntries(new Set(selectedEntries))}
-              className="text-blue-600 hover:text-blue-800 font-medium"
+              className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center gap-1"
             >
-              Focus
+              Focus <Kbd>F</Kbd>
             </button>
           )}
           <button
             type="button"
             onClick={clearSelection}
-            className="text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
           >
-            Clear
+            Clear <Kbd>Esc</Kbd>
           </button>
         </div>
       )}

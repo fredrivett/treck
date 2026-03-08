@@ -35,14 +35,20 @@ export function useThemePreference(): UseThemePreferenceReturn {
     applyThemePreference(initialPreference);
   }, [mounted]);
 
+  const setThemePreference = useCallback(
+    (next: ThemePreference) => {
+      if (!mounted) return;
+      setPreference(next);
+      applyThemePreference(next);
+      storeThemePreference(next);
+    },
+    [mounted],
+  );
+
   const toggle = useCallback(() => {
-    if (!mounted) return;
-
     const next = getNextTheme(preference);
-    setPreference(next);
-    applyThemePreference(next);
-    storeThemePreference(next);
-  }, [mounted, preference]);
+    setThemePreference(next);
+  }, [preference, setThemePreference]);
 
-  return { mounted, preference, toggle };
+  return { mounted, preference, setPreference: setThemePreference, toggle };
 }

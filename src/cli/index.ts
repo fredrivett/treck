@@ -10,9 +10,11 @@ const cli = cac('treck');
 cli.version(version).help();
 
 import { registerCheckCommand } from './commands/check.js';
+import { registerDiffCommand } from './commands/diff.js';
 // Register commands
 import { registerInitCommand } from './commands/init.js';
 import { registerJsDocCommand } from './commands/jsdoc.js';
+import { registerMcpCommand } from './commands/mcp.js';
 import { registerServeCommand } from './commands/serve.js';
 import { registerShowCommand } from './commands/show.js';
 import { registerSyncCommand } from './commands/sync.js';
@@ -20,9 +22,11 @@ import { registerSyncCommand } from './commands/sync.js';
 registerInitCommand(cli);
 registerSyncCommand(cli);
 registerCheckCommand(cli);
+registerDiffCommand(cli);
 registerJsDocCommand(cli);
 registerServeCommand(cli);
 registerShowCommand(cli);
+registerMcpCommand(cli);
 
 /** Parsed CLI arguments and options. */
 const parsed = cli.parse();

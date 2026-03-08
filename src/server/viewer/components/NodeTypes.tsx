@@ -1,5 +1,38 @@
 import { Handle, type NodeProps, Position } from '@xyflow/react';
 import { Badge, type BadgeVariant, variantLabels } from './ui/badge';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
+
+/** Max width (px) for all graph node shapes — used by ELK layout cap. */
+export const NODE_MAX_WIDTH = 160;
+
+/**
+ * Display a file path, truncating from the start when it overflows.
+ *
+ * During measurement, renders as a non-breaking space so the path
+ * contributes height but not width to the node sizing.
+ * Shows the full path in a native tooltip on hover.
+ *
+ * @param path - The full file path to display
+ * @param measuring - Whether the node is being measured for layout
+ */
+function FilePath({ path, measuring }: { path: string; measuring?: boolean }) {
+  if (measuring) {
+    return <div className="text-[10px] text-muted-foreground mt-0.5">{'\u00A0'}</div>;
+  }
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div
+          className="text-[10px] text-muted-foreground mt-0.5 truncate"
+          style={{ direction: 'rtl', textAlign: 'left' }}
+        >
+          {path}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>{path}</TooltipContent>
+    </Tooltip>
+  );
+}
 
 interface NodeData {
   label: string;
@@ -16,9 +49,11 @@ interface NodeData {
   dimmed?: boolean;
   selected?: boolean;
   hasJsDoc?: boolean;
+  measuring?: boolean;
 }
 
-const BASE_NODE_CLASSES = 'h-full flex flex-col justify-center transition-all duration-200';
+const BASE_NODE_CLASSES =
+  'h-full flex flex-col justify-center transition-all duration-200 overflow-hidden';
 
 function nodeClass(d: NodeData, ...classes: string[]) {
   return `${BASE_NODE_CLASSES} ${d.isAsync ? 'border-dashed' : ''} ${d.dimmed ? 'opacity-50' : ''} ${classes.join(' ')}`;
@@ -101,7 +136,7 @@ function EntryPointNode({ data }: NodeProps) {
     <div
       className={nodeClass(
         d,
-        `border-2 ${config.border} rounded-xl px-3.5 py-2.5 min-w-[160px] ${config.bg} shadow-md`,
+        `border-2 ${config.border} rounded-xl px-3.5 py-2.5 ${config.bg} shadow-md`,
         d.selected ? `ring-2 ${config.ring}` : '',
       )}
     >
@@ -123,7 +158,7 @@ function EntryPointNode({ data }: NodeProps) {
           {route || eventTrigger || taskId}
         </div>
       )}
-      <div className="text-[10px] text-muted-foreground mt-0.5">{d.filePath}</div>
+      <FilePath path={d.filePath} measuring={d.measuring} />
       <Handle type="source" position={Position.Bottom} style={{ background: config.handle }} />
     </div>
   );
@@ -136,7 +171,7 @@ function ComponentNode({ data }: NodeProps) {
     <div
       className={nodeClass(
         d,
-        'border-[1.5px] rounded-[10px] px-3 py-2 min-w-[140px] border-orange-600 bg-orange-50 dark:bg-orange-900/20 shadow',
+        'border-[1.5px] rounded-[10px] px-3 py-2 border-orange-600 bg-orange-50 dark:bg-orange-900/20 shadow',
         d.selected ? 'ring-2 ring-orange-500/25' : '',
       )}
     >
@@ -147,7 +182,7 @@ function ComponentNode({ data }: NodeProps) {
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
-      <div className="text-[10px] text-muted-foreground mt-0.5">{d.filePath}</div>
+      <FilePath path={d.filePath} measuring={d.measuring} />
       <Handle type="source" position={Position.Bottom} style={{ background: '#f97316' }} />
     </div>
   );
@@ -160,7 +195,7 @@ function HookNode({ data }: NodeProps) {
     <div
       className={nodeClass(
         d,
-        'border-[1.5px] rounded-[10px] px-3 py-2 min-w-[140px] border-lime-600 bg-lime-50 dark:bg-lime-950 shadow',
+        'border-[1.5px] rounded-[10px] px-3 py-2 border-lime-600 bg-lime-50 dark:bg-lime-950 shadow',
         d.selected ? 'ring-2 ring-lime-500/25' : '',
       )}
     >
@@ -171,7 +206,7 @@ function HookNode({ data }: NodeProps) {
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
-      <div className="text-[10px] text-muted-foreground mt-0.5">{d.filePath}</div>
+      <FilePath path={d.filePath} measuring={d.measuring} />
       <Handle type="source" position={Position.Bottom} style={{ background: '#84cc16' }} />
     </div>
   );
@@ -222,7 +257,7 @@ function FunctionNode({ data }: NodeProps) {
     <div
       className={nodeClass(
         d,
-        'border rounded-lg px-3 py-2 min-w-[120px] border-blue-500 bg-blue-50 dark:bg-blue-950 shadow',
+        'border rounded-lg px-3 py-2 border-blue-500 bg-blue-50 dark:bg-blue-950 shadow',
         d.selected ? 'ring-2 ring-blue-500/25' : '',
       )}
     >
@@ -233,7 +268,7 @@ function FunctionNode({ data }: NodeProps) {
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
-      <div className="text-[10px] text-muted-foreground mt-0.5">{d.filePath}</div>
+      <FilePath path={d.filePath} measuring={d.measuring} />
       <Handle type="source" position={Position.Bottom} style={{ background: '#9ca3af' }} />
     </div>
   );
