@@ -5,7 +5,11 @@ export function Kbd({
   children,
   mod,
   variant = 'default',
-}: { children: React.ReactNode; mod?: boolean; variant?: 'default' | 'inverse' }) {
+}: {
+  children: React.ReactNode;
+  mod?: boolean;
+  variant?: 'default' | 'inverse';
+}) {
   const styles =
     variant === 'inverse'
       ? 'border-transparent bg-background/20 text-background/70'

@@ -439,9 +439,7 @@ describe('chat-store', () => {
     });
 
     it('preserves unicode characters', () => {
-      expect(deriveTitle('How does the 日本語 API work?')).toBe(
-        'How does the 日本語 API work?',
-      );
+      expect(deriveTitle('How does the 日本語 API work?')).toBe('How does the 日本語 API work?');
     });
 
     it('truncates unicode correctly at character boundary', () => {
