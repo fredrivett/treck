@@ -17,6 +17,7 @@ import { ActiveChat } from './ActiveChat';
 import { ChatList } from './ChatList';
 import { Button } from './ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
+import { Kbd } from './ui/kbd';
 import {
   Drawer,
   DrawerBody,
@@ -244,7 +245,7 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
             </CardHeader>
             <CardFooter>
               <Button type="button" onClick={requestOpenSettingsDialog} variant="inverse">
-                Open settings
+                Open settings <Kbd mod variant="inverse">,</Kbd>
               </Button>
             </CardFooter>
           </Card>
