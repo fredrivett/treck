@@ -212,6 +212,44 @@ function HookNode({ data }: NodeProps) {
   );
 }
 
+/** Angled-corner condition node (hexagonal shape via CSS clip-path on a background layer). */
+function ConditionNode({ data }: NodeProps) {
+  const d = data as unknown as NodeData;
+
+  return (
+    <div
+      className={`relative ${d.dimmed ? 'opacity-50' : ''} transition-all duration-200`}
+      style={{ minWidth: 80, maxWidth: 300 }}
+    >
+      <Handle type="target" position={Position.Top} style={{ background: '#eab308' }} />
+      {/* Outer shape (border) */}
+      <div
+        className="absolute inset-0 bg-yellow-500"
+        style={{
+          clipPath:
+            'polygon(12px 0%, calc(100% - 12px) 0%, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0% 50%)',
+        }}
+      />
+      {/* Inner shape (fill) inset by 2px for border effect */}
+      <div
+        className="absolute bg-yellow-50 dark:bg-yellow-950/80"
+        style={{
+          inset: 2,
+          clipPath:
+            'polygon(11px 0%, calc(100% - 11px) 0%, 100% 50%, calc(100% - 11px) 100%, 11px 100%, 0% 50%)',
+        }}
+      />
+      <div
+        className="relative z-10 py-1.5 text-[11px] text-foreground font-medium text-center leading-tight"
+        style={{ paddingLeft: 20, paddingRight: 20 }}
+      >
+        {d.label}
+      </div>
+      <Handle type="source" position={Position.Bottom} style={{ background: '#eab308' }} />
+    </div>
+  );
+}
+
 function FunctionNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
 
@@ -241,4 +279,5 @@ export const nodeTypes = {
   componentNode: ComponentNode,
   hookNode: HookNode,
   functionNode: FunctionNode,
+  conditionNode: ConditionNode,
 };

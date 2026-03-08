@@ -18,31 +18,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import '@xyflow/react/dist/style.css';
 
-import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
+import type { FlowGraph as FlowGraphData, GraphNode } from '../../../graph/types.js';
 import { GRID_SIZE, snapCeil } from '../grid';
+import { edgeStyleByType, expandConditionals, toReactFlowNode } from './condition-expansion';
 import { DocPanel } from './DocPanel';
 import { defaultLayoutOptions, type LayoutOptions, LayoutSettings } from './LayoutSettings';
 import { nodeTypes } from './NodeTypes';
 import { Kbd } from './ui/kbd';
 
 const elk = new ELK();
-
-const edgeStyleByType: Record<string, React.CSSProperties> = {
-  'direct-call': { stroke: '#6b7280' },
-  'async-dispatch': { stroke: '#ec4899' },
-  'event-emit': { stroke: '#ec4899', strokeDasharray: '4 4' },
-  'http-request': { stroke: '#f97316', strokeDasharray: '8 4' },
-  'conditional-call': { stroke: '#f59e0b' },
-  'error-handler': { stroke: '#ef4444' },
-  'middleware-chain': { stroke: '#06b6d4', strokeDasharray: '4 2' },
-};
-
-function getNodeType(node: GraphNode): string {
-  if (node.entryType) return 'entryPoint';
-  if (node.kind === 'component') return 'componentNode';
-  if (node.kind === 'function' && /^use[A-Z]/.test(node.name)) return 'hookNode';
-  return 'functionNode';
-}
 
 export type NodeCategory = string;
 
@@ -73,24 +57,6 @@ export function getCategoryLabel(category: NodeCategory): string {
   return entryTypeCategoryLabels[category] || nonEntryCategoryLabels[category] || category;
 }
 
-function toReactFlowNode(node: GraphNode, measuring: boolean): Node {
-  return {
-    id: node.id,
-    type: getNodeType(node),
-    position: { x: 0, y: 0 },
-    data: {
-      label: node.name,
-      kind: node.kind,
-      filePath: node.filePath,
-      isAsync: node.isAsync,
-      entryType: node.entryType,
-      metadata: node.metadata,
-      hasJsDoc: node.hasJsDoc,
-      measuring,
-    },
-  };
-}
-
 function toReactFlowEdges(graphEdges: FlowGraphData['edges'], showConditionals: boolean): Edge[] {
   return graphEdges.map((edge) => {
     // When conditionals are hidden, render conditional-call edges as direct-call style
@@ -119,9 +85,16 @@ function toReactFlowEdges(graphEdges: FlowGraphData['edges'], showConditionals: 
 
 type SizeCache = Map<string, { width: number; height: number }>;
 
+/** Minimal edge shape needed for ELK layout. */
+interface LayoutEdge {
+  id: string;
+  source: string;
+  target: string;
+}
+
 async function runElkLayout(
   currentNodes: Node[],
-  graphEdges: FlowGraphData['edges'],
+  edges: LayoutEdge[],
   layoutOptions: LayoutOptions,
   sizeCache?: SizeCache,
 ): Promise<Map<string, { x: number; y: number }>> {
@@ -136,7 +109,7 @@ async function runElkLayout(
         height: snapCeil(cached?.height || node.measured?.height || 60),
       };
     }),
-    edges: graphEdges.map((edge) => ({
+    edges: edges.map((edge) => ({
       id: edge.id,
       sources: [edge.source],
       targets: [edge.target],
@@ -218,7 +191,9 @@ function FlowGraphInner({
   const fittedViewportRef = useRef<{ x: number; y: number; zoom: number } | null>(null);
   const lastContainerSizeRef = useRef<{ width: number; height: number } | null>(null);
   const nodesInitialized = useNodesInitialized();
+  const currentNodesRef = useRef<Node[]>([]);
   const visibleGraphRef = useRef<FlowGraphData | null>(null);
+  const visualEdgesRef = useRef<Edge[]>([]);
   const sizeCache = useRef<SizeCache>(new Map());
   const [initialMeasureDone, setInitialMeasureDone] = useState(false);
 
@@ -269,6 +244,10 @@ function FlowGraphInner({
     if (focusedChanged) setFocusedEntries(urlFocused);
   }, [searchParams]);
 
+  useEffect(() => {
+    currentNodesRef.current = nodes;
+  }, [nodes]);
+
   // Shared helper: apply ELK positions to nodes and fit the view
   const applyPositionsAndFit = useCallback(
     (positions: Map<string, { x: number; y: number }>, initialNodes?: Node[]) => {
@@ -288,14 +267,13 @@ function FlowGraphInner({
           data: { ...node.data, selected: isSelected, dimmed },
         };
       };
-      if (initialNodes) {
-        setNodes(initialNodes.map(apply));
-      } else {
-        setNodes((prev) => prev.map(apply));
-      }
+
+      const nextNodes = (initialNodes ?? currentNodesRef.current).map(apply);
+      currentNodesRef.current = nextNodes;
+      setNodes(nextNodes);
+
       requestAnimationFrame(() => {
-        fitView({ padding: 0.15 });
-        requestAnimationFrame(() => {
+        void fitView({ padding: 0.15, nodes: nextNodes }).then(() => {
           fittedViewportRef.current = getViewport();
           onOffCenterChange?.(false);
           onLayoutReady?.();
@@ -307,7 +285,8 @@ function FlowGraphInner({
 
   /** Recenter the viewport on the current nodes. */
   const recenter = useCallback(() => {
-    void fitView({ padding: 0.15, duration: 250 }).then(() => {
+    const currentNodes = currentNodesRef.current;
+    void fitView({ padding: 0.15, duration: 250, nodes: currentNodes }).then(() => {
       fittedViewportRef.current = getViewport();
       onOffCenterChange?.(false);
     });
@@ -444,25 +423,71 @@ function FlowGraphInner({
   // First render: measure ALL nodes (behind loading screen). After: render filtered view.
   const renderGraph = initialMeasureDone ? focusFilteredGraph : graph;
 
-  // When renderGraph changes: use cached sizes for instant layout, or fall back to two-pass measurement
+  // Derive ReactFlow nodes and edges from the render graph + conditionals toggle.
+  // This memo ensures toggling conditionals produces a new reference, following
+  // the same pattern as the focus/filter pipeline above.
+  const { rfNodes, rfEdges } = useMemo(() => {
+    if (showConditionals) {
+      const expanded = expandConditionals(renderGraph.nodes, renderGraph.edges);
+      return { rfNodes: expanded.rfNodes, rfEdges: expanded.rfEdges };
+    }
+    return {
+      rfNodes: renderGraph.nodes.map((n) => toReactFlowNode(n)),
+      rfEdges: toReactFlowEdges(renderGraph.edges, false),
+    };
+  }, [renderGraph, showConditionals]);
+
+  // When the derived nodes/edges change: use cached sizes for instant layout,
+  // or fall back to two-pass measurement.
   useEffect(() => {
     visibleGraphRef.current = renderGraph;
-    setEdges(toReactFlowEdges(renderGraph.edges, showConditionals));
+    visualEdgesRef.current = rfEdges;
+    setEdges(rfEdges);
 
-    const allCached = renderGraph.nodes.every((n) => sizeCache.current.has(n.id));
-    if (allCached && renderGraph.nodes.length > 0) {
+    let measuringNodes = rfNodes;
+    if (!initialMeasureDone) {
+      measuringNodes = showConditionals
+        ? expandConditionals(renderGraph.nodes, renderGraph.edges, true).rfNodes
+        : renderGraph.nodes.map((node) => toReactFlowNode(node, true));
+    }
+
+    // During the initial measurement pass, also expand conditionals so their
+    // nodes get measured and cached — but only for sizing, not for display.
+    let extraCondNodes: Node[] = [];
+    if (!initialMeasureDone && !showConditionals) {
+      const hasConditionals = renderGraph.edges.some(
+        (e) => e.type === 'conditional-call' && e.conditions?.length,
+      );
+      if (hasConditionals) {
+        const expanded = expandConditionals(renderGraph.nodes, renderGraph.edges, true);
+        const existingIds = new Set(measuringNodes.map((node) => node.id));
+        extraCondNodes = expanded.rfNodes.filter((n) => !existingIds.has(n.id));
+      }
+    }
+
+    const allNodes = [...measuringNodes, ...extraCondNodes];
+    const allCached = allNodes.every((n) => sizeCache.current.has(n.id));
+    if (allCached && rfNodes.length > 0) {
       // Fast path: compute positions before rendering so nodes never appear at origin
-      const rfNodes = renderGraph.nodes.map((n) => toReactFlowNode(n, false));
-      runElkLayout(rfNodes, renderGraph.edges, layoutOptions, sizeCache.current).then((positions) =>
+      runElkLayout(rfNodes, rfEdges, layoutOptions, sizeCache.current).then((positions) =>
         applyPositionsAndFit(positions, rfNodes),
       );
     } else {
-      // Slow path: hide file paths during measurement so they don't inflate width
-      const rfNodes = renderGraph.nodes.map((n) => toReactFlowNode(n, true));
-      setNodes(rfNodes);
+      // Slow path: render at origin so React Flow can measure with file paths hidden.
+      setNodes(allNodes);
       setNeedsLayout(true);
     }
-  }, [renderGraph, setNodes, setEdges, layoutOptions, applyPositionsAndFit, showConditionals]);
+  }, [
+    rfNodes,
+    rfEdges,
+    renderGraph,
+    setNodes,
+    setEdges,
+    layoutOptions,
+    applyPositionsAndFit,
+    initialMeasureDone,
+    showConditionals,
+  ]);
 
   // Update node data (selected/dimmed) without triggering re-layout
   useEffect(() => {
@@ -470,7 +495,11 @@ function FlowGraphInner({
     setNodes((prev) =>
       prev.map((node) => {
         const isSelected = selectedEntries.has(node.id);
-        const dimmed = hasActive ? !(isSelected || focusedEntries.has(node.id)) : false;
+        // Condition nodes are never dimmed — they only exist between visible nodes
+        const isCondition = node.type === 'conditionNode';
+        const dimmed = hasActive
+          ? !(isSelected || focusedEntries.has(node.id) || isCondition)
+          : false;
         return {
           ...node,
           data: { ...node.data, selected: isSelected, dimmed },
@@ -497,17 +526,23 @@ function FlowGraphInner({
 
     if (!initialMeasureDone) setInitialMeasureDone(true);
 
-    // Show file paths now that measurement is done
-    setNodes((prev) =>
-      prev.map((node) => ({
+    // Strip out measurement-only condition nodes that aren't part of the
+    // current visual edges (added only to cache their sizes), and restore
+    // file-path rendering once measurement is complete.
+    const edgeNodeIds = new Set<string>();
+    for (const edge of visualEdgesRef.current) {
+      edgeNodeIds.add(edge.source);
+      edgeNodeIds.add(edge.target);
+    }
+    const displayNodes = nodes
+      .map((node) => ({
         ...node,
         data: { ...node.data, measuring: false },
-      })),
-    );
+      }))
+      .filter((node) => node.type !== 'conditionNode' || edgeNodeIds.has(node.id));
 
-    const currentGraph = visibleGraphRef.current;
-    runElkLayout(nodes, currentGraph.edges, layoutOptions, sizeCache.current).then((positions) =>
-      applyPositionsAndFit(positions),
+    runElkLayout(displayNodes, visualEdgesRef.current, layoutOptions, sizeCache.current).then(
+      (positions) => applyPositionsAndFit(positions, displayNodes),
     );
   }, [needsLayout, nodesInitialized, nodes, layoutOptions, applyPositionsAndFit]);
 
@@ -515,7 +550,7 @@ function FlowGraphInner({
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally only re-run on layoutOptions change
   useEffect(() => {
     if (!visibleGraphRef.current || needsLayout) return;
-    runElkLayout(nodes, visibleGraphRef.current.edges, layoutOptions, sizeCache.current).then(
+    runElkLayout(nodes, visualEdgesRef.current, layoutOptions, sizeCache.current).then(
       (positions) => applyPositionsAndFit(positions),
     );
   }, [layoutOptions]);

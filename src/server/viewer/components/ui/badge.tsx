@@ -25,6 +25,7 @@ type BadgeVariant =
   | 'hook'
   | 'async'
   | 'no-jsdoc'
+  | 'condition'
   | 'default';
 
 const badgeVariants = cva(
@@ -55,6 +56,8 @@ const badgeVariants = cva(
         async: 'border-transparent bg-muted text-muted-foreground',
         'no-jsdoc':
           'border-transparent bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-300',
+        condition:
+          'border-transparent bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
         default: 'border-transparent bg-muted text-muted-foreground',
       },
     },
@@ -82,6 +85,7 @@ const variantLabels: Record<BadgeVariant, string> = {
   hook: 'Hook',
   async: 'async',
   'no-jsdoc': 'no jsdoc',
+  condition: 'Condition',
   default: '',
 };
 

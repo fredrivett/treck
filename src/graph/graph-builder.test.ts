@@ -314,7 +314,7 @@ export function handle(req: any) {
       expect(edges[0].conditions).toBeUndefined();
     });
 
-    it('should merge labels when same target is called under two different conditions', () => {
+    it('should preserve separate conditional edges when same target is called under two different conditions', () => {
       const mainFile = join(TEST_DIR, 'main.ts');
       writeFileSync(
         mainFile,
@@ -337,13 +337,20 @@ export function handle(req: any) {
         (e) => e.source === handleNode?.id && e.target === saveNode?.id,
       );
 
-      expect(edges).toHaveLength(1);
-      expect(edges[0].type).toBe('conditional-call');
-      expect(edges[0].label).toMatch(/or/);
-      expect(edges[0].conditions).toBeUndefined();
+      expect(edges).toHaveLength(2);
+      for (const edge of edges) {
+        expect(edge.type).toBe('conditional-call');
+        expect(edge.conditions).toHaveLength(1);
+      }
+      expect(edges.map((edge) => edge.id)).toEqual(
+        expect.arrayContaining([
+          `${handleNode?.id}->${saveNode?.id}`,
+          `${handleNode?.id}->${saveNode?.id}::1`,
+        ]),
+      );
     });
 
-    it('should merge labels across three or more different conditions', () => {
+    it('should preserve separate conditional edges across three or more different conditions', () => {
       const mainFile = join(TEST_DIR, 'main.ts');
       writeFileSync(
         mainFile,
@@ -369,10 +376,239 @@ export function handle(req: any) {
         (e) => e.source === handleNode?.id && e.target === saveNode?.id,
       );
 
+      expect(edges).toHaveLength(3);
+      for (const edge of edges) {
+        expect(edge.type).toBe('conditional-call');
+        expect(edge.conditions).toHaveLength(1);
+      }
+      expect(edges.map((edge) => edge.id)).toEqual(
+        expect.arrayContaining([
+          `${handleNode?.id}->${saveNode?.id}`,
+          `${handleNode?.id}->${saveNode?.id}::1`,
+          `${handleNode?.id}->${saveNode?.id}::2`,
+        ]),
+      );
+    });
+
+    it('should preserve separate conditional edges for repeated JSX targets in different guards', () => {
+      const mainFile = join(TEST_DIR, 'main.tsx');
+      writeFileSync(
+        mainFile,
+        `export function Guides() { return <div /> }
+export function TreeDir({
+  depth,
+  isCollapsed,
+  items,
+}: {
+  depth: number;
+  isCollapsed: boolean;
+  items: Array<{ type: 'dir' | 'sym'; items?: unknown[] }>;
+}) {
+  return (
+    <div>
+      {depth > 0 && <Guides />}
+      {!isCollapsed && (
+        <div>
+          {items.map((item, index) => {
+            if (item.type === 'dir') {
+              return (
+                <TreeDir
+                  key={index}
+                  depth={depth + 1}
+                  isCollapsed={isCollapsed}
+                  items={item.items ?? []}
+                />
+              )
+            }
+            return <Guides key={index} />
+          })}
+        </div>
+      )}
+    </div>
+  )
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const treeDirNode = graph.nodes.find((n) => n.name === 'TreeDir');
+      const guidesNode = graph.nodes.find((n) => n.name === 'Guides');
+
+      const edges = graph.edges.filter(
+        (e) => e.source === treeDirNode?.id && e.target === guidesNode?.id,
+      );
+
+      expect(edges).toHaveLength(2);
+      expect(edges.every((edge) => edge.type === 'conditional-call')).toBe(true);
+      expect(edges.map((edge) => edge.conditions?.map((condition) => condition.condition))).toEqual(
+        expect.arrayContaining([
+          ['depth > 0 &&'],
+          ['!isCollapsed &&', "else (item.type === 'dir')"],
+        ]),
+      );
+    });
+
+    it('should preserve accumulated implicit else conditions after stacked early returns', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function reject() { return false }
+export function serveFromCache() { return true }
+export function fulfill() { return true }
+export function handle(req: any) {
+  if (req.invalid) {
+    return reject()
+  }
+  if (req.cached) {
+    return serveFromCache()
+  }
+  fulfill()
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const handleNode = graph.nodes.find((n) => n.name === 'handle');
+      const fulfillNode = graph.nodes.find((n) => n.name === 'fulfill');
+      const edge = graph.edges.find(
+        (e) => e.source === handleNode?.id && e.target === fulfillNode?.id,
+      );
+
+      expect(edge?.type).toBe('conditional-call');
+      expect(edge?.conditions?.map((condition) => condition.condition)).toEqual([
+        'else (req.invalid)',
+        'else (req.cached)',
+      ]);
+    });
+
+    it('should preserve accumulated implicit else conditions after an else-if return chain', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function handleGet() { return true }
+export function handlePost() { return true }
+export function handleOther() { return true }
+export function route(req: any) {
+  if (req.method === 'GET') {
+    return handleGet()
+  } else if (req.method === 'POST') {
+    return handlePost()
+  }
+  handleOther()
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const routeNode = graph.nodes.find((n) => n.name === 'route');
+      const otherNode = graph.nodes.find((n) => n.name === 'handleOther');
+      const edge = graph.edges.find(
+        (e) => e.source === routeNode?.id && e.target === otherNode?.id,
+      );
+
+      expect(edge?.type).toBe('conditional-call');
+      expect(edge?.conditions?.map((condition) => condition.condition)).toEqual([
+        "else (req.method === 'GET')",
+        "else (req.method === 'POST')",
+      ]);
+    });
+
+    it('should preserve switch-branch conditions for follow-up calls when only some cases reach the exit', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function handleA() { return true }
+export function handleB() { return true }
+export function handleDefault() { return true }
+export function finalize() { return true }
+export function route(kind: string) {
+  switch (kind) {
+    case 'a':
+      return handleA()
+    case 'b':
+      handleB()
+      break
+    default:
+      handleDefault()
+      break
+  }
+  finalize()
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const routeNode = graph.nodes.find((n) => n.name === 'route');
+      const finalizeNode = graph.nodes.find((n) => n.name === 'finalize');
+      const edges = graph.edges.filter(
+        (e) => e.source === routeNode?.id && e.target === finalizeNode?.id,
+      );
+
+      expect(edges).toHaveLength(2);
+      expect(edges.map((edge) => edge.conditions?.[0].branch).sort()).toEqual([
+        "case 'b'",
+        'default',
+      ]);
+    });
+
+    it('should upgrade follow-up calls after switch to direct-call when every branch reaches the exit', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function handleA() { return true }
+export function handleDefault() { return true }
+export function finalize() { return true }
+export function route(kind: string) {
+  switch (kind) {
+    case 'a':
+      handleA()
+      break
+    default:
+      handleDefault()
+      break
+  }
+  finalize()
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const routeNode = graph.nodes.find((n) => n.name === 'route');
+      const finalizeNode = graph.nodes.find((n) => n.name === 'finalize');
+      const edge = graph.edges.find(
+        (e) => e.source === routeNode?.id && e.target === finalizeNode?.id,
+      );
+
+      expect(edge?.type).toBe('direct-call');
+      expect(edge?.conditions).toBeUndefined();
+    });
+
+    it('should exclude fallthrough cases that only reach a later returning case from follow-up switch paths', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function handleA() { return true }
+export function handleB() { return true }
+export function handleDefault() { return true }
+export function finalize() { return true }
+export function route(kind: string) {
+  switch (kind) {
+    case 'a':
+      handleA()
+    case 'b':
+      return handleB()
+    default:
+      handleDefault()
+      break
+  }
+  finalize()
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const routeNode = graph.nodes.find((n) => n.name === 'route');
+      const finalizeNode = graph.nodes.find((n) => n.name === 'finalize');
+      const edges = graph.edges.filter(
+        (e) => e.source === routeNode?.id && e.target === finalizeNode?.id,
+      );
+
       expect(edges).toHaveLength(1);
-      expect(edges[0].type).toBe('conditional-call');
-      expect(edges[0].label).toMatch(/or.*or/);
-      expect(edges[0].conditions).toBeUndefined();
+      expect(edges[0].conditions?.[0].branch).toBe('default');
     });
   });
 
