@@ -14,7 +14,10 @@ import { marked } from 'marked';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { useMediaQuery } from 'usehooks-ts';
+import { requestOpenSettingsDialog } from '../lib/settings-dialog-events';
 import { LoadingEllipsis } from './LoadingEllipsis';
+import { Button } from './ui/button';
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import {
   Drawer,
   DrawerBody,
@@ -44,11 +47,6 @@ function loadSettings(): ChatSettings {
   return { apiKey: '', model: '' };
 }
 
-/** Save chat settings to localStorage. */
-function saveSettings(settings: ChatSettings): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-}
-
 interface ChatPanelProps {
   /** Called when the panel should close. */
   onClose: () => void;
@@ -65,33 +63,6 @@ function ChatMarkdown({ content }: { content: string }) {
       // biome-ignore lint/security/noDangerouslySetInnerHtml: rendered from markdown via marked
       dangerouslySetInnerHTML={{ __html: html }}
     />
-  );
-}
-
-/** Settings gear icon button. */
-function SettingsButton({ onClick }: { onClick: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
-      title="Settings"
-    >
-      <svg
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-        <circle cx="12" cy="12" r="3" />
-      </svg>
-    </button>
   );
 }
 
@@ -125,9 +96,28 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
   const [, setSearchParams] = useSearchParams();
   const [input, setInput] = useState('');
   const [settings, setSettings] = useState<ChatSettings>(loadSettings);
-  const [showSettings, setShowSettings] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  // Re-read settings when changed from the global settings dialog
+  useEffect(() => {
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY) setSettings(loadSettings());
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
+  // Also poll for same-tab changes (storage event only fires cross-tab)
+  useEffect(() => {
+    const id = setInterval(() => {
+      const fresh = loadSettings();
+      if (fresh.apiKey !== settings.apiKey || fresh.model !== settings.model) {
+        setSettings(fresh);
+      }
+    }, 1000);
+    return () => clearInterval(id);
+  }, [settings]);
 
   // Ref to avoid stale closures in transport body function
   const settingsRef = useRef(settings);
@@ -213,12 +203,7 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
   /** Send the current input as a message. */
   const handleSend = useCallback(() => {
     const text = input.trim();
-    if (!text || isLoading) return;
-
-    if (!settings.apiKey) {
-      setShowSettings(true);
-      return;
-    }
+    if (!text || isLoading || !settings.apiKey) return;
 
     setInput('');
     sendMessage({ text });
@@ -233,16 +218,6 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
       }
     },
     [handleSend],
-  );
-
-  /** Update and persist a settings field. */
-  const updateSetting = useCallback(
-    (key: keyof ChatSettings, value: string) => {
-      const next = { ...settings, [key]: value };
-      setSettings(next);
-      saveSettings(next);
-    },
-    [settings],
   );
 
   /** Extract selected node IDs from a message's tool parts. */
@@ -264,22 +239,19 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
   const header = (
     <div className="flex items-center justify-between">
       <h2 className="font-semibold">Chat</h2>
-      <div className="flex items-center gap-1">
-        <SettingsButton onClick={() => setShowSettings(!showSettings)} />
-        {isDesktop ? (
-          <button
-            type="button"
-            onClick={onClose}
-            className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
-          >
-            <CloseIcon />
-          </button>
-        ) : (
-          <DrawerClose className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground">
-            <CloseIcon />
-          </DrawerClose>
-        )}
-      </div>
+      {isDesktop ? (
+        <button
+          type="button"
+          onClick={onClose}
+          className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+        >
+          <CloseIcon />
+        </button>
+      ) : (
+        <DrawerClose className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground">
+          <CloseIcon />
+        </DrawerClose>
+      )}
     </div>
   );
 
@@ -289,49 +261,20 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
 
   const body = (
     <>
-      {/* Settings panel */}
-      {showSettings && (
-        <div className="mb-4 space-y-3 rounded-md border border-border p-3">
-          <div>
-            <label htmlFor="chat-api-key" className="text-xs font-medium text-muted-foreground">
-              API Key
-            </label>
-            <input
-              id="chat-api-key"
-              type="password"
-              value={settings.apiKey}
-              onChange={(e) => updateSetting('apiKey', e.target.value)}
-              placeholder="sk-..."
-              className="mt-1 w-full rounded-md border border-border bg-background px-2.5 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="chat-model" className="text-xs font-medium text-muted-foreground">
-              Model (optional)
-            </label>
-            <input
-              id="chat-model"
-              type="text"
-              value={settings.model}
-              onChange={(e) => updateSetting('model', e.target.value)}
-              placeholder="claude-haiku-4-5-20251001"
-              className="mt-1 w-full rounded-md border border-border bg-background px-2.5 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-        </div>
-      )}
-
       {/* No API key prompt */}
-      {!settings.apiKey && !showSettings && (
-        <div className="flex flex-col items-center justify-center py-12 text-center text-sm text-muted-foreground">
-          <p className="mb-2">Enter an API key to start chatting.</p>
-          <button
-            type="button"
-            onClick={() => setShowSettings(true)}
-            className="text-blue-600 hover:text-blue-800 font-medium"
-          >
-            Open settings
-          </button>
+      {!settings.apiKey && (
+        <div className="flex items-center justify-center">
+          <Card className="w-full max-w-sm">
+            <CardHeader className="pb-2">
+              <CardTitle>Missing API key</CardTitle>
+              <CardDescription>Add an API key in settings to start chatting.</CardDescription>
+            </CardHeader>
+            <CardFooter>
+              <Button type="button" onClick={requestOpenSettingsDialog} variant="default">
+                Open settings
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       )}
 

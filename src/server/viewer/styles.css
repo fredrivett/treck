@@ -13,6 +13,8 @@
   --color-ring: var(--ring);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -28,6 +30,8 @@
   --ring: oklch(70.7% 0.022 261.33);
   --secondary: oklch(96.7% 0.003 264.54);
   --secondary-foreground: oklch(21% 0.034 264.66);
+  --primary: oklch(57.7% 0.245 258.33);
+  --primary-foreground: oklch(98% 0.003 247.86);
   --radius: 0.625rem;
   --graph-bg-dot: #d1d5db;
   --graph-edge-label: #6b7280;
@@ -49,6 +53,8 @@
   --ring: oklch(45% 0.02 261.33);
   --secondary: oklch(22% 0.012 264.54);
   --secondary-foreground: oklch(90% 0.006 264.54);
+  --primary: oklch(62.3% 0.214 259.82);
+  --primary-foreground: oklch(98% 0.003 247.86);
   --graph-bg-dot: #374151;
   --graph-edge-label: #9ca3af;
   --graph-minimap-border: #374151;

@@ -26,8 +26,20 @@ declare global {
  * - Others: Ctrl (ctrlKey)
  */
 export function isApplePlatform(): boolean {
-  // TODO: remove hardcoded false — testing non-Mac display
-  return false;
+  if (typeof navigator === 'undefined') return false;
+
+  const userAgentDataPlatform = navigator.userAgentData?.platform?.toLowerCase();
+  if (userAgentDataPlatform) {
+    return /(mac|iphone|ipad|ipod)/.test(userAgentDataPlatform);
+  }
+
+  const platform = navigator.platform?.toLowerCase();
+  if (platform) {
+    return /(mac|iphone|ipad|ipod)/.test(platform);
+  }
+
+  const userAgent = navigator.userAgent?.toLowerCase();
+  return /(macintosh|mac os x|iphone|ipad|ipod)/.test(userAgent);
 }
 
 /**
