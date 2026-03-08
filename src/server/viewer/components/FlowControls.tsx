@@ -1,5 +1,7 @@
-import type { ChangeEvent } from 'react';
+import { type ChangeEvent, useEffect, useRef } from 'react';
+import { isApplePlatform } from '../keyboard';
 import { getCategoryLabel, type NodeCategory } from './FlowGraph';
+import { Kbd } from './ui/kbd';
 
 interface FlowControlsProps {
   loading: boolean;
@@ -33,15 +35,41 @@ export function FlowControls({
   onToggleConditionals,
   hasConditionalEdges,
 }: FlowControlsProps) {
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        const input = searchRef.current;
+        if (input) {
+          input.focus();
+          input.setSelectionRange(input.value.length, input.value.length);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <div className="p-4">
-      <input
-        type="text"
-        placeholder="Search nodes..."
-        value={searchQuery}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => onSearch(e.target.value)}
-        className="w-full px-2.5 py-2 border border-border rounded-md text-[13px] outline-none mb-3 bg-background text-foreground"
-      />
+      <div className="relative mb-3">
+        <input
+          ref={searchRef}
+          type="text"
+          placeholder="Search nodes..."
+          value={searchQuery}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => onSearch(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') e.currentTarget.blur();
+          }}
+          className={`peer w-full px-2.5 py-2 ${isApplePlatform() ? 'pr-10' : 'pr-16'} focus:pr-2.5 border border-border rounded-md text-[13px] outline-none bg-background text-foreground`}
+        />
+        <div className="absolute right-2 inset-y-0 flex items-center pointer-events-none peer-focus:hidden">
+          <Kbd mod>K</Kbd>
+        </div>
+      </div>
 
       {!loading && (
         <div className="text-[11px] text-muted-foreground mb-3">

@@ -23,6 +23,7 @@ import { GRID_SIZE, snapCeil } from '../grid';
 import { DocPanel } from './DocPanel';
 import { defaultLayoutOptions, type LayoutOptions, LayoutSettings } from './LayoutSettings';
 import { nodeTypes } from './NodeTypes';
+import { Kbd } from './ui/kbd';
 
 const elk = new ELK();
 
@@ -214,6 +215,7 @@ function FlowGraphInner({
   const [needsLayout, setNeedsLayout] = useState(false);
   const { fitView, getViewport } = useReactFlow();
   const fittedViewportRef = useRef<{ x: number; y: number; zoom: number } | null>(null);
+  const lastContainerSizeRef = useRef<{ width: number; height: number } | null>(null);
   const nodesInitialized = useNodesInitialized();
   const visibleGraphRef = useRef<FlowGraphData | null>(null);
   const sizeCache = useRef<SizeCache>(new Map());
@@ -304,10 +306,9 @@ function FlowGraphInner({
 
   /** Recenter the viewport on the current nodes. */
   const recenter = useCallback(() => {
-    fitView({ padding: 0.15 });
-    onOffCenterChange?.(false);
-    requestAnimationFrame(() => {
+    void fitView({ padding: 0.15, duration: 250 }).then(() => {
       fittedViewportRef.current = getViewport();
+      onOffCenterChange?.(false);
     });
   }, [fitView, getViewport, onOffCenterChange]);
 
@@ -317,6 +318,28 @@ function FlowGraphInner({
       recenterRef.current = recenter;
     }
   }, [recenter, recenterRef]);
+
+  // Show recenter when the React Flow panel size changes after initial mount.
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      const width = entry.contentRect.width;
+      const height = entry.contentRect.height;
+      const prev = lastContainerSizeRef.current;
+      lastContainerSizeRef.current = { width, height };
+
+      if (!prev) return;
+      if (Math.abs(width - prev.width) < 1 && Math.abs(height - prev.height) < 1) return;
+      if (!fittedViewportRef.current) return;
+
+      onOffCenterChange?.(true);
+    });
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [onOffCenterChange]);
 
   /** Detect when the user pans or zooms away from the fitted viewport. */
   const handleMoveEnd = useCallback(() => {
@@ -520,13 +543,20 @@ function FlowGraphInner({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
       if (e.key === 'Escape') {
         clearSelection();
+      }
+      if (e.key === 'f' && selectedEntries.size > 0) {
+        e.preventDefault();
+        setFocusedEntries(new Set(selectedEntries));
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [clearSelection]);
+  }, [clearSelection, selectedEntries]);
 
   return (
     <div ref={containerRef} className="w-full h-full relative">
@@ -539,17 +569,17 @@ function FlowGraphInner({
             <button
               type="button"
               onClick={() => setFocusedEntries(new Set(selectedEntries))}
-              className="text-blue-600 hover:text-blue-800 font-medium"
+              className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center gap-1"
             >
-              Focus
+              Focus <Kbd>F</Kbd>
             </button>
           )}
           <button
             type="button"
             onClick={clearSelection}
-            className="text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
           >
-            Clear
+            Clear <Kbd>Esc</Kbd>
           </button>
         </div>
       )}

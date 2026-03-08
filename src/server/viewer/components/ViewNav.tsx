@@ -1,7 +1,7 @@
 import type { LucideIcon } from 'lucide-react';
 import { FileText, Workflow } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
-import { ThemeToggle } from './ThemeToggle';
+import { SettingsButton } from './SettingsDialog';
 
 function NavLink({
   to,
@@ -29,7 +29,7 @@ function NavLink({
   );
 }
 
-/** Sidebar header with project name, theme toggle, and Graph/Docs navigation. */
+/** Sidebar header with project name, settings, and Graph/Docs navigation. */
 export function ViewNav() {
   const location = useLocation();
   const isGraph = location.pathname === '/' || location.pathname === '';
@@ -39,7 +39,7 @@ export function ViewNav() {
     <div className="p-4 border-b border-border">
       <div className="flex items-center justify-between mb-3">
         <div className="font-bold text-sm text-foreground">treck</div>
-        <ThemeToggle />
+        <SettingsButton />
       </div>
       <div className="flex gap-1">
         <NavLink to="/" label="Graph" icon={Workflow} isActive={isGraph} />
