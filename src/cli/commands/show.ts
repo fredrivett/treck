@@ -9,6 +9,7 @@ import { explainUnresolved, resolveFocusTargets } from '../utils/resolve-targets
 interface ShowOptions {
   format?: 'mermaid' | 'markdown' | 'json' | 'ascii';
   depth?: number;
+  theme?: string;
 }
 
 const USAGE = `Show graph data for symbols in your codebase.
@@ -23,6 +24,7 @@ Targets: file:symbol or file path (comma-separated)
 Options:
   --format <f>  Output format: mermaid (default), markdown, json, ascii
   --depth <n>   Limit traversal depth (default: full connected flow)
+  --theme <name> ASCII theme (e.g. zinc-dark, tokyo-night, github-light)
 
 Tip: If file paths contain parentheses or brackets, wrap the target in quotes:
   treck show "src/app/(dashboard)/page.tsx:Home"
@@ -87,6 +89,7 @@ export function registerShowCommand(cli: CAC) {
     .command('show [targets]', 'Show graph data for symbols')
     .option('--format <format>', 'Output format: mermaid (default), markdown, json, ascii')
     .option('--depth <n>', 'Limit traversal depth (default: full connected flow)')
+    .option('--theme <name>', 'ASCII theme (e.g. zinc-dark, tokyo-night, github-light)')
     .example('treck show src/api/route.ts:GET')
     .example('treck show src/api/route.ts:GET --format markdown')
     .example('treck show src/api/route.ts:GET --format json')
@@ -140,7 +143,7 @@ export function registerShowCommand(cli: CAC) {
         }
         case 'ascii': {
           const mermaid = formatMermaidOutput(nodeIds, graph, depth);
-          const ascii = await beautifyMermaid(mermaid);
+          const ascii = await beautifyMermaid(mermaid, options.theme);
           process.stdout.write(`${ascii}\n`);
           return;
         }
@@ -153,16 +156,38 @@ export function registerShowCommand(cli: CAC) {
 }
 
 /**
+ * Detect whether the terminal is using a dark color scheme.
+ *
+ * Checks `COLORFGBG` (fg;bg format — bg > 8 means light) and common
+ * terminal-specific env vars. Falls back to dark when unknown.
+ */
+export function detectDarkMode(): boolean {
+  const colorfgbg = process.env.COLORFGBG;
+  if (colorfgbg) {
+    const bg = Number(colorfgbg.split(';').pop());
+    if (!Number.isNaN(bg)) return bg <= 8;
+  }
+  // iTerm2 and macOS Terminal report profile names but not reliably dark/light,
+  // so default to dark (most developer terminals are dark)
+  return true;
+}
+
+/**
  * Render a mermaid diagram as Unicode box-drawing art for terminal display.
  *
- * Uses `beautiful-mermaid`'s ASCII renderer under the hood.
+ * Auto-detects dark/light mode for theme selection. Pass a theme name
+ * to override (e.g. `"tokyo-night"`, `"github-light"`).
  *
  * @param mermaidSource - Raw mermaid flowchart source
+ * @param theme - Optional theme name from beautiful-mermaid's THEMES
  * @returns Unicode box-drawing string
  */
-export async function beautifyMermaid(mermaidSource: string): Promise<string> {
-  const { renderMermaidASCII } = await import('beautiful-mermaid');
-  return renderMermaidASCII(mermaidSource);
+export async function beautifyMermaid(mermaidSource: string, theme?: string): Promise<string> {
+  const { renderMermaidASCII, THEMES } = await import('beautiful-mermaid');
+  const resolvedTheme = theme
+    ? THEMES[theme]
+    : THEMES[detectDarkMode() ? 'zinc-dark' : 'zinc-light'];
+  return renderMermaidASCII(mermaidSource, { theme: resolvedTheme });
 }
 
 /**

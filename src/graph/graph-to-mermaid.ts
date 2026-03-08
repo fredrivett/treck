@@ -84,7 +84,8 @@ function buildMermaid(
     for (const node of nodes) {
       const nodeId = sanitizeId(node.id);
       const label = formatNodeLabel(node);
-      const shape = node.entryType ? `([${label}])` : `["${label}"]`;
+      // Asymmetric shape for entry points — keep in sync with diff.ts:nodeShape
+      const shape = node.entryType ? `>${label}]` : `["${label}"]`;
       const indent = fileGroups.size > 1 ? '    ' : '  ';
       lines.push(`${indent}${nodeId}${shape}`);
     }
@@ -129,7 +130,7 @@ function buildMermaid(
 }
 
 /** Build a display label for a graph node, including async prefix and metadata. */
-function formatNodeLabel(node: GraphNode): string {
+export function formatNodeLabel(node: GraphNode): string {
   let label = node.name;
   if (node.isAsync) label = `async ${label}`;
   if (node.metadata?.httpMethod) {
@@ -145,7 +146,7 @@ function formatNodeLabel(node: GraphNode): string {
 }
 
 /** Return the mermaid arrow syntax for a given edge type. */
-function edgeArrow(edge: GraphEdge): string {
+export function edgeArrow(edge: GraphEdge): string {
   if (edge.type === 'error-handler') return '-.->';
   if (edge.type === 'event-emit' || edge.type === 'async-dispatch') return '-.->';
   if (edge.type === 'http-request') return '-->';
@@ -154,7 +155,7 @@ function edgeArrow(edge: GraphEdge): string {
 }
 
 /** Return a label derived from the edge type, if applicable. */
-function edgeTypeLabel(edge: GraphEdge): string | undefined {
+export function edgeTypeLabel(edge: GraphEdge): string | undefined {
   if (edge.type === 'error-handler') return 'error';
   if (edge.type === 'http-request') return 'HTTP';
   return undefined;
@@ -163,13 +164,13 @@ function edgeTypeLabel(edge: GraphEdge): string | undefined {
 /**
  * Sanitize a label for mermaid (escape characters that break parsing)
  */
-function sanitizeLabel(label: string): string {
+export function sanitizeLabel(label: string): string {
   return label.replace(/[>"<|]/g, (ch) => `#${ch.charCodeAt(0)};`);
 }
 
 /**
  * Sanitize a node ID for mermaid (replace special characters)
  */
-function sanitizeId(id: string): string {
+export function sanitizeId(id: string): string {
   return id.replace(/[^a-zA-Z0-9]/g, '_');
 }
