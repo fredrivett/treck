@@ -215,6 +215,7 @@ function FlowGraphInner({
   const [needsLayout, setNeedsLayout] = useState(false);
   const { fitView, getViewport } = useReactFlow();
   const fittedViewportRef = useRef<{ x: number; y: number; zoom: number } | null>(null);
+  const lastContainerSizeRef = useRef<{ width: number; height: number } | null>(null);
   const nodesInitialized = useNodesInitialized();
   const visibleGraphRef = useRef<FlowGraphData | null>(null);
   const sizeCache = useRef<SizeCache>(new Map());
@@ -318,6 +319,28 @@ function FlowGraphInner({
       recenterRef.current = recenter;
     }
   }, [recenter, recenterRef]);
+
+  // Show recenter when the React Flow panel size changes after initial mount.
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      const width = entry.contentRect.width;
+      const height = entry.contentRect.height;
+      const prev = lastContainerSizeRef.current;
+      lastContainerSizeRef.current = { width, height };
+
+      if (!prev) return;
+      if (Math.abs(width - prev.width) < 1 && Math.abs(height - prev.height) < 1) return;
+      if (!fittedViewportRef.current) return;
+
+      onOffCenterChange?.(true);
+    });
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [onOffCenterChange]);
 
   /** Detect when the user pans or zooms away from the fitted viewport. */
   const handleMoveEnd = useCallback(() => {
