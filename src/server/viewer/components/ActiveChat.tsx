@@ -14,6 +14,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { deriveTitle, type StoredChat, saveChat } from '../lib/chat-store';
 import { LoadingEllipsis } from './LoadingEllipsis';
+import { Card } from './ui/card';
 
 interface ChatSettings {
   apiKey: string;
@@ -204,12 +205,12 @@ export function ActiveChat({
   return (
     <>
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto px-4 pb-4">
         <div className="space-y-4">
           {messages.length === 0 && !isLoading && (
-            <div className="py-12 text-center text-sm text-muted-foreground">
+            <Card className="p-3 text-center text-sm text-muted-foreground">
               Ask a question about your codebase to get started.
-            </div>
+            </Card>
           )}
           {messages.map((msg) => {
             const selectedNodeIds = msg.role === 'assistant' ? getSelectedNodeIds(msg) : [];

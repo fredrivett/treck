@@ -7,6 +7,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { deleteChat, listChatsForGraph, type StoredChatMeta } from '../lib/chat-store';
+import { Card } from './ui/card';
 
 /** Format a timestamp as a relative time string. */
 function timeAgo(timestamp: number): string {
@@ -75,18 +76,18 @@ export function ChatList({ graphId, onSelectChat, onNewChat, refreshKey }: ChatL
   }
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-2">
       {chats.map((chat) => (
-        <button
+        <Card
           key={chat.id}
-          type="button"
+          className="group cursor-pointer hover:bg-muted/80 transition-colors"
           onClick={() => onSelectChat(chat.id)}
-          className="group w-full text-left rounded-md px-3 py-2.5 hover:bg-muted transition-colors"
         >
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-sm font-medium text-foreground truncate flex-1">
-              {chat.title}
-            </span>
+          <div className="flex items-start justify-between gap-2 p-3">
+            <div className="min-w-0 flex-1">
+              <div className="text-sm font-medium text-foreground truncate">{chat.title}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{timeAgo(chat.updatedAt)}</div>
+            </div>
             <button
               type="button"
               onClick={(e) => handleDelete(e, chat.id)}
@@ -110,8 +111,7 @@ export function ChatList({ graphId, onSelectChat, onNewChat, refreshKey }: ChatL
               </svg>
             </button>
           </div>
-          <div className="text-xs text-muted-foreground mt-0.5">{timeAgo(chat.updatedAt)}</div>
-        </button>
+        </Card>
       ))}
     </div>
   );
