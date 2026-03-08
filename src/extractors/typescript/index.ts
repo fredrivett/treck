@@ -193,30 +193,39 @@ export class TypeScriptExtractor {
       }
     };
 
-    const statementAlwaysExits = (statement: ts.Statement): boolean => {
+    const statementAlwaysTransfersControl = (
+      statement: ts.Statement,
+      treatBreakAsExit: boolean,
+    ): boolean => {
       if (
         ts.isReturnStatement(statement) ||
         ts.isThrowStatement(statement) ||
-        ts.isBreakStatement(statement) ||
         ts.isContinueStatement(statement)
       ) {
         return true;
       }
 
+      if (ts.isBreakStatement(statement)) {
+        return treatBreakAsExit;
+      }
+
       if (ts.isBlock(statement)) {
         const last = statement.statements.at(-1);
-        return last ? statementAlwaysExits(last) : false;
+        return last ? statementAlwaysTransfersControl(last, treatBreakAsExit) : false;
       }
 
       if (ts.isIfStatement(statement) && statement.elseStatement) {
         return (
-          statementAlwaysExits(statement.thenStatement) &&
-          statementAlwaysExits(statement.elseStatement)
+          statementAlwaysTransfersControl(statement.thenStatement, treatBreakAsExit) &&
+          statementAlwaysTransfersControl(statement.elseStatement, treatBreakAsExit)
         );
       }
 
       return false;
     };
+
+    const statementAlwaysExits = (statement: ts.Statement): boolean =>
+      statementAlwaysTransfersControl(statement, true);
 
     const getImplicitElseFallthrough = (statement: ts.Statement): ConditionInfo[] | null => {
       if (!ts.isIfStatement(statement) || !statementAlwaysExits(statement.thenStatement)) {
@@ -242,10 +251,84 @@ export class TypeScriptExtractor {
       return null;
     };
 
-    const walkStatements = (statements: ts.NodeArray<ts.Statement>, conditions: ConditionInfo[]) => {
+    const getSwitchBranchCondition = (
+      switchStatement: ts.SwitchStatement,
+      label: string,
+      pendingLabels: string[],
+    ): ConditionInfo => {
+      const switchExpr = switchStatement.expression.getText(sourceFile).slice(0, 40);
+      const caseText =
+        pendingLabels.length > 0
+          ? `case ${[...pendingLabels, label].join(' | ')}`
+          : label === 'default'
+            ? 'default'
+            : `case ${label}`;
+      return {
+        condition: `switch (${switchExpr}): ${caseText}`,
+        branch: caseText,
+        branchGroup: `branch:${getLine(switchStatement)}`,
+      };
+    };
+
+    const getSwitchFallthroughConditions = (
+      switchStatement: ts.SwitchStatement,
+    ): ConditionInfo[][] => {
+      const fallthroughConditions: ConditionInfo[][] = [];
+      let pendingLabels: string[] = [];
+      let hasDefault = false;
+      const clauses = switchStatement.caseBlock.clauses;
+
+      const switchPathReachesExit = (startIndex: number): boolean => {
+        for (let index = startIndex; index < clauses.length; index++) {
+          const clause = clauses[index];
+          if (clause.statements.length === 0) continue;
+
+          const lastStatement = clause.statements.at(-1);
+          if (!lastStatement) continue;
+
+          if (ts.isBreakStatement(lastStatement)) {
+            return true;
+          }
+
+          if (statementAlwaysTransfersControl(lastStatement, false)) {
+            return false;
+          }
+        }
+
+        return true;
+      };
+
+      for (let index = 0; index < clauses.length; index++) {
+        const clause = clauses[index];
+        const label = ts.isCaseClause(clause) ? clause.expression.getText(sourceFile) : 'default';
+        hasDefault = hasDefault || label === 'default';
+
+        if (clause.statements.length === 0) {
+          pendingLabels.push(label);
+          continue;
+        }
+
+        if (switchPathReachesExit(index)) {
+          fallthroughConditions.push([
+            getSwitchBranchCondition(switchStatement, label, pendingLabels),
+          ]);
+        }
+
+        pendingLabels = [];
+      }
+
+      if (!hasDefault) {
+        fallthroughConditions.push([getSwitchBranchCondition(switchStatement, 'default', [])]);
+      }
+
+      return fallthroughConditions;
+    };
+
+    const walkStatements = (statements: readonly ts.Statement[], conditions: ConditionInfo[]) => {
       let fallthroughConditions = conditions;
 
-      for (const statement of statements) {
+      for (let index = 0; index < statements.length; index++) {
+        const statement = statements[index];
         walk(statement, fallthroughConditions);
 
         if (statementAlwaysExits(statement)) {
@@ -255,6 +338,18 @@ export class TypeScriptExtractor {
         const implicitElse = getImplicitElseFallthrough(statement);
         if (implicitElse) {
           fallthroughConditions = [...fallthroughConditions, ...implicitElse];
+          continue;
+        }
+
+        if (ts.isSwitchStatement(statement)) {
+          const nextStatements = statements.slice(index + 1);
+          if (nextStatements.length === 0) break;
+
+          const switchFallthroughConditions = getSwitchFallthroughConditions(statement);
+          for (const branchConditions of switchFallthroughConditions) {
+            walkStatements(nextStatements, [...fallthroughConditions, ...branchConditions]);
+          }
+          break;
         }
       }
     };
@@ -284,9 +379,11 @@ export class TypeScriptExtractor {
         const switchExpr = node.expression.getText(sourceFile).slice(0, 40);
         const group = `branch:${getLine(node)}`;
         let pendingLabels: string[] = [];
+        let hasDefault = false;
 
         for (const clause of node.caseBlock.clauses) {
           const label = ts.isCaseClause(clause) ? clause.expression.getText(sourceFile) : 'default';
+          hasDefault = hasDefault || label === 'default';
 
           if (clause.statements.length === 0) {
             pendingLabels.push(label);
@@ -311,6 +408,9 @@ export class TypeScriptExtractor {
               branchGroup: group,
             },
           ]);
+        }
+        if (!hasDefault) {
+          countBranch(group);
         }
         return;
       }

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-08T20:52:28.121Z",
+  "generatedAt": "2026-03-08T20:59:53.651Z",
   "nodes": [
     {
       "id": "scripts/generate-showcase.ts:generateConfig",
@@ -1658,10 +1658,10 @@
       "kind": "class",
       "filePath": "src/extractors/typescript/index.ts",
       "isAsync": false,
-      "hash": "1ebe0d38fbf3a78f7025c74489177de6a027f0abec2ed561bd1f1589ac4bd614",
+      "hash": "a352f9eaa57dcc649ccc38de18e7c171d39535d31c2fd49b0949e99d34d8b012",
       "lineRange": [
         18,
-        979
+        1079
       ],
       "hasJsDoc": true,
       "description": "Extracts symbols (functions, classes, arrow functions, call expressions) from TypeScript/JavaScript files using the TS Compiler API.",

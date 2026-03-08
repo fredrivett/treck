@@ -507,6 +507,107 @@ export function route(req: any) {
         "else (req.method === 'POST')",
       ]);
     });
+
+    it('should preserve switch-branch conditions for follow-up calls when only some cases reach the exit', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function handleA() { return true }
+export function handleB() { return true }
+export function handleDefault() { return true }
+export function finalize() { return true }
+export function route(kind: string) {
+  switch (kind) {
+    case 'a':
+      return handleA()
+    case 'b':
+      handleB()
+      break
+    default:
+      handleDefault()
+      break
+  }
+  finalize()
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const routeNode = graph.nodes.find((n) => n.name === 'route');
+      const finalizeNode = graph.nodes.find((n) => n.name === 'finalize');
+      const edges = graph.edges.filter(
+        (e) => e.source === routeNode?.id && e.target === finalizeNode?.id,
+      );
+
+      expect(edges).toHaveLength(2);
+      expect(edges.map((edge) => edge.conditions?.[0].branch).sort()).toEqual([
+        "case 'b'",
+        'default',
+      ]);
+    });
+
+    it('should upgrade follow-up calls after switch to direct-call when every branch reaches the exit', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function handleA() { return true }
+export function handleDefault() { return true }
+export function finalize() { return true }
+export function route(kind: string) {
+  switch (kind) {
+    case 'a':
+      handleA()
+      break
+    default:
+      handleDefault()
+      break
+  }
+  finalize()
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const routeNode = graph.nodes.find((n) => n.name === 'route');
+      const finalizeNode = graph.nodes.find((n) => n.name === 'finalize');
+      const edge = graph.edges.find(
+        (e) => e.source === routeNode?.id && e.target === finalizeNode?.id,
+      );
+
+      expect(edge?.type).toBe('direct-call');
+      expect(edge?.conditions).toBeUndefined();
+    });
+
+    it('should exclude fallthrough cases that only reach a later returning case from follow-up switch paths', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function handleA() { return true }
+export function handleB() { return true }
+export function handleDefault() { return true }
+export function finalize() { return true }
+export function route(kind: string) {
+  switch (kind) {
+    case 'a':
+      handleA()
+    case 'b':
+      return handleB()
+    default:
+      handleDefault()
+      break
+  }
+  finalize()
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const routeNode = graph.nodes.find((n) => n.name === 'route');
+      const finalizeNode = graph.nodes.find((n) => n.name === 'finalize');
+      const edges = graph.edges.filter(
+        (e) => e.source === routeNode?.id && e.target === finalizeNode?.id,
+      );
+
+      expect(edges).toHaveLength(1);
+      expect(edges[0].conditions?.[0].branch).toBe('default');
+    });
   });
 
   describe('trigger task dispatch edges', () => {

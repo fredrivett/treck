@@ -1451,6 +1451,102 @@ function handleType(type: string) {
       expect(imageCall?.conditions?.[0].condition).toContain("'jpg' | 'png' | 'gif'");
     });
 
+    it('should treat following statements after a returning switch as the implicit default path', () => {
+      const code = `
+function route(kind: string) {
+  switch (kind) {
+    case 'a':
+      return handleA()
+    case 'b':
+      return handleB()
+  }
+  handleFallback()
+}
+`;
+      writeFileSync(TEST_FILE, code);
+
+      const calls = extractor.extractCallSites(TEST_FILE, 'route');
+      const fallbackCall = calls.find((c) => c.name === 'handleFallback');
+
+      expect(fallbackCall?.conditions).toHaveLength(1);
+      expect(fallbackCall?.conditions?.[0].branch).toBe('default');
+      expect(fallbackCall?.conditions?.[0].condition).toBe('switch (kind): default');
+    });
+
+    it('should keep following statements conditional on switch branches that reach the exit', () => {
+      const code = `
+function route(kind: string) {
+  switch (kind) {
+    case 'a':
+      return handleA()
+    case 'b':
+      handleB()
+      break
+    default:
+      handleDefault()
+      break
+  }
+  finalize()
+}
+`;
+      writeFileSync(TEST_FILE, code);
+
+      const calls = extractor.extractCallSites(TEST_FILE, 'route');
+      const finalizeCalls = calls.filter((c) => c.name === 'finalize');
+
+      expect(finalizeCalls).toHaveLength(2);
+      expect(finalizeCalls.map((call) => call.conditions?.[0].branch).sort()).toEqual([
+        "case 'b'",
+        'default',
+      ]);
+    });
+
+    it('should not treat a fallthrough case as reaching the switch exit when a later case returns', () => {
+      const code = `
+function route(kind: string) {
+  switch (kind) {
+    case 'a':
+      handleA()
+    case 'b':
+      return handleB()
+    default:
+      handleDefault()
+      break
+  }
+  finalize()
+}
+`;
+      writeFileSync(TEST_FILE, code);
+
+      const calls = extractor.extractCallSites(TEST_FILE, 'route');
+      const finalizeCalls = calls.filter((c) => c.name === 'finalize');
+
+      expect(finalizeCalls).toHaveLength(1);
+      expect(finalizeCalls[0].conditions?.[0].branch).toBe('default');
+    });
+
+    it('should treat following statements as unconditional when all switch branches reach the exit', () => {
+      const code = `
+function route(kind: string) {
+  switch (kind) {
+    case 'a':
+      handleA()
+      break
+    default:
+      handleDefault()
+      break
+  }
+  finalize()
+}
+`;
+      writeFileSync(TEST_FILE, code);
+
+      const calls = extractor.extractCallSites(TEST_FILE, 'route');
+      const finalizeCall = calls.find((c) => c.name === 'finalize');
+
+      expect(finalizeCall?.conditions).toBeUndefined();
+    });
+
     it('should detect ternary conditionals', () => {
       const code = `
 function choose(flag: boolean) {
