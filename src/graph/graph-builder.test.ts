@@ -314,7 +314,7 @@ export function handle(req: any) {
       expect(edges[0].conditions).toBeUndefined();
     });
 
-    it('should merge labels when same target is called under two different conditions', () => {
+    it('should preserve separate conditional edges when same target is called under two different conditions', () => {
       const mainFile = join(TEST_DIR, 'main.ts');
       writeFileSync(
         mainFile,
@@ -337,13 +337,20 @@ export function handle(req: any) {
         (e) => e.source === handleNode?.id && e.target === saveNode?.id,
       );
 
-      expect(edges).toHaveLength(1);
-      expect(edges[0].type).toBe('conditional-call');
-      expect(edges[0].label).toMatch(/or/);
-      expect(edges[0].conditions).toBeUndefined();
+      expect(edges).toHaveLength(2);
+      for (const edge of edges) {
+        expect(edge.type).toBe('conditional-call');
+        expect(edge.conditions).toHaveLength(1);
+      }
+      expect(edges.map((edge) => edge.id)).toEqual(
+        expect.arrayContaining([
+          `${handleNode?.id}->${saveNode?.id}`,
+          `${handleNode?.id}->${saveNode?.id}::1`,
+        ]),
+      );
     });
 
-    it('should merge labels across three or more different conditions', () => {
+    it('should preserve separate conditional edges across three or more different conditions', () => {
       const mainFile = join(TEST_DIR, 'main.ts');
       writeFileSync(
         mainFile,
@@ -369,10 +376,52 @@ export function handle(req: any) {
         (e) => e.source === handleNode?.id && e.target === saveNode?.id,
       );
 
-      expect(edges).toHaveLength(1);
-      expect(edges[0].type).toBe('conditional-call');
-      expect(edges[0].label).toMatch(/or.*or/);
-      expect(edges[0].conditions).toBeUndefined();
+      expect(edges).toHaveLength(3);
+      for (const edge of edges) {
+        expect(edge.type).toBe('conditional-call');
+        expect(edge.conditions).toHaveLength(1);
+      }
+      expect(edges.map((edge) => edge.id)).toEqual(
+        expect.arrayContaining([
+          `${handleNode?.id}->${saveNode?.id}`,
+          `${handleNode?.id}->${saveNode?.id}::1`,
+          `${handleNode?.id}->${saveNode?.id}::2`,
+        ]),
+      );
+    });
+
+    it('should preserve separate conditional edges for repeated JSX targets in different guards', () => {
+      const mainFile = join(TEST_DIR, 'main.tsx');
+      writeFileSync(
+        mainFile,
+        `export function Guides() { return <div /> }
+export function TreeDir({ depth, isCollapsed }: { depth: number; isCollapsed: boolean }) {
+  return (
+    <div>
+      {depth > 0 && <Guides />}
+      {!isCollapsed && (
+        <div>
+          <Guides />
+        </div>
+      )}
+    </div>
+  )
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const treeDirNode = graph.nodes.find((n) => n.name === 'TreeDir');
+      const guidesNode = graph.nodes.find((n) => n.name === 'Guides');
+
+      const edges = graph.edges.filter(
+        (e) => e.source === treeDirNode?.id && e.target === guidesNode?.id,
+      );
+
+      expect(edges).toHaveLength(2);
+      expect(edges.every((edge) => edge.type === 'conditional-call')).toBe(true);
+      expect(edges.map((edge) => edge.conditions?.[0].condition)).toEqual(
+        expect.arrayContaining(['depth > 0 &&', '!isCollapsed &&']),
+      );
     });
   });
 

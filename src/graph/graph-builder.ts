@@ -376,31 +376,46 @@ export class GraphBuilder {
   }
 
   /**
-   * Deduplicate edges by source+target, merging conditions where necessary.
+   * Deduplicate exact edge duplicates while preserving distinct conditional paths.
    *
-   * The extractor guarantees that if any call is unconditional, only that one
-   * call site is returned — so duplicates reaching here are always conditional.
-   * Both occurrences get their labels merged as `(A) or (B)`.
+   * The extractor can emit multiple conditional call sites from the same source
+   * to the same target when the call happens under different branches. Those
+   * must survive as separate edges so the viewer can render one condition node
+   * per branch group.
    */
   private deduplicateEdges(edges: GraphEdge[]): GraphEdge[] {
     const seen = new Map<string, GraphEdge>();
 
     for (const edge of edges) {
-      const key = `${edge.source}->${edge.target}`;
-      const existing = seen.get(key);
-
-      if (!existing) {
+      const key = this.getEdgeDedupKey(edge);
+      if (!seen.has(key)) {
         seen.set(key, { ...edge });
-        continue;
       }
-
-      // Both conditional — merge labels and drop the conditions array
-      const existingLabel = existing.label ?? '';
-      const newLabel = edge.label ?? '';
-      existing.label = `(${existingLabel}) or (${newLabel})`;
-      delete existing.conditions;
     }
 
-    return [...seen.values()];
+    const idCounts = new Map<string, number>();
+    return [...seen.values()].map((edge) => {
+      const baseId = `${edge.source}->${edge.target}`;
+      const nextIndex = idCounts.get(baseId) || 0;
+      idCounts.set(baseId, nextIndex + 1);
+
+      return {
+        ...edge,
+        id: nextIndex === 0 ? baseId : `${baseId}::${nextIndex}`,
+      };
+    });
+  }
+
+  private getEdgeDedupKey(edge: GraphEdge): string {
+    const base = `${edge.source}->${edge.target}:${edge.type}`;
+    if (edge.conditions?.length) {
+      const conditionKey = edge.conditions
+        .map((condition) =>
+          [condition.branchGroup, condition.branch, condition.condition].join('::'),
+        )
+        .join('>>');
+      return `${base}:${conditionKey}`;
+    }
+    return `${base}:${edge.label ?? ''}`;
   }
 }
