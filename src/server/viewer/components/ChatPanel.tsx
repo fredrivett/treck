@@ -17,7 +17,6 @@ import { ActiveChat } from './ActiveChat';
 import { ChatList } from './ChatList';
 import { Button } from './ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
-import { Kbd } from './ui/kbd';
 import {
   Drawer,
   DrawerBody,
@@ -26,6 +25,8 @@ import {
   DrawerDescription,
   DrawerHeader,
 } from './ui/drawer';
+import { Kbd } from './ui/kbd';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
 interface ChatSettings {
   apiKey: string;
@@ -190,14 +191,18 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-1.5">
         {view === 'chat' && (
-          <button
-            type="button"
-            onClick={handleBack}
-            className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
-            title="Back to chat list"
-          >
-            <BackIcon />
-          </button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                onClick={handleBack}
+                className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <BackIcon />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>Back to chat list</TooltipContent>
+          </Tooltip>
         )}
         <h2 className="inline-flex items-center gap-1.5 font-semibold">
           <MessageSquare size={13} aria-hidden />
@@ -206,23 +211,32 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
       </div>
       <div className="flex items-center gap-1">
         {view === 'list' && settings.apiKey && (
-          <button
-            type="button"
-            onClick={handleNewChat}
-            className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
-            title="New chat"
-          >
-            <PlusIcon />
-          </button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                onClick={handleNewChat}
+                className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <PlusIcon />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>New chat</TooltipContent>
+          </Tooltip>
         )}
         {isDesktop ? (
-          <button
-            type="button"
-            onClick={onClose}
-            className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
-          >
-            <CloseIcon />
-          </button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <CloseIcon />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>Close chat</TooltipContent>
+          </Tooltip>
         ) : (
           <DrawerClose className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground">
             <CloseIcon />
@@ -249,7 +263,10 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
             </CardHeader>
             <CardFooter>
               <Button type="button" onClick={requestOpenSettingsDialog} variant="inverse">
-                Open settings <Kbd mod variant="inverse">,</Kbd>
+                Open settings{' '}
+                <Kbd mod variant="inverse">
+                  ,
+                </Kbd>
               </Button>
             </CardFooter>
           </Card>

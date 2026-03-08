@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router';
 import type { FlowGraph as FlowGraphData } from '../../graph/types.js';
 import { GraphExplorer } from './components/GraphExplorer';
+import { TooltipProvider } from './components/ui/tooltip';
 
 /** Fetches graph data and project info, then renders the GraphExplorer. */
 function GraphExplorerWithData() {
@@ -40,7 +41,9 @@ function GraphExplorerWithData() {
 export default function App() {
   return (
     <BrowserRouter>
-      <GraphExplorerWithData />
+      <TooltipProvider>
+        <GraphExplorerWithData />
+      </TooltipProvider>
     </BrowserRouter>
   );
 }
