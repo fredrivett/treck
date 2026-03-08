@@ -306,10 +306,9 @@ function FlowGraphInner({
 
   /** Recenter the viewport on the current nodes. */
   const recenter = useCallback(() => {
-    fitView({ padding: 0.15 });
-    onOffCenterChange?.(false);
-    requestAnimationFrame(() => {
+    void fitView({ padding: 0.15, duration: 250 }).then(() => {
       fittedViewportRef.current = getViewport();
+      onOffCenterChange?.(false);
     });
   }, [fitView, getViewport, onOffCenterChange]);
 
