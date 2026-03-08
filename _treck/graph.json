@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-08T20:26:17.772Z",
+  "generatedAt": "2026-03-08T20:44:38.262Z",
   "nodes": [
     {
       "id": "scripts/generate-showcase.ts:generateConfig",
@@ -1658,10 +1658,10 @@
       "kind": "class",
       "filePath": "src/extractors/typescript/index.ts",
       "isAsync": false,
-      "hash": "67b47b9467663c9ca5ed1a224976a0e333a22d37eb05c054374c940f5167bacb",
+      "hash": "ae6e37b030cba6c0b01f6d6ca34c4c3d9b68ceeea53387f6cee43934c4d513c7",
       "lineRange": [
         18,
-        903
+        967
       ],
       "hasJsDoc": true,
       "description": "Extracts symbols (functions, classes, arrow functions, call expressions) from TypeScript/JavaScript files using the TS Compiler API.",
@@ -3682,29 +3682,6 @@
       "isExported": true
     },
     {
-      "id": "src/server/viewer/components/FlowGraph.tsx:getNodeType",
-      "name": "getNodeType",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "07da06467e4b96f13b7f90fcf2a68be407aed5ebf9f9ab8b9c1724bae991134a",
-      "lineRange": [
-        37,
-        44
-      ],
-      "hasJsDoc": false,
-      "structuredParams": [
-        {
-          "name": "node",
-          "type": "GraphNode",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "returnType": "string",
-      "isExported": false
-    },
-    {
       "id": "src/server/viewer/components/FlowGraph.tsx:getNodeCategory",
       "name": "getNodeCategory",
       "kind": "function",
@@ -3712,8 +3689,8 @@
       "isAsync": false,
       "hash": "d8bb9027fbd1e97c6e68c2fbc8b73510a052e8187eaa846d0319fb34df328584",
       "lineRange": [
-        61,
-        69
+        45,
+        53
       ],
       "hasJsDoc": true,
       "description": "Returns the filter category for a graph node (entry type or kind-based).",
@@ -3736,8 +3713,8 @@
       "isAsync": false,
       "hash": "2715c980acd3228c2eca1f77b3c4709e28a62dfe251d32aa76c481fd8bef6137",
       "lineRange": [
-        69,
-        73
+        53,
+        57
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -3753,30 +3730,6 @@
       "isExported": true
     },
     {
-      "id": "src/server/viewer/components/FlowGraph.tsx:toReactFlowNode",
-      "name": "toReactFlowNode",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "1d813169c2f6ceaca18a1cd506edd1732a1322e9713bdac5ef9722ffab8e5ab8",
-      "lineRange": [
-        73,
-        90
-      ],
-      "hasJsDoc": false,
-      "isTrivial": true,
-      "structuredParams": [
-        {
-          "name": "node",
-          "type": "GraphNode",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "returnType": "Node",
-      "isExported": false
-    },
-    {
       "id": "src/server/viewer/components/FlowGraph.tsx:toReactFlowEdges",
       "name": "toReactFlowEdges",
       "kind": "function",
@@ -3784,8 +3737,8 @@
       "isAsync": false,
       "hash": "03cab612f2b8123180317c144968b5655533e105b8464433386b14a3f44097c3",
       "lineRange": [
-        90,
-        116
+        57,
+        83
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -3807,84 +3760,6 @@
       "isExported": false
     },
     {
-      "id": "src/server/viewer/components/FlowGraph.tsx:cleanConditionText",
-      "name": "cleanConditionText",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "a090865a70a5af541f6af2e19b0de38b217a1fcce026b6c4454dea26a71cda18",
-      "lineRange": [
-        116,
-        136
-      ],
-      "hasJsDoc": true,
-      "description": "Strip `if (...)` wrapper, trailing `&&`/`||`, and other noise from a\ncondition string to produce a clean expression for display.\n\nFor `else (expr)` conditions (else-only branches), negates the expression\nso the condition node reads as the actual guard, e.g. `staleDocs.length > 0`.",
-      "structuredParams": [
-        {
-          "name": "raw",
-          "type": "string",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "returnType": "string",
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:negateExpression",
-      "name": "negateExpression",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "149957ef0d0397657bb7a2c3b68247eff1f0d57e989c8233ea6b3c8a10488084",
-      "lineRange": [
-        136,
-        160
-      ],
-      "hasJsDoc": true,
-      "description": "Negate a simple comparison expression, or wrap in `!(...)`.",
-      "structuredParams": [
-        {
-          "name": "expr",
-          "type": "string",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "returnType": "string",
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:expandConditionals",
-      "name": "expandConditionals",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "b4bb9f96b0e3b953b1e07afdb2ec57b65a290258db2fec3940bc8c51add9a55d",
-      "lineRange": [
-        160,
-        252
-      ],
-      "hasJsDoc": true,
-      "description": "Expand conditional edges into diamond condition nodes with split edges.\n\nGroups conditional edges by (source, outermost branchGroup) so that\nbranches of the same if/switch share a single diamond node.",
-      "structuredParams": [
-        {
-          "name": "graphNodes",
-          "type": "FlowGraphData['nodes']",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "graphEdges",
-          "type": "FlowGraphData['edges']",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "returnType": "{ rfNodes: Node[]; rfEdges: Edge[] }",
-      "isExported": false
-    },
-    {
       "id": "src/server/viewer/components/FlowGraph.tsx:runElkLayout",
       "name": "runElkLayout",
       "kind": "function",
@@ -3892,8 +3767,8 @@
       "isAsync": true,
       "hash": "bad6297cd150543075044d1c000e24424ef9075bd53056ca3f1a004253ec9c82",
       "lineRange": [
-        261,
-        296
+        92,
+        127
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -3933,8 +3808,8 @@
       "isAsync": false,
       "hash": "a29b93857b4333d45e51efadc3741851fc4e82633a0198479eb66ffe9c95f1f0",
       "lineRange": [
-        308,
-        332
+        139,
+        163
       ],
       "hasJsDoc": true,
       "description": "Detect dark mode by checking for a `.dark` class on the document root.\n\nObserves class mutations on `<html>` so the value updates when the\ntheme is toggled at runtime.",
@@ -3949,8 +3824,8 @@
       "isAsync": true,
       "hash": "e2ffcfd9bb97749a349d22ad252815723989f0d2eeea023b9023983e089a00ca",
       "lineRange": [
-        332,
-        783
+        163,
+        614
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -4007,8 +3882,8 @@
       "isAsync": false,
       "hash": "5e3a62e0203f193e421af51476ba4e43843f71026d6ca0b76582392d5b53c49d",
       "lineRange": [
-        783,
-        808
+        614,
+        639
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -4440,6 +4315,131 @@
       ],
       "hasJsDoc": true,
       "description": "Sidebar header with project name, theme toggle, and Graph/Docs navigation.",
+      "isExported": true
+    },
+    {
+      "id": "src/server/viewer/components/condition-expansion.ts:getNodeType",
+      "name": "getNodeType",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/condition-expansion.ts",
+      "isAsync": false,
+      "hash": "07da06467e4b96f13b7f90fcf2a68be407aed5ebf9f9ab8b9c1724bae991134a",
+      "lineRange": [
+        14,
+        21
+      ],
+      "hasJsDoc": false,
+      "structuredParams": [
+        {
+          "name": "node",
+          "type": "GraphNode",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "string",
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/condition-expansion.ts:toReactFlowNode",
+      "name": "toReactFlowNode",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/condition-expansion.ts",
+      "isAsync": false,
+      "hash": "1d813169c2f6ceaca18a1cd506edd1732a1322e9713bdac5ef9722ffab8e5ab8",
+      "lineRange": [
+        21,
+        38
+      ],
+      "hasJsDoc": false,
+      "isTrivial": true,
+      "structuredParams": [
+        {
+          "name": "node",
+          "type": "GraphNode",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "Node",
+      "isExported": true
+    },
+    {
+      "id": "src/server/viewer/components/condition-expansion.ts:cleanConditionText",
+      "name": "cleanConditionText",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/condition-expansion.ts",
+      "isAsync": false,
+      "hash": "a090865a70a5af541f6af2e19b0de38b217a1fcce026b6c4454dea26a71cda18",
+      "lineRange": [
+        38,
+        58
+      ],
+      "hasJsDoc": true,
+      "description": "Strip `if (...)` wrapper, trailing `&&`/`||`, and other noise from a\ncondition string to produce a clean expression for display.\n\nFor `else (expr)` conditions (else-only branches), negates the expression\nso the condition node reads as the actual guard, e.g. `staleDocs.length > 0`.",
+      "structuredParams": [
+        {
+          "name": "raw",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "string",
+      "isExported": true
+    },
+    {
+      "id": "src/server/viewer/components/condition-expansion.ts:negateExpression",
+      "name": "negateExpression",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/condition-expansion.ts",
+      "isAsync": false,
+      "hash": "149957ef0d0397657bb7a2c3b68247eff1f0d57e989c8233ea6b3c8a10488084",
+      "lineRange": [
+        58,
+        82
+      ],
+      "hasJsDoc": true,
+      "description": "Negate a simple comparison expression, or wrap in `!(...)`.",
+      "structuredParams": [
+        {
+          "name": "expr",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "string",
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/condition-expansion.ts:expandConditionals",
+      "name": "expandConditionals",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/condition-expansion.ts",
+      "isAsync": false,
+      "hash": "2ace2e9ab2bb6c4df93839834eaa4e6eea31f76485496967982cdf339ba149ed",
+      "lineRange": [
+        82,
+        161
+      ],
+      "hasJsDoc": true,
+      "description": "Expand conditional edges into condition-node chains that preserve nested\nbranch paths while still sharing common prefixes.",
+      "structuredParams": [
+        {
+          "name": "graphNodes",
+          "type": "FlowGraphData['nodes']",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "graphEdges",
+          "type": "FlowGraphData['edges']",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "{ rfNodes: Node[]; rfEdges: Edge[] }",
       "isExported": true
     },
     {
@@ -5692,7 +5692,15 @@
       "id": "src/checker/index.ts:StaleChecker->src/cli/utils/paths.ts:resolveSourcePath",
       "source": "src/checker/index.ts:StaleChecker",
       "target": "src/cli/utils/paths.ts:resolveSourcePath",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!graph)",
+          "branch": "else",
+          "branchGroup": "branch:39"
+        }
+      ],
+      "label": "else (!graph)",
       "isAsync": false,
       "order": 3
     },
@@ -5756,7 +5764,20 @@
       "id": "src/cli/commands/jsdoc.ts:registerJsDocCommand->src/cli/utils/config.ts:loadConfig",
       "source": "src/cli/commands/jsdoc.ts:registerJsDocCommand",
       "target": "src/cli/utils/config.ts:loadConfig",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (options.run)",
+          "branch": "else",
+          "branchGroup": "branch:127"
+        },
+        {
+          "condition": "else (options.prompt)",
+          "branch": "else",
+          "branchGroup": "branch:161"
+        }
+      ],
+      "label": "else (options.run) → else (options.prompt)",
       "isAsync": false,
       "order": 0
     },
@@ -5764,7 +5785,20 @@
       "id": "src/cli/commands/jsdoc.ts:registerJsDocCommand->src/cli/utils/jsdoc-coverage.ts:scanProjectAsync",
       "source": "src/cli/commands/jsdoc.ts:registerJsDocCommand",
       "target": "src/cli/utils/jsdoc-coverage.ts:scanProjectAsync",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (options.run)",
+          "branch": "else",
+          "branchGroup": "branch:127"
+        },
+        {
+          "condition": "else (options.prompt)",
+          "branch": "else",
+          "branchGroup": "branch:161"
+        }
+      ],
+      "label": "else (options.run) → else (options.prompt)",
       "isAsync": true,
       "order": 1
     },
@@ -5772,7 +5806,20 @@
       "id": "src/cli/commands/jsdoc.ts:registerJsDocCommand->src/cli/utils/jsdoc-coverage.ts:renderJsDocCoverageStats",
       "source": "src/cli/commands/jsdoc.ts:registerJsDocCommand",
       "target": "src/cli/utils/jsdoc-coverage.ts:renderJsDocCoverageStats",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (options.run)",
+          "branch": "else",
+          "branchGroup": "branch:127"
+        },
+        {
+          "condition": "else (options.prompt)",
+          "branch": "else",
+          "branchGroup": "branch:161"
+        }
+      ],
+      "label": "else (options.run) → else (options.prompt)",
       "isAsync": false,
       "order": 2
     },
@@ -5780,7 +5827,20 @@
       "id": "src/cli/commands/jsdoc.ts:registerJsDocCommand->src/cli/utils/jsdoc-coverage.ts:renderMissingJsDocList",
       "source": "src/cli/commands/jsdoc.ts:registerJsDocCommand",
       "target": "src/cli/utils/jsdoc-coverage.ts:renderMissingJsDocList",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (options.run)",
+          "branch": "else",
+          "branchGroup": "branch:127"
+        },
+        {
+          "condition": "else (options.prompt)",
+          "branch": "else",
+          "branchGroup": "branch:161"
+        }
+      ],
+      "label": "else (options.run) → else (options.prompt)",
       "isAsync": false,
       "order": 3
     },
@@ -5945,7 +6005,15 @@
       "id": "src/cli/commands/show.ts:formatMermaidOutput->src/graph/graph-query.ts:connectedSubgraph",
       "source": "src/cli/commands/show.ts:formatMermaidOutput",
       "target": "src/graph/graph-query.ts:connectedSubgraph",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (nodeIds.length === 1)",
+          "branch": "else",
+          "branchGroup": "branch:173"
+        }
+      ],
+      "label": "else (nodeIds.length === 1)",
       "isAsync": false,
       "order": 1
     },
@@ -5953,7 +6021,15 @@
       "id": "src/cli/commands/show.ts:formatMermaidOutput->src/graph/graph-to-mermaid.ts:flowToMermaid",
       "source": "src/cli/commands/show.ts:formatMermaidOutput",
       "target": "src/graph/graph-to-mermaid.ts:flowToMermaid",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (nodeIds.length === 1)",
+          "branch": "else",
+          "branchGroup": "branch:173"
+        }
+      ],
+      "label": "else (nodeIds.length === 1)",
       "isAsync": false,
       "order": 2
     },
@@ -5961,7 +6037,15 @@
       "id": "src/cli/commands/show.ts:formatDocsOutput->src/cli/commands/show.ts:buildMetadataLine",
       "source": "src/cli/commands/show.ts:formatDocsOutput",
       "target": "src/cli/commands/show.ts:buildMetadataLine",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!node)",
+          "branch": "else",
+          "branchGroup": "branch:201"
+        }
+      ],
+      "label": "else (!node)",
       "isAsync": false,
       "order": 0
     },
@@ -5969,7 +6053,15 @@
       "id": "src/cli/commands/show.ts:formatDocsOutput->src/graph/graph-renderer.ts:renderNodeMarkdown",
       "source": "src/cli/commands/show.ts:formatDocsOutput",
       "target": "src/graph/graph-renderer.ts:renderNodeMarkdown",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!node)",
+          "branch": "else",
+          "branchGroup": "branch:201"
+        }
+      ],
+      "label": "else (!node)",
       "isAsync": false,
       "order": 1
     },
@@ -5977,7 +6069,15 @@
       "id": "src/cli/commands/show.ts:formatDocsOutput->src/graph/graph-to-mermaid.ts:nodeToMermaid",
       "source": "src/cli/commands/show.ts:formatDocsOutput",
       "target": "src/graph/graph-to-mermaid.ts:nodeToMermaid",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!node)",
+          "branch": "else",
+          "branchGroup": "branch:201"
+        }
+      ],
+      "label": "else (!node)",
       "isAsync": false,
       "order": 2
     },
@@ -6028,12 +6128,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!existsSync(configPath))",
+          "branch": "else",
+          "branchGroup": "branch:21"
+        },
+        {
           "condition": "if (dirMatch)",
           "branch": "then",
           "branchGroup": "branch:27"
         }
       ],
-      "label": "if (dirMatch)",
+      "label": "else (!existsSync(configPath)) → if (dirMatch)",
       "isAsync": false,
       "order": 0
     },
@@ -6041,7 +6146,15 @@
       "id": "src/cli/utils/config.ts:loadConfig->src/cli/utils/config.ts:parseYamlList",
       "source": "src/cli/utils/config.ts:loadConfig",
       "target": "src/cli/utils/config.ts:parseYamlList",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!existsSync(configPath))",
+          "branch": "else",
+          "branchGroup": "branch:21"
+        }
+      ],
+      "label": "else (!existsSync(configPath))",
       "isAsync": false,
       "order": 1
     },
@@ -6052,12 +6165,22 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!keyMatch)",
+          "branch": "else",
+          "branchGroup": "branch:45"
+        },
+        {
+          "condition": "else (trimmed === '' || trimmed.startsWith('#'))",
+          "branch": "else",
+          "branchGroup": "branch:52"
+        },
+        {
           "condition": "if (listItemMatch)",
           "branch": "then",
           "branchGroup": "branch:54"
         }
       ],
-      "label": "if (listItemMatch)",
+      "label": "else (!keyMatch) → else (trimmed === '' || trimmed.startsWith('#')) → if (listItemMatch)",
       "isAsync": false,
       "order": 0
     },
@@ -6073,7 +6196,20 @@
       "id": "src/cli/utils/detect-sources.ts:detectIncludePatterns->src/cli/utils/detect-sources.ts:containsSourceFiles",
       "source": "src/cli/utils/detect-sources.ts:detectIncludePatterns",
       "target": "src/cli/utils/detect-sources.ts:containsSourceFiles",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (workspacePatterns)",
+          "branch": "else",
+          "branchGroup": "branch:37"
+        },
+        {
+          "condition": "else (matchedCandidates.some((matched) => matched.startsWith(`${ca)",
+          "branch": "else",
+          "branchGroup": "branch:45"
+        }
+      ],
+      "label": "else (workspacePatterns) → else (matchedCandidates.some((matched) => matched.startsWith(`${ca)",
       "isAsync": false,
       "order": 1
     },
@@ -6081,7 +6217,20 @@
       "id": "src/cli/utils/detect-sources.ts:detectIncludePatterns->src/cli/utils/detect-sources.ts:hasRootLevelSourceFiles",
       "source": "src/cli/utils/detect-sources.ts:detectIncludePatterns",
       "target": "src/cli/utils/detect-sources.ts:hasRootLevelSourceFiles",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (workspacePatterns)",
+          "branch": "else",
+          "branchGroup": "branch:37"
+        },
+        {
+          "condition": "else (patterns.length > 0)",
+          "branch": "else",
+          "branchGroup": "branch:55"
+        }
+      ],
+      "label": "else (workspacePatterns) → else (patterns.length > 0)",
       "isAsync": false,
       "order": 2
     },
@@ -6097,7 +6246,15 @@
       "id": "src/cli/utils/detect-sources.ts:detectWorkspacePatterns->src/cli/utils/detect-sources.ts:resolveWorkspaceDirs",
       "source": "src/cli/utils/detect-sources.ts:detectWorkspacePatterns",
       "target": "src/cli/utils/detect-sources.ts:resolveWorkspaceDirs",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!workspaceDirs)",
+          "branch": "else",
+          "branchGroup": "branch:74"
+        }
+      ],
+      "label": "else (!workspaceDirs)",
       "isAsync": false,
       "order": 1
     },
@@ -6105,7 +6262,15 @@
       "id": "src/cli/utils/detect-sources.ts:detectWorkspacePatterns->src/cli/utils/detect-sources.ts:containsSourceFiles",
       "source": "src/cli/utils/detect-sources.ts:detectWorkspacePatterns",
       "target": "src/cli/utils/detect-sources.ts:containsSourceFiles",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!workspaceDirs)",
+          "branch": "else",
+          "branchGroup": "branch:74"
+        }
+      ],
+      "label": "else (!workspaceDirs)",
       "isAsync": false,
       "order": 2
     },
@@ -6129,7 +6294,15 @@
       "id": "src/cli/utils/detect-sources.ts:containsSourceFiles->src/cli/utils/detect-sources.ts:scanDirectory",
       "source": "src/cli/utils/detect-sources.ts:containsSourceFiles",
       "target": "src/cli/utils/detect-sources.ts:scanDirectory",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!existsSync(directoryPath))",
+          "branch": "else",
+          "branchGroup": "branch:209"
+        }
+      ],
+      "label": "else (!existsSync(directoryPath))",
       "isAsync": false,
       "order": 0
     },
@@ -6156,12 +6329,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (entry.isFile() && isSourceFile(entry.name))",
+          "branch": "else",
+          "branchGroup": "branch:225"
+        },
+        {
           "condition": "entry.isDirectory() &&\n      remainingDepth > 0 &&\n      !IG &&",
           "branch": "&&",
           "branchGroup": "branch:230"
         }
       ],
-      "label": "entry.isDirectory() &&\n      remainingDepth > 0 &&\n      !IG &&",
+      "label": "else (entry.isFile() && isSourceFile(entry.name)) → entry.isDirectory() &&\n      remainingDepth > 0 &&\n      !IG &&",
       "isAsync": false,
       "order": 1
     },
@@ -6345,12 +6523,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (withoutJsDoc === 0)",
+          "branch": "else",
+          "branchGroup": "branch:158"
+        },
+        {
           "condition": "if (verbose || withoutJsDoc <= 20)",
           "branch": "then",
           "branchGroup": "branch:160"
         }
       ],
-      "label": "if (verbose || withoutJsDoc <= 20)",
+      "label": "else (withoutJsDoc === 0) → if (verbose || withoutJsDoc <= 20)",
       "isAsync": false,
       "order": 0
     },
@@ -6374,7 +6557,15 @@
       "id": "src/cli/utils/source-files.ts:countImports->src/cli/utils/source-files.ts:resolveImport",
       "source": "src/cli/utils/source-files.ts:countImports",
       "target": "src/cli/utils/source-files.ts:resolveImport",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!specifier.startsWith('.'))",
+          "branch": "else",
+          "branchGroup": "branch:133"
+        }
+      ],
+      "label": "else (!specifier.startsWith('.'))",
       "isAsync": false,
       "order": 0
     },
@@ -6385,12 +6576,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!specifier.startsWith('.'))",
+          "branch": "else",
+          "branchGroup": "branch:133"
+        },
+        {
           "condition": "if (resolved)",
           "branch": "then",
           "branchGroup": "branch:138"
         }
       ],
-      "label": "if (resolved)",
+      "label": "else (!specifier.startsWith('.')) → if (resolved)",
       "isAsync": false,
       "order": 1
     },
@@ -6398,7 +6594,15 @@
       "id": "src/extractors/jsdoc/index.ts:extractJsDoc->src/extractors/jsdoc/index.ts:commentToString",
       "source": "src/extractors/jsdoc/index.ts:extractJsDoc",
       "target": "src/extractors/jsdoc/index.ts:commentToString",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!jsDocs || jsDocs.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:34"
+        }
+      ],
+      "label": "else (!jsDocs || jsDocs.length === 0)",
       "isAsync": false,
       "order": 0
     },
@@ -6406,7 +6610,15 @@
       "id": "src/extractors/jsdoc/index.ts:extractJsDoc->src/extractors/jsdoc/index.ts:extractParamDescriptions",
       "source": "src/extractors/jsdoc/index.ts:extractJsDoc",
       "target": "src/extractors/jsdoc/index.ts:extractParamDescriptions",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!jsDocs || jsDocs.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:34"
+        }
+      ],
+      "label": "else (!jsDocs || jsDocs.length === 0)",
       "isAsync": false,
       "order": 1
     },
@@ -6414,7 +6626,15 @@
       "id": "src/extractors/jsdoc/index.ts:extractJsDoc->src/extractors/jsdoc/index.ts:extractReturns",
       "source": "src/extractors/jsdoc/index.ts:extractJsDoc",
       "target": "src/extractors/jsdoc/index.ts:extractReturns",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!jsDocs || jsDocs.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:34"
+        }
+      ],
+      "label": "else (!jsDocs || jsDocs.length === 0)",
       "isAsync": false,
       "order": 2
     },
@@ -6422,7 +6642,15 @@
       "id": "src/extractors/jsdoc/index.ts:extractJsDoc->src/extractors/jsdoc/index.ts:extractExamples",
       "source": "src/extractors/jsdoc/index.ts:extractJsDoc",
       "target": "src/extractors/jsdoc/index.ts:extractExamples",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!jsDocs || jsDocs.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:34"
+        }
+      ],
+      "label": "else (!jsDocs || jsDocs.length === 0)",
       "isAsync": false,
       "order": 3
     },
@@ -6430,7 +6658,15 @@
       "id": "src/extractors/jsdoc/index.ts:extractJsDoc->src/extractors/jsdoc/index.ts:extractDeprecated",
       "source": "src/extractors/jsdoc/index.ts:extractJsDoc",
       "target": "src/extractors/jsdoc/index.ts:extractDeprecated",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!jsDocs || jsDocs.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:34"
+        }
+      ],
+      "label": "else (!jsDocs || jsDocs.length === 0)",
       "isAsync": false,
       "order": 4
     },
@@ -6438,7 +6674,15 @@
       "id": "src/extractors/jsdoc/index.ts:extractJsDoc->src/extractors/jsdoc/index.ts:extractAllTagTexts",
       "source": "src/extractors/jsdoc/index.ts:extractJsDoc",
       "target": "src/extractors/jsdoc/index.ts:extractAllTagTexts",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!jsDocs || jsDocs.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:34"
+        }
+      ],
+      "label": "else (!jsDocs || jsDocs.length === 0)",
       "isAsync": false,
       "order": 5
     },
@@ -6446,7 +6690,15 @@
       "id": "src/extractors/jsdoc/index.ts:extractJsDoc->src/extractors/jsdoc/index.ts:extractSeeTags",
       "source": "src/extractors/jsdoc/index.ts:extractJsDoc",
       "target": "src/extractors/jsdoc/index.ts:extractSeeTags",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!jsDocs || jsDocs.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:34"
+        }
+      ],
+      "label": "else (!jsDocs || jsDocs.length === 0)",
       "isAsync": false,
       "order": 6
     },
@@ -6454,7 +6706,20 @@
       "id": "src/extractors/jsdoc/index.ts:extractParamDescriptions->src/extractors/jsdoc/index.ts:commentToString",
       "source": "src/extractors/jsdoc/index.ts:extractParamDescriptions",
       "target": "src/extractors/jsdoc/index.ts:commentToString",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!tags)",
+          "branch": "else",
+          "branchGroup": "branch:77"
+        },
+        {
+          "condition": "else (!ts.isJSDocParameterTag(tag))",
+          "branch": "else",
+          "branchGroup": "branch:82"
+        }
+      ],
+      "label": "else (!tags) → else (!ts.isJSDocParameterTag(tag))",
       "isAsync": false,
       "order": 0
     },
@@ -6465,12 +6730,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!tags)",
+          "branch": "else",
+          "branchGroup": "branch:100"
+        },
+        {
           "condition": "if (ts.isJSDocReturnTag(tag))",
           "branch": "then",
           "branchGroup": "branch:103"
         }
       ],
-      "label": "if (ts.isJSDocReturnTag(tag))",
+      "label": "else (!tags) → if (ts.isJSDocReturnTag(tag))",
       "isAsync": false,
       "order": 0
     },
@@ -6478,7 +6748,20 @@
       "id": "src/extractors/jsdoc/index.ts:extractExamples->src/extractors/jsdoc/index.ts:commentToString",
       "source": "src/extractors/jsdoc/index.ts:extractExamples",
       "target": "src/extractors/jsdoc/index.ts:commentToString",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!tags)",
+          "branch": "else",
+          "branchGroup": "branch:116"
+        },
+        {
+          "condition": "else (tag.tagName.text !== 'example')",
+          "branch": "else",
+          "branchGroup": "branch:121"
+        }
+      ],
+      "label": "else (!tags) → else (tag.tagName.text !== 'example')",
       "isAsync": false,
       "order": 0
     },
@@ -6489,12 +6772,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!tags)",
+          "branch": "else",
+          "branchGroup": "branch:137"
+        },
+        {
           "condition": "if (ts.isJSDocDeprecatedTag(tag))",
           "branch": "then",
           "branchGroup": "branch:140"
         }
       ],
-      "label": "if (ts.isJSDocDeprecatedTag(tag))",
+      "label": "else (!tags) → if (ts.isJSDocDeprecatedTag(tag))",
       "isAsync": false,
       "order": 0
     },
@@ -6502,7 +6790,20 @@
       "id": "src/extractors/jsdoc/index.ts:extractSeeTags->src/extractors/jsdoc/index.ts:commentToString",
       "source": "src/extractors/jsdoc/index.ts:extractSeeTags",
       "target": "src/extractors/jsdoc/index.ts:commentToString",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!tags)",
+          "branch": "else",
+          "branchGroup": "branch:158"
+        },
+        {
+          "condition": "else (tag.tagName.text !== 'see')",
+          "branch": "else",
+          "branchGroup": "branch:163"
+        }
+      ],
+      "label": "else (!tags) → else (tag.tagName.text !== 'see')",
       "isAsync": false,
       "order": 0
     },
@@ -6510,7 +6811,20 @@
       "id": "src/extractors/jsdoc/index.ts:extractAllTagTexts->src/extractors/jsdoc/index.ts:commentToString",
       "source": "src/extractors/jsdoc/index.ts:extractAllTagTexts",
       "target": "src/extractors/jsdoc/index.ts:commentToString",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!tags)",
+          "branch": "else",
+          "branchGroup": "branch:193"
+        },
+        {
+          "condition": "else (tag.tagName.text !== tagName)",
+          "branch": "else",
+          "branchGroup": "branch:198"
+        }
+      ],
+      "label": "else (!tags) → else (tag.tagName.text !== tagName)",
       "isAsync": false,
       "order": 0
     },
@@ -6582,9 +6896,43 @@
       "id": "src/graph/graph-builder.ts:GraphBuilder->src/graph/resolve-import/index.ts:resolveImportPath",
       "source": "src/graph/graph-builder.ts:GraphBuilder",
       "target": "src/graph/resolve-import/index.ts:resolveImportPath",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (sameFileMatch)",
+          "branch": "else",
+          "branchGroup": "branch:245"
+        },
+        {
+          "condition": "else (!importMatch)",
+          "branch": "else",
+          "branchGroup": "branch:252"
+        }
+      ],
+      "label": "else (sameFileMatch) → else (!importMatch)",
       "isAsync": false,
       "order": 5
+    },
+    {
+      "id": "src/graph/graph-builder.ts:GraphBuilder->src/graph/resolve-import/index.ts:resolveImportPath::1",
+      "source": "src/graph/graph-builder.ts:GraphBuilder",
+      "target": "src/graph/resolve-import/index.ts:resolveImportPath",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (depth > 5)",
+          "branch": "else",
+          "branchGroup": "branch:285"
+        },
+        {
+          "condition": "else (!match)",
+          "branch": "else",
+          "branchGroup": "branch:290"
+        }
+      ],
+      "label": "else (depth > 5) → else (!match)",
+      "isAsync": false,
+      "order": 6
     },
     {
       "id": "src/graph/graph-builder.ts:GraphBuilder->src/graph/graph-builder.ts:connectionTypeToEdgeType",
@@ -6600,7 +6948,7 @@
       ],
       "label": "if (isEventMatch ||\n        isTaskMatch ||\n        isInvokeMatch)",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "src/graph/graph-query.ts:reachableFrom->src/graph/graph-query.ts:buildAdjacencyList",
@@ -6670,7 +7018,15 @@
       "id": "src/graph/graph-to-mermaid.ts:nodeToMermaid->src/graph/graph-query.ts:connectedSubgraph",
       "source": "src/graph/graph-to-mermaid.ts:nodeToMermaid",
       "target": "src/graph/graph-query.ts:connectedSubgraph",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!nodeMap.has(nodeId))",
+          "branch": "else",
+          "branchGroup": "branch:24"
+        }
+      ],
+      "label": "else (!nodeMap.has(nodeId))",
       "isAsync": false,
       "order": 0
     },
@@ -6678,7 +7034,15 @@
       "id": "src/graph/graph-to-mermaid.ts:nodeToMermaid->src/graph/graph-to-mermaid.ts:buildMermaid",
       "source": "src/graph/graph-to-mermaid.ts:nodeToMermaid",
       "target": "src/graph/graph-to-mermaid.ts:buildMermaid",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!nodeMap.has(nodeId))",
+          "branch": "else",
+          "branchGroup": "branch:24"
+        }
+      ],
+      "label": "else (!nodeMap.has(nodeId))",
       "isAsync": false,
       "order": 1
     },
@@ -6753,12 +7117,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (tsconfigCache.has(dir))",
+          "branch": "else",
+          "branchGroup": "branch:63"
+        },
+        {
           "condition": "if (existsSync(tsconfigPath))",
           "branch": "then",
           "branchGroup": "branch:68"
         }
       ],
-      "label": "if (existsSync(tsconfigPath))",
+      "label": "else (tsconfigCache.has(dir)) → if (existsSync(tsconfigPath))",
       "isAsync": false,
       "order": 0
     },
@@ -6766,46 +7135,25 @@
       "id": "src/graph/resolve-import/index.ts:resolveImportPath->src/graph/resolve-import/index.ts:tryResolveFile",
       "source": "src/graph/resolve-import/index.ts:resolveImportPath",
       "target": "src/graph/resolve-import/index.ts:tryResolveFile",
-      "type": "conditional-call",
-      "conditions": [
-        {
-          "condition": "if (importSource.startsWith('.'))",
-          "branch": "then",
-          "branchGroup": "branch:167"
-        }
-      ],
-      "label": "if (importSource.startsWith('.'))",
+      "type": "direct-call",
       "isAsync": false,
       "order": 0
-    },
-    {
-      "id": "src/graph/resolve-import/index.ts:resolveImportPath->src/graph/resolve-import/index.ts:tryResolveFile::1",
-      "source": "src/graph/resolve-import/index.ts:resolveImportPath",
-      "target": "src/graph/resolve-import/index.ts:tryResolveFile",
-      "type": "conditional-call",
-      "conditions": [
-        {
-          "condition": "if (tsconfig)",
-          "branch": "then",
-          "branchGroup": "branch:176"
-        },
-        {
-          "condition": "if (importSource.startsWith(prefix))",
-          "branch": "then",
-          "branchGroup": "branch:178"
-        }
-      ],
-      "label": "if (tsconfig) → if (importSource.startsWith(prefix))",
-      "isAsync": false,
-      "order": 1
     },
     {
       "id": "src/graph/resolve-import/index.ts:resolveImportPath->src/graph/resolve-import/index.ts:loadTsconfigPaths",
       "source": "src/graph/resolve-import/index.ts:resolveImportPath",
       "target": "src/graph/resolve-import/index.ts:loadTsconfigPaths",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (importSource.startsWith('.'))",
+          "branch": "else",
+          "branchGroup": "branch:167"
+        }
+      ],
+      "label": "else (importSource.startsWith('.'))",
       "isAsync": false,
-      "order": 2
+      "order": 1
     },
     {
       "id": "src/graph/symbol-index.ts:buildSymbolIndexFromGraph->src/graph/graph-renderer.ts:getDocPath",
@@ -6827,7 +7175,20 @@
       "id": "src/graph/symbol-index.ts:buildDocResponse->src/graph/graph-renderer.ts:renderNodeMarkdown",
       "source": "src/graph/symbol-index.ts:buildDocResponse",
       "target": "src/graph/graph-renderer.ts:renderNodeMarkdown",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!entry)",
+          "branch": "else",
+          "branchGroup": "branch:169"
+        },
+        {
+          "condition": "else (!node)",
+          "branch": "else",
+          "branchGroup": "branch:172"
+        }
+      ],
+      "label": "else (!entry) → else (!node)",
       "isAsync": false,
       "order": 0
     },
@@ -6835,7 +7196,20 @@
       "id": "src/graph/symbol-index.ts:buildDocResponse->src/graph/graph-to-mermaid.ts:nodeToMermaid",
       "source": "src/graph/symbol-index.ts:buildDocResponse",
       "target": "src/graph/graph-to-mermaid.ts:nodeToMermaid",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!entry)",
+          "branch": "else",
+          "branchGroup": "branch:169"
+        },
+        {
+          "condition": "else (!node)",
+          "branch": "else",
+          "branchGroup": "branch:172"
+        }
+      ],
+      "label": "else (!entry) → else (!node)",
       "isAsync": false,
       "order": 1
     },
@@ -6878,12 +7252,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (cachedProjectFiles === projectFiles && cachedRouteMap)",
+          "branch": "else",
+          "branchGroup": "branch:54"
+        },
+        {
           "condition": "if (API_ROUTE_PATTERN.test(f))",
           "branch": "then",
           "branchGroup": "branch:59"
         }
       ],
-      "label": "if (API_ROUTE_PATTERN.test(f))",
+      "label": "else (cachedProjectFiles === projectFiles && cachedRouteMap) → if (API_ROUTE_PATTERN.test(f))",
       "isAsync": false,
       "order": 0
     },
@@ -6910,12 +7289,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (API_ROUTE_PATTERN.test(filePath) && HTTP_METHODS.includes(sy)",
+          "branch": "else",
+          "branchGroup": "branch:76"
+        },
+        {
           "condition": "if (PAGE_PATTERN.test(filePath) &&\n      (symbol.name === 'defau)",
           "branch": "then",
           "branchGroup": "branch:85"
         }
       ],
-      "label": "if (PAGE_PATTERN.test(filePath) &&\n      (symbol.name === 'defau)",
+      "label": "else (API_ROUTE_PATTERN.test(filePath) && HTTP_METHODS.includes(sy) → if (PAGE_PATTERN.test(filePath) &&\n      (symbol.name === 'defau)",
       "isAsync": false,
       "order": 1
     },
@@ -6942,12 +7326,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (symbol.kind !== 'const' || !symbol.initializerCall)",
+          "branch": "else",
+          "branchGroup": "branch:79"
+        },
+        {
           "condition": "if (functionName === 'task' && expression === 'schedules.task')",
           "branch": "then",
           "branchGroup": "branch:82"
         }
       ],
-      "label": "if (functionName === 'task' && expression === 'schedules.task')",
+      "label": "else (symbol.kind !== 'const' || !symbol.initializerCall) → if (functionName === 'task' && expression === 'schedules.task')",
       "isAsync": false,
       "order": 0
     },
@@ -6958,12 +7347,22 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (symbol.kind !== 'const' || !symbol.initializerCall)",
+          "branch": "else",
+          "branchGroup": "branch:79"
+        },
+        {
+          "condition": "else (functionName === 'task' && expression === 'schedules.task')",
+          "branch": "else",
+          "branchGroup": "branch:82"
+        },
+        {
           "condition": "if (['task', 'Task', 'schemaTask'].includes(functionName))",
           "branch": "then",
           "branchGroup": "branch:96"
         }
       ],
-      "label": "if (['task', 'Task', 'schemaTask'].includes(functionName))",
+      "label": "else (symbol.kind !== 'const' || !symbol.initializerCall) → else (functionName === 'task' && expression === 'schedules.task') → if (['task', 'Task', 'schemaTask'].includes(functionName))",
       "isAsync": false,
       "order": 1
     },
@@ -6974,12 +7373,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (symbol.kind !== 'const' || !symbol.initializerCall)",
+          "branch": "else",
+          "branchGroup": "branch:79"
+        },
+        {
           "condition": "if (functionName === 'task' && expression === 'schedules.task')",
           "branch": "then",
           "branchGroup": "branch:82"
         }
       ],
-      "label": "if (functionName === 'task' && expression === 'schedules.task')",
+      "label": "else (symbol.kind !== 'const' || !symbol.initializerCall) → if (functionName === 'task' && expression === 'schedules.task')",
       "isAsync": false,
       "order": 2
     },
@@ -6987,7 +7391,15 @@
       "id": "src/server/chat.ts:handleChatRequest->src/graph/chat-helpers.ts:buildSystemPrompt",
       "source": "src/server/chat.ts:handleChatRequest",
       "target": "src/graph/chat-helpers.ts:buildSystemPrompt",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!body.apiKey)",
+          "branch": "else",
+          "branchGroup": "branch:49"
+        }
+      ],
+      "label": "else (!body.apiKey)",
       "isAsync": false,
       "order": 0
     },
@@ -6995,7 +7407,15 @@
       "id": "src/server/chat.ts:handleChatRequest->src/graph/chat-helpers.ts:executeSearchNodes",
       "source": "src/server/chat.ts:handleChatRequest",
       "target": "src/graph/chat-helpers.ts:executeSearchNodes",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!body.apiKey)",
+          "branch": "else",
+          "branchGroup": "branch:49"
+        }
+      ],
+      "label": "else (!body.apiKey)",
       "isAsync": false,
       "order": 1
     },
@@ -7003,7 +7423,15 @@
       "id": "src/server/chat.ts:handleChatRequest->src/graph/chat-helpers.ts:executeSelectNodes",
       "source": "src/server/chat.ts:handleChatRequest",
       "target": "src/graph/chat-helpers.ts:executeSelectNodes",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!body.apiKey)",
+          "branch": "else",
+          "branchGroup": "branch:49"
+        }
+      ],
+      "label": "else (!body.apiKey)",
       "isAsync": false,
       "order": 2
     },
@@ -7038,12 +7466,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (filename !== 'graph.json')",
+          "branch": "else",
+          "branchGroup": "branch:73"
+        },
+        {
           "condition": "if (graph)",
           "branch": "then",
           "branchGroup": "branch:77"
         }
       ],
-      "label": "if (graph)",
+      "label": "else (filename !== 'graph.json') → if (graph)",
       "isAsync": false,
       "order": 2
     },
@@ -7054,12 +7487,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (url.pathname === '/api/graph')",
+          "branch": "else",
+          "branchGroup": "branch:93"
+        },
+        {
           "condition": "if (url.pathname === '/api/index')",
           "branch": "then",
           "branchGroup": "branch:111"
         }
       ],
-      "label": "if (url.pathname === '/api/index')",
+      "label": "else (url.pathname === '/api/graph') → if (url.pathname === '/api/index')",
       "isAsync": false,
       "order": 3
     },
@@ -7070,12 +7508,32 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (url.pathname === '/api/graph')",
+          "branch": "else",
+          "branchGroup": "branch:93"
+        },
+        {
+          "condition": "else (url.pathname === '/api/index')",
+          "branch": "else",
+          "branchGroup": "branch:111"
+        },
+        {
+          "condition": "else (req.method === 'OPTIONS' && url.pathname === '/api/chat')",
+          "branch": "else",
+          "branchGroup": "branch:120"
+        },
+        {
           "condition": "if (url.pathname === '/api/chat' && req.method === 'POST')",
           "branch": "then",
           "branchGroup": "branch:131"
+        },
+        {
+          "condition": "else (!graph)",
+          "branch": "else",
+          "branchGroup": "branch:133"
         }
       ],
-      "label": "if (url.pathname === '/api/chat' && req.method === 'POST')",
+      "label": "else (url.pathname === '/api/graph') → else (url.pathname === '/api/index') → else (req.method === 'OPTIONS' && url.pathname === '/api/chat') → if (url.pathname === '/api/chat' && req.method === 'POST') → else (!graph)",
       "isAsync": true,
       "order": 4
     },
@@ -7086,12 +7544,42 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (url.pathname === '/api/graph')",
+          "branch": "else",
+          "branchGroup": "branch:93"
+        },
+        {
+          "condition": "else (url.pathname === '/api/index')",
+          "branch": "else",
+          "branchGroup": "branch:111"
+        },
+        {
+          "condition": "else (req.method === 'OPTIONS' && url.pathname === '/api/chat')",
+          "branch": "else",
+          "branchGroup": "branch:120"
+        },
+        {
+          "condition": "else (url.pathname === '/api/chat' && req.method === 'POST')",
+          "branch": "else",
+          "branchGroup": "branch:131"
+        },
+        {
           "condition": "if (url.pathname === '/api/doc')",
           "branch": "then",
           "branchGroup": "branch:144"
+        },
+        {
+          "condition": "else (!docPath)",
+          "branch": "else",
+          "branchGroup": "branch:147"
+        },
+        {
+          "condition": "else (!graph)",
+          "branch": "else",
+          "branchGroup": "branch:152"
         }
       ],
-      "label": "if (url.pathname === '/api/doc')",
+      "label": "else (url.pathname === '/api/graph') → else (url.pathname === '/api/index') → else (req.method === 'OPTIONS' && url.pathname === '/api/chat') → else (url.pathname === '/api/chat' && req.method === 'POST') → if (url.pathname === '/api/doc') → else (!docPath) → else (!graph)",
       "isAsync": false,
       "order": 5
     },
@@ -7099,9 +7587,83 @@
       "id": "src/server/index.ts:startServer->src/server/index.ts:serveStaticFile",
       "source": "src/server/index.ts:startServer",
       "target": "src/server/index.ts:serveStaticFile",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (url.pathname === '/api/graph')",
+          "branch": "else",
+          "branchGroup": "branch:93"
+        },
+        {
+          "condition": "else (url.pathname === '/api/index')",
+          "branch": "else",
+          "branchGroup": "branch:111"
+        },
+        {
+          "condition": "else (req.method === 'OPTIONS' && url.pathname === '/api/chat')",
+          "branch": "else",
+          "branchGroup": "branch:120"
+        },
+        {
+          "condition": "else (url.pathname === '/api/chat' && req.method === 'POST')",
+          "branch": "else",
+          "branchGroup": "branch:131"
+        },
+        {
+          "condition": "else (url.pathname === '/api/doc')",
+          "branch": "else",
+          "branchGroup": "branch:144"
+        },
+        {
+          "condition": "if (url.pathname.startsWith('/assets/'))",
+          "branch": "then",
+          "branchGroup": "branch:173"
+        },
+        {
+          "condition": "assetPath.startsWith(`${viewerDistDir}/`) &&",
+          "branch": "&&",
+          "branchGroup": "branch:179"
+        }
+      ],
+      "label": "else (url.pathname === '/api/graph') → else (url.pathname === '/api/index') → else (req.method === 'OPTIONS' && url.pathname === '/api/chat') → else (url.pathname === '/api/chat' && req.method === 'POST') → else (url.pathname === '/api/doc') → if (url.pathname.startsWith('/assets/')) → assetPath.startsWith(`${viewerDistDir}/`) &&",
       "isAsync": false,
       "order": 6
+    },
+    {
+      "id": "src/server/index.ts:startServer->src/server/index.ts:serveStaticFile::1",
+      "source": "src/server/index.ts:startServer",
+      "target": "src/server/index.ts:serveStaticFile",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (url.pathname === '/api/graph')",
+          "branch": "else",
+          "branchGroup": "branch:93"
+        },
+        {
+          "condition": "else (url.pathname === '/api/index')",
+          "branch": "else",
+          "branchGroup": "branch:111"
+        },
+        {
+          "condition": "else (req.method === 'OPTIONS' && url.pathname === '/api/chat')",
+          "branch": "else",
+          "branchGroup": "branch:120"
+        },
+        {
+          "condition": "else (url.pathname === '/api/chat' && req.method === 'POST')",
+          "branch": "else",
+          "branchGroup": "branch:131"
+        },
+        {
+          "condition": "else (url.pathname === '/api/doc')",
+          "branch": "else",
+          "branchGroup": "branch:144"
+        }
+      ],
+      "label": "else (url.pathname === '/api/graph') → else (url.pathname === '/api/index') → else (req.method === 'OPTIONS' && url.pathname === '/api/chat') → else (url.pathname === '/api/chat' && req.method === 'POST') → else (url.pathname === '/api/doc')",
+      "isAsync": false,
+      "order": 7
     },
     {
       "id": "src/server/symbol-index.ts:buildDocResponseWithSVG->src/graph/symbol-index.ts:buildDocResponse",
@@ -7179,6 +7741,11 @@
           "branchGroup": "branch:337"
         },
         {
+          "condition": "else (!textContent && selectedNodeIds.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:349"
+        },
+        {
           "condition": "textContent &&",
           "branch": "&&",
           "branchGroup": "branch:364"
@@ -7189,7 +7756,7 @@
           "branchGroup": "branch:365"
         }
       ],
-      "label": "settings.apiKey && → textContent && → else (msg.role === 'user')",
+      "label": "settings.apiKey && → else (!textContent && selectedNodeIds.length === 0) → textContent && → else (msg.role === 'user')",
       "isAsync": false,
       "order": 4
     },
@@ -7197,7 +7764,15 @@
       "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ui/drawer.tsx:Drawer",
       "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
       "target": "src/server/viewer/components/ui/drawer.tsx:Drawer",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:428"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 5
     },
@@ -7205,7 +7780,15 @@
       "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ui/drawer.tsx:DrawerContent",
       "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
       "target": "src/server/viewer/components/ui/drawer.tsx:DrawerContent",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:428"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 6
     },
@@ -7213,7 +7796,15 @@
       "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ui/drawer.tsx:DrawerHeader",
       "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
       "target": "src/server/viewer/components/ui/drawer.tsx:DrawerHeader",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:428"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 7
     },
@@ -7221,7 +7812,15 @@
       "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ui/drawer.tsx:DrawerDescription",
       "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
       "target": "src/server/viewer/components/ui/drawer.tsx:DrawerDescription",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:428"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 8
     },
@@ -7229,7 +7828,15 @@
       "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ui/drawer.tsx:DrawerBody",
       "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
       "target": "src/server/viewer/components/ui/drawer.tsx:DrawerBody",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:428"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 9
     },
@@ -7317,9 +7924,33 @@
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/DocPanel.tsx:nodeToDocPath",
       "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
       "target": "src/server/viewer/components/DocPanel.tsx:nodeToDocPath",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!node)",
+          "branch": "else",
+          "branchGroup": "branch:53"
+        }
+      ],
+      "label": "else (!node)",
       "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/DocPanel.tsx:nodeToDocPath::1",
+      "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "target": "src/server/viewer/components/DocPanel.tsx:nodeToDocPath",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (node)",
+          "branch": "then",
+          "branchGroup": "branch:85"
+        }
+      ],
+      "label": "if (node)",
+      "isAsync": false,
+      "order": 1
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer",
@@ -7327,7 +7958,7 @@
       "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerContent",
@@ -7335,7 +7966,7 @@
       "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerContent",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerHeader",
@@ -7343,7 +7974,7 @@
       "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerHeader",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerTitle",
@@ -7351,7 +7982,7 @@
       "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerTitle",
       "type": "direct-call",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/DocPanel.tsx:docPathToUrl",
@@ -7367,7 +7998,7 @@
       ],
       "label": "doc &&",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/DocPanel.tsx:docPathToUrl::1",
@@ -7383,7 +8014,7 @@
       ],
       "label": "doc &&",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerClose",
@@ -7391,7 +8022,7 @@
       "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerClose",
       "type": "direct-call",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerDescription",
@@ -7399,7 +8030,7 @@
       "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerDescription",
       "type": "direct-call",
       "isAsync": false,
-      "order": 8
+      "order": 9
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerBody",
@@ -7407,7 +8038,7 @@
       "target": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerBody",
       "type": "direct-call",
       "isAsync": false,
-      "order": 9
+      "order": 10
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/DocContent.tsx:DocContent",
@@ -7423,7 +8054,7 @@
       ],
       "label": "doc &&",
       "isAsync": false,
-      "order": 10
+      "order": 11
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerFooter",
@@ -7439,7 +8070,7 @@
       ],
       "label": "doc &&",
       "isAsync": false,
-      "order": 11
+      "order": 12
     },
     {
       "id": "src/server/viewer/components/DocsTree.tsx:TreeDir->src/server/viewer/components/DocsTree.tsx:Guides",
@@ -7448,12 +8079,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!hasChildren)",
+          "branch": "else",
+          "branchGroup": "branch:90"
+        },
+        {
           "condition": "depth > 0 &&",
           "branch": "&&",
           "branchGroup": "branch:124"
         }
       ],
-      "label": "depth > 0 &&",
+      "label": "else (!hasChildren) → depth > 0 &&",
       "isAsync": false,
       "order": 0
     },
@@ -7464,12 +8100,22 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!hasChildren)",
+          "branch": "else",
+          "branchGroup": "branch:90"
+        },
+        {
           "condition": "!isCollapsed &&",
           "branch": "&&",
           "branchGroup": "branch:133"
+        },
+        {
+          "condition": "else (item.type === 'dir')",
+          "branch": "else",
+          "branchGroup": "branch:136"
         }
       ],
-      "label": "!isCollapsed &&",
+      "label": "else (!hasChildren) → !isCollapsed && → else (item.type === 'dir')",
       "isAsync": false,
       "order": 1
     },
@@ -7479,6 +8125,11 @@
       "target": "src/server/viewer/components/DocsTree.tsx:TreeDir",
       "type": "conditional-call",
       "conditions": [
+        {
+          "condition": "else (!hasChildren)",
+          "branch": "else",
+          "branchGroup": "branch:90"
+        },
         {
           "condition": "!isCollapsed &&",
           "branch": "&&",
@@ -7490,7 +8141,7 @@
           "branchGroup": "branch:136"
         }
       ],
-      "label": "!isCollapsed && → if (item.type === 'dir')",
+      "label": "else (!hasChildren) → !isCollapsed && → if (item.type === 'dir')",
       "isAsync": false,
       "order": 2
     },
@@ -7501,12 +8152,22 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!hasChildren)",
+          "branch": "else",
+          "branchGroup": "branch:90"
+        },
+        {
           "condition": "!isCollapsed &&",
           "branch": "&&",
           "branchGroup": "branch:133"
+        },
+        {
+          "condition": "else (item.type === 'dir')",
+          "branch": "else",
+          "branchGroup": "branch:136"
         }
       ],
-      "label": "!isCollapsed &&",
+      "label": "else (!hasChildren) → !isCollapsed && → else (item.type === 'dir')",
       "isAsync": false,
       "order": 3
     },
@@ -7530,7 +8191,15 @@
       "id": "src/server/viewer/components/DocsTree.tsx:DocsTree->src/server/viewer/components/DocsTree.tsx:buildTree",
       "source": "src/server/viewer/components/DocsTree.tsx:DocsTree",
       "target": "src/server/viewer/components/DocsTree.tsx:buildTree",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!index)",
+          "branch": "else",
+          "branchGroup": "branch:199"
+        }
+      ],
+      "label": "else (!index)",
       "isAsync": false,
       "order": 2
     },
@@ -7541,12 +8210,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!index)",
+          "branch": "else",
+          "branchGroup": "branch:232"
+        },
+        {
           "condition": "tree &&",
           "branch": "&&",
           "branchGroup": "branch:265"
         }
       ],
-      "label": "tree &&",
+      "label": "else (!index) → tree &&",
       "isAsync": false,
       "order": 3
     },
@@ -7557,12 +8231,17 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!related || related.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:17"
+        },
+        {
           "condition": "if (docPath)",
           "branch": "then",
           "branchGroup": "branch:25"
         }
       ],
-      "label": "if (docPath)",
+      "label": "else (!related || related.length === 0) → if (docPath)",
       "isAsync": false,
       "order": 0
     },
@@ -7586,7 +8265,15 @@
       "id": "src/server/viewer/components/DocsViewer.tsx:DocsViewer->src/graph/symbol-index.ts:buildDocResponse",
       "source": "src/server/viewer/components/DocsViewer.tsx:DocsViewer",
       "target": "src/graph/symbol-index.ts:buildDocResponse",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!docPath || !ctx)",
+          "branch": "else",
+          "branchGroup": "branch:52"
+        }
+      ],
+      "label": "else (!docPath || !ctx)",
       "isAsync": false,
       "order": 2
     },
@@ -7594,7 +8281,15 @@
       "id": "src/server/viewer/components/DocsViewer.tsx:DocsViewer->src/server/viewer/components/DocsViewer.tsx:makeRelatedLinksClickable",
       "source": "src/server/viewer/components/DocsViewer.tsx:DocsViewer",
       "target": "src/server/viewer/components/DocsViewer.tsx:makeRelatedLinksClickable",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!containerRef.current || !doc)",
+          "branch": "else",
+          "branchGroup": "branch:58"
+        }
+      ],
+      "label": "else (!containerRef.current || !doc)",
       "isAsync": false,
       "order": 3
     },
@@ -7605,12 +8300,22 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!docPath)",
+          "branch": "else",
+          "branchGroup": "branch:86"
+        },
+        {
+          "condition": "else (!doc)",
+          "branch": "else",
+          "branchGroup": "branch:95"
+        },
+        {
           "condition": "if (doc.dependencyGraph)",
           "branch": "then",
           "branchGroup": "branch:102"
         }
       ],
-      "label": "if (doc.dependencyGraph)",
+      "label": "else (!docPath) → else (!doc) → if (doc.dependencyGraph)",
       "isAsync": false,
       "order": 4
     },
@@ -7621,12 +8326,22 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!docPath)",
+          "branch": "else",
+          "branchGroup": "branch:86"
+        },
+        {
+          "condition": "else (!doc)",
+          "branch": "else",
+          "branchGroup": "branch:95"
+        },
+        {
           "condition": "if (doc.treckVersion)",
           "branch": "then",
           "branchGroup": "branch:166"
         }
       ],
-      "label": "if (doc.treckVersion)",
+      "label": "else (!docPath) → else (!doc) → if (doc.treckVersion)",
       "isAsync": false,
       "order": 5
     },
@@ -7637,12 +8352,22 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!docPath)",
+          "branch": "else",
+          "branchGroup": "branch:86"
+        },
+        {
+          "condition": "else (!doc)",
+          "branch": "else",
+          "branchGroup": "branch:95"
+        },
+        {
           "condition": "badges.length > 0 &&",
           "branch": "&&",
           "branchGroup": "branch:193"
         }
       ],
-      "label": "badges.length > 0 &&",
+      "label": "else (!docPath) → else (!doc) → badges.length > 0 &&",
       "isAsync": false,
       "order": 6
     },
@@ -7652,6 +8377,16 @@
       "target": "src/server/viewer/components/MissingJsDocBanner.tsx:TrivialSymbolInfo",
       "type": "conditional-call",
       "conditions": [
+        {
+          "condition": "else (!docPath)",
+          "branch": "else",
+          "branchGroup": "branch:86"
+        },
+        {
+          "condition": "else (!doc)",
+          "branch": "else",
+          "branchGroup": "branch:95"
+        },
         {
           "condition": "doc.hasJsDoc === false &&\n          doc.exported &&",
           "branch": "&&",
@@ -7663,7 +8398,7 @@
           "branchGroup": "branch:210"
         }
       ],
-      "label": "doc.hasJsDoc === false &&\n          doc.exported && → if (doc.isTrivial)",
+      "label": "else (!docPath) → else (!doc) → doc.hasJsDoc === false &&\n          doc.exported && → if (doc.isTrivial)",
       "isAsync": false,
       "order": 7
     },
@@ -7673,6 +8408,16 @@
       "target": "src/server/viewer/components/MissingJsDocBanner.tsx:MissingJsDocBanner",
       "type": "conditional-call",
       "conditions": [
+        {
+          "condition": "else (!docPath)",
+          "branch": "else",
+          "branchGroup": "branch:86"
+        },
+        {
+          "condition": "else (!doc)",
+          "branch": "else",
+          "branchGroup": "branch:95"
+        },
         {
           "condition": "doc.hasJsDoc === false &&\n          doc.exported &&",
           "branch": "&&",
@@ -7684,7 +8429,7 @@
           "branchGroup": "branch:210"
         }
       ],
-      "label": "doc.hasJsDoc === false &&\n          doc.exported && → else (doc.isTrivial)",
+      "label": "else (!docPath) → else (!doc) → doc.hasJsDoc === false &&\n          doc.exported && → else (doc.isTrivial)",
       "isAsync": false,
       "order": 8
     },
@@ -7701,38 +8446,6 @@
         }
       ],
       "label": "!loading && availableTypes.size > 0 &&",
-      "isAsync": false,
-      "order": 0
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:toReactFlowNode->src/server/viewer/components/FlowGraph.tsx:getNodeType",
-      "source": "src/server/viewer/components/FlowGraph.tsx:toReactFlowNode",
-      "target": "src/server/viewer/components/FlowGraph.tsx:getNodeType",
-      "type": "direct-call",
-      "isAsync": false,
-      "order": 0
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:cleanConditionText->src/server/viewer/components/FlowGraph.tsx:negateExpression",
-      "source": "src/server/viewer/components/FlowGraph.tsx:cleanConditionText",
-      "target": "src/server/viewer/components/FlowGraph.tsx:negateExpression",
-      "type": "conditional-call",
-      "conditions": [
-        {
-          "condition": "if (elseMatch)",
-          "branch": "then",
-          "branchGroup": "branch:127"
-        }
-      ],
-      "label": "if (elseMatch)",
-      "isAsync": false,
-      "order": 0
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:expandConditionals->src/server/viewer/components/FlowGraph.tsx:cleanConditionText",
-      "source": "src/server/viewer/components/FlowGraph.tsx:expandConditionals",
-      "target": "src/server/viewer/components/FlowGraph.tsx:cleanConditionText",
-      "type": "direct-call",
       "isAsync": false,
       "order": 0
     },
@@ -7761,7 +8474,7 @@
         {
           "condition": "if (enabledTypes)",
           "branch": "then",
-          "branchGroup": "branch:515"
+          "branchGroup": "branch:346"
         }
       ],
       "label": "if (enabledTypes)",
@@ -7769,15 +8482,15 @@
       "order": 1
     },
     {
-      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:expandConditionals",
+      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/condition-expansion.ts:expandConditionals",
       "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
-      "target": "src/server/viewer/components/FlowGraph.tsx:expandConditionals",
+      "target": "src/server/viewer/components/condition-expansion.ts:expandConditionals",
       "type": "conditional-call",
       "conditions": [
         {
           "condition": "if (showConditionals)",
           "branch": "then",
-          "branchGroup": "branch:574"
+          "branchGroup": "branch:405"
         }
       ],
       "label": "if (showConditionals)",
@@ -7785,20 +8498,20 @@
       "order": 2
     },
     {
-      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:expandConditionals::1",
+      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/condition-expansion.ts:expandConditionals::1",
       "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
-      "target": "src/server/viewer/components/FlowGraph.tsx:expandConditionals",
+      "target": "src/server/viewer/components/condition-expansion.ts:expandConditionals",
       "type": "conditional-call",
       "conditions": [
         {
           "condition": "if (!initialMeasureDone && !showConditionals)",
           "branch": "then",
-          "branchGroup": "branch:594"
+          "branchGroup": "branch:425"
         },
         {
           "condition": "if (hasConditionals)",
           "branch": "then",
-          "branchGroup": "branch:598"
+          "branchGroup": "branch:429"
         }
       ],
       "label": "if (!initialMeasureDone && !showConditionals) → if (hasConditionals)",
@@ -7806,10 +8519,18 @@
       "order": 3
     },
     {
-      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:toReactFlowNode",
+      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/condition-expansion.ts:toReactFlowNode",
       "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
-      "target": "src/server/viewer/components/FlowGraph.tsx:toReactFlowNode",
-      "type": "direct-call",
+      "target": "src/server/viewer/components/condition-expansion.ts:toReactFlowNode",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (showConditionals)",
+          "branch": "else",
+          "branchGroup": "branch:405"
+        }
+      ],
+      "label": "else (showConditionals)",
       "isAsync": false,
       "order": 4
     },
@@ -7817,7 +8538,15 @@
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:toReactFlowEdges",
       "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
       "target": "src/server/viewer/components/FlowGraph.tsx:toReactFlowEdges",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (showConditionals)",
+          "branch": "else",
+          "branchGroup": "branch:405"
+        }
+      ],
+      "label": "else (showConditionals)",
       "isAsync": false,
       "order": 5
     },
@@ -7825,9 +8554,49 @@
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:runElkLayout",
       "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
       "target": "src/server/viewer/components/FlowGraph.tsx:runElkLayout",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (allCached && rfNodes.length > 0)",
+          "branch": "then",
+          "branchGroup": "branch:438"
+        }
+      ],
+      "label": "if (allCached && rfNodes.length > 0)",
       "isAsync": true,
       "order": 6
+    },
+    {
+      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:runElkLayout::1",
+      "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
+      "target": "src/server/viewer/components/FlowGraph.tsx:runElkLayout",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!needsLayout || !nodesInitialized || !visibleGraphRef.curren)",
+          "branch": "else",
+          "branchGroup": "branch:472"
+        }
+      ],
+      "label": "else (!needsLayout || !nodesInitialized || !visibleGraphRef.curren)",
+      "isAsync": true,
+      "order": 7
+    },
+    {
+      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:runElkLayout::2",
+      "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
+      "target": "src/server/viewer/components/FlowGraph.tsx:runElkLayout",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!visibleGraphRef.current || needsLayout)",
+          "branch": "else",
+          "branchGroup": "branch:506"
+        }
+      ],
+      "label": "else (!visibleGraphRef.current || needsLayout)",
+      "isAsync": true,
+      "order": 8
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/grid.ts:snapCeil",
@@ -7836,14 +8605,19 @@
       "type": "conditional-call",
       "conditions": [
         {
+          "condition": "else (!needsLayout || !nodesInitialized || !visibleGraphRef.curren)",
+          "branch": "else",
+          "branchGroup": "branch:472"
+        },
+        {
           "condition": "if (node.measured?.width && node.measured?.height)",
           "branch": "then",
-          "branchGroup": "branch:646"
+          "branchGroup": "branch:477"
         }
       ],
-      "label": "if (node.measured?.width && node.measured?.height)",
+      "label": "else (!needsLayout || !nodesInitialized || !visibleGraphRef.curren) → if (node.measured?.width && node.measured?.height)",
       "isAsync": false,
-      "order": 7
+      "order": 9
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/LayoutSettings.tsx:LayoutSettings",
@@ -7851,7 +8625,7 @@
       "target": "src/server/viewer/components/LayoutSettings.tsx:LayoutSettings",
       "type": "direct-call",
       "isAsync": false,
-      "order": 9
+      "order": 11
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/DocPanel.tsx:DocPanel",
@@ -7859,7 +8633,7 @@
       "target": "src/server/viewer/components/DocPanel.tsx:DocPanel",
       "type": "direct-call",
       "isAsync": false,
-      "order": 10
+      "order": 12
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraph->src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
@@ -7873,9 +8647,38 @@
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/FlowGraph.tsx:getNodeCategory",
       "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
       "target": "src/server/viewer/components/FlowGraph.tsx:getNodeCategory",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!graph)",
+          "branch": "else",
+          "branchGroup": "branch:81"
+        }
+      ],
+      "label": "else (!graph)",
       "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/FlowGraph.tsx:getNodeCategory::1",
+      "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "target": "src/server/viewer/components/FlowGraph.tsx:getNodeCategory",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!graph)",
+          "branch": "else",
+          "branchGroup": "branch:96"
+        },
+        {
+          "condition": "if (enabledTypes)",
+          "branch": "then",
+          "branchGroup": "branch:98"
+        }
+      ],
+      "label": "else (!graph) → if (enabledTypes)",
+      "isAsync": false,
+      "order": 1
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/graph/symbol-index.ts:buildSymbolIndexFromGraph",
@@ -7891,7 +8694,7 @@
       ],
       "label": "if (graph)",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/graph/symbol-index.ts:buildIndexResponse",
@@ -7907,7 +8710,7 @@
       ],
       "label": "if (symbolIndex)",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/LoadingSpinner.tsx:LoadingSpinner",
@@ -7923,7 +8726,7 @@
       ],
       "label": "!layoutReady &&",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/FlowGraph.tsx:FlowGraph",
@@ -7939,7 +8742,7 @@
       ],
       "label": "graph &&",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/Sidebar.tsx:Sidebar",
@@ -7947,7 +8750,7 @@
       "target": "src/server/viewer/components/Sidebar.tsx:Sidebar",
       "type": "direct-call",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ViewNav.tsx:ViewNav",
@@ -7955,7 +8758,7 @@
       "target": "src/server/viewer/components/ViewNav.tsx:ViewNav",
       "type": "direct-call",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/FlowControls.tsx:FlowControls",
@@ -7963,7 +8766,7 @@
       "target": "src/server/viewer/components/FlowControls.tsx:FlowControls",
       "type": "direct-call",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/DocsTree.tsx:DocsTree",
@@ -7971,7 +8774,7 @@
       "target": "src/server/viewer/components/DocsTree.tsx:DocsTree",
       "type": "direct-call",
       "isAsync": false,
-      "order": 8
+      "order": 9
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/DocsViewer.tsx:DocsViewer",
@@ -7979,7 +8782,7 @@
       "target": "src/server/viewer/components/DocsViewer.tsx:DocsViewer",
       "type": "direct-call",
       "isAsync": false,
-      "order": 9
+      "order": 10
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ChatPanel.tsx:ChatPanel",
@@ -7995,7 +8798,7 @@
       ],
       "label": "chatOpen &&",
       "isAsync": false,
-      "order": 10
+      "order": 11
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode->src/server/viewer/components/NodeTypes.tsx:nodeClass",
@@ -8110,6 +8913,51 @@
       "order": 1
     },
     {
+      "id": "src/server/viewer/components/condition-expansion.ts:toReactFlowNode->src/server/viewer/components/condition-expansion.ts:getNodeType",
+      "source": "src/server/viewer/components/condition-expansion.ts:toReactFlowNode",
+      "target": "src/server/viewer/components/condition-expansion.ts:getNodeType",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/condition-expansion.ts:cleanConditionText->src/server/viewer/components/condition-expansion.ts:negateExpression",
+      "source": "src/server/viewer/components/condition-expansion.ts:cleanConditionText",
+      "target": "src/server/viewer/components/condition-expansion.ts:negateExpression",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (elseMatch)",
+          "branch": "then",
+          "branchGroup": "branch:49"
+        }
+      ],
+      "label": "if (elseMatch)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/condition-expansion.ts:expandConditionals->src/server/viewer/components/condition-expansion.ts:cleanConditionText",
+      "source": "src/server/viewer/components/condition-expansion.ts:expandConditionals",
+      "target": "src/server/viewer/components/condition-expansion.ts:cleanConditionText",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (edge.type === 'conditional-call' && edge.conditions?.length)",
+          "branch": "then",
+          "branchGroup": "branch:103"
+        },
+        {
+          "condition": "if (!seenNodeIds.has(condNodeId))",
+          "branch": "then",
+          "branchGroup": "branch:112"
+        }
+      ],
+      "label": "if (edge.type === 'conditional-call' && edge.conditions?.length) → if (!seenNodeIds.has(condNodeId))",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "src/server/viewer/components/ui/drawer.tsx:DrawerOverlay->src/server/viewer/lib/utils.ts:cn",
       "source": "src/server/viewer/components/ui/drawer.tsx:DrawerOverlay",
       "target": "src/server/viewer/lib/utils.ts:cn",
@@ -8201,7 +9049,15 @@
       "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer->src/server/viewer/components/ui/drawer.tsx:Drawer",
       "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer",
       "target": "src/server/viewer/components/ui/drawer.tsx:Drawer",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:33"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 1
     },
@@ -8225,7 +9081,15 @@
       "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerContent->src/server/viewer/components/ui/drawer.tsx:DrawerContent",
       "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerContent",
       "target": "src/server/viewer/components/ui/drawer.tsx:DrawerContent",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:50"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 1
     },
@@ -8249,7 +9113,15 @@
       "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerHeader->src/server/viewer/components/ui/drawer.tsx:DrawerHeader",
       "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerHeader",
       "target": "src/server/viewer/components/ui/drawer.tsx:DrawerHeader",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:71"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 1
     },
@@ -8273,7 +9145,15 @@
       "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerBody->src/server/viewer/components/ui/drawer.tsx:DrawerBody",
       "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerBody",
       "target": "src/server/viewer/components/ui/drawer.tsx:DrawerBody",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:84"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 1
     },
@@ -8297,7 +9177,15 @@
       "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerFooter->src/server/viewer/components/ui/drawer.tsx:DrawerFooter",
       "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerFooter",
       "target": "src/server/viewer/components/ui/drawer.tsx:DrawerFooter",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:97"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 1
     },
@@ -8321,7 +9209,15 @@
       "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerTitle->src/server/viewer/components/ui/drawer.tsx:DrawerTitle",
       "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerTitle",
       "target": "src/server/viewer/components/ui/drawer.tsx:DrawerTitle",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:110"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 1
     },
@@ -8345,7 +9241,15 @@
       "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerDescription->src/server/viewer/components/ui/drawer.tsx:DrawerDescription",
       "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerDescription",
       "target": "src/server/viewer/components/ui/drawer.tsx:DrawerDescription",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:126"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 1
     },
@@ -8369,7 +9273,15 @@
       "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerClose->src/server/viewer/components/ui/drawer.tsx:DrawerClose",
       "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerClose",
       "target": "src/server/viewer/components/ui/drawer.tsx:DrawerClose",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (isDesktop)",
+          "branch": "else",
+          "branchGroup": "branch:139"
+        }
+      ],
+      "label": "else (isDesktop)",
       "isAsync": false,
       "order": 1
     },
@@ -8465,7 +9377,15 @@
       "id": "src/server/viewer/lib/theme.ts:applyThemePreference->src/server/viewer/lib/theme.ts:resolveMode",
       "source": "src/server/viewer/lib/theme.ts:applyThemePreference",
       "target": "src/server/viewer/lib/theme.ts:resolveMode",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!isDomAvailable())",
+          "branch": "else",
+          "branchGroup": "branch:42"
+        }
+      ],
+      "label": "else (!isDomAvailable())",
       "isAsync": false,
       "order": 1
     },
@@ -8497,7 +9417,15 @@
       "id": "src/server/viewer/lib/theme.ts:getStoredThemePreference->src/server/viewer/lib/theme.ts:parseStoredPreference",
       "source": "src/server/viewer/lib/theme.ts:getStoredThemePreference",
       "target": "src/server/viewer/lib/theme.ts:parseStoredPreference",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!isDomAvailable())",
+          "branch": "else",
+          "branchGroup": "branch:99"
+        }
+      ],
+      "label": "else (!isDomAvailable())",
       "isAsync": false,
       "order": 1
     },
@@ -8513,7 +9441,15 @@
       "id": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference->src/server/viewer/lib/theme.ts:getStoredThemePreference",
       "source": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference",
       "target": "src/server/viewer/lib/theme.ts:getStoredThemePreference",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!mounted)",
+          "branch": "else",
+          "branchGroup": "branch:27"
+        }
+      ],
+      "label": "else (!mounted)",
       "isAsync": false,
       "order": 0
     },
@@ -8521,7 +9457,15 @@
       "id": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference->src/server/viewer/lib/theme.ts:getCurrentPreference",
       "source": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference",
       "target": "src/server/viewer/lib/theme.ts:getCurrentPreference",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!mounted)",
+          "branch": "else",
+          "branchGroup": "branch:27"
+        }
+      ],
+      "label": "else (!mounted)",
       "isAsync": false,
       "order": 1
     },
@@ -8529,25 +9473,65 @@
       "id": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference->src/server/viewer/lib/theme.ts:applyThemePreference",
       "source": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference",
       "target": "src/server/viewer/lib/theme.ts:applyThemePreference",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!mounted)",
+          "branch": "else",
+          "branchGroup": "branch:27"
+        }
+      ],
+      "label": "else (!mounted)",
       "isAsync": false,
       "order": 2
+    },
+    {
+      "id": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference->src/server/viewer/lib/theme.ts:applyThemePreference::1",
+      "source": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference",
+      "target": "src/server/viewer/lib/theme.ts:applyThemePreference",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!mounted)",
+          "branch": "else",
+          "branchGroup": "branch:37"
+        }
+      ],
+      "label": "else (!mounted)",
+      "isAsync": false,
+      "order": 3
     },
     {
       "id": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference->src/server/viewer/lib/theme.ts:getNextTheme",
       "source": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference",
       "target": "src/server/viewer/lib/theme.ts:getNextTheme",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!mounted)",
+          "branch": "else",
+          "branchGroup": "branch:37"
+        }
+      ],
+      "label": "else (!mounted)",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference->src/server/viewer/lib/theme.ts:storeThemePreference",
       "source": "src/server/viewer/lib/use-theme-preference.ts:useThemePreference",
       "target": "src/server/viewer/lib/theme.ts:storeThemePreference",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!mounted)",
+          "branch": "else",
+          "branchGroup": "branch:37"
+        }
+      ],
+      "label": "else (!mounted)",
       "isAsync": false,
-      "order": 4
+      "order": 5
     }
   ]
 }

@@ -1131,6 +1131,31 @@ function maybeProcess(req: any) {
       expect(finalizeCall?.conditions).toBeUndefined();
     });
 
+    it('should treat siblings after an early-return if as the implicit else path', () => {
+      const code = `
+function renderItem(item: any) {
+  if (item.type === 'dir') {
+    return renderDir(item)
+  }
+  renderLeaf(item)
+}
+`;
+      writeFileSync(TEST_FILE, code);
+
+      const calls = extractor.extractCallSites(TEST_FILE, 'renderItem');
+
+      const dirCall = calls.find((c) => c.name === 'renderDir');
+      const leafCall = calls.find((c) => c.name === 'renderLeaf');
+
+      expect(dirCall?.conditions).toHaveLength(1);
+      expect(dirCall?.conditions?.[0].condition).toBe("if (item.type === 'dir')");
+
+      expect(leafCall?.conditions).toHaveLength(1);
+      expect(leafCall?.conditions?.[0].branch).toBe('else');
+      expect(leafCall?.conditions?.[0].condition).toBe("else (item.type === 'dir')");
+      expect(leafCall?.conditions?.[0].branchGroup).toBe(dirCall?.conditions?.[0].branchGroup);
+    });
+
     it('should handle else if chains as flat (same branchGroup)', () => {
       const code = `
 function route(req: any) {

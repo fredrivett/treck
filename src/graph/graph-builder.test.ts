@@ -395,13 +395,33 @@ export function handle(req: any) {
       writeFileSync(
         mainFile,
         `export function Guides() { return <div /> }
-export function TreeDir({ depth, isCollapsed }: { depth: number; isCollapsed: boolean }) {
+export function TreeDir({
+  depth,
+  isCollapsed,
+  items,
+}: {
+  depth: number;
+  isCollapsed: boolean;
+  items: Array<{ type: 'dir' | 'sym'; items?: unknown[] }>;
+}) {
   return (
     <div>
       {depth > 0 && <Guides />}
       {!isCollapsed && (
         <div>
-          <Guides />
+          {items.map((item, index) => {
+            if (item.type === 'dir') {
+              return (
+                <TreeDir
+                  key={index}
+                  depth={depth + 1}
+                  isCollapsed={isCollapsed}
+                  items={item.items ?? []}
+                />
+              )
+            }
+            return <Guides key={index} />
+          })}
         </div>
       )}
     </div>
@@ -419,8 +439,11 @@ export function TreeDir({ depth, isCollapsed }: { depth: number; isCollapsed: bo
 
       expect(edges).toHaveLength(2);
       expect(edges.every((edge) => edge.type === 'conditional-call')).toBe(true);
-      expect(edges.map((edge) => edge.conditions?.[0].condition)).toEqual(
-        expect.arrayContaining(['depth > 0 &&', '!isCollapsed &&']),
+      expect(edges.map((edge) => edge.conditions?.map((condition) => condition.condition))).toEqual(
+        expect.arrayContaining([
+          ['depth > 0 &&'],
+          ['!isCollapsed &&', "else (item.type === 'dir')"],
+        ]),
       );
     });
   });

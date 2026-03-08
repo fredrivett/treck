@@ -193,7 +193,71 @@ export class TypeScriptExtractor {
       }
     };
 
+    const statementAlwaysExits = (statement: ts.Statement): boolean => {
+      if (
+        ts.isReturnStatement(statement) ||
+        ts.isThrowStatement(statement) ||
+        ts.isBreakStatement(statement) ||
+        ts.isContinueStatement(statement)
+      ) {
+        return true;
+      }
+
+      if (ts.isBlock(statement)) {
+        const last = statement.statements.at(-1);
+        return last ? statementAlwaysExits(last) : false;
+      }
+
+      if (ts.isIfStatement(statement) && statement.elseStatement) {
+        return (
+          statementAlwaysExits(statement.thenStatement) &&
+          statementAlwaysExits(statement.elseStatement)
+        );
+      }
+
+      return false;
+    };
+
+    const getImplicitElseFallthrough = (statement: ts.Statement): ConditionInfo | null => {
+      if (!ts.isIfStatement(statement) || statement.elseStatement) return null;
+      if (!statementAlwaysExits(statement.thenStatement)) return null;
+
+      const condText = statement.expression.getText(sourceFile).slice(0, 60);
+      return {
+        condition: `else (${condText})`,
+        branch: 'else',
+        branchGroup: `branch:${getLine(statement)}`,
+      };
+    };
+
+    const walkStatements = (statements: ts.NodeArray<ts.Statement>, conditions: ConditionInfo[]) => {
+      let fallthroughConditions = conditions;
+
+      for (const statement of statements) {
+        walk(statement, fallthroughConditions);
+
+        if (statementAlwaysExits(statement)) {
+          break;
+        }
+
+        const implicitElse = getImplicitElseFallthrough(statement);
+        if (implicitElse) {
+          fallthroughConditions = [...fallthroughConditions, implicitElse];
+        }
+      }
+    };
+
     const walk = (node: ts.Node, conditions: ConditionInfo[]) => {
+      if (
+        ts.isSourceFile(node) ||
+        ts.isBlock(node) ||
+        ts.isCaseClause(node) ||
+        ts.isDefaultClause(node)
+      ) {
+        walkStatements(node.statements, conditions);
+        return;
+      }
+
       // --- if / else if / else ---
       if (ts.isIfStatement(node)) {
         const group = `branch:${getLine(node)}`;
