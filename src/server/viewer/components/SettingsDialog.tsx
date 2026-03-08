@@ -20,6 +20,7 @@ import {
   DialogOrDrawerHeader,
   DialogOrDrawerTitle,
 } from './ui/dialog-or-drawer';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
 interface ChatSettings {
   apiKey: string;
@@ -78,14 +79,18 @@ export function SettingsButton() {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
-        title="Settings"
-      >
-        <Settings size={14} aria-hidden />
-      </button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+          >
+            <Settings size={14} aria-hidden />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>Settings</TooltipContent>
+      </Tooltip>
       <SettingsDialog open={open} onOpenChange={setOpen} />
     </>
   );

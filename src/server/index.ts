@@ -8,7 +8,7 @@
 
 import { existsSync, readFileSync, watch } from 'node:fs';
 import { createServer } from 'node:http';
-import { dirname, extname, resolve } from 'node:path';
+import { basename, dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { GraphStore } from '../graph/graph-store.js';
 import type { FlowGraph } from '../graph/types.js';
@@ -117,6 +117,15 @@ export async function startServer(outputDir: string, port: number) {
         'Access-Control-Allow-Origin': '*',
       });
       res.end(JSON.stringify(buildIndexResponse(index)));
+      return;
+    }
+
+    if (url.pathname === '/api/project-info') {
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      });
+      res.end(JSON.stringify({ graphId: basename(process.cwd()) }));
       return;
     }
 
