@@ -28,6 +28,8 @@ interface ActiveChatProps {
   initialMessages: UIMessage[];
   /** Graph identifier for persistence. */
   graphId: string;
+  /** Original creation timestamp (when resuming a saved chat). Defaults to now. */
+  createdAt?: number;
   /** Showcase project slug — passed to the chat API. */
   project?: string;
   /** Current chat settings (API key, model). */
@@ -53,6 +55,7 @@ export function ActiveChat({
   chatId,
   initialMessages,
   graphId,
+  createdAt,
   project,
   settings,
   onChatUpdated,
@@ -61,7 +64,7 @@ export function ActiveChat({
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const createdAtRef = useRef(Date.now());
+  const createdAtRef = useRef(createdAt ?? Date.now());
 
   // Refs to avoid stale closures in transport body function
   const settingsRef = useRef(settings);

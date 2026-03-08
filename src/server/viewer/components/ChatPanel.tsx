@@ -147,6 +147,7 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
   const [view, setView] = useState<'list' | 'chat'>('list');
   const [activeChatId, setActiveChatId] = useState<string | null>(null);
   const [initialMessages, setInitialMessages] = useState<UIMessage[]>([]);
+  const [activeChatCreatedAt, setActiveChatCreatedAt] = useState<number | undefined>();
   const [listRefreshKey, setListRefreshKey] = useState(0);
 
   const graphId = project || 'local';
@@ -155,6 +156,7 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
   const handleNewChat = useCallback(() => {
     setActiveChatId(crypto.randomUUID());
     setInitialMessages([]);
+    setActiveChatCreatedAt(undefined);
     setView('chat');
   }, []);
 
@@ -164,6 +166,7 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
     if (chat) {
       setActiveChatId(chatId);
       setInitialMessages(chat.messages);
+      setActiveChatCreatedAt(chat.createdAt);
       setView('chat');
     }
   }, []);
@@ -173,6 +176,7 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
     setView('list');
     setActiveChatId(null);
     setInitialMessages([]);
+    setActiveChatCreatedAt(undefined);
     setListRefreshKey((k) => k + 1);
   }, []);
 
@@ -278,6 +282,7 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
             chatId={activeChatId}
             initialMessages={initialMessages}
             graphId={graphId}
+            createdAt={activeChatCreatedAt}
             project={project}
             settings={settings}
             onChatUpdated={handleChatUpdated}
