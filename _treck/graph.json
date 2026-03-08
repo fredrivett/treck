@@ -1,7 +1,246 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-06T03:21:27.102Z",
+  "generatedAt": "2026-03-07T22:23:56.221Z",
   "nodes": [
+    {
+      "id": "src/cli/commands/diff.ts:formatDiffJson",
+      "name": "formatDiffJson",
+      "kind": "function",
+      "filePath": "src/cli/commands/diff.ts",
+      "isAsync": false,
+      "hash": "312ffdce7e8a9125b6c50ba1b482b5906d6fd2bcabd23bffceca641ce251cfda",
+      "lineRange": [
+        40,
+        50
+      ],
+      "hasJsDoc": true,
+      "isTrivial": true,
+      "description": "Format diff result as pretty-printed JSON.",
+      "structuredParams": [
+        {
+          "name": "diff",
+          "type": "GraphDiff",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The graph diff to serialize"
+        }
+      ],
+      "returnType": "string",
+      "isExported": true
+    },
+    {
+      "id": "src/cli/commands/diff.ts:formatDiffMermaid",
+      "name": "formatDiffMermaid",
+      "kind": "function",
+      "filePath": "src/cli/commands/diff.ts",
+      "isAsync": false,
+      "hash": "e9273b011ef542136d34af7ab951eed8d66aa9cf000f97632d361d5e7f4d745b",
+      "lineRange": [
+        50,
+        65
+      ],
+      "hasJsDoc": true,
+      "isTrivial": true,
+      "description": "Format diff result as a mermaid flowchart with change-type highlighting.",
+      "structuredParams": [
+        {
+          "name": "diff",
+          "type": "GraphDiff",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The graph diff to render"
+        }
+      ],
+      "returnType": "string",
+      "isExported": true
+    },
+    {
+      "id": "src/cli/commands/diff.ts:registerDiffCommand",
+      "name": "registerDiffCommand",
+      "kind": "function",
+      "filePath": "src/cli/commands/diff.ts",
+      "isAsync": false,
+      "hash": "48fee7c00a3a686deacf4530b787da84a0e4de9dac1b672eb6f2fddd62d2ebc2",
+      "lineRange": [
+        65,
+        154
+      ],
+      "hasJsDoc": true,
+      "description": "Register the `treck diff` CLI command.\n\nCompares the current graph against a base git ref and outputs changed\nsymbols with their call chain context. Writes a text summary to stderr\nand structured output (mermaid or JSON) to stdout.",
+      "structuredParams": [
+        {
+          "name": "cli",
+          "type": "CAC",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "isExported": true
+    },
+    {
+      "id": "src/cli/utils/git.ts:detectBaseRef",
+      "name": "detectBaseRef",
+      "kind": "function",
+      "filePath": "src/cli/utils/git.ts",
+      "isAsync": false,
+      "hash": "17678a5b5d4220fd266934f1d1802fb1cc7dde66f4b4ea8f76ebe7aa63872028",
+      "lineRange": [
+        6,
+        26
+      ],
+      "hasJsDoc": true,
+      "description": "Detect the default branch of the remote origin.\n\nUses `git symbolic-ref refs/remotes/origin/HEAD` to find the remote's\ndefault branch name (e.g. \"main\" or \"master\").",
+      "returnType": "string",
+      "isExported": true,
+      "throws": [
+        "If the symbolic ref cannot be resolved — suggests using `--base`"
+      ]
+    },
+    {
+      "id": "src/cli/utils/git.ts:loadGraphAtRef",
+      "name": "loadGraphAtRef",
+      "kind": "function",
+      "filePath": "src/cli/utils/git.ts",
+      "isAsync": false,
+      "hash": "7c778b6433eaf7c6aa7f3679440749ec88026e81fd6f474f4bef0004fb55a924",
+      "lineRange": [
+        26,
+        51
+      ],
+      "hasJsDoc": true,
+      "description": "Load and parse graph.json from a specific git ref.\n\nUses `git show <ref>:<path>` to read the file contents at that commit\nwithout checking out the branch.",
+      "structuredParams": [
+        {
+          "name": "baseRef",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Git ref (branch name, commit hash, or tag)"
+        },
+        {
+          "name": "graphPath",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Relative path to graph.json from repo root"
+        }
+      ],
+      "returnType": "FlowGraph",
+      "isExported": true,
+      "throws": [
+        "If graph.json doesn't exist at that ref or contains invalid JSON"
+      ]
+    },
+    {
+      "id": "src/graph/diff.ts:diffGraphs",
+      "name": "diffGraphs",
+      "kind": "function",
+      "filePath": "src/graph/diff.ts",
+      "isAsync": false,
+      "hash": "9cd1ae1ec884ae0a1fc7c5f272b6faf6033404c98abc34e4ec016843eb6450ad",
+      "lineRange": [
+        43,
+        119
+      ],
+      "hasJsDoc": true,
+      "description": "Compare two graph snapshots and produce a diff with impact context.\n\nNodes are compared by hash — different hash means the symbol body changed.\nThe impact subgraph is built from the head graph using `connectedSubgraph`.",
+      "structuredParams": [
+        {
+          "name": "baseGraph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The older graph snapshot (from a git ref)"
+        },
+        {
+          "name": "headGraph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The current graph snapshot (from disk)"
+        },
+        {
+          "name": "options",
+          "type": "{ baseRef: string; depth?: number }",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Comparison options"
+        }
+      ],
+      "returnType": "GraphDiff",
+      "isExported": true
+    },
+    {
+      "id": "src/graph/diff.ts:diffToMermaid",
+      "name": "diffToMermaid",
+      "kind": "function",
+      "filePath": "src/graph/diff.ts",
+      "isAsync": false,
+      "hash": "24db8a3e981b17115ab6f72e07e86cb49c904e350b23931e33cecf7f581e6f25",
+      "lineRange": [
+        119,
+        194
+      ],
+      "hasJsDoc": true,
+      "description": "Generate a mermaid flowchart for a diff result with change-type highlighting.\n\nUses `classDef` syntax with `modified` and `added` classes. Removed nodes\nare not included (they don't exist in the head graph).",
+      "structuredParams": [
+        {
+          "name": "nodes",
+          "type": "GraphNode[]",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Subgraph nodes to render"
+        },
+        {
+          "name": "edges",
+          "type": "GraphEdge[]",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Subgraph edges to render"
+        },
+        {
+          "name": "modifiedIds",
+          "type": "Set<string>",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Set of node IDs that were modified"
+        },
+        {
+          "name": "addedIds",
+          "type": "Set<string>",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Set of node IDs that were added"
+        }
+      ],
+      "returnType": "string",
+      "isExported": true
+    },
+    {
+      "id": "src/graph/diff.ts:formatDiffSummary",
+      "name": "formatDiffSummary",
+      "kind": "function",
+      "filePath": "src/graph/diff.ts",
+      "isAsync": false,
+      "hash": "5878ae31999f0f8b532b14025dc146e5b762f27a7690ee3e86ae86a7679aa74d",
+      "lineRange": [
+        194,
+        229
+      ],
+      "hasJsDoc": true,
+      "description": "Format a human-readable text summary of a graph diff.\n\nIntended for stderr output so it doesn't pollute structured output on stdout.",
+      "structuredParams": [
+        {
+          "name": "diff",
+          "type": "GraphDiff",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The diff result to summarize"
+        }
+      ],
+      "returnType": "string",
+      "isExported": true
+    },
     {
       "id": "scripts/generate-showcase.ts:generateConfig",
       "name": "generateConfig",
@@ -355,6 +594,327 @@
       "isExported": true
     },
     {
+      "id": "src/cli/commands/mcp.ts:handleSearchNodes",
+      "name": "handleSearchNodes",
+      "kind": "function",
+      "filePath": "src/cli/commands/mcp.ts",
+      "isAsync": false,
+      "hash": "d2938b74954345650ebb748c79c78a7a6740ef334d6961c7c34f84cdc2b418e5",
+      "lineRange": [
+        21,
+        34
+      ],
+      "hasJsDoc": true,
+      "description": "Handle `search_nodes` tool — find symbols by name, file path, or description.",
+      "structuredParams": [
+        {
+          "name": "query",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Search query string"
+        },
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The flow graph to search"
+        }
+      ],
+      "returnType": "McpTextResponse",
+      "isExported": true
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handleShowSymbol",
+      "name": "handleShowSymbol",
+      "kind": "function",
+      "filePath": "src/cli/commands/mcp.ts",
+      "isAsync": false,
+      "hash": "aa93e81815a5ba10c1e3d8e997dc2974398a6731a0af54c81b0138e5d6cd4eba",
+      "lineRange": [
+        34,
+        66
+      ],
+      "hasJsDoc": true,
+      "description": "Handle `show_symbol` tool — get the connected subgraph for one or more targets.",
+      "structuredParams": [
+        {
+          "name": "targets",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Comma-separated targets in \"filePath:symbolName\" format"
+        },
+        {
+          "name": "depth",
+          "type": "number | undefined",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Max traversal depth, or undefined for full connected flow"
+        },
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The flow graph to query"
+        }
+      ],
+      "returnType": "McpTextResponse",
+      "isExported": true
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handleListEntryPoints",
+      "name": "handleListEntryPoints",
+      "kind": "function",
+      "filePath": "src/cli/commands/mcp.ts",
+      "isAsync": false,
+      "hash": "5cdf9c1d445cff42ce1e3e580773956f0d2ff3ea51de1152aa8f4c595b3a931a",
+      "lineRange": [
+        66,
+        90
+      ],
+      "hasJsDoc": true,
+      "description": "Handle `list_entry_points` tool — list all entry points in the project.",
+      "structuredParams": [
+        {
+          "name": "kind",
+          "type": "string | undefined",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Optional filter by entry type"
+        },
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The flow graph to query"
+        }
+      ],
+      "returnType": "McpTextResponse",
+      "isExported": true
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handleFindCallers",
+      "name": "handleFindCallers",
+      "kind": "function",
+      "filePath": "src/cli/commands/mcp.ts",
+      "isAsync": false,
+      "hash": "a4401ec3290d68ab5f4ddc3c54b4506d2d428d386f3a5342b4a25aafed67635d",
+      "lineRange": [
+        90,
+        150
+      ],
+      "hasJsDoc": true,
+      "description": "Handle `find_callers` tool — find all symbols that call a given symbol.",
+      "structuredParams": [
+        {
+          "name": "nodeId",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Target node ID"
+        },
+        {
+          "name": "depth",
+          "type": "number",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Max traversal depth (default 1)"
+        },
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The flow graph to query"
+        }
+      ],
+      "returnType": "McpTextResponse",
+      "isExported": true
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handleFindCallees",
+      "name": "handleFindCallees",
+      "kind": "function",
+      "filePath": "src/cli/commands/mcp.ts",
+      "isAsync": false,
+      "hash": "cf29510209de1af63cd29fc019097d67048ba1ca4570945625034c63e47036c9",
+      "lineRange": [
+        150,
+        210
+      ],
+      "hasJsDoc": true,
+      "description": "Handle `find_callees` tool — find all symbols that a given symbol calls.",
+      "structuredParams": [
+        {
+          "name": "nodeId",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Source node ID"
+        },
+        {
+          "name": "depth",
+          "type": "number",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Max traversal depth (default 1)"
+        },
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The flow graph to query"
+        }
+      ],
+      "returnType": "McpTextResponse",
+      "isExported": true
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handlePathsBetween",
+      "name": "handlePathsBetween",
+      "kind": "function",
+      "filePath": "src/cli/commands/mcp.ts",
+      "isAsync": false,
+      "hash": "62a37eb47f40ae657bac643dd3a5f6f077eac04ec84833d2175d5c3fd150a6f6",
+      "lineRange": [
+        210,
+        235
+      ],
+      "hasJsDoc": true,
+      "description": "Handle `paths_between` tool — find call paths between two symbols.",
+      "structuredParams": [
+        {
+          "name": "from",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Source node ID"
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Target node ID"
+        },
+        {
+          "name": "maxPaths",
+          "type": "number",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Max number of paths to return"
+        },
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The flow graph to query"
+        }
+      ],
+      "returnType": "McpTextResponse",
+      "isExported": true
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handleGetGraphSummary",
+      "name": "handleGetGraphSummary",
+      "kind": "function",
+      "filePath": "src/cli/commands/mcp.ts",
+      "isAsync": false,
+      "hash": "643666387e391e4e68d5c14bd572d6ed3f76fe53295a790ff8f3a33f4d96d2bd",
+      "lineRange": [
+        235,
+        263
+      ],
+      "hasJsDoc": true,
+      "description": "Handle `get_graph_summary` tool — overview stats for the project graph.",
+      "structuredParams": [
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The flow graph to summarize"
+        }
+      ],
+      "returnType": "McpTextResponse",
+      "isExported": true
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handleDiffGraph",
+      "name": "handleDiffGraph",
+      "kind": "function",
+      "filePath": "src/cli/commands/mcp.ts",
+      "isAsync": false,
+      "hash": "5aa35f4039f3e1a9b6d6c5f12d841c23394f761ca659163f701cbe51328c301e",
+      "lineRange": [
+        263,
+        296
+      ],
+      "hasJsDoc": true,
+      "description": "Handle `diff_graph` tool — compare current graph against a base git ref.\n\nLoads graph.json from the base ref via `git show` and diffs it against\nthe current in-memory graph by node hash.",
+      "structuredParams": [
+        {
+          "name": "baseRef",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Git ref to compare against (branch, tag, or commit)"
+        },
+        {
+          "name": "depth",
+          "type": "number | undefined",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Max traversal depth for impact zone, or undefined for full flow"
+        },
+        {
+          "name": "graphPath",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Relative path to graph.json from repo root"
+        },
+        {
+          "name": "currentGraph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The current in-memory graph"
+        }
+      ],
+      "returnType": "McpTextResponse",
+      "isExported": true
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "name": "registerMcpCommand",
+      "kind": "function",
+      "filePath": "src/cli/commands/mcp.ts",
+      "isAsync": true,
+      "hash": "ee80487d8cbdb5a78f12eb186f803fe64038e15928fb29d34dcb04ece1740588",
+      "lineRange": [
+        296,
+        513
+      ],
+      "hasJsDoc": true,
+      "description": "Register the `treck mcp` CLI command.\n\nStarts an MCP server over stdio, exposing graph queries as tools\nfor AI agents like Claude Code, Cursor, and Windsurf.",
+      "structuredParams": [
+        {
+          "name": "cli",
+          "type": "CAC",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "isExported": true
+    },
+    {
       "id": "src/cli/commands/serve.ts:registerServeCommand",
       "name": "registerServeCommand",
       "kind": "function",
@@ -385,8 +945,8 @@
       "isAsync": false,
       "hash": "ee924dcecd47915d5808e7ae378d901512ba868726778317ba75a7bc353d3740",
       "lineRange": [
-        36,
-        78
+        35,
+        77
       ],
       "hasJsDoc": true,
       "description": "Build a metadata header line for a node in --docs output.\n\nShows file path, kind, line range, and entry type info on a single line.",
@@ -408,13 +968,13 @@
       "kind": "function",
       "filePath": "src/cli/commands/show.ts",
       "isAsync": false,
-      "hash": "90eac342aacaaa432d77a8eb9c5a4c349ada1a68313cec432898230e8e7e6e26",
+      "hash": "44ca266a6bae7b068ba065931bfc061db799cfb57b723b7e54ca249b783c9777",
       "lineRange": [
-        78,
-        144
+        77,
+        153
       ],
       "hasJsDoc": true,
-      "description": "Register the `treck show` CLI command.\n\nOutputs graph data to stdout in mermaid (default) or markdown format.\nTargets are required positional args specifying which symbols to show.",
+      "description": "Register the `treck show` CLI command.\n\nOutputs graph data to stdout in the chosen format (mermaid, markdown, json, or ascii).\nTargets are required positional args specifying which symbols to show.",
       "structuredParams": [
         {
           "name": "cli",
@@ -433,8 +993,8 @@
       "isAsync": true,
       "hash": "50d21f014fe16c4712b062fad655522a74cce654b2b5490a0196fbc39d4c15b4",
       "lineRange": [
-        144,
-        157
+        153,
+        166
       ],
       "hasJsDoc": true,
       "description": "Render a mermaid diagram as Unicode box-drawing art for terminal display.\n\nUses `beautiful-mermaid`'s ASCII renderer under the hood.",
@@ -458,11 +1018,50 @@
       "isAsync": false,
       "hash": "9b71dfe94ed839abade9ce6c1a84c997aa1d810edfcb1241214dfc76578cfd33",
       "lineRange": [
-        157,
-        180
+        166,
+        189
       ],
       "hasJsDoc": true,
       "description": "Format mermaid graph output for the given node IDs.\n\nSingle target produces a per-node diagram. Multiple targets produce\na combined diagram with all targets highlighted.",
+      "structuredParams": [
+        {
+          "name": "nodeIds",
+          "type": "string[]",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Resolved node IDs to include"
+        },
+        {
+          "name": "graph",
+          "type": "import('../../graph/types.js').FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The full flow graph"
+        },
+        {
+          "name": "depth",
+          "type": "number",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Traversal depth for neighbor collection"
+        }
+      ],
+      "returnType": "string",
+      "isExported": true
+    },
+    {
+      "id": "src/cli/commands/show.ts:formatJsonOutput",
+      "name": "formatJsonOutput",
+      "kind": "function",
+      "filePath": "src/cli/commands/show.ts",
+      "isAsync": false,
+      "hash": "85564a84b6d55fa27851d8a4fbac1612b7586d6df0b8bc56365bb4654086679e",
+      "lineRange": [
+        189,
+        215
+      ],
+      "hasJsDoc": true,
+      "description": "Format structured JSON output for the given node IDs.\n\nReturns the connected subgraph as a JSON string with targets, depth,\nnodes, and edges. All `GraphNode` and `GraphEdge` fields are preserved.",
       "structuredParams": [
         {
           "name": "nodeIds",
@@ -497,8 +1096,8 @@
       "isAsync": false,
       "hash": "654fbb88cf2889709428189fb6847f3450ec0bf774c82097ef21e8035998367a",
       "lineRange": [
-        180,
-        235
+        215,
+        270
       ],
       "hasJsDoc": true,
       "description": "Format markdown documentation output for the given node IDs.\n\nEach symbol gets a metadata header, rendered markdown body, and\nan embedded mermaid diagram. Multiple symbols are separated by `---`.",
@@ -534,10 +1133,10 @@
       "kind": "function",
       "filePath": "src/cli/commands/sync.ts",
       "isAsync": false,
-      "hash": "1f977fa4856b16515afc53b191af9707c65ac49ee77891ca86b424cce38e9931",
+      "hash": "e6fd48ebd101c0efc0bf3d77eed1206226cd89038dcdda933c2df0fb58efdcf5",
       "lineRange": [
-        8,
-        119
+        5,
+        90
       ],
       "hasJsDoc": true,
       "description": "Register the `treck sync` CLI command.\n\nFinds source files, builds the dependency graph, and writes graph.json.\nOptionally filters to a target path.",
@@ -574,8 +1173,8 @@
       "isAsync": false,
       "hash": "9414a23a483396e472a47f35e0ae9d6d5f6ebd5dcfa3209f117a6fecd3f95fea",
       "lineRange": [
-        28,
-        28
+        32,
+        32
       ],
       "hasJsDoc": true,
       "description": "Parsed CLI arguments and options.",
@@ -1668,6 +2267,118 @@
       "isExported": true
     },
     {
+      "id": "src/graph/chat-helpers.ts:pickExampleNodes",
+      "name": "pickExampleNodes",
+      "kind": "function",
+      "filePath": "src/graph/chat-helpers.ts",
+      "isAsync": false,
+      "hash": "c703f4919aa0e8a2950d4510d1a208b7909b721a4371431cfddaac55440e9a26",
+      "lineRange": [
+        9,
+        55
+      ],
+      "hasJsDoc": true,
+      "description": "Pick example nodes for the system prompt.\n\nSelects entry points and the most-connected nodes to teach the AI the\nID format and give it a sense of the codebase structure.",
+      "structuredParams": [
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The full flow graph"
+        }
+      ],
+      "returnType": "string",
+      "isExported": false
+    },
+    {
+      "id": "src/graph/chat-helpers.ts:buildSystemPrompt",
+      "name": "buildSystemPrompt",
+      "kind": "function",
+      "filePath": "src/graph/chat-helpers.ts",
+      "isAsync": false,
+      "hash": "f73405a0cbb472cc1b234378b8168389bc2b5129ccccca1332e07b453685365b",
+      "lineRange": [
+        55,
+        80
+      ],
+      "hasJsDoc": true,
+      "description": "Build the system prompt with example nodes and instructions.",
+      "structuredParams": [
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The full flow graph"
+        }
+      ],
+      "returnType": "string",
+      "isExported": true
+    },
+    {
+      "id": "src/graph/chat-helpers.ts:executeSearchNodes",
+      "name": "executeSearchNodes",
+      "kind": "function",
+      "filePath": "src/graph/chat-helpers.ts",
+      "isAsync": false,
+      "hash": "ae7330ed4723025919710010b1c94ad8168ae114cb90c49f48401adb5877e7ed",
+      "lineRange": [
+        80,
+        108
+      ],
+      "hasJsDoc": true,
+      "description": "Execute a search_nodes tool call against the graph.",
+      "structuredParams": [
+        {
+          "name": "query",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Search query string"
+        },
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The full flow graph"
+        }
+      ],
+      "isExported": true
+    },
+    {
+      "id": "src/graph/chat-helpers.ts:executeSelectNodes",
+      "name": "executeSelectNodes",
+      "kind": "function",
+      "filePath": "src/graph/chat-helpers.ts",
+      "isAsync": false,
+      "hash": "ff58fa130f78a86e434864364646821c06998ecf208a8c3141863015654494e4",
+      "lineRange": [
+        108,
+        127
+      ],
+      "hasJsDoc": true,
+      "description": "Validate node IDs for a select_nodes tool call.",
+      "structuredParams": [
+        {
+          "name": "nodeIds",
+          "type": "string[]",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Array of node IDs to validate"
+        },
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The full flow graph"
+        }
+      ],
+      "isExported": true
+    },
+    {
       "id": "src/graph/graph-builder.ts:connectionTypeToEdgeType",
       "name": "connectionTypeToEdgeType",
       "kind": "function",
@@ -2111,10 +2822,10 @@
       "kind": "function",
       "filePath": "src/graph/graph-to-mermaid.ts",
       "isAsync": false,
-      "hash": "47dcf12fadae4e7868810eaffa66375f615acbe68f5f7f01fba6e26e8309c1e9",
+      "hash": "d7a88fa2979dd01c322dbf53d5fac9a3474eb3eec2a31c3a701c7eac2c9f3a45",
       "lineRange": [
         52,
-        125
+        129
       ],
       "hasJsDoc": true,
       "description": "Build a mermaid flowchart string from a set of nodes and edges.\n\nGroups nodes into subgraphs by file path, applies styling to\nhighlighted nodes and entry points, and renders edge arrows based on type.",
@@ -2155,8 +2866,8 @@
       "isAsync": false,
       "hash": "ba1bc940a918499cbd0ae6d8997935114846a5ff02dca9687d957326680ee2fb",
       "lineRange": [
-        125,
-        141
+        129,
+        145
       ],
       "hasJsDoc": true,
       "description": "Build a display label for a graph node, including async prefix and metadata.",
@@ -2169,7 +2880,7 @@
         }
       ],
       "returnType": "string",
-      "isExported": false
+      "isExported": true
     },
     {
       "id": "src/graph/graph-to-mermaid.ts:edgeArrow",
@@ -2179,8 +2890,8 @@
       "isAsync": false,
       "hash": "f900abae92e505f5a486445a66c4449d2127b74ecbdc39f6e01ece770fffd1e0",
       "lineRange": [
-        141,
-        150
+        145,
+        154
       ],
       "hasJsDoc": true,
       "description": "Return the mermaid arrow syntax for a given edge type.",
@@ -2193,7 +2904,7 @@
         }
       ],
       "returnType": "string",
-      "isExported": false
+      "isExported": true
     },
     {
       "id": "src/graph/graph-to-mermaid.ts:edgeTypeLabel",
@@ -2203,8 +2914,8 @@
       "isAsync": false,
       "hash": "0ee3e7c32707b5dfdf10e478121e54bd3ccf31aa6e1c242a98aefd6f1c7bc916",
       "lineRange": [
-        150,
-        157
+        154,
+        161
       ],
       "hasJsDoc": true,
       "description": "Return a label derived from the edge type, if applicable.",
@@ -2217,7 +2928,7 @@
         }
       ],
       "returnType": "string | undefined",
-      "isExported": false
+      "isExported": true
     },
     {
       "id": "src/graph/graph-to-mermaid.ts:sanitizeLabel",
@@ -2227,8 +2938,8 @@
       "isAsync": false,
       "hash": "4e32ef11830135e16d23b1f831de0348b99b4aafeaa4c9ac05d185fef8001cf6",
       "lineRange": [
-        157,
-        164
+        161,
+        168
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -2242,7 +2953,7 @@
         }
       ],
       "returnType": "string",
-      "isExported": false
+      "isExported": true
     },
     {
       "id": "src/graph/graph-to-mermaid.ts:sanitizeId",
@@ -2252,8 +2963,8 @@
       "isAsync": false,
       "hash": "24dbed29c3876b7eb4715c9e48b692a70314100b6c23bbcbd6c34e5a958b0864",
       "lineRange": [
-        164,
-        171
+        168,
+        175
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -2267,7 +2978,7 @@
         }
       ],
       "returnType": "string",
-      "isExported": false
+      "isExported": true
     },
     {
       "id": "src/graph/resolve-import/index.ts:stripJsonComments",
@@ -2499,6 +3210,38 @@
       "isExported": true
     },
     {
+      "id": "src/graph/sync.ts:syncGraph",
+      "name": "syncGraph",
+      "kind": "function",
+      "filePath": "src/graph/sync.ts",
+      "isAsync": false,
+      "hash": "660ab493a219a7a736fa4391184328c57b4faa6d3d8d231dc135fe53de3aa1ff",
+      "lineRange": [
+        15,
+        55
+      ],
+      "hasJsDoc": true,
+      "description": "Build the dependency graph from source files and write it to disk.\n\nFinds source files matching the config scope, builds the call graph,\nand writes graph.json to the output directory.",
+      "structuredParams": [
+        {
+          "name": "config",
+          "type": "TreckConfig",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Treck configuration with scope and output directory"
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "isOptional": true,
+          "isRest": false,
+          "description": "Optional path to limit sync to files under this directory"
+        }
+      ],
+      "returnType": "SyncResult | null",
+      "isExported": true
+    },
+    {
       "id": "src/hasher/index.ts:ContentHasher",
       "name": "ContentHasher",
       "kind": "class",
@@ -2725,6 +3468,45 @@
       "isExported": true
     },
     {
+      "id": "src/server/chat.ts:handleChatRequest",
+      "name": "handleChatRequest",
+      "kind": "function",
+      "filePath": "src/server/chat.ts",
+      "isAsync": true,
+      "hash": "291c01d077fc723ffab8e0d145f4312fd0c64d9b09bcd86799f10f09e6c43f42",
+      "lineRange": [
+        18,
+        101
+      ],
+      "hasJsDoc": true,
+      "description": "Handle a POST /api/chat request.\n\nStreams responses from the Anthropic API with graph context,\nautomatically handling the tool-use loop for search_nodes and\nselect_nodes via the AI SDK.",
+      "structuredParams": [
+        {
+          "name": "req",
+          "type": "import('node:http').IncomingMessage",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Incoming HTTP request"
+        },
+        {
+          "name": "res",
+          "type": "import('node:http').ServerResponse",
+          "isOptional": false,
+          "isRest": false,
+          "description": "HTTP response"
+        },
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The current flow graph"
+        }
+      ],
+      "returnType": "Promise<void>",
+      "isExported": true
+    },
+    {
       "id": "src/server/index.ts:serveStaticFile",
       "name": "serveStaticFile",
       "kind": "function",
@@ -2732,8 +3514,8 @@
       "isAsync": false,
       "hash": "8131a9f57e256532d6becf8708767698b20d05275c71283f82ec56dd42c8d0a8",
       "lineRange": [
-        29,
-        46
+        30,
+        47
       ],
       "hasJsDoc": true,
       "description": "Serve a static file with the appropriate Content-Type header.",
@@ -2762,10 +3544,10 @@
       "kind": "function",
       "filePath": "src/server/index.ts",
       "isAsync": true,
-      "hash": "a6806fadfa7884c9fffa9483e85c5a4d1f69a831a7aa56885918d304fd936ca3",
+      "hash": "e7e3249b15c69f26b3e76b0b69c0ede9cce6b4c8b51031b38d5dd0387a29c502",
       "lineRange": [
-        46,
-        190
+        47,
+        215
       ],
       "hasJsDoc": true,
       "description": "Start the treck documentation viewer HTTP server.\n\nServes the single-page viewer app, a JSON API for the symbol index and\nindividual doc pages, and the graph data. Watches graph.json for changes\nand rebuilds the index automatically.\n\nIf the requested port is taken, retries up to 10 consecutive ports.",
@@ -2796,10 +3578,10 @@
       "kind": "function",
       "filePath": "src/server/symbol-index.ts",
       "isAsync": false,
-      "hash": "f68d3c5eaf5032b62f2e90d31d26f99b22206ebde9ac6f972e4cecbf1c9ee42f",
+      "hash": "bd5fbcc61962c58a5ad4f9353d15b1881ebe8c5bafe7e5f24af12f682998923e",
       "lineRange": [
         17,
-        46
+        51
       ],
       "hasJsDoc": true,
       "description": "Build the doc response with server-side SVG rendering for the dependency graph.\n\nWraps the browser-safe `buildDocResponse` and replaces the raw mermaid\nsource with a rendered SVG string.",
@@ -2857,6 +3639,138 @@
       "hasJsDoc": true,
       "isTrivial": true,
       "description": "Root application component for the treck viewer.",
+      "isExported": true
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:loadSettings",
+      "name": "loadSettings",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/ChatPanel.tsx",
+      "isAsync": false,
+      "hash": "b2568f636d978ff0cb99026af575f32b7419904aa92c2c939fb4feb45b047182",
+      "lineRange": [
+        32,
+        45
+      ],
+      "hasJsDoc": true,
+      "description": "Load chat settings from localStorage.",
+      "returnType": "ChatSettings",
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:saveSettings",
+      "name": "saveSettings",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/ChatPanel.tsx",
+      "isAsync": false,
+      "hash": "f8e2c099dd3a5fcbce76b5dc62c27cbb1b84f6cec5bd9f00cc8d9531c813b4f9",
+      "lineRange": [
+        45,
+        50
+      ],
+      "hasJsDoc": true,
+      "description": "Save chat settings to localStorage.",
+      "structuredParams": [
+        {
+          "name": "settings",
+          "type": "ChatSettings",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "void",
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatMarkdown",
+      "name": "ChatMarkdown",
+      "kind": "component",
+      "filePath": "src/server/viewer/components/ChatPanel.tsx",
+      "isAsync": false,
+      "hash": "a33a4d8344eeb3518fd73ee05f1ff4b6c826167f46ead657548e27a9786ab444",
+      "lineRange": [
+        57,
+        69
+      ],
+      "hasJsDoc": true,
+      "description": "Renders markdown content from assistant messages.",
+      "structuredParams": [
+        {
+          "name": "content",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:SettingsButton",
+      "name": "SettingsButton",
+      "kind": "component",
+      "filePath": "src/server/viewer/components/ChatPanel.tsx",
+      "isAsync": false,
+      "hash": "52d216176b08700f627e7b3399b708cca48136d6f827b79f2f44a9294a76e069",
+      "lineRange": [
+        69,
+        96
+      ],
+      "hasJsDoc": true,
+      "isTrivial": true,
+      "description": "Settings gear icon button.",
+      "structuredParams": [
+        {
+          "name": "onClick",
+          "type": "() => void",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:CloseIcon",
+      "name": "CloseIcon",
+      "kind": "component",
+      "filePath": "src/server/viewer/components/ChatPanel.tsx",
+      "isAsync": false,
+      "hash": "ac1649af0576bb0db70c9677e6de3f9f522c50bb52d1db052aa1bdd6a611e1f5",
+      "lineRange": [
+        96,
+        116
+      ],
+      "hasJsDoc": true,
+      "isTrivial": true,
+      "description": "Close X icon.",
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "name": "ChatPanel",
+      "kind": "component",
+      "filePath": "src/server/viewer/components/ChatPanel.tsx",
+      "isAsync": false,
+      "hash": "405e1ed592e3c6197172890da3c7b33a05e28242d53181cca2dfa41a863d9fbe",
+      "lineRange": [
+        116,
+        460
+      ],
+      "hasJsDoc": true,
+      "description": "AI chat panel for code navigation questions.",
+      "structuredParams": [
+        {
+          "name": "onClose",
+          "type": "unknown",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "project",
+          "type": "unknown",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
       "isExported": true
     },
     {
@@ -3034,8 +3948,8 @@
       "isAsync": false,
       "hash": "f5a262a430b42007316ce0dbfe1d5de568e2d0b5c80c51e259bd648849443c3d",
       "lineRange": [
-        37,
-        42
+        38,
+        43
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -3057,8 +3971,8 @@
       "isAsync": false,
       "hash": "157a97ac980c98d3ea67fb151a9d891b6132aa94d1ee5d9b13b98be1c5e33a9d",
       "lineRange": [
-        42,
-        46
+        43,
+        47
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -3079,10 +3993,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/DocPanel.tsx",
       "isAsync": false,
-      "hash": "0c6b7335479fbd8ba0272fb30f81c4c9e9ef6adab183ce7e16312b24103eae29",
+      "hash": "7c680ba98bd7473162e3c3499a1411fb568639d18e5781a787809ae615828046",
       "lineRange": [
-        46,
-        214
+        47,
+        218
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -3109,8 +4023,8 @@
       "isAsync": false,
       "hash": "761efe9ccffac73008b69089a4b411c4ee202eb92256e3abbc704c0a08c9d2b2",
       "lineRange": [
-        27,
-        49
+        28,
+        50
       ],
       "hasJsDoc": true,
       "description": "Build a tree from the docs index, optionally filtering to only visible symbol names.",
@@ -3139,8 +4053,8 @@
       "isAsync": false,
       "hash": "b7e911deb4556576ac7c0088d435561a93afd23f0ef3244dcaa368a4360b8787",
       "lineRange": [
-        54,
-        66
+        55,
+        67
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -3168,8 +4082,8 @@
       "isAsync": false,
       "hash": "48f6c4c18f259a6ec767e8b0a45cfeea9f73fdd1ad1bcffb886d9be5bf336934",
       "lineRange": [
-        78,
-        178
+        79,
+        179
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -3236,10 +4150,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/DocsTree.tsx",
       "isAsync": false,
-      "hash": "7b636a0e86593def23eb52a2a7f699506ba8ee81fc8dfc6d6c2dc630de119996",
+      "hash": "ab8ced97efe6b044b24fdd5643c10a2081fb5e9c8ddc00c916adfeba6879389c",
       "lineRange": [
-        182,
-        286
+        183,
+        290
       ],
       "hasJsDoc": true,
       "description": "File tree navigation for browsing documented symbols.",
@@ -3261,8 +4175,8 @@
       "isAsync": false,
       "hash": "6d65bcb50b2e5e2326ffa0f0cb3a3521b6872bd663b5e48ae6af59de2609d723",
       "lineRange": [
-        11,
-        39
+        12,
+        40
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -3293,10 +4207,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/DocsViewer.tsx",
       "isAsync": false,
-      "hash": "08ef4ccd407f66220c8a0d94223c06899b7186395427ee07d4153fe75e732bff",
+      "hash": "9d92b70a7bb1809b09fb00dc3606eab2d8debc1413529106c2191c5a349aabe2",
       "lineRange": [
-        39,
-        210
+        40,
+        226
       ],
       "hasJsDoc": true,
       "description": "Full-page documentation reader, computing docs client-side from graph context.",
@@ -3572,8 +4486,8 @@
       "isAsync": false,
       "hash": "a29b93857b4333d45e51efadc3741851fc4e82633a0198479eb66ffe9c95f1f0",
       "lineRange": [
-        161,
-        185
+        165,
+        189
       ],
       "hasJsDoc": true,
       "description": "Detect dark mode by checking for a `.dark` class on the document root.\n\nObserves class mutations on `<html>` so the value updates when the\ntheme is toggled at runtime.",
@@ -3586,10 +4500,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": true,
-      "hash": "9a2411ddd6af8cc61ea99b70b33cac4b20561e0bf1715ad582331d900c508652",
+      "hash": "90cb5aed63ea330d89a000ff371ad80096d36313338552639d54c14d9d862b81",
       "lineRange": [
-        185,
-        528
+        189,
+        590
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -3622,6 +4536,18 @@
           "type": "unknown",
           "isOptional": false,
           "isRest": false
+        },
+        {
+          "name": "recenterRef",
+          "type": "unknown",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "onOffCenterChange",
+          "type": "unknown",
+          "isOptional": false,
+          "isRest": false
         }
       ],
       "isExported": false
@@ -3632,10 +4558,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": false,
-      "hash": "529a79637b22ba96cdbe57d1199ea08435af418777384114bafe3bbe7bed8ead",
+      "hash": "5e3a62e0203f193e421af51476ba4e43843f71026d6ca0b76582392d5b53c49d",
       "lineRange": [
-        528,
-        549
+        590,
+        615
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -3670,6 +4596,18 @@
           "type": "unknown",
           "isOptional": false,
           "isRest": false
+        },
+        {
+          "name": "recenterRef",
+          "type": "unknown",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "onOffCenterChange",
+          "type": "unknown",
+          "isOptional": false,
+          "isRest": false
         }
       ],
       "isExported": true
@@ -3680,10 +4618,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/GraphExplorer.tsx",
       "isAsync": false,
-      "hash": "d951ed8a7db37254909e36f3b559d6b8d0bd0d94f7e85916e7b90900725c12be",
+      "hash": "d4fc4bf09af4b39c8511caa328291a590a774189e585d2a02b5f6596cdd98354",
       "lineRange": [
-        30,
-        242
+        34,
+        314
       ],
       "hasJsDoc": true,
       "description": "Standalone graph explorer — renders sidebar, graph, and docs from a single graph prop.",
@@ -3707,6 +4645,12 @@
           "isOptional": true,
           "isRest": false,
           "defaultValue": "null"
+        },
+        {
+          "name": "project",
+          "type": "unknown",
+          "isOptional": false,
+          "isRest": false
         }
       ],
       "isExported": true
@@ -3771,18 +4715,35 @@
       "isExported": true
     },
     {
+      "id": "src/server/viewer/components/LoadingEllipsis.tsx:LoadingEllipsis",
+      "name": "LoadingEllipsis",
+      "kind": "component",
+      "filePath": "src/server/viewer/components/LoadingEllipsis.tsx",
+      "isAsync": false,
+      "hash": "3406c09fef91f0c23800c9e09e17290fa5dcf882a99422d29788cfdf4b35beee",
+      "lineRange": [
+        1,
+        13
+      ],
+      "hasJsDoc": true,
+      "isTrivial": true,
+      "description": "Animated ellipsis dots that cycle through opacity states,\nused as a replacement for static \"...\" in loading text.",
+      "isExported": true
+    },
+    {
       "id": "src/server/viewer/components/LoadingSpinner.tsx:LoadingSpinner",
       "name": "LoadingSpinner",
       "kind": "component",
       "filePath": "src/server/viewer/components/LoadingSpinner.tsx",
       "isAsync": false,
-      "hash": "1d8f0dea192eb9447efe1b002d8dd11698d90c8193a5b5ddd89bb4ad1bb5fad9",
+      "hash": "2c501d831ec806b56e95c42000dd1b66bafd2470ef35ae14e1f276fed5fa099e",
       "lineRange": [
         1,
-        8
+        14
       ],
-      "hasJsDoc": false,
+      "hasJsDoc": true,
       "isTrivial": true,
+      "description": "Full-area centered loading spinner with animated ellipsis text.",
       "isExported": true
     },
     {
@@ -5251,6 +6212,174 @@
   ],
   "edges": [
     {
+      "id": "src/cli/commands/diff.ts:formatDiffMermaid->src/graph/diff.ts:diffToMermaid",
+      "source": "src/cli/commands/diff.ts:formatDiffMermaid",
+      "target": "src/graph/diff.ts:diffToMermaid",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/cli/commands/diff.ts:registerDiffCommand->src/cli/utils/config.ts:loadConfig",
+      "source": "src/cli/commands/diff.ts:registerDiffCommand",
+      "target": "src/cli/utils/config.ts:loadConfig",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/cli/commands/diff.ts:registerDiffCommand->src/graph/graph-store.ts:GraphStore",
+      "source": "src/cli/commands/diff.ts:registerDiffCommand",
+      "target": "src/graph/graph-store.ts:GraphStore",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/cli/commands/diff.ts:registerDiffCommand->src/checker/index.ts:StaleChecker",
+      "source": "src/cli/commands/diff.ts:registerDiffCommand",
+      "target": "src/checker/index.ts:StaleChecker",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
+      "id": "src/cli/commands/diff.ts:registerDiffCommand->src/cli/utils/git.ts:detectBaseRef",
+      "source": "src/cli/commands/diff.ts:registerDiffCommand",
+      "target": "src/cli/utils/git.ts:detectBaseRef",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 3
+    },
+    {
+      "id": "src/cli/commands/diff.ts:registerDiffCommand->src/cli/utils/git.ts:loadGraphAtRef",
+      "source": "src/cli/commands/diff.ts:registerDiffCommand",
+      "target": "src/cli/utils/git.ts:loadGraphAtRef",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 4
+    },
+    {
+      "id": "src/cli/commands/diff.ts:registerDiffCommand->src/graph/diff.ts:diffGraphs",
+      "source": "src/cli/commands/diff.ts:registerDiffCommand",
+      "target": "src/graph/diff.ts:diffGraphs",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 5
+    },
+    {
+      "id": "src/cli/commands/diff.ts:registerDiffCommand->src/graph/diff.ts:formatDiffSummary",
+      "source": "src/cli/commands/diff.ts:registerDiffCommand",
+      "target": "src/graph/diff.ts:formatDiffSummary",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 6
+    },
+    {
+      "id": "src/cli/commands/diff.ts:registerDiffCommand->src/cli/commands/diff.ts:formatDiffJson",
+      "source": "src/cli/commands/diff.ts:registerDiffCommand",
+      "target": "src/cli/commands/diff.ts:formatDiffJson",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "switch (format): case 'json'",
+          "branch": "case 'json'",
+          "branchGroup": "branch:141"
+        }
+      ],
+      "label": "switch (format): case 'json'",
+      "isAsync": false,
+      "order": 7
+    },
+    {
+      "id": "src/cli/commands/diff.ts:registerDiffCommand->src/cli/commands/diff.ts:formatDiffMermaid",
+      "source": "src/cli/commands/diff.ts:registerDiffCommand",
+      "target": "src/cli/commands/diff.ts:formatDiffMermaid",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "switch (format): default",
+          "branch": "default",
+          "branchGroup": "branch:141"
+        }
+      ],
+      "label": "switch (format): default",
+      "isAsync": false,
+      "order": 8
+    },
+    {
+      "id": "src/graph/diff.ts:diffGraphs->src/graph/graph-query.ts:connectedSubgraph",
+      "source": "src/graph/diff.ts:diffGraphs",
+      "target": "src/graph/graph-query.ts:connectedSubgraph",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (changedIds.length > 0)",
+          "branch": "then",
+          "branchGroup": "branch:87"
+        }
+      ],
+      "label": "if (changedIds.length > 0)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/graph/diff.ts:diffToMermaid->src/graph/graph-to-mermaid.ts:sanitizeId",
+      "source": "src/graph/diff.ts:diffToMermaid",
+      "target": "src/graph/graph-to-mermaid.ts:sanitizeId",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/graph/diff.ts:diffToMermaid->src/graph/graph-to-mermaid.ts:formatNodeLabel",
+      "source": "src/graph/diff.ts:diffToMermaid",
+      "target": "src/graph/graph-to-mermaid.ts:formatNodeLabel",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/graph/diff.ts:diffToMermaid->src/graph/graph-to-mermaid.ts:edgeArrow",
+      "source": "src/graph/diff.ts:diffToMermaid",
+      "target": "src/graph/graph-to-mermaid.ts:edgeArrow",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
+      "id": "src/graph/diff.ts:diffToMermaid->src/graph/graph-to-mermaid.ts:edgeTypeLabel",
+      "source": "src/graph/diff.ts:diffToMermaid",
+      "target": "src/graph/graph-to-mermaid.ts:edgeTypeLabel",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "edge.label ||",
+          "branch": "||",
+          "branchGroup": "branch:175"
+        }
+      ],
+      "label": "edge.label ||",
+      "isAsync": false,
+      "order": 3
+    },
+    {
+      "id": "src/graph/diff.ts:diffToMermaid->src/graph/graph-to-mermaid.ts:sanitizeLabel",
+      "source": "src/graph/diff.ts:diffToMermaid",
+      "target": "src/graph/graph-to-mermaid.ts:sanitizeLabel",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (rawLabel)",
+          "branch": "then",
+          "branchGroup": "branch:176"
+        }
+      ],
+      "label": "if (rawLabel)",
+      "isAsync": false,
+      "order": 4
+    },
+    {
       "id": "src/checker/index.ts:StaleChecker->src/extractors/typescript/index.ts:TypeScriptExtractor",
       "source": "src/checker/index.ts:StaleChecker",
       "target": "src/extractors/typescript/index.ts:TypeScriptExtractor",
@@ -5371,6 +6500,158 @@
       "order": 3
     },
     {
+      "id": "src/cli/commands/mcp.ts:handleSearchNodes->src/graph/chat-helpers.ts:executeSearchNodes",
+      "source": "src/cli/commands/mcp.ts:handleSearchNodes",
+      "target": "src/graph/chat-helpers.ts:executeSearchNodes",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handleShowSymbol->src/cli/utils/resolve-targets.ts:resolveFocusTargets",
+      "source": "src/cli/commands/mcp.ts:handleShowSymbol",
+      "target": "src/cli/utils/resolve-targets.ts:resolveFocusTargets",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handleShowSymbol->src/graph/graph-query.ts:connectedSubgraph",
+      "source": "src/cli/commands/mcp.ts:handleShowSymbol",
+      "target": "src/graph/graph-query.ts:connectedSubgraph",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handleListEntryPoints->src/graph/graph-query.ts:entryPoints",
+      "source": "src/cli/commands/mcp.ts:handleListEntryPoints",
+      "target": "src/graph/graph-query.ts:entryPoints",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handlePathsBetween->src/graph/graph-query.ts:pathsBetween",
+      "source": "src/cli/commands/mcp.ts:handlePathsBetween",
+      "target": "src/graph/graph-query.ts:pathsBetween",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handleDiffGraph->src/cli/utils/git.ts:loadGraphAtRef",
+      "source": "src/cli/commands/mcp.ts:handleDiffGraph",
+      "target": "src/cli/utils/git.ts:loadGraphAtRef",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:handleDiffGraph->src/graph/diff.ts:diffGraphs",
+      "source": "src/cli/commands/mcp.ts:handleDiffGraph",
+      "target": "src/graph/diff.ts:diffGraphs",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/utils/config.ts:loadConfig",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/cli/utils/config.ts:loadConfig",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/graph/graph-store.ts:GraphStore",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/graph/graph-store.ts:GraphStore",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleSearchNodes",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/cli/commands/mcp.ts:handleSearchNodes",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleShowSymbol",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/cli/commands/mcp.ts:handleShowSymbol",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 3
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleListEntryPoints",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/cli/commands/mcp.ts:handleListEntryPoints",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 4
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleFindCallers",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/cli/commands/mcp.ts:handleFindCallers",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 5
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleFindCallees",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/cli/commands/mcp.ts:handleFindCallees",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 6
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handlePathsBetween",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/cli/commands/mcp.ts:handlePathsBetween",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 7
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleGetGraphSummary",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/cli/commands/mcp.ts:handleGetGraphSummary",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 8
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleDiffGraph",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/cli/commands/mcp.ts:handleDiffGraph",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 9
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/checker/index.ts:StaleChecker",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/checker/index.ts:StaleChecker",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 10
+    },
+    {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/graph/sync.ts:syncGraph",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/graph/sync.ts:syncGraph",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 11
+    },
+    {
       "id": "src/cli/commands/serve.ts:registerServeCommand->src/cli/utils/config.ts:loadConfig",
       "source": "src/cli/commands/serve.ts:registerServeCommand",
       "target": "src/cli/utils/config.ts:loadConfig",
@@ -5456,12 +6737,28 @@
         {
           "condition": "if (unresolved.length > 0)",
           "branch": "then",
-          "branchGroup": "branch:114"
+          "branchGroup": "branch:112"
         }
       ],
       "label": "if (unresolved.length > 0)",
       "isAsync": false,
       "order": 3
+    },
+    {
+      "id": "src/cli/commands/show.ts:registerShowCommand->src/cli/commands/show.ts:formatJsonOutput",
+      "source": "src/cli/commands/show.ts:registerShowCommand",
+      "target": "src/cli/commands/show.ts:formatJsonOutput",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "switch (format): case 'json'",
+          "branch": "case 'json'",
+          "branchGroup": "branch:129"
+        }
+      ],
+      "label": "switch (format): case 'json'",
+      "isAsync": false,
+      "order": 4
     },
     {
       "id": "src/cli/commands/show.ts:registerShowCommand->src/cli/commands/show.ts:formatDocsOutput",
@@ -5470,30 +6767,23 @@
       "type": "conditional-call",
       "conditions": [
         {
-          "condition": "if (options.docs)",
-          "branch": "then",
-          "branchGroup": "branch:132"
+          "condition": "switch (format): case 'markdown'",
+          "branch": "case 'markdown'",
+          "branchGroup": "branch:129"
         }
       ],
-      "label": "if (options.docs)",
+      "label": "switch (format): case 'markdown'",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "src/cli/commands/show.ts:registerShowCommand->src/cli/commands/show.ts:formatMermaidOutput",
       "source": "src/cli/commands/show.ts:registerShowCommand",
       "target": "src/cli/commands/show.ts:formatMermaidOutput",
       "type": "conditional-call",
-      "conditions": [
-        {
-          "condition": "else",
-          "branch": "else",
-          "branchGroup": "branch:132"
-        }
-      ],
-      "label": "else",
+      "label": "(switch (format): case 'ascii') or (switch (format): default)",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "src/cli/commands/show.ts:registerShowCommand->src/cli/commands/show.ts:beautifyMermaid",
@@ -5502,14 +6792,14 @@
       "type": "conditional-call",
       "conditions": [
         {
-          "condition": "if (options.beautify && !options.docs)",
-          "branch": "then",
-          "branchGroup": "branch:134"
+          "condition": "switch (format): case 'ascii'",
+          "branch": "case 'ascii'",
+          "branchGroup": "branch:129"
         }
       ],
-      "label": "if (options.beautify && !options.docs)",
+      "label": "switch (format): case 'ascii'",
       "isAsync": true,
-      "order": 6
+      "order": 8
     },
     {
       "id": "src/cli/commands/show.ts:formatMermaidOutput->src/graph/graph-to-mermaid.ts:nodeToMermaid",
@@ -5520,7 +6810,7 @@
         {
           "condition": "if (nodeIds.length === 1)",
           "branch": "then",
-          "branchGroup": "branch:173"
+          "branchGroup": "branch:182"
         }
       ],
       "label": "if (nodeIds.length === 1)",
@@ -5542,6 +6832,14 @@
       "type": "direct-call",
       "isAsync": false,
       "order": 2
+    },
+    {
+      "id": "src/cli/commands/show.ts:formatJsonOutput->src/graph/graph-query.ts:connectedSubgraph",
+      "source": "src/cli/commands/show.ts:formatJsonOutput",
+      "target": "src/graph/graph-query.ts:connectedSubgraph",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
     },
     {
       "id": "src/cli/commands/show.ts:formatDocsOutput->src/cli/commands/show.ts:buildMetadataLine",
@@ -5576,28 +6874,12 @@
       "order": 0
     },
     {
-      "id": "src/cli/commands/sync.ts:registerSyncCommand->src/cli/utils/source-files.ts:findSourceFiles",
+      "id": "src/cli/commands/sync.ts:registerSyncCommand->src/graph/sync.ts:syncGraph",
       "source": "src/cli/commands/sync.ts:registerSyncCommand",
-      "target": "src/cli/utils/source-files.ts:findSourceFiles",
+      "target": "src/graph/sync.ts:syncGraph",
       "type": "direct-call",
       "isAsync": false,
       "order": 1
-    },
-    {
-      "id": "src/cli/commands/sync.ts:registerSyncCommand->src/graph/graph-builder.ts:GraphBuilder",
-      "source": "src/cli/commands/sync.ts:registerSyncCommand",
-      "target": "src/graph/graph-builder.ts:GraphBuilder",
-      "type": "direct-call",
-      "isAsync": false,
-      "order": 2
-    },
-    {
-      "id": "src/cli/commands/sync.ts:registerSyncCommand->src/graph/graph-store.ts:GraphStore",
-      "source": "src/cli/commands/sync.ts:registerSyncCommand",
-      "target": "src/graph/graph-store.ts:GraphStore",
-      "type": "direct-call",
-      "isAsync": false,
-      "order": 3
     },
     {
       "id": "src/cli/commands/sync.ts:registerSyncCommand->src/graph/graph-query.ts:entryPoints",
@@ -5605,7 +6887,7 @@
       "target": "src/graph/graph-query.ts:entryPoints",
       "type": "direct-call",
       "isAsync": false,
-      "order": 4
+      "order": 2
     },
     {
       "id": "src/cli/utils/config.ts:loadConfig->src/cli/utils/config.ts:stripQuotes",
@@ -6089,6 +7371,14 @@
       "order": 1
     },
     {
+      "id": "src/graph/chat-helpers.ts:buildSystemPrompt->src/graph/chat-helpers.ts:pickExampleNodes",
+      "source": "src/graph/chat-helpers.ts:buildSystemPrompt",
+      "target": "src/graph/chat-helpers.ts:pickExampleNodes",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "src/graph/graph-builder.ts:GraphBuilder->src/extractors/typescript/index.ts:TypeScriptExtractor",
       "source": "src/graph/graph-builder.ts:GraphBuilder",
       "target": "src/extractors/typescript/index.ts:TypeScriptExtractor",
@@ -6339,6 +7629,38 @@
       "order": 1
     },
     {
+      "id": "src/graph/sync.ts:syncGraph->src/cli/utils/source-files.ts:findSourceFiles",
+      "source": "src/graph/sync.ts:syncGraph",
+      "target": "src/cli/utils/source-files.ts:findSourceFiles",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/graph/sync.ts:syncGraph->src/graph/graph-builder.ts:GraphBuilder",
+      "source": "src/graph/sync.ts:syncGraph",
+      "target": "src/graph/graph-builder.ts:GraphBuilder",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/graph/sync.ts:syncGraph->src/graph/graph-store.ts:GraphStore",
+      "source": "src/graph/sync.ts:syncGraph",
+      "target": "src/graph/graph-store.ts:GraphStore",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
+      "id": "src/graph/sync.ts:syncGraph->src/graph/graph-query.ts:entryPoints",
+      "source": "src/graph/sync.ts:syncGraph",
+      "target": "src/graph/graph-query.ts:entryPoints",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 3
+    },
+    {
       "id": "src/matchers/inngest.ts:inngestMatcher->src/matchers/inngest.ts:extractEventTrigger",
       "source": "src/matchers/inngest.ts:inngestMatcher",
       "target": "src/matchers/inngest.ts:extractEventTrigger",
@@ -6460,6 +7782,30 @@
       "order": 2
     },
     {
+      "id": "src/server/chat.ts:handleChatRequest->src/graph/chat-helpers.ts:buildSystemPrompt",
+      "source": "src/server/chat.ts:handleChatRequest",
+      "target": "src/graph/chat-helpers.ts:buildSystemPrompt",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/chat.ts:handleChatRequest->src/graph/chat-helpers.ts:executeSearchNodes",
+      "source": "src/server/chat.ts:handleChatRequest",
+      "target": "src/graph/chat-helpers.ts:executeSearchNodes",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/chat.ts:handleChatRequest->src/graph/chat-helpers.ts:executeSelectNodes",
+      "source": "src/server/chat.ts:handleChatRequest",
+      "target": "src/graph/chat-helpers.ts:executeSelectNodes",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
       "id": "src/server/index.ts:startServer->src/graph/graph-store.ts:GraphStore",
       "source": "src/server/index.ts:startServer",
       "target": "src/graph/graph-store.ts:GraphStore",
@@ -6485,12 +7831,28 @@
         {
           "condition": "if (url.pathname === '/api/index')",
           "branch": "then",
-          "branchGroup": "branch:110"
+          "branchGroup": "branch:111"
         }
       ],
       "label": "if (url.pathname === '/api/index')",
       "isAsync": false,
       "order": 3
+    },
+    {
+      "id": "src/server/index.ts:startServer->src/server/chat.ts:handleChatRequest",
+      "source": "src/server/index.ts:startServer",
+      "target": "src/server/chat.ts:handleChatRequest",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (url.pathname === '/api/chat' && req.method === 'POST')",
+          "branch": "then",
+          "branchGroup": "branch:131"
+        }
+      ],
+      "label": "if (url.pathname === '/api/chat' && req.method === 'POST')",
+      "isAsync": true,
+      "order": 4
     },
     {
       "id": "src/server/index.ts:startServer->src/server/symbol-index.ts:buildDocResponseWithSVG",
@@ -6501,12 +7863,12 @@
         {
           "condition": "if (url.pathname === '/api/doc')",
           "branch": "then",
-          "branchGroup": "branch:119"
+          "branchGroup": "branch:144"
         }
       ],
       "label": "if (url.pathname === '/api/doc')",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "src/server/index.ts:startServer->src/server/index.ts:serveStaticFile",
@@ -6514,7 +7876,7 @@
       "target": "src/server/index.ts:serveStaticFile",
       "type": "direct-call",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "src/server/symbol-index.ts:buildDocResponseWithSVG->src/graph/symbol-index.ts:buildDocResponse",
@@ -6539,6 +7901,133 @@
       "type": "direct-call",
       "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ChatPanel.tsx:saveSettings",
+      "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "target": "src/server/viewer/components/ChatPanel.tsx:saveSettings",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ChatPanel.tsx:SettingsButton",
+      "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "target": "src/server/viewer/components/ChatPanel.tsx:SettingsButton",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ChatPanel.tsx:CloseIcon",
+      "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "target": "src/server/viewer/components/ChatPanel.tsx:CloseIcon",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ui/drawer.tsx:DrawerClose",
+      "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerClose",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else",
+          "branch": "else",
+          "branchGroup": "branch:268"
+        }
+      ],
+      "label": "else",
+      "isAsync": false,
+      "order": 3
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ChatPanel.tsx:ChatMarkdown",
+      "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "target": "src/server/viewer/components/ChatPanel.tsx:ChatMarkdown",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "settings.apiKey &&",
+          "branch": "&&",
+          "branchGroup": "branch:338"
+        },
+        {
+          "condition": "textContent &&",
+          "branch": "&&",
+          "branchGroup": "branch:365"
+        },
+        {
+          "condition": "else",
+          "branch": "else",
+          "branchGroup": "branch:366"
+        }
+      ],
+      "label": "settings.apiKey && → textContent && → else",
+      "isAsync": false,
+      "order": 4
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/LoadingEllipsis.tsx:LoadingEllipsis",
+      "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "target": "src/server/viewer/components/LoadingEllipsis.tsx:LoadingEllipsis",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "settings.apiKey &&",
+          "branch": "&&",
+          "branchGroup": "branch:338"
+        },
+        {
+          "condition": "status === 'submitted' &&",
+          "branch": "&&",
+          "branchGroup": "branch:390"
+        }
+      ],
+      "label": "settings.apiKey && → status === 'submitted' &&",
+      "isAsync": false,
+      "order": 5
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ui/drawer.tsx:Drawer",
+      "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "target": "src/server/viewer/components/ui/drawer.tsx:Drawer",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 6
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ui/drawer.tsx:DrawerContent",
+      "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerContent",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 7
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ui/drawer.tsx:DrawerHeader",
+      "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerHeader",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 8
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ui/drawer.tsx:DrawerDescription",
+      "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerDescription",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 9
+    },
+    {
+      "id": "src/server/viewer/components/ChatPanel.tsx:ChatPanel->src/server/viewer/components/ui/drawer.tsx:DrawerBody",
+      "source": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "target": "src/server/viewer/components/ui/drawer.tsx:DrawerBody",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 10
     },
     {
       "id": "src/server/viewer/components/DocContent.tsx:DocContent->src/server/viewer/components/DocContent.tsx:entryTypeToVariant",
@@ -6694,6 +8183,22 @@
       "order": 9
     },
     {
+      "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/LoadingEllipsis.tsx:LoadingEllipsis",
+      "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
+      "target": "src/server/viewer/components/LoadingEllipsis.tsx:LoadingEllipsis",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "loading &&",
+          "branch": "&&",
+          "branchGroup": "branch:149"
+        }
+      ],
+      "label": "loading &&",
+      "isAsync": false,
+      "order": 10
+    },
+    {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/DocContent.tsx:DocContent",
       "source": "src/server/viewer/components/DocPanel.tsx:DocPanel",
       "target": "src/server/viewer/components/DocContent.tsx:DocContent",
@@ -6702,12 +8207,12 @@
         {
           "condition": "doc &&",
           "branch": "&&",
-          "branchGroup": "branch:161"
+          "branchGroup": "branch:165"
         }
       ],
       "label": "doc &&",
       "isAsync": false,
-      "order": 10
+      "order": 11
     },
     {
       "id": "src/server/viewer/components/DocPanel.tsx:DocPanel->src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawerFooter",
@@ -6718,12 +8223,12 @@
         {
           "condition": "doc &&",
           "branch": "&&",
-          "branchGroup": "branch:182"
+          "branchGroup": "branch:186"
         }
       ],
       "label": "doc &&",
       "isAsync": false,
-      "order": 11
+      "order": 12
     },
     {
       "id": "src/server/viewer/components/DocsTree.tsx:TreeDir->src/server/viewer/components/DocsTree.tsx:Guides",
@@ -6743,12 +8248,12 @@
         {
           "condition": "!isCollapsed &&",
           "branch": "&&",
-          "branchGroup": "branch:133"
+          "branchGroup": "branch:134"
         },
         {
           "condition": "if (item.type === 'dir')",
           "branch": "then",
-          "branchGroup": "branch:136"
+          "branchGroup": "branch:137"
         }
       ],
       "label": "!isCollapsed && → if (item.type === 'dir')",
@@ -6764,7 +8269,7 @@
         {
           "condition": "!isCollapsed &&",
           "branch": "&&",
-          "branchGroup": "branch:133"
+          "branchGroup": "branch:134"
         }
       ],
       "label": "!isCollapsed &&",
@@ -6796,6 +8301,22 @@
       "order": 2
     },
     {
+      "id": "src/server/viewer/components/DocsTree.tsx:DocsTree->src/server/viewer/components/LoadingEllipsis.tsx:LoadingEllipsis",
+      "source": "src/server/viewer/components/DocsTree.tsx:DocsTree",
+      "target": "src/server/viewer/components/LoadingEllipsis.tsx:LoadingEllipsis",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (!index)",
+          "branch": "then",
+          "branchGroup": "branch:233"
+        }
+      ],
+      "label": "if (!index)",
+      "isAsync": false,
+      "order": 3
+    },
+    {
       "id": "src/server/viewer/components/DocsTree.tsx:DocsTree->src/server/viewer/components/DocsTree.tsx:TreeDir",
       "source": "src/server/viewer/components/DocsTree.tsx:DocsTree",
       "target": "src/server/viewer/components/DocsTree.tsx:TreeDir",
@@ -6804,12 +8325,12 @@
         {
           "condition": "tree &&",
           "branch": "&&",
-          "branchGroup": "branch:265"
+          "branchGroup": "branch:269"
         }
       ],
       "label": "tree &&",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "src/server/viewer/components/DocsViewer.tsx:makeRelatedLinksClickable->src/server/viewer/docs-utils.ts:docPathToUrl",
@@ -6820,7 +8341,7 @@
         {
           "condition": "if (docPath)",
           "branch": "then",
-          "branchGroup": "branch:24"
+          "branchGroup": "branch:25"
         }
       ],
       "label": "if (docPath)",
@@ -6864,14 +8385,7 @@
       "source": "src/server/viewer/components/DocsViewer.tsx:DocsViewer",
       "target": "src/server/viewer/docs-utils.ts:escapeHtml",
       "type": "conditional-call",
-      "conditions": [
-        {
-          "condition": "if (doc.treckVersion)",
-          "branch": "then",
-          "branchGroup": "branch:150"
-        }
-      ],
-      "label": "if (doc.treckVersion)",
+      "label": "(if (doc.dependencyGraph)) or (if (doc.treckVersion))",
       "isAsync": false,
       "order": 4
     },
@@ -6884,12 +8398,12 @@
         {
           "condition": "badges.length > 0 &&",
           "branch": "&&",
-          "branchGroup": "branch:177"
+          "branchGroup": "branch:193"
         }
       ],
       "label": "badges.length > 0 &&",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "src/server/viewer/components/DocsViewer.tsx:DocsViewer->src/server/viewer/components/MissingJsDocBanner.tsx:TrivialSymbolInfo",
@@ -6900,17 +8414,17 @@
         {
           "condition": "doc.hasJsDoc === false &&\n          doc.exported &&",
           "branch": "&&",
-          "branchGroup": "branch:192"
+          "branchGroup": "branch:208"
         },
         {
           "condition": "if (doc.isTrivial)",
           "branch": "then",
-          "branchGroup": "branch:194"
+          "branchGroup": "branch:210"
         }
       ],
       "label": "doc.hasJsDoc === false &&\n          doc.exported && → if (doc.isTrivial)",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "src/server/viewer/components/DocsViewer.tsx:DocsViewer->src/server/viewer/components/MissingJsDocBanner.tsx:MissingJsDocBanner",
@@ -6921,17 +8435,17 @@
         {
           "condition": "doc.hasJsDoc === false &&\n          doc.exported &&",
           "branch": "&&",
-          "branchGroup": "branch:192"
+          "branchGroup": "branch:208"
         },
         {
           "condition": "else",
           "branch": "else",
-          "branchGroup": "branch:194"
+          "branchGroup": "branch:210"
         }
       ],
       "label": "doc.hasJsDoc === false &&\n          doc.exported && → else",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "src/server/viewer/components/FlowControls.tsx:FlowControls->src/server/viewer/components/FlowGraph.tsx:getCategoryLabel",
@@ -6982,7 +8496,7 @@
         {
           "condition": "if (enabledTypes)",
           "branch": "then",
-          "branchGroup": "branch:305"
+          "branchGroup": "branch:366"
         }
       ],
       "label": "if (enabledTypes)",
@@ -7063,7 +8577,7 @@
         {
           "condition": "if (graph)",
           "branch": "then",
-          "branchGroup": "branch:145"
+          "branchGroup": "branch:159"
         }
       ],
       "label": "if (graph)",
@@ -7079,7 +8593,7 @@
         {
           "condition": "if (symbolIndex)",
           "branch": "then",
-          "branchGroup": "branch:148"
+          "branchGroup": "branch:162"
         }
       ],
       "label": "if (symbolIndex)",
@@ -7095,7 +8609,7 @@
         {
           "condition": "!layoutReady &&",
           "branch": "&&",
-          "branchGroup": "branch:169"
+          "branchGroup": "branch:183"
         }
       ],
       "label": "!layoutReady &&",
@@ -7111,7 +8625,7 @@
         {
           "condition": "graph &&",
           "branch": "&&",
-          "branchGroup": "branch:192"
+          "branchGroup": "branch:206"
         }
       ],
       "label": "graph &&",
@@ -7157,6 +8671,30 @@
       "type": "direct-call",
       "isAsync": false,
       "order": 9
+    },
+    {
+      "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "target": "src/server/viewer/components/ChatPanel.tsx:ChatPanel",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "chatOpen &&",
+          "branch": "&&",
+          "branchGroup": "branch:304"
+        }
+      ],
+      "label": "chatOpen &&",
+      "isAsync": false,
+      "order": 10
+    },
+    {
+      "id": "src/server/viewer/components/LoadingSpinner.tsx:LoadingSpinner->src/server/viewer/components/LoadingEllipsis.tsx:LoadingEllipsis",
+      "source": "src/server/viewer/components/LoadingSpinner.tsx:LoadingSpinner",
+      "target": "src/server/viewer/components/LoadingEllipsis.tsx:LoadingEllipsis",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode->src/server/viewer/components/NodeTypes.tsx:nodeClass",

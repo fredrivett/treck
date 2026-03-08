@@ -84,7 +84,8 @@ function buildMermaid(
     for (const node of nodes) {
       const nodeId = sanitizeId(node.id);
       const label = formatNodeLabel(node);
-      const shape = node.entryType ? `([${label}])` : `["${label}"]`;
+      // Asymmetric shape for entry points — keep in sync with diff.ts:nodeShape
+      const shape = node.entryType ? `>${label}]` : `["${label}"]`;
       const indent = fileGroups.size > 1 ? '    ' : '  ';
       lines.push(`${indent}${nodeId}${shape}`);
     }

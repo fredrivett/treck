@@ -18,6 +18,7 @@ interface DiffOptions {
   base?: string;
   format?: 'mermaid' | 'json' | 'ascii';
   depth?: number;
+  theme?: string;
 }
 
 const USAGE = `Compare graph changes between git refs at the symbol level.
@@ -31,6 +32,7 @@ Options:
   --base <ref>    Base git ref to compare against (default: auto-detect remote default branch)
   --format <f>    Output format: mermaid (default), json, ascii
   --depth <n>     Limit impact zone depth (default: full connected flow)
+  --theme <name>  ASCII theme (e.g. zinc-dark, tokyo-night, github-light)
 
 Examples:
   treck diff
@@ -55,14 +57,17 @@ export function formatDiffJson(diff: GraphDiff): string {
  * Format diff result as a mermaid flowchart with change-type highlighting.
  *
  * @param diff - The graph diff to render
+ * @param options - Rendering options
+ * @param options.asciiShapes - Use distinct shapes for ASCII rendering
  * @returns Mermaid flowchart string
  */
-export function formatDiffMermaid(diff: GraphDiff): string {
+export function formatDiffMermaid(diff: GraphDiff, options?: { asciiShapes?: boolean }): string {
   return diffToMermaid(
     diff.nodes,
     diff.edges,
     new Set(diff.changes.modified),
     new Set(diff.changes.added),
+    options,
   );
 }
 
@@ -79,6 +84,7 @@ export function registerDiffCommand(cli: CAC) {
     .option('--base <ref>', 'Base git ref to compare against (default: auto-detect)')
     .option('--format <format>', 'Output format: mermaid (default), json, ascii')
     .option('--depth <n>', 'Limit impact zone depth (default: full connected flow)')
+    .option('--theme <name>', 'ASCII theme (e.g. zinc-dark, tokyo-night, github-light)')
     .example('treck diff')
     .example('treck diff --base main')
     .example('treck diff --format json')
@@ -150,11 +156,12 @@ export function registerDiffCommand(cli: CAC) {
         }
         case 'ascii': {
           const MAX_ASCII_NODES = 80;
+          const asciiOpts = { asciiShapes: true };
 
           // If graph fits, render directly
           if (diff.nodes.length <= MAX_ASCII_NODES) {
-            const mermaid = formatDiffMermaid(diff);
-            const ascii = await beautifyMermaid(mermaid);
+            const mermaid = formatDiffMermaid(diff, asciiOpts);
+            const ascii = await beautifyMermaid(mermaid, options.theme);
             process.stdout.write(`${ascii}\n`);
             return;
           }
@@ -166,8 +173,8 @@ export function registerDiffCommand(cli: CAC) {
               process.stderr.write(
                 `\x1b[1;33m⚠ Graph too large at full depth (${diff.nodes.length} nodes). Showing depth ${tryDepth} (${smaller.nodes.length} nodes).\x1b[0m\n`,
               );
-              const mermaid = formatDiffMermaid(smaller);
-              const ascii = await beautifyMermaid(mermaid);
+              const mermaid = formatDiffMermaid(smaller, asciiOpts);
+              const ascii = await beautifyMermaid(mermaid, options.theme);
               process.stdout.write(`${ascii}\n`);
               return;
             }

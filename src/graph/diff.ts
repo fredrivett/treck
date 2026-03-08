@@ -128,6 +128,8 @@ export function diffGraphs(
  * @param edges - Subgraph edges to render
  * @param modifiedIds - Set of node IDs that were modified
  * @param addedIds - Set of node IDs that were added
+ * @param options - Rendering options
+ * @param options.asciiShapes - Use distinct node shapes instead of classDef for ASCII rendering
  * @returns Mermaid flowchart string with classDef definitions
  */
 export function diffToMermaid(
@@ -135,10 +137,15 @@ export function diffToMermaid(
   edges: GraphEdge[],
   modifiedIds: Set<string>,
   addedIds: Set<string>,
+  options?: { asciiShapes?: boolean },
 ): string {
+  const asciiShapes = options?.asciiShapes ?? false;
   const lines: string[] = ['flowchart LR'];
-  lines.push('  classDef modified fill:#fbbf24,stroke:#d97706,stroke-width:2px');
-  lines.push('  classDef added fill:#4ade80,stroke:#16a34a,stroke-width:2px');
+
+  if (!asciiShapes) {
+    lines.push('  classDef modified fill:#fbbf24,stroke:#d97706,stroke-width:2px');
+    lines.push('  classDef added fill:#4ade80,stroke:#16a34a,stroke-width:2px');
+  }
 
   const includedIds = new Set(nodes.map((n) => n.id));
 
@@ -158,9 +165,9 @@ export function diffToMermaid(
     for (const node of fileNodes) {
       const nodeId = sanitizeId(node.id);
       const label = formatNodeLabel(node);
-      const shape = node.entryType ? `([${label}])` : `["${label}"]`;
+      const shape = nodeShape(node, modifiedIds, addedIds, asciiShapes);
       const indent = fileGroups.size > 1 ? '    ' : '  ';
-      lines.push(`${indent}${nodeId}${shape}`);
+      lines.push(`${indent}${nodeId}${shape(label)}`);
     }
 
     if (fileGroups.size > 1) {
@@ -178,19 +185,44 @@ export function diffToMermaid(
     lines.push(`  ${sourceId} ${arrow}${label} ${targetId}`);
   }
 
-  // Apply change-type classes
-  for (const id of modifiedIds) {
-    if (includedIds.has(id)) {
-      lines.push(`  class ${sanitizeId(id)} modified`);
+  // Apply change-type classes (mermaid mode only)
+  if (!asciiShapes) {
+    for (const id of modifiedIds) {
+      if (includedIds.has(id)) {
+        lines.push(`  class ${sanitizeId(id)} modified`);
+      }
     }
-  }
-  for (const id of addedIds) {
-    if (includedIds.has(id)) {
-      lines.push(`  class ${sanitizeId(id)} added`);
+    for (const id of addedIds) {
+      if (includedIds.has(id)) {
+        lines.push(`  class ${sanitizeId(id)} added`);
+      }
     }
   }
 
   return lines.join('\n');
+}
+
+/**
+ * Pick the mermaid shape wrapper for a diff node.
+ *
+ * In ASCII mode, uses distinct shapes: subroutine `[[]]` for modified,
+ * hexagon `{{}}` for added. Entry points always use asymmetric `>]`.
+ *
+ * @returns A function that wraps a label string in the chosen shape syntax
+ */
+function nodeShape(
+  node: GraphNode,
+  modifiedIds: Set<string>,
+  addedIds: Set<string>,
+  asciiShapes: boolean,
+): (label: string) => string {
+  // Asymmetric shape for entry points — keep in sync with graph-to-mermaid.ts
+  if (node.entryType) return (l) => `>${l}]`;
+  if (asciiShapes) {
+    if (modifiedIds.has(node.id)) return (l) => `[["★ ${l}"]]`;
+    if (addedIds.has(node.id)) return (l) => `{{"+ ${l}"}}`;
+  }
+  return (l) => `["${l}"]`;
 }
 
 /**

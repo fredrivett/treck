@@ -449,11 +449,11 @@ describe('diffToMermaid', () => {
     expect(result).toContain('subgraph src_b_ts["src/b.ts"]');
   });
 
-  it('renders entry point nodes with stadium shape', () => {
+  it('renders entry point nodes with asymmetric shape', () => {
     const nodes = [makeNode({ id: 'route.ts:GET', name: 'GET', entryType: 'api-route' })];
     const result = diffToMermaid(nodes, [], new Set(['route.ts:GET']), new Set());
 
-    expect(result).toContain('([GET])');
+    expect(result).toContain('>GET]');
   });
 
   it('applies both modified and added classes in the same diagram', () => {
@@ -480,6 +480,39 @@ describe('diffToMermaid', () => {
 
     expect(result).not.toContain('class missing');
     expect(result).not.toContain('class also');
+  });
+
+  it('uses subroutine shape for modified nodes in asciiShapes mode', () => {
+    const nodes = [makeNode({ id: 'a.ts:A', name: 'A' })];
+    const result = diffToMermaid(nodes, [], new Set(['a.ts:A']), new Set(), { asciiShapes: true });
+
+    expect(result).toContain('[["★ A"]]');
+    expect(result).not.toContain('classDef');
+    expect(result).not.toContain('class a_ts_A');
+  });
+
+  it('uses hexagon shape for added nodes in asciiShapes mode', () => {
+    const nodes = [makeNode({ id: 'b.ts:B', name: 'B' })];
+    const result = diffToMermaid(nodes, [], new Set(), new Set(['b.ts:B']), { asciiShapes: true });
+
+    expect(result).toContain('{{"+ B"}}');
+  });
+
+  it('keeps asymmetric shape for entry points in asciiShapes mode', () => {
+    const nodes = [makeNode({ id: 'route.ts:GET', name: 'GET', entryType: 'api-route' })];
+    const result = diffToMermaid(nodes, [], new Set(['route.ts:GET']), new Set(), {
+      asciiShapes: true,
+    });
+
+    expect(result).toContain('>GET]');
+    expect(result).not.toContain('[[');
+  });
+
+  it('uses plain rectangle for unchanged nodes in asciiShapes mode', () => {
+    const nodes = [makeNode({ id: 'a.ts:A', name: 'A' })];
+    const result = diffToMermaid(nodes, [], new Set(), new Set(), { asciiShapes: true });
+
+    expect(result).toContain('["A"]');
   });
 });
 
