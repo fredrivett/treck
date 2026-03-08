@@ -446,6 +446,67 @@ export function TreeDir({
         ]),
       );
     });
+
+    it('should preserve accumulated implicit else conditions after stacked early returns', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function reject() { return false }
+export function serveFromCache() { return true }
+export function fulfill() { return true }
+export function handle(req: any) {
+  if (req.invalid) {
+    return reject()
+  }
+  if (req.cached) {
+    return serveFromCache()
+  }
+  fulfill()
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const handleNode = graph.nodes.find((n) => n.name === 'handle');
+      const fulfillNode = graph.nodes.find((n) => n.name === 'fulfill');
+      const edge = graph.edges.find(
+        (e) => e.source === handleNode?.id && e.target === fulfillNode?.id,
+      );
+
+      expect(edge?.type).toBe('conditional-call');
+      expect(edge?.conditions?.map((condition) => condition.condition)).toEqual([
+        'else (req.invalid)',
+        'else (req.cached)',
+      ]);
+    });
+
+    it('should preserve accumulated implicit else conditions after an else-if return chain', () => {
+      const mainFile = join(TEST_DIR, 'main.ts');
+      writeFileSync(
+        mainFile,
+        `export function handleGet() { return true }
+export function handlePost() { return true }
+export function handleOther() { return true }
+export function route(req: any) {
+  if (req.method === 'GET') {
+    return handleGet()
+  } else if (req.method === 'POST') {
+    return handlePost()
+  }
+  handleOther()
+}`,
+      );
+
+      const graph = builder.build([mainFile]);
+      const routeNode = graph.nodes.find((n) => n.name === 'route');
+      const otherNode = graph.nodes.find((n) => n.name === 'handleOther');
+      const edge = graph.edges.find((e) => e.source === routeNode?.id && e.target === otherNode?.id);
+
+      expect(edge?.type).toBe('conditional-call');
+      expect(edge?.conditions?.map((condition) => condition.condition)).toEqual([
+        "else (req.method === 'GET')",
+        "else (req.method === 'POST')",
+      ]);
+    });
   });
 
   describe('trigger task dispatch edges', () => {

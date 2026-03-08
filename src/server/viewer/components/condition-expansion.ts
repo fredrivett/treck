@@ -65,17 +65,20 @@ function negateExpression(expr: string): string {
   // could cause greedy regex to match an inner comparison incorrectly)
   if (!/&&|\|\|/.test(expr)) {
     const comparisons: [RegExp, string][] = [
-      [/^(.+)\s*===\s*(.+)$/, '$1 !== $2'],
-      [/^(.+)\s*!==\s*(.+)$/, '$1 === $2'],
-      [/^(.+)\s*==\s*(.+)$/, '$1 != $2'],
-      [/^(.+)\s*!=\s*(.+)$/, '$1 == $2'],
-      [/^(.+)\s*>=\s*(.+)$/, '$1 < $2'],
-      [/^(.+)\s*<=\s*(.+)$/, '$1 > $2'],
-      [/^(.+)\s*>\s*(.+)$/, '$1 <= $2'],
-      [/^(.+)\s*<\s*(.+)$/, '$1 >= $2'],
+      [/^(.+)\s*===\s*(.+)$/, '!=='],
+      [/^(.+)\s*!==\s*(.+)$/, '==='],
+      [/^(.+)\s*==\s*(.+)$/, '!='],
+      [/^(.+)\s*!=\s*(.+)$/, '=='],
+      [/^(.+)\s*>=\s*(.+)$/, '<'],
+      [/^(.+)\s*<=\s*(.+)$/, '>'],
+      [/^(.+)\s*>\s*(.+)$/, '<='],
+      [/^(.+)\s*<\s*(.+)$/, '>='],
     ];
-    for (const [pattern, replacement] of comparisons) {
-      if (pattern.test(expr)) return expr.replace(pattern, replacement);
+    for (const [pattern, operator] of comparisons) {
+      const match = expr.match(pattern);
+      if (match) {
+        return `${match[1].trim()} ${operator} ${match[2].trim()}`;
+      }
     }
   }
   return `!(${expr})`;

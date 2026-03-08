@@ -143,4 +143,56 @@ describe('expandConditionals', () => {
       ),
     ).toBeDefined();
   });
+
+  it('branches multiple nested condition chains from a shared outer prefix', () => {
+    const graph = makeGraph();
+    graph.nodes.push({
+      id: 'SymbolLeaf',
+      name: 'SymbolLeaf',
+      kind: 'function',
+      filePath: 'DocsTree.tsx',
+      isAsync: false,
+      hash: 'e',
+      lineRange: [1, 1],
+      hasJsDoc: false,
+    });
+    graph.edges.push({
+      id: 'TreeDir->SymbolLeaf',
+      source: 'TreeDir',
+      target: 'SymbolLeaf',
+      type: 'conditional-call',
+      conditions: [
+        { condition: '!isCollapsed &&', branch: '&&', branchGroup: 'branch:133' },
+        {
+          condition: "else (item.type === 'dir')",
+          branch: 'else',
+          branchGroup: 'branch:136',
+        },
+      ],
+      label: "!isCollapsed && → else (item.type === 'dir')",
+      isAsync: false,
+    });
+
+    const { rfNodes, rfEdges } = expandConditionals(graph.nodes, graph.edges);
+
+    const outerNodeId = 'cond::TreeDir::branch:133::&&::!isCollapsed &&';
+    const dirBranchNodeId =
+      "cond::TreeDir::branch:133::&&::!isCollapsed &&>>branch:136::then::if (item.type === 'dir')";
+    const nonDirBranchNodeId =
+      "cond::TreeDir::branch:133::&&::!isCollapsed &&>>branch:136::else::else (item.type === 'dir')";
+
+    expect(rfNodes.find((node) => node.id === dirBranchNodeId)?.data).toMatchObject({
+      label: "item.type === 'dir'",
+    });
+    expect(rfNodes.find((node) => node.id === nonDirBranchNodeId)?.data).toMatchObject({
+      label: "item.type !== 'dir'",
+    });
+
+    expect(
+      rfEdges.find((edge) => edge.id === `${outerNodeId}->${dirBranchNodeId}`),
+    ).toBeDefined();
+    expect(
+      rfEdges.find((edge) => edge.id === `${outerNodeId}->${nonDirBranchNodeId}`),
+    ).toBeDefined();
+  });
 });

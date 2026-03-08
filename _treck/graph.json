@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-08T20:44:38.262Z",
+  "generatedAt": "2026-03-08T20:52:28.121Z",
   "nodes": [
     {
       "id": "scripts/generate-showcase.ts:generateConfig",
@@ -1658,10 +1658,10 @@
       "kind": "class",
       "filePath": "src/extractors/typescript/index.ts",
       "isAsync": false,
-      "hash": "ae6e37b030cba6c0b01f6d6ca34c4c3d9b68ceeea53387f6cee43934c4d513c7",
+      "hash": "1ebe0d38fbf3a78f7025c74489177de6a027f0abec2ed561bd1f1589ac4bd614",
       "lineRange": [
         18,
-        967
+        979
       ],
       "hasJsDoc": true,
       "description": "Extracts symbols (functions, classes, arrow functions, call expressions) from TypeScript/JavaScript files using the TS Compiler API.",
@@ -4394,10 +4394,10 @@
       "kind": "function",
       "filePath": "src/server/viewer/components/condition-expansion.ts",
       "isAsync": false,
-      "hash": "149957ef0d0397657bb7a2c3b68247eff1f0d57e989c8233ea6b3c8a10488084",
+      "hash": "0ffcd370acf9a0844ad3fcf3c499c051ed1bc01ef909906db5abbbd96177f8b5",
       "lineRange": [
         58,
-        82
+        85
       ],
       "hasJsDoc": true,
       "description": "Negate a simple comparison expression, or wrap in `!(...)`.",
@@ -4420,8 +4420,8 @@
       "isAsync": false,
       "hash": "2ace2e9ab2bb6c4df93839834eaa4e6eea31f76485496967982cdf339ba149ed",
       "lineRange": [
-        82,
-        161
+        85,
+        164
       ],
       "hasJsDoc": true,
       "description": "Expand conditional edges into condition-node chains that preserve nested\nbranch paths while still sharing common prefixes.",
@@ -8945,12 +8945,12 @@
         {
           "condition": "if (edge.type === 'conditional-call' && edge.conditions?.length)",
           "branch": "then",
-          "branchGroup": "branch:103"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "if (!seenNodeIds.has(condNodeId))",
           "branch": "then",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:115"
         }
       ],
       "label": "if (edge.type === 'conditional-call' && edge.conditions?.length) → if (!seenNodeIds.has(condNodeId))",

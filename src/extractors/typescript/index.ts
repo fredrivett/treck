@@ -218,16 +218,28 @@ export class TypeScriptExtractor {
       return false;
     };
 
-    const getImplicitElseFallthrough = (statement: ts.Statement): ConditionInfo | null => {
-      if (!ts.isIfStatement(statement) || statement.elseStatement) return null;
-      if (!statementAlwaysExits(statement.thenStatement)) return null;
+    const getImplicitElseFallthrough = (statement: ts.Statement): ConditionInfo[] | null => {
+      if (!ts.isIfStatement(statement) || !statementAlwaysExits(statement.thenStatement)) {
+        return null;
+      }
 
       const condText = statement.expression.getText(sourceFile).slice(0, 60);
-      return {
+      const elseCondition: ConditionInfo = {
         condition: `else (${condText})`,
         branch: 'else',
         branchGroup: `branch:${getLine(statement)}`,
       };
+
+      if (!statement.elseStatement) {
+        return [elseCondition];
+      }
+
+      if (ts.isIfStatement(statement.elseStatement)) {
+        const nested = getImplicitElseFallthrough(statement.elseStatement);
+        return nested ? [elseCondition, ...nested] : null;
+      }
+
+      return null;
     };
 
     const walkStatements = (statements: ts.NodeArray<ts.Statement>, conditions: ConditionInfo[]) => {
@@ -242,7 +254,7 @@ export class TypeScriptExtractor {
 
         const implicitElse = getImplicitElseFallthrough(statement);
         if (implicitElse) {
-          fallthroughConditions = [...fallthroughConditions, implicitElse];
+          fallthroughConditions = [...fallthroughConditions, ...implicitElse];
         }
       }
     };
