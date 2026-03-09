@@ -9,7 +9,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { PanelImperativeHandle } from 'react-resizable-panels';
+import { type PanelImperativeHandle, useDefaultLayout } from 'react-resizable-panels';
 import { Route, Routes, useLocation, useSearchParams } from 'react-router';
 import { buildIndexResponse, buildSymbolIndexFromGraph } from '../../../graph/symbol-index.js';
 import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
@@ -58,6 +58,17 @@ export function GraphExplorer({
   const sidebarPanelRef = useRef<PanelImperativeHandle>(null);
   const chatPanelRef = useRef<PanelImperativeHandle>(null);
   const isGraphView = location.pathname === '/';
+
+  // Persist panel layout to localStorage, supporting the conditional chat panel
+  const panelIds = useMemo(
+    () => (chatOpen ? ['sidebar', 'main', 'chat'] : ['sidebar', 'main']),
+    [chatOpen],
+  );
+  const { defaultLayout, onLayoutChanged } = useDefaultLayout({
+    id: 'treck-layout',
+    panelIds,
+    storage: localStorage,
+  });
 
   // Global keyboard shortcuts (Cmd/Ctrl prefixed so they work in inputs too)
   useEffect(() => {
@@ -259,8 +270,14 @@ export function GraphExplorer({
   }, []);
 
   const content = (
-    <ResizablePanelGroup direction="horizontal" autoSaveId="treck-layout" className="h-full">
+    <ResizablePanelGroup
+      direction="horizontal"
+      defaultLayout={defaultLayout}
+      onLayoutChanged={onLayoutChanged}
+      className="h-full"
+    >
       <ResizablePanel
+        id="sidebar"
         panelRef={sidebarPanelRef}
         defaultSize={SIDEBAR_DEFAULT_SIZE}
         minSize={200}
@@ -289,7 +306,7 @@ export function GraphExplorer({
         </Sidebar>
       </ResizablePanel>
       <ResizableHandle onDoubleClick={resetSidebar} />
-      <ResizablePanel order={2} minSize={300}>
+      <ResizablePanel id="main" order={2} minSize={300}>
         <main className="h-full relative overflow-hidden">
           <Routes>
             <Route path="/" element={graphView} />
@@ -364,6 +381,7 @@ export function GraphExplorer({
         <>
           <ResizableHandle onDoubleClick={resetChat} />
           <ResizablePanel
+            id="chat"
             panelRef={chatPanelRef}
             defaultSize={CHAT_DEFAULT_SIZE}
             minSize={280}
