@@ -9,6 +9,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { PanelImperativeHandle } from 'react-resizable-panels';
 import { Route, Routes, useLocation, useSearchParams } from 'react-router';
 import { buildIndexResponse, buildSymbolIndexFromGraph } from '../../../graph/symbol-index.js';
 import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
@@ -22,7 +23,13 @@ import { LoadingSpinner } from './LoadingSpinner';
 import { Sidebar } from './Sidebar';
 import { Button, buttonVariants } from './ui/button';
 import { Kbd } from './ui/kbd';
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './ui/resizable';
 import { ViewNav } from './ViewNav';
+
+/** Default size (pixels) for the left sidebar panel. */
+const SIDEBAR_DEFAULT_SIZE = 280;
+/** Default size (pixels) for the chat panel. */
+const CHAT_DEFAULT_SIZE = 400;
 
 interface GraphExplorerProps {
   /** The flow graph data to explore. Null while loading. */
@@ -48,6 +55,8 @@ export function GraphExplorer({
   const [chatOpen, setChatOpen] = useState(false);
   const [isOffCenter, setIsOffCenter] = useState(false);
   const recenterRef = useRef<(() => void) | null>(null);
+  const sidebarPanelRef = useRef<PanelImperativeHandle>(null);
+  const chatPanelRef = useRef<PanelImperativeHandle>(null);
   const isGraphView = location.pathname === '/';
 
   // Global keyboard shortcuts (Cmd/Ctrl prefixed so they work in inputs too)
@@ -239,99 +248,133 @@ export function GraphExplorer({
     </div>
   );
 
+  /** Reset the left sidebar to its default width. */
+  const resetSidebar = useCallback(() => {
+    sidebarPanelRef.current?.resize(SIDEBAR_DEFAULT_SIZE);
+  }, []);
+
+  /** Reset the chat panel to its default width. */
+  const resetChat = useCallback(() => {
+    chatPanelRef.current?.resize(CHAT_DEFAULT_SIZE);
+  }, []);
+
   const content = (
-    <div className="flex h-full">
-      <Sidebar>
-        <ViewNav />
-        <FlowControls
-          loading={loading}
-          searchQuery={searchQuery}
-          onSearch={setSearchQuery}
-          nodeCount={filteredGraph.nodes.length}
-          edgeCount={filteredGraph.edges.length}
-          availableTypes={availableTypes}
-          enabledTypes={enabledTypes}
-          onToggleType={onToggleType}
-          onSoloType={(category) => setParam('types', category)}
-          onResetTypes={() => setParam('types', null)}
-          showConditionals={showConditionals}
-          onToggleConditionals={() => setParam('conditionals', showConditionals ? null : 'true')}
-          hasConditionalEdges={hasConditionalEdges}
-        />
-        <div className="border-t border-border" />
-        <DocsTree visibleNames={visibleNames} />
-      </Sidebar>
-      <main className="flex-1 relative overflow-hidden min-w-0">
-        <Routes>
-          <Route path="/" element={graphView} />
-          <Route path="/docs" element={<DocsViewer />} />
-          <Route path="/docs/*" element={<DocsViewer />} />
-        </Routes>
-        {isGraphView && (
-          <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 items-end">
-            <Button
-              variant="subtle"
-              size="sm"
-              onClick={() => setChatOpen(!chatOpen)}
-              title={chatOpen ? 'Close AI chat' : 'Open AI chat'}
-              className="gap-1.5"
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
+    <ResizablePanelGroup direction="horizontal" autoSaveId="treck-layout" className="h-full">
+      <ResizablePanel
+        panelRef={sidebarPanelRef}
+        defaultSize={SIDEBAR_DEFAULT_SIZE}
+        minSize={200}
+        maxSize={500}
+        order={1}
+      >
+        <Sidebar>
+          <ViewNav />
+          <FlowControls
+            loading={loading}
+            searchQuery={searchQuery}
+            onSearch={setSearchQuery}
+            nodeCount={filteredGraph.nodes.length}
+            edgeCount={filteredGraph.edges.length}
+            availableTypes={availableTypes}
+            enabledTypes={enabledTypes}
+            onToggleType={onToggleType}
+            onSoloType={(category) => setParam('types', category)}
+            onResetTypes={() => setParam('types', null)}
+            showConditionals={showConditionals}
+            onToggleConditionals={() => setParam('conditionals', showConditionals ? null : 'true')}
+            hasConditionalEdges={hasConditionalEdges}
+          />
+          <div className="border-t border-border" />
+          <DocsTree visibleNames={visibleNames} />
+        </Sidebar>
+      </ResizablePanel>
+      <ResizableHandle onDoubleClick={resetSidebar} />
+      <ResizablePanel order={2} minSize={300}>
+        <main className="h-full relative overflow-hidden">
+          <Routes>
+            <Route path="/" element={graphView} />
+            <Route path="/docs" element={<DocsViewer />} />
+            <Route path="/docs/*" element={<DocsViewer />} />
+          </Routes>
+          {isGraphView && (
+            <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 items-end">
+              <Button
+                variant="subtle"
+                size="sm"
+                onClick={() => setChatOpen(!chatOpen)}
+                title={chatOpen ? 'Close AI chat' : 'Open AI chat'}
+                className="gap-1.5"
               >
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              </svg>
-              Chat
-              <Kbd mod>/</Kbd>
-            </Button>
-            <AnimatePresence>
-              {isOffCenter && (
-                <motion.button
-                  key="recenter"
-                  type="button"
-                  onClick={() => recenterRef.current?.()}
-                  className={buttonVariants({
-                    variant: 'subtle',
-                    size: 'sm',
-                    className: 'gap-1.5 cursor-pointer',
-                  })}
-                  title="Recenter view on nodes"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.15 }}
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
                 >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                Chat
+                <Kbd mod>/</Kbd>
+              </Button>
+              <AnimatePresence>
+                {isOffCenter && (
+                  <motion.button
+                    key="recenter"
+                    type="button"
+                    onClick={() => recenterRef.current?.()}
+                    className={buttonVariants({
+                      variant: 'subtle',
+                      size: 'sm',
+                      className: 'gap-1.5 cursor-pointer',
+                    })}
+                    title="Recenter view on nodes"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
                   >
-                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-                  </svg>
-                  Recenter
-                  <Kbd mod>.</Kbd>
-                </motion.button>
-              )}
-            </AnimatePresence>
-          </div>
-        )}
-      </main>
-      {chatOpen && <ChatPanel onClose={() => setChatOpen(false)} project={project} />}
-    </div>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                    </svg>
+                    Recenter
+                    <Kbd mod>.</Kbd>
+                  </motion.button>
+                )}
+              </AnimatePresence>
+            </div>
+          )}
+        </main>
+      </ResizablePanel>
+      {chatOpen && (
+        <>
+          <ResizableHandle onDoubleClick={resetChat} />
+          <ResizablePanel
+            panelRef={chatPanelRef}
+            defaultSize={CHAT_DEFAULT_SIZE}
+            minSize={280}
+            maxSize={600}
+            order={3}
+          >
+            <ChatPanel onClose={() => setChatOpen(false)} project={project} />
+          </ResizablePanel>
+        </>
+      )}
+    </ResizablePanelGroup>
   );
 
   if (contextValue) {
