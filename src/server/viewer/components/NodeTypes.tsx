@@ -1,5 +1,5 @@
 import { Handle, type NodeProps, Position } from '@xyflow/react';
-import { getCategoryColors } from './node-colors';
+import { DIMMED_CLASSES, getCategoryColors } from './node-colors';
 import { Badge, type BadgeVariant, variantLabels } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
@@ -57,7 +57,7 @@ const BASE_NODE_CLASSES =
   'h-full flex flex-col justify-center transition-all duration-200 overflow-hidden';
 
 function nodeClass(d: NodeData, ...classes: string[]) {
-  return `${BASE_NODE_CLASSES} ${d.isAsync ? 'border-dashed' : ''} ${d.dimmed ? 'opacity-50' : ''} ${classes.join(' ')}`;
+  return `${BASE_NODE_CLASSES} ${d.isAsync ? 'border-dashed' : ''} ${d.dimmed ? DIMMED_CLASSES : ''} ${classes.join(' ')}`;
 }
 
 /** Resolve entry type config from shared category colors. */
@@ -185,7 +185,7 @@ function ConditionNode({ data }: NodeProps) {
 
   return (
     <div
-      className={`relative ${d.dimmed ? 'opacity-50' : ''} transition-all duration-200`}
+      className={`relative ${d.dimmed ? DIMMED_CLASSES : ''} transition-all duration-200`}
       style={{ minWidth: 80, maxWidth: 300 }}
     >
       <Handle type="target" position={Position.Top} style={{ background: '#eab308' }} />

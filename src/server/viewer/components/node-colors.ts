@@ -95,6 +95,9 @@ export const categoryColors: Record<string, CategoryColors> = {
   },
 };
 
+/** Tailwind classes applied to inactive (dimmed) nodes and badges. */
+export const DIMMED_CLASSES = 'opacity-50';
+
 /** Default colors when category is unknown. */
 const defaultColors = categoryColors.function;
 

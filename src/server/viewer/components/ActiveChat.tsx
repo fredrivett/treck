@@ -15,7 +15,7 @@ import { deriveTitle, type StoredChat, saveChat } from '../lib/chat-store';
 import { getNodeCategory, type NodeCategory } from './FlowGraph';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
-import { categoryBadgeClasses } from './node-colors';
+import { categoryBadgeClasses, DIMMED_CLASSES } from './node-colors';
 import { Card } from './ui/card';
 import { useNodeSelection } from './useNodeSelection';
 
@@ -74,10 +74,12 @@ function ToolCallIndicator({
   part,
   onSelectNode,
   getCategory,
+  selectedNodes,
 }: {
   part: ToolPart;
   onSelectNode: (ids: string[], event: React.MouseEvent) => void;
   getCategory: (nodeId: string) => NodeCategory;
+  selectedNodes: Set<string>;
 }) {
   const [expanded, setExpanded] = useState(false);
   const [showAll, setShowAll] = useState(false);
@@ -152,7 +154,7 @@ function ToolCallIndicator({
             key={id}
             type="button"
             onClick={(e) => onSelectNode([id], e)}
-            className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs opacity-80 hover:opacity-100 transition-opacity cursor-pointer ${categoryBadgeClasses(getCategory(id))}`}
+            className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs transition-opacity cursor-pointer ${selectedNodes.size > 0 && !selectedNodes.has(id) ? DIMMED_CLASSES : 'opacity-80 hover:opacity-100'} ${categoryBadgeClasses(getCategory(id))}`}
             title={id}
           >
             {id.split(':').pop()}
@@ -225,7 +227,7 @@ export function ActiveChat({
   settings,
   onChatUpdated,
 }: ActiveChatProps) {
-  const { clickNode, selectNodes } = useNodeSelection();
+  const { selected: selectedNodes, clickNode, selectNodes } = useNodeSelection();
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -404,6 +406,7 @@ export function ActiveChat({
                         part={seg.part}
                         onSelectNode={handleBadgeClick}
                         getCategory={getCategory}
+                        selectedNodes={selectedNodes}
                       />
                     );
                   }

@@ -209,7 +209,6 @@ function FlowGraphInner({
   const applyPositionsAndFit = useCallback(
     (positions: Map<string, { x: number; y: number }>, initialNodes?: Node[]) => {
       const sel = selectedEntriesRef.current;
-      const foc = focusedEntriesRef.current;
       const hasSelected = sel.size > 0;
       const apply = (node: Node): Node => {
         const pos = positions.get(node.id);
@@ -461,7 +460,7 @@ function FlowGraphInner({
         };
       }),
     );
-  }, [selectedEntries, focusedEntries, setNodes]);
+  }, [selectedEntries, setNodes]);
 
   // Pass 2: once nodes are measured, cache sizes and run ELK with real dimensions
   // biome-ignore lint/correctness/useExhaustiveDependencies: initialMeasureDone is write-only here
