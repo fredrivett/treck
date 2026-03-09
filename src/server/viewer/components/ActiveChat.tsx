@@ -76,7 +76,7 @@ function ToolCallIndicator({
   getCategory,
 }: {
   part: ToolPart;
-  onSelectNode: (ids: string[]) => void;
+  onSelectNode: (ids: string[], event: React.MouseEvent) => void;
   getCategory: (nodeId: string) => NodeCategory;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -151,7 +151,7 @@ function ToolCallIndicator({
           <button
             key={id}
             type="button"
-            onClick={() => onSelectNode([id])}
+            onClick={(e) => onSelectNode([id], e)}
             className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs opacity-80 hover:opacity-100 transition-opacity cursor-pointer ${categoryBadgeClasses(getCategory(id))}`}
             title={id}
           >
@@ -264,12 +264,35 @@ export function ActiveChat({
 
   /** Apply selected node IDs to the URL params (same as clicking nodes). */
   const applySelection = useCallback(
-    (nodeIds: string[]) => {
+    (nodeIds: string[], event?: React.MouseEvent) => {
       if (nodeIds.length === 0) return;
+      const isMultiSelect = event?.metaKey || event?.ctrlKey;
       setSearchParams((prev) => {
-        const encoded = nodeIds.map(encodeURIComponent).join(',');
-        prev.set('selected', encoded);
-        prev.set('focused', encoded);
+        if (isMultiSelect && nodeIds.length === 1) {
+          // Toggle the single node in/out of the current selection
+          const current = prev.get('selected');
+          const currentSet = current
+            ? new Set(current.split(',').map(decodeURIComponent))
+            : new Set<string>();
+          const nodeId = nodeIds[0];
+          if (currentSet.has(nodeId)) {
+            currentSet.delete(nodeId);
+          } else {
+            currentSet.add(nodeId);
+          }
+          if (currentSet.size === 0) {
+            prev.delete('selected');
+            prev.delete('focused');
+          } else {
+            const encoded = [...currentSet].map(encodeURIComponent).join(',');
+            prev.set('selected', encoded);
+            prev.set('focused', encoded);
+          }
+        } else {
+          const encoded = nodeIds.map(encodeURIComponent).join(',');
+          prev.set('selected', encoded);
+          prev.set('focused', encoded);
+        }
         return prev;
       });
     },
