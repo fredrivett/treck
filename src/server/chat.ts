@@ -15,6 +15,7 @@ import {
   executeSearchNodes,
   executeSelectNodes,
 } from '../graph/chat-helpers.js';
+import type { SearchIndex } from '../graph/search.js';
 import type { FlowGraph } from '../graph/types.js';
 
 /**
@@ -27,11 +28,13 @@ import type { FlowGraph } from '../graph/types.js';
  * @param req - Incoming HTTP request
  * @param res - HTTP response
  * @param graph - The current flow graph
+ * @param searchIndex - Optional pre-built search index for better matching
  */
 export async function handleChatRequest(
   req: import('node:http').IncomingMessage,
   res: import('node:http').ServerResponse,
   graph: FlowGraph,
+  searchIndex?: SearchIndex,
 ): Promise<void> {
   try {
     // Parse request body
@@ -71,10 +74,10 @@ export async function handleChatRequest(
             query: z
               .string()
               .describe(
-                'Search query to match against node names, file paths, and descriptions (case-insensitive substring match)',
+                'Search query to match against node names, file paths, and descriptions. Supports multi-word queries, camelCase splitting, fuzzy matching, and prefix matching.',
               ),
           }),
-          execute: async ({ query }) => executeSearchNodes(query, graph),
+          execute: async ({ query }) => executeSearchNodes(query, graph, searchIndex),
         }),
         select_nodes: tool({
           description:

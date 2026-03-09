@@ -6,6 +6,7 @@
  * Node.js http dependencies — safe to import in any environment.
  */
 
+import type { SearchIndex } from './search.js';
 import type { FlowGraph, GraphNode } from './types.js';
 
 /**
@@ -82,11 +83,45 @@ Node IDs follow the format "filePath:symbolName" (e.g. "src/api/route.ts:POST").
 /**
  * Execute a search_nodes tool call against the graph.
  *
+ * When a `SearchIndex` is provided, uses MiniSearch for multi-word,
+ * camelCase-aware, fuzzy matching with relevance scoring. Without an
+ * index, falls back to simple case-insensitive substring matching.
+ *
  * @param query - Search query string
  * @param graph - The full flow graph
+ * @param index - Optional pre-built search index for better matching
  * @returns Array of matching nodes (up to 20)
  */
-export function executeSearchNodes(query: string, graph: FlowGraph) {
+export function executeSearchNodes(query: string, graph: FlowGraph, index?: SearchIndex) {
+  if (!query.trim()) return [];
+
+  if (index) {
+    const nodeMap = new Map(graph.nodes.map((n) => [n.id, n]));
+
+    // Pre-compute connection counts for hub detection
+    const connCount = new Map<string, number>();
+    for (const edge of graph.edges) {
+      connCount.set(edge.source, (connCount.get(edge.source) || 0) + 1);
+      connCount.set(edge.target, (connCount.get(edge.target) || 0) + 1);
+    }
+
+    const results = index.search(query);
+    return results.slice(0, 20).map((r) => {
+      const node = nodeMap.get(r.nodeId as string);
+      return {
+        id: r.nodeId as string,
+        name: node?.name ?? '',
+        kind: node?.kind ?? 'function',
+        filePath: node?.filePath ?? '',
+        entryType: node?.entryType || undefined,
+        description: node?.description || undefined,
+        score: r.score,
+        connections: connCount.get(r.nodeId as string) || 0,
+      };
+    });
+  }
+
+  // Fallback: simple substring matching
   const q = query.toLowerCase();
   return graph.nodes
     .filter(
