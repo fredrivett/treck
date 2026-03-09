@@ -11,13 +11,13 @@ import type { UIMessage } from 'ai';
 import { DefaultChatTransport } from 'ai';
 import { marked } from 'marked';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router';
 import { deriveTitle, type StoredChat, saveChat } from '../lib/chat-store';
 import { getNodeCategory, type NodeCategory } from './FlowGraph';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
 import { categoryBadgeClasses } from './node-colors';
 import { Card } from './ui/card';
+import { useNodeSelection } from './useNodeSelection';
 
 /** Typed tool part from the AI SDK message stream. */
 interface ToolPart {
@@ -225,7 +225,7 @@ export function ActiveChat({
   settings,
   onChatUpdated,
 }: ActiveChatProps) {
-  const [, setSearchParams] = useSearchParams();
+  const { clickNode, selectNodes } = useNodeSelection();
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -262,41 +262,16 @@ export function ActiveChat({
     [],
   );
 
-  /** Apply selected node IDs to the URL params (same as clicking nodes). */
-  const applySelection = useCallback(
-    (nodeIds: string[], event?: React.MouseEvent) => {
-      if (nodeIds.length === 0) return;
-      const isMultiSelect = event?.metaKey || event?.ctrlKey;
-      setSearchParams((prev) => {
-        if (isMultiSelect && nodeIds.length === 1) {
-          // Toggle the single node in/out of the current selection
-          const current = prev.get('selected');
-          const currentSet = current
-            ? new Set(current.split(',').map(decodeURIComponent))
-            : new Set<string>();
-          const nodeId = nodeIds[0];
-          if (currentSet.has(nodeId)) {
-            currentSet.delete(nodeId);
-          } else {
-            currentSet.add(nodeId);
-          }
-          if (currentSet.size === 0) {
-            prev.delete('selected');
-            prev.delete('focused');
-          } else {
-            const encoded = [...currentSet].map(encodeURIComponent).join(',');
-            prev.set('selected', encoded);
-            prev.set('focused', encoded);
-          }
-        } else {
-          const encoded = nodeIds.map(encodeURIComponent).join(',');
-          prev.set('selected', encoded);
-          prev.set('focused', encoded);
-        }
-        return prev;
-      });
+  /** Handle a badge click — delegates to shared selection hook. */
+  const handleBadgeClick = useCallback(
+    (nodeIds: string[], event: React.MouseEvent) => {
+      if (nodeIds.length === 1) {
+        clickNode(nodeIds[0], event);
+      } else {
+        selectNodes(nodeIds);
+      }
     },
-    [setSearchParams],
+    [clickNode, selectNodes],
   );
 
   const { messages, sendMessage, status } = useChat({
@@ -327,12 +302,12 @@ export function ActiveChat({
           appliedToolCallsRef.current.add(typedPart.toolCallId);
           const output = typedPart.output as { selected?: string[] };
           if (output?.selected && output.selected.length > 0) {
-            applySelection(output.selected);
+            selectNodes(output.selected);
           }
         }
       }
     }
-  }, [messages, applySelection]);
+  }, [messages, selectNodes]);
 
   // Persist messages to IndexedDB after each completed exchange
   const onChatUpdatedRef = useRef(onChatUpdated);
@@ -427,7 +402,7 @@ export function ActiveChat({
                       <ToolCallIndicator
                         key={seg.key}
                         part={seg.part}
-                        onSelectNode={applySelection}
+                        onSelectNode={handleBadgeClick}
                         getCategory={getCategory}
                       />
                     );
