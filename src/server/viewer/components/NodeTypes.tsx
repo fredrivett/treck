@@ -1,4 +1,5 @@
 import { Handle, type NodeProps, Position } from '@xyflow/react';
+import { getCategoryColors } from './node-colors';
 import { Badge, type BadgeVariant, variantLabels } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
@@ -59,47 +60,11 @@ function nodeClass(d: NodeData, ...classes: string[]) {
   return `${BASE_NODE_CLASSES} ${d.isAsync ? 'border-dashed' : ''} ${d.dimmed ? 'opacity-50' : ''} ${classes.join(' ')}`;
 }
 
-const entryTypeConfig: Record<
-  string,
-  { border: string; bg: string; ring: string; handle: string }
-> = {
-  'api-route': {
-    border: 'border-blue-500',
-    bg: 'bg-blue-50 dark:bg-blue-950',
-    ring: 'ring-blue-500/25',
-    handle: '#3b82f6',
-  },
-  page: {
-    border: 'border-violet-500',
-    bg: 'bg-violet-50 dark:bg-violet-950',
-    ring: 'ring-violet-500/25',
-    handle: '#8b5cf6',
-  },
-  'inngest-function': {
-    border: 'border-pink-500',
-    bg: 'bg-pink-50 dark:bg-pink-950',
-    ring: 'ring-pink-500/25',
-    handle: '#ec4899',
-  },
-  'trigger-task': {
-    border: 'border-pink-500',
-    bg: 'bg-pink-50 dark:bg-pink-950',
-    ring: 'ring-pink-500/25',
-    handle: '#ec4899',
-  },
-  middleware: {
-    border: 'border-cyan-500',
-    bg: 'bg-cyan-50 dark:bg-cyan-950',
-    ring: 'ring-cyan-500/25',
-    handle: '#06b6d4',
-  },
-  'server-action': {
-    border: 'border-emerald-500',
-    bg: 'bg-emerald-50 dark:bg-emerald-950',
-    ring: 'ring-emerald-500/25',
-    handle: '#10b981',
-  },
-};
+/** Resolve entry type config from shared category colors. */
+function entryTypeConfig(entryType: string) {
+  const c = getCategoryColors(entryType);
+  return { border: c.border, bg: c.bg, ring: c.ring, handle: c.handle };
+}
 
 const entryTypeBadgeVariant: Record<string, BadgeVariant> = {
   'api-route': 'api-route',
@@ -124,7 +89,7 @@ const defaultConfig = {
 
 function EntryPointNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
-  const config = d.entryType ? entryTypeConfig[d.entryType] || defaultConfig : defaultConfig;
+  const config = d.entryType ? entryTypeConfig(d.entryType) : defaultConfig;
   const badgeVariant = d.entryType ? entryTypeBadgeVariant[d.entryType] || 'default' : 'default';
   const typeLabel = d.entryType ? variantLabels[badgeVariant] || d.entryType : '';
   const impl = d.entryType ? entryTypeImpl[d.entryType] : undefined;
@@ -166,16 +131,17 @@ function EntryPointNode({ data }: NodeProps) {
 
 function ComponentNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
+  const c = getCategoryColors('component');
 
   return (
     <div
       className={nodeClass(
         d,
-        'border-[1.5px] rounded-[10px] px-3 py-2 border-orange-600 bg-orange-50 dark:bg-orange-900/20 shadow',
-        d.selected ? 'ring-2 ring-orange-500/25' : '',
+        `border-[1.5px] rounded-[10px] px-3 py-2 ${c.border} ${c.bg} shadow`,
+        d.selected ? `ring-2 ${c.ring}` : '',
       )}
     >
-      <Handle type="target" position={Position.Top} style={{ background: '#f97316' }} />
+      <Handle type="target" position={Position.Top} style={{ background: c.handle }} />
       <div className="flex items-center gap-1 mb-0.5">
         <Badge variant="component">Component</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
@@ -183,23 +149,24 @@ function ComponentNode({ data }: NodeProps) {
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
-      <Handle type="source" position={Position.Bottom} style={{ background: '#f97316' }} />
+      <Handle type="source" position={Position.Bottom} style={{ background: c.handle }} />
     </div>
   );
 }
 
 function HookNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
+  const c = getCategoryColors('hook');
 
   return (
     <div
       className={nodeClass(
         d,
-        'border-[1.5px] rounded-[10px] px-3 py-2 border-lime-600 bg-lime-50 dark:bg-lime-950 shadow',
-        d.selected ? 'ring-2 ring-lime-500/25' : '',
+        `border-[1.5px] rounded-[10px] px-3 py-2 ${c.border} ${c.bg} shadow`,
+        d.selected ? `ring-2 ${c.ring}` : '',
       )}
     >
-      <Handle type="target" position={Position.Top} style={{ background: '#84cc16' }} />
+      <Handle type="target" position={Position.Top} style={{ background: c.handle }} />
       <div className="flex items-center gap-1 mb-0.5">
         <Badge variant="hook">Hook</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
@@ -207,7 +174,7 @@ function HookNode({ data }: NodeProps) {
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
-      <Handle type="source" position={Position.Bottom} style={{ background: '#84cc16' }} />
+      <Handle type="source" position={Position.Bottom} style={{ background: c.handle }} />
     </div>
   );
 }
@@ -252,16 +219,17 @@ function ConditionNode({ data }: NodeProps) {
 
 function FunctionNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
+  const c = getCategoryColors('function');
 
   return (
     <div
       className={nodeClass(
         d,
-        'border rounded-lg px-3 py-2 border-blue-500 bg-blue-50 dark:bg-blue-950 shadow',
-        d.selected ? 'ring-2 ring-blue-500/25' : '',
+        `border rounded-lg px-3 py-2 ${c.border} ${c.bg} shadow`,
+        d.selected ? `ring-2 ${c.ring}` : '',
       )}
     >
-      <Handle type="target" position={Position.Top} style={{ background: '#9ca3af' }} />
+      <Handle type="target" position={Position.Top} style={{ background: c.handle }} />
       <div className="flex items-center gap-1 mb-0.5">
         <span className="text-[10px] text-muted-foreground">{d.kind}</span>
         {d.isAsync && <Badge variant="async">async</Badge>}
@@ -269,7 +237,7 @@ function FunctionNode({ data }: NodeProps) {
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
-      <Handle type="source" position={Position.Bottom} style={{ background: '#9ca3af' }} />
+      <Handle type="source" position={Position.Bottom} style={{ background: c.handle }} />
     </div>
   );
 }

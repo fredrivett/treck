@@ -152,7 +152,7 @@ function ToolCallIndicator({
             key={id}
             type="button"
             onClick={() => onSelectNode([id])}
-            className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs ${categoryBadgeClasses(getCategory(id))}`}
+            className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs opacity-80 hover:opacity-100 transition-opacity cursor-pointer ${categoryBadgeClasses(getCategory(id))}`}
             title={id}
           >
             {id.split(':').pop()}
