@@ -210,13 +210,13 @@ function FlowGraphInner({
     (positions: Map<string, { x: number; y: number }>, initialNodes?: Node[]) => {
       const sel = selectedEntriesRef.current;
       const foc = focusedEntriesRef.current;
-      const hasActive = sel.size > 0 || foc.size > 0;
+      const hasSelected = sel.size > 0;
       const apply = (node: Node): Node => {
         const pos = positions.get(node.id);
         if (!pos) return node;
         const cached = sizeCache.current.get(node.id);
         const isSelected = sel.has(node.id);
-        const dimmed = hasActive ? !(isSelected || foc.has(node.id)) : false;
+        const dimmed = hasSelected ? !isSelected : false;
         return {
           ...node,
           position: pos,
@@ -448,15 +448,13 @@ function FlowGraphInner({
 
   // Update node data (selected/dimmed) without triggering re-layout
   useEffect(() => {
-    const hasActive = selectedEntries.size > 0 || focusedEntries.size > 0;
+    const hasSelected = selectedEntries.size > 0;
     setNodes((prev) =>
       prev.map((node) => {
         const isSelected = selectedEntries.has(node.id);
         // Condition nodes are never dimmed — they only exist between visible nodes
         const isCondition = node.type === 'conditionNode';
-        const dimmed = hasActive
-          ? !(isSelected || focusedEntries.has(node.id) || isCondition)
-          : false;
+        const dimmed = hasSelected ? !(isSelected || isCondition) : false;
         return {
           ...node,
           data: { ...node.data, selected: isSelected, dimmed },
