@@ -288,7 +288,7 @@ export function ChatPanel({ onClose, project }: ChatPanelProps) {
   // Desktop: inline panel as a flex column
   if (isDesktop) {
     return (
-      <div className="w-[400px] min-w-[400px] h-full flex flex-col border-l border-border bg-background">
+      <div className="h-full flex flex-col bg-background">
         <div className="flex flex-col gap-0.5 p-4 md:gap-1.5">
           {header}
           {description}
