@@ -154,7 +154,7 @@ function ToolCallIndicator({
             key={id}
             type="button"
             onClick={(e) => onSelectNode([id], e)}
-            className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs transition-opacity cursor-pointer ${selectedNodes.size > 0 && !selectedNodes.has(id) ? DIMMED_CLASSES : 'opacity-80 hover:opacity-100'} ${categoryBadgeClasses(getCategory(id))}`}
+            className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs transition-opacity cursor-pointer focus:outline-none ${selectedNodes.size > 0 && !selectedNodes.has(id) ? DIMMED_CLASSES : 'opacity-80 hover:opacity-100'} ${categoryBadgeClasses(getCategory(id))}`}
             title={id}
           >
             {id.split(':').pop()}
