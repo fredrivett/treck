@@ -8,6 +8,7 @@ import { executeSearchNodes } from '../../graph/chat-helpers.js';
 import { diffGraphs } from '../../graph/diff.js';
 import { connectedSubgraph, entryPoints, pathsBetween } from '../../graph/graph-query.js';
 import { GraphStore } from '../../graph/graph-store.js';
+import { buildSearchIndex, type SearchIndex } from '../../graph/search.js';
 import { syncGraph } from '../../graph/sync.js';
 import type { FlowGraph, GraphNode } from '../../graph/types.js';
 import { loadConfig } from '../utils/config.js';
@@ -25,9 +26,14 @@ interface McpTextResponse {
  *
  * @param query - Search query string
  * @param graph - The flow graph to search
+ * @param index - Optional pre-built search index for better matching
  */
-export function handleSearchNodes(query: string, graph: FlowGraph): McpTextResponse {
-  const results = executeSearchNodes(query, graph);
+export function handleSearchNodes(
+  query: string,
+  graph: FlowGraph,
+  index?: SearchIndex,
+): McpTextResponse {
+  const results = executeSearchNodes(query, graph, index);
   return {
     content: [{ type: 'text', text: JSON.stringify(results, null, 2) }],
   };
@@ -321,6 +327,8 @@ export function registerMcpCommand(cli: CAC) {
         process.exit(1);
       }
 
+      let searchIndex = buildSearchIndex(graph);
+
       const server = new McpServer({
         name: 'treck',
         version,
@@ -334,7 +342,7 @@ export function registerMcpCommand(cli: CAC) {
             .string()
             .describe('Search query to match against symbol names, file paths, and descriptions'),
         },
-        async ({ query }) => handleSearchNodes(query, graph),
+        async ({ query }) => handleSearchNodes(query, graph, searchIndex),
       );
 
       server.tool(
@@ -483,6 +491,7 @@ export function registerMcpCommand(cli: CAC) {
           }
 
           graph = syncResult.graph;
+          searchIndex = buildSearchIndex(graph);
 
           return {
             content: [

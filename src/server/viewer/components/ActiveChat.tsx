@@ -11,10 +11,22 @@ import type { UIMessage } from 'ai';
 import { DefaultChatTransport } from 'ai';
 import { marked } from 'marked';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router';
 import { deriveTitle, type StoredChat, saveChat } from '../lib/chat-store';
+import { getNodeCategory, type NodeCategory } from './FlowGraph';
+import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
+import { categoryBadgeClasses, DIMMED_CLASSES } from './node-colors';
 import { Card } from './ui/card';
+import { useNodeSelection } from './useNodeSelection';
+
+/** Typed tool part from the AI SDK message stream. */
+interface ToolPart {
+  type: string;
+  toolCallId: string;
+  state: 'call' | 'partial-call' | 'result' | 'output-available';
+  args?: Record<string, unknown>;
+  output?: unknown;
+}
 
 interface ChatSettings {
   apiKey: string;
@@ -50,6 +62,161 @@ function ChatMarkdown({ content }: { content: string }) {
   );
 }
 
+/** Small inline spinner for in-progress tool calls. */
+function InlineSpinner() {
+  return (
+    <div className="w-3 h-3 border-[1.5px] border-muted-foreground/30 border-t-muted-foreground rounded-full animate-spin shrink-0" />
+  );
+}
+
+/** Standalone tool call indicator rendered outside chat bubbles. */
+function ToolCallIndicator({
+  part,
+  onSelectNode,
+  getCategory,
+  selectedNodes,
+}: {
+  part: ToolPart;
+  onSelectNode: (ids: string[], event: React.MouseEvent) => void;
+  getCategory: (nodeId: string) => NodeCategory;
+  selectedNodes: Set<string>;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  const isLoading = part.state === 'call' || part.state === 'partial-call';
+  const toolName = part.type.replace(/^tool-/, '');
+
+  if (toolName === 'search_nodes') {
+    const query = (part.args as { query?: string })?.query;
+    if (isLoading) {
+      return (
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground px-2 py-1">
+          <InlineSpinner />
+          <span>Searching for &ldquo;{query}&rdquo;&hellip;</span>
+        </div>
+      );
+    }
+    const results = (part.output as Array<{ id: string; name: string; filePath: string }>) ?? [];
+    const count = results.length;
+    return (
+      <div className="px-2 py-1">
+        <button
+          type="button"
+          onClick={() => setExpanded(!expanded)}
+          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+        >
+          <span className={`transition-transform ${expanded ? 'rotate-90' : ''}`}>&#9656;</span>
+          Found {count} result{count !== 1 ? 's' : ''}
+          {query ? ` for "${query}"` : ''}
+        </button>
+        {expanded && results.length > 0 && (
+          <div className="mt-1 ml-3 space-y-0.5">
+            {(showAll ? results : results.slice(0, 10)).map((r) => (
+              <div key={r.id} className="text-xs text-muted-foreground truncate" title={r.id}>
+                <span className="text-foreground/70">{r.name}</span>
+                <span className="ml-1 opacity-50">{r.filePath}</span>
+              </div>
+            ))}
+            {!showAll && results.length > 10 && (
+              <button
+                type="button"
+                onClick={() => setShowAll(true)}
+                className="text-xs text-muted-foreground opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+              >
+                +{results.length - 10} more
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  if (toolName === 'select_nodes') {
+    if (isLoading) {
+      const nodeIds = (part.args as { node_ids?: string[] })?.node_ids;
+      return (
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground px-2 py-1">
+          <InlineSpinner />
+          <span>
+            Selecting {nodeIds?.length ?? ''} node{nodeIds?.length !== 1 ? 's' : ''}&hellip;
+          </span>
+        </div>
+      );
+    }
+    const output = part.output as { selected?: string[] } | undefined;
+    const selected = output?.selected ?? [];
+    if (selected.length === 0) return null;
+    return (
+      <div className="px-2 py-1 flex flex-wrap gap-1">
+        {selected.map((id) => (
+          <button
+            key={id}
+            type="button"
+            onClick={(e) => onSelectNode([id], e)}
+            className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs transition-opacity cursor-pointer focus:outline-none ${selectedNodes.size > 0 && !selectedNodes.has(id) ? DIMMED_CLASSES : 'opacity-80 hover:opacity-100'} ${categoryBadgeClasses(getCategory(id))}`}
+            title={id}
+          >
+            {id.split(':').pop()}
+          </button>
+        ))}
+      </div>
+    );
+  }
+
+  // Unknown tool — show generic indicator
+  if (isLoading) {
+    return (
+      <div className="flex items-center gap-1.5 text-xs text-muted-foreground px-2 py-1">
+        <InlineSpinner />
+        <span>{toolName}&hellip;</span>
+      </div>
+    );
+  }
+  return <div className="text-xs text-muted-foreground px-2 py-1">{toolName} complete</div>;
+}
+
+/** A segment of an assistant message — either consecutive text or a single tool call. */
+type MessageSegment =
+  | { kind: 'text'; key: string; text: string }
+  | { kind: 'tool'; key: string; part: ToolPart };
+
+/**
+ * Split an assistant message's parts into segments for rendering.
+ *
+ * Groups consecutive text parts into a single text segment; each tool
+ * part becomes its own segment. This allows text to render in bubbles
+ * and tool calls to render as standalone indicators between them.
+ */
+function segmentAssistantParts(msgId: string, parts: UIMessage['parts']): MessageSegment[] {
+  const segments: MessageSegment[] = [];
+  let pendingText = '';
+
+  const flushText = () => {
+    if (pendingText) {
+      segments.push({ kind: 'text', key: `${msgId}-text-${segments.length}`, text: pendingText });
+      pendingText = '';
+    }
+  };
+
+  for (const part of parts) {
+    if (part.type === 'text') {
+      const textPart = part as { type: 'text'; text: string };
+      if (textPart.text) {
+        if (pendingText) pendingText += '\n';
+        pendingText += textPart.text;
+      }
+    } else if (part.type.startsWith('tool-')) {
+      flushText();
+      const toolPart = part as unknown as ToolPart;
+      segments.push({ kind: 'tool', key: toolPart.toolCallId, part: toolPart });
+    }
+  }
+  flushText();
+
+  return segments;
+}
+
 /** Active chat conversation with message thread and input. */
 export function ActiveChat({
   chatId,
@@ -60,11 +227,22 @@ export function ActiveChat({
   settings,
   onChatUpdated,
 }: ActiveChatProps) {
-  const [, setSearchParams] = useSearchParams();
+  const { selected: selectedNodes, clickNode, selectNodes } = useNodeSelection();
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const createdAtRef = useRef(createdAt ?? Date.now());
+
+  // Build a node ID → category lookup from the graph context
+  const graphCtx = useGraphExplorer();
+  const getCategory = useMemo(() => {
+    if (!graphCtx) return () => 'function' as NodeCategory;
+    const map = new Map<string, NodeCategory>();
+    for (const node of graphCtx.graph.nodes) {
+      map.set(node.id, getNodeCategory(node));
+    }
+    return (nodeId: string): NodeCategory => map.get(nodeId) ?? 'function';
+  }, [graphCtx]);
 
   // Refs to avoid stale closures in transport body function
   const settingsRef = useRef(settings);
@@ -86,18 +264,16 @@ export function ActiveChat({
     [],
   );
 
-  /** Apply selected node IDs to the URL params (same as clicking nodes). */
-  const applySelection = useCallback(
-    (nodeIds: string[]) => {
-      if (nodeIds.length === 0) return;
-      setSearchParams((prev) => {
-        const encoded = nodeIds.map(encodeURIComponent).join(',');
-        prev.set('selected', encoded);
-        prev.set('focused', encoded);
-        return prev;
-      });
+  /** Handle a badge click — delegates to shared selection hook. */
+  const handleBadgeClick = useCallback(
+    (nodeIds: string[], event: React.MouseEvent) => {
+      if (nodeIds.length === 1) {
+        clickNode(nodeIds[0], event);
+      } else {
+        selectNodes(nodeIds);
+      }
     },
-    [setSearchParams],
+    [clickNode, selectNodes],
   );
 
   const { messages, sendMessage, status } = useChat({
@@ -128,12 +304,12 @@ export function ActiveChat({
           appliedToolCallsRef.current.add(typedPart.toolCallId);
           const output = typedPart.output as { selected?: string[] };
           if (output?.selected && output.selected.length > 0) {
-            applySelection(output.selected);
+            selectNodes(output.selected);
           }
         }
       }
     }
-  }, [messages, applySelection]);
+  }, [messages, selectNodes]);
 
   // Persist messages to IndexedDB after each completed exchange
   const onChatUpdatedRef = useRef(onChatUpdated);
@@ -190,21 +366,6 @@ export function ActiveChat({
     [handleSend],
   );
 
-  /** Extract selected node IDs from a message's tool parts. */
-  const getSelectedNodeIds = useCallback((msg: UIMessage): string[] => {
-    const ids: string[] = [];
-    for (const part of msg.parts) {
-      const typedPart = part as { type: string; state?: string; output?: unknown };
-      if (typedPart.type === 'tool-select_nodes' && typedPart.state === 'output-available') {
-        const output = typedPart.output as { selected?: string[] };
-        if (output?.selected) {
-          ids.push(...output.selected);
-        }
-      }
-    }
-    return ids;
-  }, []);
-
   return (
     <>
       {/* Messages */}
@@ -216,55 +377,57 @@ export function ActiveChat({
             </Card>
           )}
           {messages.map((msg) => {
-            const selectedNodeIds = msg.role === 'assistant' ? getSelectedNodeIds(msg) : [];
-            const textContent = msg.parts
-              .filter((p): p is { type: 'text'; text: string } => p.type === 'text')
-              .map((p) => p.text)
-              .join('\n');
+            if (msg.role === 'user') {
+              const textContent = msg.parts
+                .filter((p): p is { type: 'text'; text: string } => p.type === 'text')
+                .map((p) => p.text)
+                .join('\n');
+              if (!textContent) return null;
+              return (
+                <div key={msg.id} className="flex justify-end">
+                  <div className="max-w-[85%] rounded-lg px-3 py-2 text-sm bg-blue-600 text-white">
+                    <div className="whitespace-pre-wrap">{textContent}</div>
+                  </div>
+                </div>
+              );
+            }
 
-            if (!textContent && selectedNodeIds.length === 0) return null;
+            // Assistant: split into segments (text bubbles + tool indicators)
+            const segments = segmentAssistantParts(msg.id, msg.parts);
+            if (segments.length === 0) return null;
 
             return (
-              <div
-                key={msg.id}
-                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
-                    msg.role === 'user' ? 'bg-blue-600 text-white' : 'bg-muted text-foreground'
-                  }`}
-                >
-                  {textContent &&
-                    (msg.role === 'user' ? (
-                      <div className="whitespace-pre-wrap">{textContent}</div>
-                    ) : (
-                      <ChatMarkdown content={textContent} />
-                    ))}
-                  {selectedNodeIds.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      {selectedNodeIds.map((id) => (
-                        <button
-                          key={id}
-                          type="button"
-                          onClick={() => applySelection([id])}
-                          className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2 py-0.5 text-xs text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800"
-                          title={id}
-                        >
-                          {id.split(':').pop()}
-                        </button>
-                      ))}
+              <div key={msg.id} className="space-y-2">
+                {segments.map((seg) => {
+                  if (seg.kind === 'tool') {
+                    return (
+                      <ToolCallIndicator
+                        key={seg.key}
+                        part={seg.part}
+                        onSelectNode={handleBadgeClick}
+                        getCategory={getCategory}
+                        selectedNodes={selectedNodes}
+                      />
+                    );
+                  }
+                  return (
+                    <div key={seg.key} className="flex justify-start">
+                      <div className="max-w-[85%] rounded-lg px-3 py-2 text-sm bg-muted text-foreground">
+                        <ChatMarkdown content={seg.text} />
+                      </div>
                     </div>
-                  )}
-                </div>
+                  );
+                })}
               </div>
             );
           })}
           {status === 'submitted' && (
-            <div className="flex justify-start">
-              <div className="max-w-[85%] rounded-lg bg-muted px-3 py-2 text-sm text-muted-foreground">
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground px-2 py-1">
+              <InlineSpinner />
+              <span>
                 Thinking
                 <LoadingEllipsis />
-              </div>
+              </span>
             </div>
           )}
           <div ref={messagesEndRef} />

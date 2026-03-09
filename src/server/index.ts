@@ -11,6 +11,7 @@ import { createServer } from 'node:http';
 import { basename, dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { GraphStore } from '../graph/graph-store.js';
+import { buildSearchIndex, type SearchIndex } from '../graph/search.js';
 import type { FlowGraph } from '../graph/types.js';
 import { handleChatRequest } from './chat.js';
 import {
@@ -66,6 +67,7 @@ export async function startServer(outputDir: string, port: number) {
   let index: SymbolIndex = graph
     ? buildSymbolIndexFromGraph(graph)
     : { entries: new Map(), byName: new Map() };
+  let searchIndex: SearchIndex | undefined = graph ? buildSearchIndex(graph) : undefined;
 
   // Watch output directory for graph.json changes and rebuild index
   const absOutputDir = resolve(process.cwd(), outputDir);
@@ -78,6 +80,7 @@ export async function startServer(outputDir: string, port: number) {
         graph = graphStore.read();
         if (graph) {
           index = buildSymbolIndexFromGraph(graph);
+          searchIndex = buildSearchIndex(graph);
         }
       }, 500);
     });
@@ -149,7 +152,7 @@ export async function startServer(outputDir: string, port: number) {
         res.end(JSON.stringify({ error: 'Graph not found. Run: treck sync' }));
         return;
       }
-      handleChatRequest(req, res, graph);
+      handleChatRequest(req, res, graph, searchIndex);
       return;
     }
 

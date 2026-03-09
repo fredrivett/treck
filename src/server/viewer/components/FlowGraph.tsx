@@ -15,7 +15,6 @@ import {
 import ELK, { type ElkNode } from 'elkjs/lib/elk.bundled.js';
 import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router';
 import '@xyflow/react/dist/style.css';
 
 import type { FlowGraph as FlowGraphData, GraphNode } from '../../../graph/types.js';
@@ -25,6 +24,7 @@ import { DocPanel } from './DocPanel';
 import { defaultLayoutOptions, type LayoutOptions, LayoutSettings } from './LayoutSettings';
 import { nodeTypes } from './NodeTypes';
 import { Kbd } from './ui/kbd';
+import { useNodeSelection } from './useNodeSelection';
 
 const elk = new ELK();
 
@@ -176,15 +176,13 @@ function FlowGraphInner({
   const darkMode = useDarkMode();
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedEntries, setSelectedEntries] = useState<Set<string>>(() => {
-    const param = searchParams.get('selected');
-    return param ? new Set(param.split(',').map(decodeURIComponent)) : new Set<string>();
-  });
-  const [focusedEntries, setFocusedEntries] = useState<Set<string>>(() => {
-    const param = searchParams.get('focused');
-    return param ? new Set(param.split(',').map(decodeURIComponent)) : new Set<string>();
-  });
+  const {
+    selected: selectedEntries,
+    focused: focusedEntries,
+    setFocused: setFocusedEntries,
+    clickNode,
+    clear: clearSelection,
+  } = useNodeSelection();
   const [layoutOptions, setLayoutOptions] = useState<LayoutOptions>(defaultLayoutOptions);
   const [needsLayout, setNeedsLayout] = useState(false);
   const { fitView, getViewport } = useReactFlow();
@@ -203,47 +201,6 @@ function FlowGraphInner({
   const focusedEntriesRef = useRef(focusedEntries);
   focusedEntriesRef.current = focusedEntries;
 
-  // Sync selection state to URL query params
-  useEffect(() => {
-    setSearchParams((prev) => {
-      if (selectedEntries.size > 0) {
-        prev.set('selected', [...selectedEntries].map(encodeURIComponent).join(','));
-      } else {
-        prev.delete('selected');
-      }
-      if (focusedEntries.size > 0) {
-        prev.set('focused', [...focusedEntries].map(encodeURIComponent).join(','));
-      } else {
-        prev.delete('focused');
-      }
-      return prev;
-    });
-  }, [selectedEntries, focusedEntries, setSearchParams]);
-
-  // Sync URL query params back to selection state (for external updates like chat)
-  useEffect(() => {
-    const selectedParam = searchParams.get('selected');
-    const urlSelected = selectedParam
-      ? new Set(selectedParam.split(',').map(decodeURIComponent))
-      : new Set<string>();
-
-    const focusedParam = searchParams.get('focused');
-    const urlFocused = focusedParam
-      ? new Set(focusedParam.split(',').map(decodeURIComponent))
-      : new Set<string>();
-
-    // Only update if different from current state to avoid loops
-    const selectedChanged =
-      urlSelected.size !== selectedEntriesRef.current.size ||
-      [...urlSelected].some((id) => !selectedEntriesRef.current.has(id));
-    const focusedChanged =
-      urlFocused.size !== focusedEntriesRef.current.size ||
-      [...urlFocused].some((id) => !focusedEntriesRef.current.has(id));
-
-    if (selectedChanged) setSelectedEntries(urlSelected);
-    if (focusedChanged) setFocusedEntries(urlFocused);
-  }, [searchParams]);
-
   useEffect(() => {
     currentNodesRef.current = nodes;
   }, [nodes]);
@@ -252,14 +209,13 @@ function FlowGraphInner({
   const applyPositionsAndFit = useCallback(
     (positions: Map<string, { x: number; y: number }>, initialNodes?: Node[]) => {
       const sel = selectedEntriesRef.current;
-      const foc = focusedEntriesRef.current;
-      const hasActive = sel.size > 0 || foc.size > 0;
+      const hasSelected = sel.size > 0;
       const apply = (node: Node): Node => {
         const pos = positions.get(node.id);
         if (!pos) return node;
         const cached = sizeCache.current.get(node.id);
         const isSelected = sel.has(node.id);
-        const dimmed = hasActive ? !(isSelected || foc.has(node.id)) : false;
+        const dimmed = hasSelected ? !isSelected : false;
         return {
           ...node,
           position: pos,
@@ -491,22 +447,18 @@ function FlowGraphInner({
 
   // Update node data (selected/dimmed) without triggering re-layout
   useEffect(() => {
-    const hasActive = selectedEntries.size > 0 || focusedEntries.size > 0;
+    const hasSelected = selectedEntries.size > 0;
     setNodes((prev) =>
       prev.map((node) => {
         const isSelected = selectedEntries.has(node.id);
-        // Condition nodes are never dimmed — they only exist between visible nodes
-        const isCondition = node.type === 'conditionNode';
-        const dimmed = hasActive
-          ? !(isSelected || focusedEntries.has(node.id) || isCondition)
-          : false;
+        const dimmed = hasSelected ? !isSelected : false;
         return {
           ...node,
           data: { ...node.data, selected: isSelected, dimmed },
         };
       }),
     );
-  }, [selectedEntries, focusedEntries, setNodes]);
+  }, [selectedEntries, setNodes]);
 
   // Pass 2: once nodes are measured, cache sizes and run ELK with real dimensions
   // biome-ignore lint/correctness/useExhaustiveDependencies: initialMeasureDone is write-only here
@@ -555,36 +507,12 @@ function FlowGraphInner({
     );
   }, [layoutOptions]);
 
-  const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
-    const isMultiSelect = event.metaKey || event.ctrlKey;
-
-    if (isMultiSelect) {
-      setSelectedEntries((prev) => {
-        const next = new Set(prev);
-        if (next.has(node.id)) {
-          next.delete(node.id);
-        } else {
-          next.add(node.id);
-        }
-        return next;
-      });
-    } else {
-      setSelectedEntries((prev) => {
-        if (prev.size === 1 && prev.has(node.id)) {
-          setFocusedEntries(new Set());
-          return new Set();
-        }
-        const next = new Set([node.id]);
-        setFocusedEntries(next);
-        return next;
-      });
-    }
-  }, []);
-
-  const clearSelection = useCallback(() => {
-    setSelectedEntries(new Set());
-    setFocusedEntries(new Set());
-  }, []);
+  const onNodeClick = useCallback(
+    (event: React.MouseEvent, node: Node) => {
+      clickNode(node.id, event);
+    },
+    [clickNode],
+  );
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -601,7 +529,7 @@ function FlowGraphInner({
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [clearSelection, selectedEntries]);
+  }, [clearSelection, selectedEntries, setFocusedEntries]);
 
   return (
     <div ref={containerRef} className="w-full h-full relative">

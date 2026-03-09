@@ -16,6 +16,7 @@ import {
   executeSearchNodes,
   executeSelectNodes,
 } from '@treck/graph/chat-helpers.js';
+import { buildSearchIndex } from '@treck/graph/search.js';
 import type { FlowGraph } from '@treck/graph/types.js';
 import { convertToModelMessages, stepCountIs, streamText, tool, type UIMessage } from 'ai';
 import type { APIRoute } from 'astro';
@@ -83,6 +84,7 @@ export const POST: APIRoute = async (context) => {
     });
   }
 
+  const searchIndex = buildSearchIndex(graph);
   const anthropic = createAnthropic({ apiKey: body.apiKey });
   const model = body.model || 'claude-haiku-4-5-20251001';
   const systemPrompt = buildSystemPrompt(graph);
@@ -99,10 +101,10 @@ export const POST: APIRoute = async (context) => {
           query: z
             .string()
             .describe(
-              'Search query to match against node names, file paths, and descriptions (case-insensitive substring match)',
+              'Search query to match against node names, file paths, and descriptions. Supports multi-word queries, camelCase splitting, fuzzy matching, and prefix matching.',
             ),
         }),
-        execute: async ({ query }) => executeSearchNodes(query, graph),
+        execute: async ({ query }) => executeSearchNodes(query, graph, searchIndex),
       }),
       select_nodes: tool({
         description:
