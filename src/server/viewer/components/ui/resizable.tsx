@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 function ResizablePanelGroup({ className, ...props }: ComponentProps<typeof Group>) {
   return (
     <Group
-      className={cn('flex h-full w-full data-[panel-group-direction=vertical]:flex-col', className)}
+      className={cn('flex h-full w-full data-[direction=vertical]:flex-col', className)}
       {...props}
     />
   );
@@ -28,7 +28,7 @@ const ResizableHandle = forwardRef<HTMLDivElement, ComponentProps<typeof Separat
   ({ className, ...props }, ref) => (
     <Separator
       className={cn(
-        'relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:-left-1 after:-right-1 after:content-[""] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 data-[panel-group-direction=vertical]:h-px data-[panel-group-direction=vertical]:w-full data-[panel-group-direction=vertical]:after:left-0 data-[panel-group-direction=vertical]:after:right-0 data-[panel-group-direction=vertical]:after:-top-1 data-[panel-group-direction=vertical]:after:-bottom-1 [&[data-resize-handle-state=drag]]:bg-ring [&[data-resize-handle-state=hover]]:bg-ring',
+        'relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:-left-1 after:-right-1 after:content-[""] after:transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 data-[direction=vertical]:h-px data-[direction=vertical]:w-full data-[direction=vertical]:after:left-0 data-[direction=vertical]:after:right-0 data-[direction=vertical]:after:-top-1 data-[direction=vertical]:after:-bottom-1 data-[separator=hover]:after:bg-border data-[separator=active]:after:bg-primary/20',
         className,
       )}
       {...props}
