@@ -1,5 +1,6 @@
 import type { FlowGraph as FlowGraphData } from '@treck/graph/types.js';
 import { GraphExplorer } from '@viewer/components/GraphExplorer';
+import { TooltipProvider } from '@viewer/components/ui/tooltip';
 import { MemoryRouter } from 'react-router';
 
 interface ShowcaseViewerProps {
@@ -13,7 +14,9 @@ interface ShowcaseViewerProps {
 export function ShowcaseViewer({ graph, project }: ShowcaseViewerProps) {
   return (
     <MemoryRouter>
-      <GraphExplorer graph={graph} project={project} />
+      <TooltipProvider>
+        <GraphExplorer graph={graph} project={project} />
+      </TooltipProvider>
     </MemoryRouter>
   );
 }
