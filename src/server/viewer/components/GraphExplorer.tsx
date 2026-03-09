@@ -9,7 +9,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { type PanelImperativeHandle, useDefaultLayout } from 'react-resizable-panels';
+import type { PanelImperativeHandle } from 'react-resizable-panels';
 import { Route, Routes, useLocation, useSearchParams } from 'react-router';
 import { buildIndexResponse, buildSymbolIndexFromGraph } from '../../../graph/symbol-index.js';
 import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
@@ -59,16 +59,35 @@ export function GraphExplorer({
   const chatPanelRef = useRef<PanelImperativeHandle>(null);
   const isGraphView = location.pathname === '/';
 
-  // Persist panel layout to localStorage, supporting the conditional chat panel
-  const panelIds = useMemo(
-    () => (chatOpen ? ['sidebar', 'main', 'chat'] : ['sidebar', 'main']),
-    [chatOpen],
-  );
-  const { defaultLayout, onLayoutChanged } = useDefaultLayout({
-    id: 'treck-layout',
-    panelIds,
-    storage: localStorage,
-  });
+  // Read persisted panel widths from localStorage (pixels)
+  const savedSidebarSize = useMemo(() => {
+    const v = localStorage.getItem('treck-sidebar-width');
+    return v ? Number(v) : SIDEBAR_DEFAULT_SIZE;
+  }, []);
+  const savedChatSize = useMemo(() => {
+    const v = localStorage.getItem('treck-chat-width');
+    return v ? Number(v) : CHAT_DEFAULT_SIZE;
+  }, []);
+
+  /** Toggle chat panel via collapse/expand on the always-mounted panel. */
+  const toggleChat = useCallback(() => {
+    const panel = chatPanelRef.current;
+    if (!panel) return;
+    if (panel.isCollapsed()) {
+      const saved = localStorage.getItem('treck-chat-width');
+      const target = saved ? Number(saved) : CHAT_DEFAULT_SIZE;
+      panel.resize(target);
+    } else {
+      panel.collapse();
+    }
+  }, []);
+
+  // Restore saved sidebar width on mount
+  useEffect(() => {
+    if (savedSidebarSize !== SIDEBAR_DEFAULT_SIZE) {
+      sidebarPanelRef.current?.resize(savedSidebarSize);
+    }
+  }, [savedSidebarSize]);
 
   // Global keyboard shortcuts (Cmd/Ctrl prefixed so they work in inputs too)
   useEffect(() => {
@@ -78,7 +97,7 @@ export function GraphExplorer({
 
       if (e.key === '/' && isGraphView) {
         e.preventDefault();
-        setChatOpen((prev) => !prev);
+        toggleChat();
       }
       if (e.key === '.' && isGraphView && isOffCenter) {
         e.preventDefault();
@@ -87,7 +106,7 @@ export function GraphExplorer({
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isGraphView, isOffCenter]);
+  }, [isGraphView, isOffCenter, toggleChat]);
 
   const onLayoutReady = useCallback(() => {
     setLayoutReady(true);
@@ -259,6 +278,21 @@ export function GraphExplorer({
     </div>
   );
 
+  /** Persist sidebar width to localStorage when it changes. */
+  const onSidebarResize = useCallback((size: { inPixels: number }) => {
+    localStorage.setItem('treck-sidebar-width', String(Math.round(size.inPixels)));
+  }, []);
+
+  /** Persist chat width to localStorage when it changes and sync open state. */
+  const onChatResize = useCallback((size: { inPixels: number }) => {
+    if (size.inPixels > 0) {
+      localStorage.setItem('treck-chat-width', String(Math.round(size.inPixels)));
+      setChatOpen(true);
+    } else {
+      setChatOpen(false);
+    }
+  }, []);
+
   /** Reset the left sidebar to its default width. */
   const resetSidebar = useCallback(() => {
     sidebarPanelRef.current?.resize(SIDEBAR_DEFAULT_SIZE);
@@ -270,12 +304,7 @@ export function GraphExplorer({
   }, []);
 
   const content = (
-    <ResizablePanelGroup
-      direction="horizontal"
-      defaultLayout={defaultLayout}
-      onLayoutChanged={onLayoutChanged}
-      className="h-full"
-    >
+    <ResizablePanelGroup direction="horizontal" className="h-full">
       <ResizablePanel
         id="sidebar"
         panelRef={sidebarPanelRef}
@@ -283,6 +312,8 @@ export function GraphExplorer({
         minSize={200}
         maxSize={500}
         order={1}
+        groupResizeBehavior="preserve-pixel-size"
+        onResize={onSidebarResize}
       >
         <Sidebar>
           <ViewNav />
@@ -318,7 +349,7 @@ export function GraphExplorer({
               <Button
                 variant="subtle"
                 size="sm"
-                onClick={() => setChatOpen(!chatOpen)}
+                onClick={toggleChat}
                 title={chatOpen ? 'Close AI chat' : 'Open AI chat'}
                 className="gap-1.5"
               >
@@ -377,21 +408,21 @@ export function GraphExplorer({
           )}
         </main>
       </ResizablePanel>
-      {chatOpen && (
-        <>
-          <ResizableHandle onDoubleClick={resetChat} />
-          <ResizablePanel
-            id="chat"
-            panelRef={chatPanelRef}
-            defaultSize={CHAT_DEFAULT_SIZE}
-            minSize={280}
-            maxSize={600}
-            order={3}
-          >
-            <ChatPanel onClose={() => setChatOpen(false)} project={project} />
-          </ResizablePanel>
-        </>
-      )}
+      <ResizableHandle onDoubleClick={resetChat} />
+      <ResizablePanel
+        id="chat"
+        panelRef={chatPanelRef}
+        defaultSize={0}
+        minSize={280}
+        maxSize={600}
+        collapsible
+        collapsedSize={0}
+        order={3}
+        groupResizeBehavior="preserve-pixel-size"
+        onResize={onChatResize}
+      >
+        {chatOpen && <ChatPanel onClose={toggleChat} project={project} />}
+      </ResizablePanel>
     </ResizablePanelGroup>
   );
 
