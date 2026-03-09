@@ -13,7 +13,10 @@ import { marked } from 'marked';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { deriveTitle, type StoredChat, saveChat } from '../lib/chat-store';
+import { getNodeCategory, type NodeCategory } from './FlowGraph';
+import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
+import { categoryBadgeClasses } from './node-colors';
 import { Card } from './ui/card';
 
 /** Typed tool part from the AI SDK message stream. */
@@ -70,11 +73,14 @@ function InlineSpinner() {
 function ToolCallIndicator({
   part,
   onSelectNode,
+  getCategory,
 }: {
   part: ToolPart;
   onSelectNode: (ids: string[]) => void;
+  getCategory: (nodeId: string) => NodeCategory;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [showAll, setShowAll] = useState(false);
   const isLoading = part.state === 'call' || part.state === 'partial-call';
   const toolName = part.type.replace(/^tool-/, '');
 
@@ -95,7 +101,7 @@ function ToolCallIndicator({
         <button
           type="button"
           onClick={() => setExpanded(!expanded)}
-          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
         >
           <span className={`transition-transform ${expanded ? 'rotate-90' : ''}`}>&#9656;</span>
           Found {count} result{count !== 1 ? 's' : ''}
@@ -103,16 +109,20 @@ function ToolCallIndicator({
         </button>
         {expanded && results.length > 0 && (
           <div className="mt-1 ml-3 space-y-0.5">
-            {results.slice(0, 10).map((r) => (
+            {(showAll ? results : results.slice(0, 10)).map((r) => (
               <div key={r.id} className="text-xs text-muted-foreground truncate" title={r.id}>
                 <span className="text-foreground/70">{r.name}</span>
                 <span className="ml-1 opacity-50">{r.filePath}</span>
               </div>
             ))}
-            {results.length > 10 && (
-              <div className="text-xs text-muted-foreground opacity-50">
+            {!showAll && results.length > 10 && (
+              <button
+                type="button"
+                onClick={() => setShowAll(true)}
+                className="text-xs text-muted-foreground opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+              >
                 +{results.length - 10} more
-              </div>
+              </button>
             )}
           </div>
         )}
@@ -142,7 +152,7 @@ function ToolCallIndicator({
             key={id}
             type="button"
             onClick={() => onSelectNode([id])}
-            className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2 py-0.5 text-xs text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800"
+            className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs ${categoryBadgeClasses(getCategory(id))}`}
             title={id}
           >
             {id.split(':').pop()}
@@ -220,6 +230,17 @@ export function ActiveChat({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const createdAtRef = useRef(createdAt ?? Date.now());
+
+  // Build a node ID → category lookup from the graph context
+  const graphCtx = useGraphExplorer();
+  const getCategory = useMemo(() => {
+    if (!graphCtx) return () => 'function' as NodeCategory;
+    const map = new Map<string, NodeCategory>();
+    for (const node of graphCtx.graph.nodes) {
+      map.set(node.id, getNodeCategory(node));
+    }
+    return (nodeId: string): NodeCategory => map.get(nodeId) ?? 'function';
+  }, [graphCtx]);
 
   // Refs to avoid stale closures in transport body function
   const settingsRef = useRef(settings);
@@ -384,6 +405,7 @@ export function ActiveChat({
                         key={seg.key}
                         part={seg.part}
                         onSelectNode={applySelection}
+                        getCategory={getCategory}
                       />
                     );
                   }
@@ -399,11 +421,12 @@ export function ActiveChat({
             );
           })}
           {status === 'submitted' && (
-            <div className="flex justify-start">
-              <div className="max-w-[85%] rounded-lg bg-muted px-3 py-2 text-sm text-muted-foreground">
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground px-2 py-1">
+              <InlineSpinner />
+              <span>
                 Thinking
                 <LoadingEllipsis />
-              </div>
+              </span>
             </div>
           )}
           <div ref={messagesEndRef} />
