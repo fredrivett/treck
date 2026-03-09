@@ -451,9 +451,7 @@ function FlowGraphInner({
     setNodes((prev) =>
       prev.map((node) => {
         const isSelected = selectedEntries.has(node.id);
-        // Condition nodes are never dimmed — they only exist between visible nodes
-        const isCondition = node.type === 'conditionNode';
-        const dimmed = hasSelected ? !(isSelected || isCondition) : false;
+        const dimmed = hasSelected ? !isSelected : false;
         return {
           ...node,
           data: { ...node.data, selected: isSelected, dimmed },
