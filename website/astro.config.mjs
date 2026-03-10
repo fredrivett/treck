@@ -7,6 +7,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   output: 'static',
   adapter: vercel({
+    maxDuration: 60,
     includeFiles: [
       './public/showcases/tldraw.json',
       './public/showcases/treck.json',
