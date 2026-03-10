@@ -151,6 +151,42 @@ function removeUnsafeSymlinks(dir: string, root: string): void {
   }
 }
 
+/** Redis keys for view tracking. */
+const VIEWS_SORTED_SET = 'explore:views';
+const VIEWS_LAST_SEEN = 'explore:lastViewedAt';
+
+/**
+ * Get today's date as YYYY-MM-DD for the daily views key.
+ *
+ * @returns Date string in YYYY-MM-DD format
+ */
+function todayKey(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+/**
+ * Record a view for a repo. Increments the count in both an all-time
+ * sorted set and a daily sorted set (with 48h TTL). Also updates the
+ * last-viewed timestamp. Non-blocking — errors are silently ignored.
+ *
+ * @param redis - Redis client (or null in local dev without Redis)
+ * @param repoSlug - The `owner/repo` key
+ */
+async function trackView(redis: Redis | null, repoSlug: string): Promise<void> {
+  if (!redis) return;
+  try {
+    const dailyKey = `explore:views:${todayKey()}`;
+    await Promise.all([
+      redis.zincrby(VIEWS_SORTED_SET, 1, repoSlug),
+      redis.zincrby(dailyKey, 1, repoSlug),
+      redis.expire(dailyKey, 48 * 60 * 60),
+      redis.hset(VIEWS_LAST_SEEN, { [repoSlug]: Date.now() }),
+    ]);
+  } catch {
+    // Non-critical — never block the response
+  }
+}
+
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   const redis = getRedis();
 
@@ -197,6 +233,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         const age = Date.now() - cached.cachedAt;
         if (age < STALE_AFTER_MS) {
           // Fresh — return immediately
+          await trackView(redis, `${owner}/${repo}`);
           return new Response(JSON.stringify(cached.graph), {
             headers: { 'Content-Type': 'application/json', 'X-Cache': 'HIT' },
           });
@@ -211,6 +248,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
               { ...cached, cachedAt: Date.now() },
               { ex: CACHE_TTL_SECONDS },
             );
+            await trackView(redis, `${owner}/${repo}`);
             return new Response(JSON.stringify(cached.graph), {
               headers: { 'Content-Type': 'application/json', 'X-Cache': 'HIT' },
             });
@@ -218,6 +256,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
           // Different commit — fall through to rebuild
         } catch {
           // GitHub API error — return stale cache rather than failing
+          await trackView(redis, `${owner}/${repo}`);
           return new Response(JSON.stringify(cached.graph), {
             headers: { 'Content-Type': 'application/json', 'X-Cache': 'STALE' },
           });
@@ -339,6 +378,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         await redis.set(cacheKey, cacheEntry, { ex: CACHE_TTL_SECONDS });
       }
 
+      await trackView(redis, `${owner}/${repo}`);
       return new Response(JSON.stringify(graph), {
         headers: { 'Content-Type': 'application/json', 'X-Cache': 'MISS' },
       });

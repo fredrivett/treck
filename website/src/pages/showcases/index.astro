@@ -1,5 +1,6 @@
 ---
 import Nav from '../../components/Nav.astro';
+import { PopularRepos } from '../../components/PopularRepos';
 import { RepoSearchBar } from '../../components/RepoSearchBar';
 import Base from '../../layouts/Base.astro';
 import { showcases } from '../../showcases';
@@ -16,6 +17,8 @@ import { showcases } from '../../showcases';
 			</p>
 
 			<RepoSearchBar client:load />
+
+			<PopularRepos client:load />
 
 			<div class="grid gap-px bg-border">
 				{showcases.map((project) => (
