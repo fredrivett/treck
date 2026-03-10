@@ -1,5 +1,5 @@
 import { Handle, type NodeProps, Position, useStore } from '@xyflow/react';
-import { DIMMED_CLASSES, getCategoryColors } from './node-categories';
+import { DIMMED_CLASSES, categoryBadgeVariant, getCategoryColors } from './node-categories';
 import { Badge, type BadgeVariant, variantLabels } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
@@ -70,14 +70,6 @@ function entryTypeConfig(entryType: string) {
   return { border: c.border, bg: c.bg, ring: c.ring, handle: c.handle };
 }
 
-const entryTypeBadgeVariant: Record<string, BadgeVariant> = {
-  'api-route': 'api-route',
-  page: 'page',
-  'inngest-function': 'job',
-  'trigger-task': 'job',
-  middleware: 'middleware',
-  'server-action': 'server-action',
-};
 
 const entryTypeImpl: Record<string, { label: string; variant: BadgeVariant }> = {
   'inngest-function': { label: 'Inngest', variant: 'inngest' },
@@ -94,7 +86,7 @@ const defaultConfig = {
 function EntryPointNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
   const config = d.entryType ? entryTypeConfig(d.entryType) : defaultConfig;
-  const badgeVariant = d.entryType ? entryTypeBadgeVariant[d.entryType] || 'default' : 'default';
+  const badgeVariant = d.entryType ? categoryBadgeVariant[d.entryType] || 'default' : 'default';
   const typeLabel = d.entryType ? variantLabels[badgeVariant] || d.entryType : '';
   const impl = d.entryType ? entryTypeImpl[d.entryType] : undefined;
   const httpMethod = d.metadata?.httpMethod;

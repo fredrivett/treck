@@ -6,7 +6,7 @@ import { docPathToUrl, urlToDocPath } from '../docs-utils';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
 import type { SymbolIndex } from '../../../graph/symbol-index.js';
-import { getCategoryColors, getCategoryLabel, getNodeCategory } from './node-categories';
+import { categoryBadgeVariant, getCategoryColors, getCategorySingularLabel, getNodeCategory } from './node-categories';
 import { Badge } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { useNodeSelection } from './useNodeSelection';
@@ -94,17 +94,17 @@ function SymbolTooltipContent({
         {sym.name}
       </div>
       <div className="flex flex-wrap items-center gap-1 mb-1.5">
-        <Badge variant={category === 'component' ? 'component' : category === 'hook' ? 'hook' : 'default'}>
-          {getCategoryLabel(category)}
+        <Badge variant={categoryBadgeVariant[category] || 'default'}>
+          {getCategorySingularLabel(category)}
         </Badge>
         {entry?.isAsync && <Badge variant="async">async</Badge>}
         {entry?.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
       {entry?.sourcePath && (
-        <div className="text-[11px] text-muted-foreground mb-1 break-all">{entry.sourcePath}{entry.lineRange ? `:${entry.lineRange}` : ''}</div>
+        <div className="text-[11px] text-foreground mb-1 break-all">{entry.sourcePath}{entry.lineRange ? `:${entry.lineRange}` : ''}</div>
       )}
       {entry?.overview && (
-        <div className="text-[11px] text-muted-foreground leading-relaxed">{entry.overview}</div>
+        <div className="text-[11px] text-foreground leading-relaxed">{entry.overview}</div>
       )}
     </div>
   );
