@@ -101,7 +101,7 @@ function SymbolTooltipContent({
         {entry?.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
       {entry?.sourcePath && (
-        <div className="text-[11px] text-foreground mb-1 break-all">{entry.sourcePath}{entry.lineRange ? `:${entry.lineRange}` : ''}</div>
+        <div className="text-[11px] text-muted-foreground mb-1 break-all">{entry.sourcePath}{entry.lineRange ? `:${entry.lineRange}` : ''}</div>
       )}
       {entry?.overview && (
         <div className="text-[11px] text-foreground leading-relaxed">{entry.overview}</div>
