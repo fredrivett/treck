@@ -5,7 +5,9 @@ import { Link, useLocation } from 'react-router';
 import { docPathToUrl, urlToDocPath } from '../docs-utils';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
-import { getCategoryColors, getNodeCategory } from './node-categories';
+import type { SymbolIndex } from '../../../graph/symbol-index.js';
+import { getCategoryColors, getCategoryLabel, getNodeCategory } from './node-categories';
+import { Badge } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { useNodeSelection } from './useNodeSelection';
 
@@ -74,6 +76,40 @@ function Guides({ guides, isLast }: { guides: boolean[]; isLast: boolean }) {
   );
 }
 
+/** Rich tooltip content for a sidebar symbol, showing badges and overview. */
+function SymbolTooltipContent({
+  sym,
+  symbolIndex,
+}: {
+  sym: { name: string; docPath: string; kind?: string; entryType?: string };
+  symbolIndex?: SymbolIndex;
+}) {
+  const entry = symbolIndex?.entries.get(sym.docPath);
+  const category = getNodeCategory(sym);
+  const colors = getCategoryColors(category);
+
+  return (
+    <div className="max-w-[280px]">
+      <div className="font-semibold text-[13px] mb-1" style={{ color: colors.handle }}>
+        {sym.name}
+      </div>
+      <div className="flex flex-wrap items-center gap-1 mb-1.5">
+        <Badge variant={category === 'component' ? 'component' : category === 'hook' ? 'hook' : 'default'}>
+          {getCategoryLabel(category)}
+        </Badge>
+        {entry?.isAsync && <Badge variant="async">async</Badge>}
+        {entry?.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+      </div>
+      {entry?.sourcePath && (
+        <div className="text-[11px] text-muted-foreground mb-1 break-all">{entry.sourcePath}{entry.lineRange ? `:${entry.lineRange}` : ''}</div>
+      )}
+      {entry?.overview && (
+        <div className="text-[11px] text-muted-foreground leading-relaxed">{entry.overview}</div>
+      )}
+    </div>
+  );
+}
+
 interface TreeDirProps {
   name: string;
   node: TreeNode;
@@ -90,6 +126,8 @@ interface TreeDirProps {
   selectedNodes?: Set<string>;
   /** Map from symbol name to graph node ID. */
   nameToNodeId?: Map<string, string>;
+  /** Symbol index for looking up full symbol details in tooltips. */
+  symbolIndex?: SymbolIndex;
 }
 
 function TreeDir({
@@ -105,6 +143,7 @@ function TreeDir({
   onSymbolClick,
   selectedNodes,
   nameToNodeId,
+  symbolIndex,
 }: TreeDirProps) {
   const hasChildren = Object.keys(node.children).length > 0 || node.symbols.length > 0;
   if (!hasChildren) return null;
@@ -171,6 +210,7 @@ function TreeDir({
                   onSymbolClick={onSymbolClick}
                   selectedNodes={selectedNodes}
                   nameToNodeId={nameToNodeId}
+                  symbolIndex={symbolIndex}
                 />
               );
             }
@@ -179,7 +219,7 @@ function TreeDir({
             const isSelected = nodeId ? selectedNodes?.has(nodeId) : false;
             const hasSelection = selectedNodes && selectedNodes.size > 0;
             const isDimmed = hasSelection && !isSelected;
-            const symContent = (
+            const symInner = (
               <>
                 <Guides guides={childGuides} isLast={itemIsLast} />
                 <span
@@ -189,40 +229,49 @@ function TreeDir({
                   {item.sym.name}
                 </span>
                 {item.sym.hasJsDoc === false && !item.sym.isTrivial && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <span className="ml-auto shrink-0 inline-flex items-center justify-center w-4 h-4 rounded text-[10px] font-semibold bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-300">
-                        !
-                      </span>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">Missing JSDoc</TooltipContent>
-                  </Tooltip>
+                  <span className="ml-auto shrink-0 inline-flex items-center justify-center w-4 h-4 rounded text-[10px] font-semibold bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-300">
+                    !
+                  </span>
                 )}
               </>
             );
 
+            const tooltipClasses = `${colors.bg} text-foreground border-0`;
+
             if (onSymbolClick && nodeId) {
               return (
-                <button
-                  key={`sym-${item.sym.docPath}`}
-                  type="button"
-                  onClick={(e) => onSymbolClick(nodeId, e)}
-                  className={`flex items-center w-full h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis bg-transparent border-none p-0 text-left font-[inherit] hover:bg-muted ${isSelected ? 'bg-border font-medium' : ''} ${isDimmed ? 'opacity-65' : ''}`}
-                >
-                  {symContent}
-                </button>
+                <Tooltip key={`sym-${item.sym.docPath}`}>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={(e) => onSymbolClick(nodeId, e)}
+                      className={`flex items-center w-full h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis bg-transparent border-none p-0 text-left font-[inherit] hover:bg-muted ${isSelected ? 'bg-border font-medium' : ''} ${isDimmed ? 'opacity-65' : ''}`}
+                    >
+                      {symInner}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="right" className={tooltipClasses} arrowClassName={`${colors.bg} fill-transparent`} style={{ filter: `drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex})` }}>
+                    <SymbolTooltipContent sym={item.sym} symbolIndex={symbolIndex} />
+                  </TooltipContent>
+                </Tooltip>
               );
             }
 
             const isActive = item.sym.docPath === activeDocPath;
             return (
-              <Link
-                key={`sym-${item.sym.docPath}`}
-                to={docPathToUrl(item.sym.docPath)}
-                className={`flex items-center h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis hover:bg-muted ${isActive ? 'bg-border font-medium' : ''}`}
-              >
-                {symContent}
-              </Link>
+              <Tooltip key={`sym-${item.sym.docPath}`}>
+                <TooltipTrigger asChild>
+                  <Link
+                    to={docPathToUrl(item.sym.docPath)}
+                    className={`flex items-center h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis hover:bg-muted ${isActive ? 'bg-border font-medium' : ''}`}
+                  >
+                    {symInner}
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="right" className={tooltipClasses} arrowClassName={`${colors.bg} fill-transparent`} style={{ filter: `drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex})` }}>
+                  <SymbolTooltipContent sym={item.sym} symbolIndex={symbolIndex} />
+                </TooltipContent>
+              </Tooltip>
             );
           })}
         </div>
@@ -350,6 +399,7 @@ export function DocsTree({ visibleNames }: DocsTreeProps) {
                 onSymbolClick={isGraphView ? clickNode : undefined}
                 selectedNodes={isGraphView ? selected : undefined}
                 nameToNodeId={nameToNodeId}
+                symbolIndex={ctx?.symbolIndex}
               />
             ))}
       </nav>

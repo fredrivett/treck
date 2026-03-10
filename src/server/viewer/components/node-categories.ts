@@ -53,6 +53,8 @@ export interface CategoryColors {
   bg: string;
   /** Border color class. */
   border: string;
+  /** Border hex color (matches the border class shade). */
+  borderHex: string;
   /** Text color classes (light + dark). */
   text: string;
   /** Selection ring class. */
@@ -66,6 +68,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   component: {
     bg: 'bg-orange-100 dark:bg-orange-950',
     border: 'border-orange-600',
+    borderHex: '#ea580c',
     text: 'text-orange-800 dark:text-orange-200',
     ring: 'ring-orange-500/25',
     handle: '#f97316',
@@ -73,6 +76,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   hook: {
     bg: 'bg-lime-100 dark:bg-lime-950',
     border: 'border-lime-600',
+    borderHex: '#65a30d',
     text: 'text-lime-800 dark:text-lime-200',
     ring: 'ring-lime-500/25',
     handle: '#84cc16',
@@ -80,6 +84,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   function: {
     bg: 'bg-blue-100 dark:bg-blue-950',
     border: 'border-blue-500',
+    borderHex: '#3b82f6',
     text: 'text-blue-800 dark:text-blue-200',
     ring: 'ring-blue-500/25',
     handle: '#3b82f6',
@@ -87,6 +92,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   'api-route': {
     bg: 'bg-blue-100 dark:bg-blue-950',
     border: 'border-blue-500',
+    borderHex: '#3b82f6',
     text: 'text-blue-800 dark:text-blue-200',
     ring: 'ring-blue-500/25',
     handle: '#3b82f6',
@@ -94,6 +100,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   page: {
     bg: 'bg-violet-100 dark:bg-violet-950',
     border: 'border-violet-500',
+    borderHex: '#8b5cf6',
     text: 'text-violet-800 dark:text-violet-200',
     ring: 'ring-violet-500/25',
     handle: '#8b5cf6',
@@ -101,6 +108,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   'inngest-function': {
     bg: 'bg-pink-100 dark:bg-pink-950',
     border: 'border-pink-500',
+    borderHex: '#ec4899',
     text: 'text-pink-800 dark:text-pink-200',
     ring: 'ring-pink-500/25',
     handle: '#ec4899',
@@ -108,6 +116,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   'trigger-task': {
     bg: 'bg-pink-100 dark:bg-pink-950',
     border: 'border-pink-500',
+    borderHex: '#ec4899',
     text: 'text-pink-800 dark:text-pink-200',
     ring: 'ring-pink-500/25',
     handle: '#ec4899',
@@ -115,6 +124,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   'trigger-scheduled-task': {
     bg: 'bg-pink-100 dark:bg-pink-950',
     border: 'border-pink-500',
+    borderHex: '#ec4899',
     text: 'text-pink-800 dark:text-pink-200',
     ring: 'ring-pink-500/25',
     handle: '#ec4899',
@@ -122,6 +132,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   middleware: {
     bg: 'bg-cyan-100 dark:bg-cyan-950',
     border: 'border-cyan-500',
+    borderHex: '#06b6d4',
     text: 'text-cyan-800 dark:text-cyan-200',
     ring: 'ring-cyan-500/25',
     handle: '#06b6d4',
@@ -129,6 +140,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   'server-action': {
     bg: 'bg-emerald-100 dark:bg-emerald-950',
     border: 'border-emerald-500',
+    borderHex: '#10b981',
     text: 'text-emerald-800 dark:text-emerald-200',
     ring: 'ring-emerald-500/25',
     handle: '#10b981',
