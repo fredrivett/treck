@@ -10,6 +10,7 @@ import { existsSync, readFileSync, watch } from 'node:fs';
 import { createServer } from 'node:http';
 import { basename, dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getCurrentBranch } from '../cli/utils/git.js';
 import { GraphStore } from '../graph/graph-store.js';
 import { buildSearchIndex, type SearchIndex } from '../graph/search.js';
 import type { FlowGraph } from '../graph/types.js';
@@ -128,7 +129,7 @@ export async function startServer(outputDir: string, port: number) {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       });
-      res.end(JSON.stringify({ graphId: basename(process.cwd()) }));
+      res.end(JSON.stringify({ graphId: basename(process.cwd()), branch: getCurrentBranch() }));
       return;
     }
 

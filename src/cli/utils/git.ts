@@ -6,6 +6,24 @@ import { execFileSync } from 'node:child_process';
 import type { FlowGraph } from '../../graph/types.js';
 
 /**
+ * Get the current git branch name.
+ *
+ * Uses `git rev-parse --abbrev-ref HEAD` to determine the current branch.
+ *
+ * @returns The current branch name, or undefined if not in a git repo or in detached HEAD state
+ */
+export function getCurrentBranch(): string | undefined {
+  try {
+    const branch = execFileSync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], {
+      encoding: 'utf8',
+    }).trim();
+    return branch === 'HEAD' ? undefined : branch;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
  * Detect the default branch of the remote origin.
  *
  * Uses `git symbolic-ref refs/remotes/origin/HEAD` to find the remote's
