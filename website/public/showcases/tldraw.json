@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-09T04:34:49.932Z",
+  "generatedAt": "2026-03-10T04:31:01.305Z",
   "nodes": [
     {
       "id": "packages/editor/src/lib/TldrawEditor.tsx:TldrawEditor",
@@ -11932,10 +11932,10 @@
       "kind": "class",
       "filePath": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx",
       "isAsync": false,
-      "hash": "b04e0a8a7a8084507debb99ba0fa50b6aaa3d1914d31a25b402b4abc366d396b",
+      "hash": "1fc8d5501561654eb52f81b3bdb846bca70ad8d30f6cd5c001880721d508277a",
       "lineRange": [
         87,
-        1136
+        1140
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -11948,8 +11948,8 @@
       "isAsync": false,
       "hash": "77ab1897aea3354219ce2236893b429724d42c0e29a415fd6085f2a58287cb11",
       "lineRange": [
-        1136,
-        1146
+        1140,
+        1150
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -11977,8 +11977,8 @@
       "isAsync": false,
       "hash": "a911a5dee31f7d2664bdd51fc5d3991497a3a88cbc4583e2485985e80c00b0bb",
       "lineRange": [
-        1148,
-        1278
+        1152,
+        1282
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -11991,8 +11991,8 @@
       "isAsync": false,
       "hash": "603aabb4aab7ff69b88d82bc2a25544e6c7fda9097f5df38bd0e83233fa1f983",
       "lineRange": [
-        1278,
-        1340
+        1282,
+        1344
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -12043,8 +12043,8 @@
       "isAsync": false,
       "hash": "46f7e0e510758906a380803c0b4bfe0d73ba262eecdc7bfc3f715e7f6a9031f6",
       "lineRange": [
-        1355,
-        1364
+        1359,
+        1368
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -12057,8 +12057,8 @@
       "isAsync": false,
       "hash": "2daef79cc79823f7ab4a4629a8e8e17fd428d197c262246cbf39544be3a3e82a",
       "lineRange": [
-        1364,
-        1374
+        1368,
+        1378
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -12071,8 +12071,8 @@
       "isAsync": false,
       "hash": "fa2361014f8f0d126cbdfed0d408d2f9b9f4c084e7fb78fdfb12c964b3db3fc9",
       "lineRange": [
-        1374,
-        1389
+        1378,
+        1393
       ],
       "hasJsDoc": true,
       "description": "Take 2 angles and return true if they are approximately parallel. Angle that point in the same\n(or opposite) directions are considered parallel. This also handles wrap around - e.g. 0, π, and\n2π are all considered parallel.",
@@ -14399,6 +14399,28 @@
       "isExported": true
     },
     {
+      "id": "packages/tldraw/src/lib/shapes/arrow/shared.ts:clampNormalizedAnchor",
+      "name": "clampNormalizedAnchor",
+      "kind": "function",
+      "filePath": "packages/tldraw/src/lib/shapes/arrow/shared.ts",
+      "isAsync": false,
+      "hash": "ebf0ed1f5a284a9ba93c7b6809fd5e0f3b69b5e2695e4689fed868f8964637dd",
+      "lineRange": [
+        19,
+        25
+      ],
+      "hasJsDoc": false,
+      "structuredParams": [
+        {
+          "name": "anchor",
+          "type": "{ x: number; y: number }",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "isExported": false
+    },
+    {
       "id": "packages/tldraw/src/lib/shapes/arrow/shared.ts:getIsArrowStraight",
       "name": "getIsArrowStraight",
       "kind": "function",
@@ -14406,8 +14428,8 @@
       "isAsync": false,
       "hash": "27646c7a08259d3bd793449c93b7e580b674e66b1670c65890cbeba5d99ab2d4",
       "lineRange": [
-        17,
-        22
+        25,
+        30
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -14428,8 +14450,8 @@
       "isAsync": false,
       "hash": "3a06bed29a27f9629dda35d5d9bcb3006b2dfdab49b79a93ec43e783a8c803c5",
       "lineRange": [
-        31,
-        63
+        39,
+        71
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -14461,10 +14483,10 @@
       "kind": "function",
       "filePath": "packages/tldraw/src/lib/shapes/arrow/shared.ts",
       "isAsync": false,
-      "hash": "0b98f8b1cb21aae4883329e31f42908e70b10ac20de5f313874b73ebc7042bcd",
+      "hash": "15440b1de4954f8cbebd986667c892fd52201b70e15648931fc51f215e943548",
       "lineRange": [
-        63,
-        95
+        71,
+        100
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -14503,8 +14525,8 @@
       "isAsync": false,
       "hash": "9702ebd81b5d423532f100b6eac4f684d908996b645d284cf1063c604b726211",
       "lineRange": [
-        103,
-        118
+        108,
+        123
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -14517,8 +14539,8 @@
       "isAsync": false,
       "hash": "cf597cbbef0738a815d3388c563cad69a60596018ef91ecd3c8e615eb0af0737",
       "lineRange": [
-        118,
-        123
+        123,
+        128
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -14547,8 +14569,8 @@
       "isAsync": false,
       "hash": "6216b79dba2dd7baca79487bb5e0e7b7875da6d3d98096cdcb2ccd225e390d50",
       "lineRange": [
-        123,
-        160
+        128,
+        165
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -14581,8 +14603,8 @@
       "isAsync": false,
       "hash": "3ae0c7ed2224dc682f95777f5e86c81eec6c9b3440e583cd482ffa5c6ea4595d",
       "lineRange": [
-        160,
-        199
+        165,
+        204
       ],
       "hasJsDoc": true,
       "description": "Create or update the arrow binding for a particular arrow terminal. Will clear up if needed.",
@@ -14622,8 +14644,8 @@
       "isAsync": false,
       "hash": "c58652f3184da0ffd323d2a5050158019cb92f04f7537bb0444cf4089031f590",
       "lineRange": [
-        199,
-        211
+        204,
+        216
       ],
       "hasJsDoc": true,
       "description": "Remove any arrow bindings for a particular terminal.",
@@ -14657,8 +14679,8 @@
       "isAsync": false,
       "hash": "213463630266696a06a88ecd88875ab95ba1464132caf9a8301bc052b1bebcf8",
       "lineRange": [
-        226,
-        255
+        231,
+        260
       ],
       "hasJsDoc": true,
       "description": "Get the relationships for an arrow that has two bound shape terminals.\nIf the arrow has only one bound shape, then it is always \"safe\" to apply\nstandard offsets and precision behavior. If the shape is bound to the same\nshape on both ends, then that is an exception. If one of the shape's\nterminals is bound to a shape that contains / is contained by the shape that\nis bound to the other terminal, then that is also an exception.",
@@ -14695,8 +14717,8 @@
       "isAsync": false,
       "hash": "77bd89a10d5ed7e669581796ee45d471b2b8be4e93817d9a5b88dd50d6caece4",
       "lineRange": [
-        255,
-        305
+        260,
+        310
       ],
       "hasJsDoc": true,
       "description": "If the arrow terminal point falls outside the bound shape's mask (e.g. when a shape\nextends beyond a frame boundary and is clipped), clamp the terminal to the mask boundary.\nUses the binding anchor point (inside the shape/frame) as the ray origin, since the\narrow endpoint may be entirely outside the mask.",
@@ -26349,10 +26371,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx",
       "isAsync": false,
-      "hash": "85562b4f8a2b07b4a46085a93c626fab53941e792ffba64f5dd46355bb380bb3",
+      "hash": "679a935edf2cf987fd5d0fa8b8d56578fc23f57021e76024638cad06115e0ccf",
       "lineRange": [
         202,
-        330
+        335
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -26365,8 +26387,8 @@
       "isAsync": false,
       "hash": "deabbb6edc6fbb04f98e8f6e3b623cf8aa318611834de1124272238b66a8fff6",
       "lineRange": [
-        333,
-        481
+        338,
+        486
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -42146,9 +42168,49 @@
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/arrowLabel.ts:getArrowLabelPosition",
       "source": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil",
       "target": "packages/tldraw/src/lib/shapes/arrow/arrowLabel.ts:getArrowLabelPosition",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (isEditing || !isEmptyRichText(shape.props.richText))",
+          "branch": "then",
+          "branchGroup": "branch:222"
+        }
+      ],
+      "label": "if (isEditing || !isEmptyRichText(shape.props.richText))",
       "isAsync": false,
       "order": 3
+    },
+    {
+      "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/arrowLabel.ts:getArrowLabelPosition::1",
+      "source": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil",
+      "target": "packages/tldraw/src/lib/shapes/arrow/arrowLabel.ts:getArrowLabelPosition",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!info?.isValid)",
+          "branch": "else",
+          "branchGroup": "branch:793"
+        }
+      ],
+      "label": "else (!info?.isValid)",
+      "isAsync": false,
+      "order": 4
+    },
+    {
+      "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/arrowLabel.ts:getArrowLabelPosition::2",
+      "source": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil",
+      "target": "packages/tldraw/src/lib/shapes/arrow/arrowLabel.ts:getArrowLabelPosition",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "showArrowLabel &&",
+          "branch": "&&",
+          "branchGroup": "branch:1087"
+        }
+      ],
+      "label": "showArrowLabel &&",
+      "isAsync": false,
+      "order": 5
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/utils/text/richText.ts:renderPlaintextFromRichText",
@@ -42156,7 +42218,7 @@
       "target": "packages/tldraw/src/lib/utils/text/richText.ts:renderPlaintextFromRichText",
       "type": "direct-call",
       "isAsync": false,
-      "order": 4
+      "order": 6
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/shared.ts:getArrowTerminalsInArrowSpace",
@@ -42164,7 +42226,7 @@
       "target": "packages/tldraw/src/lib/shapes/arrow/shared.ts:getArrowTerminalsInArrowSpace",
       "type": "direct-call",
       "isAsync": false,
-      "order": 5
+      "order": 7
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/elbow/elbowArrowSnapLines.tsx:perpDistanceToLineAngle",
@@ -42190,7 +42252,7 @@
       ],
       "label": "else (info?.type !== 'elbow') → else (!axisName) → else (!midRange)",
       "isAsync": false,
-      "order": 6
+      "order": 8
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/elbow/elbowArrowSnapLines.tsx:getElbowArrowSnapLines",
@@ -42216,7 +42278,7 @@
       ],
       "label": "else (info?.type !== 'elbow') → else (!axisName) → else (!midRange)",
       "isAsync": false,
-      "order": 10
+      "order": 12
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:anglesAreApproximatelyParallel",
@@ -42242,7 +42304,7 @@
       ],
       "label": "else (info?.type !== 'elbow') → else (!axisName) → else (!midRange)",
       "isAsync": false,
-      "order": 11
+      "order": 13
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/arrowTargetState.ts:updateArrowTargetState",
@@ -42250,7 +42312,7 @@
       "target": "packages/tldraw/src/lib/shapes/arrow/arrowTargetState.ts:updateArrowTargetState",
       "type": "direct-call",
       "isAsync": false,
-      "order": 12
+      "order": 14
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/shared.ts:removeArrowBinding",
@@ -42266,7 +42328,7 @@
       ],
       "label": "if (!targetInfo)",
       "isAsync": false,
-      "order": 13
+      "order": 15
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/shared.ts:removeArrowBinding::1",
@@ -42292,7 +42354,7 @@
       ],
       "label": "if (shape.props.kind === 'elbow' && this.editor.getOnlySelectedS) → else (!info) → if (bindings.start)",
       "isAsync": false,
-      "order": 14
+      "order": 16
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/shared.ts:removeArrowBinding::2",
@@ -42318,7 +42380,7 @@
       ],
       "label": "if (shape.props.kind === 'elbow' && this.editor.getOnlySelectedS) → else (!info) → if (bindings.end)",
       "isAsync": false,
-      "order": 15
+      "order": 17
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/shared.ts:removeArrowBinding::3",
@@ -42344,7 +42406,7 @@
       ],
       "label": "else (!atTranslationStart) → else (!terminalBinding) → else (newTarget?.id === terminalBinding.binding.toId)",
       "isAsync": false,
-      "order": 16
+      "order": 18
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/shared.ts:createOrUpdateArrowBinding",
@@ -42360,7 +42422,7 @@
       ],
       "label": "else (!targetInfo)",
       "isAsync": false,
-      "order": 17
+      "order": 19
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/shared.ts:createOrUpdateArrowBinding::1",
@@ -42386,7 +42448,7 @@
       ],
       "label": "else (!targetInfo) → if (newBindings.start && newBindings.end && newBindings.start.to) → if (Vec.Equals(newBindings.start.props.normalizedAnchor, newBind)",
       "isAsync": false,
-      "order": 18
+      "order": 20
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/shared.ts:createOrUpdateArrowBinding::2",
@@ -42412,7 +42474,7 @@
       ],
       "label": "else (!atTranslationStart) → else (!terminalBinding) → if (newTarget?.id === terminalBinding.binding.toId)",
       "isAsync": false,
-      "order": 19
+      "order": 21
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/shared.ts:createOrUpdateArrowBinding::3",
@@ -42428,7 +42490,7 @@
       ],
       "label": "if (bindings.start && startNormalizedAnchor)",
       "isAsync": false,
-      "order": 20
+      "order": 22
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/shared.ts:createOrUpdateArrowBinding::4",
@@ -42444,7 +42506,7 @@
       ],
       "label": "if (bindings.end && endNormalizedAnchor)",
       "isAsync": false,
-      "order": 21
+      "order": 23
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal",
@@ -42470,7 +42532,7 @@
       ],
       "label": "else (shape.props.kind === 'elbow' && this.editor.getOnlySelectedS) → else ((bindings.start &&\n\t\t\t\t(selectedShapeIds.includes(bindings.s) → if (bindings.start)",
       "isAsync": false,
-      "order": 22
+      "order": 24
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal::1",
@@ -42496,7 +42558,7 @@
       ],
       "label": "else (shape.props.kind === 'elbow' && this.editor.getOnlySelectedS) → else ((bindings.start &&\n\t\t\t\t(selectedShapeIds.includes(bindings.s) → if (bindings.end)",
       "isAsync": false,
-      "order": 23
+      "order": 25
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/shared/useDefaultColorTheme.ts:useDefaultColorTheme",
@@ -42504,7 +42566,7 @@
       "target": "packages/tldraw/src/lib/shapes/shared/useDefaultColorTheme.ts:useDefaultColorTheme",
       "type": "direct-call",
       "isAsync": false,
-      "order": 24
+      "order": 26
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowSvg",
@@ -42512,7 +42574,7 @@
       "target": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowSvg",
       "type": "direct-call",
       "isAsync": false,
-      "order": 25
+      "order": 27
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/elbow/ElbowArrowDebug.tsx:ElbowArrowDebug",
@@ -42533,7 +42595,7 @@
       ],
       "label": "else (!info?.isValid) → shape.props.kind === 'elbow' && debugFlags.debugElbowArrows. &&",
       "isAsync": false,
-      "order": 26
+      "order": 28
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/shared/RichTextLabel.tsx:RichTextLabel",
@@ -42554,15 +42616,44 @@
       ],
       "label": "else (!info?.isValid) → showArrowLabel &&",
       "isAsync": false,
-      "order": 27
+      "order": 29
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/arrowLabel.ts:getArrowLabelFontSize",
       "source": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil",
       "target": "packages/tldraw/src/lib/shapes/arrow/arrowLabel.ts:getArrowLabelFontSize",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!info?.isValid)",
+          "branch": "else",
+          "branchGroup": "branch:793"
+        },
+        {
+          "condition": "showArrowLabel &&",
+          "branch": "&&",
+          "branchGroup": "branch:807"
+        }
+      ],
+      "label": "else (!info?.isValid) → showArrowLabel &&",
       "isAsync": false,
-      "order": 28
+      "order": 30
+    },
+    {
+      "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/arrowLabel.ts:getArrowLabelFontSize::1",
+      "source": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil",
+      "target": "packages/tldraw/src/lib/shapes/arrow/arrowLabel.ts:getArrowLabelFontSize",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "showArrowLabel &&",
+          "branch": "&&",
+          "branchGroup": "branch:1087"
+        }
+      ],
+      "label": "showArrowLabel &&",
+      "isAsync": false,
+      "order": 31
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/arrowheads.ts:getArrowheadPathForType",
@@ -42588,7 +42679,7 @@
       ],
       "label": "else (!info) → else (Vec.Equals(start, end)) → info.start.arrowhead &&",
       "isAsync": false,
-      "order": 29
+      "order": 32
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/arrowheads.ts:getArrowheadPathForType::1",
@@ -42614,7 +42705,7 @@
       ],
       "label": "else (!info) → else (Vec.Equals(start, end)) → info.end.arrowhead &&",
       "isAsync": false,
-      "order": 30
+      "order": 33
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/arrowheads.ts:getArrowheadPathForType::2",
@@ -42645,7 +42736,7 @@
       ],
       "label": "else (!info) → else (Vec.Equals(start, end)) → else (isEditing && labelGeometry) → info.start.arrowhead &&",
       "isAsync": false,
-      "order": 31
+      "order": 34
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/arrowheads.ts:getArrowheadPathForType::3",
@@ -42676,7 +42767,7 @@
       ],
       "label": "else (!info) → else (Vec.Equals(start, end)) → else (isEditing && labelGeometry) → info.end.arrowhead &&",
       "isAsync": false,
-      "order": 32
+      "order": 35
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowClipPath",
@@ -42707,7 +42798,7 @@
       ],
       "label": "else (!info) → else (Vec.Equals(start, end)) → else (isEditing && labelGeometry) → includeClipPath &&",
       "isAsync": false,
-      "order": 33
+      "order": 36
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/ArrowPath.tsx:getArrowBodyPath",
@@ -42733,7 +42824,7 @@
       ],
       "label": "else (!info) → else (Vec.Equals(start, end)) → else (isEditing && labelGeometry)",
       "isAsync": false,
-      "order": 34
+      "order": 37
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/ArrowPath.tsx:getArrowBodyPathBuilder",
@@ -42759,7 +42850,7 @@
       ],
       "label": "else (!info) → else (Vec.Equals(start, end)) → else (isEditing && labelGeometry)",
       "isAsync": false,
-      "order": 35
+      "order": 38
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/arrow/arrowLabel.ts:getArrowLabelDefaultPosition",
@@ -42775,7 +42866,7 @@
       ],
       "label": "if (isEmptyRichText(shape.props.richText))",
       "isAsync": false,
-      "order": 36
+      "order": 39
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/shared/defaultStyleDefs.tsx:getFillDefForExport",
@@ -42783,15 +42874,23 @@
       "target": "packages/tldraw/src/lib/shapes/shared/defaultStyleDefs.tsx:getFillDefForExport",
       "type": "direct-call",
       "isAsync": true,
-      "order": 37
+      "order": 40
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/shared/RichTextLabel.tsx:RichTextSVG",
       "source": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil",
       "target": "packages/tldraw/src/lib/shapes/shared/RichTextLabel.tsx:RichTextSVG",
-      "type": "direct-call",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "showArrowLabel &&",
+          "branch": "&&",
+          "branchGroup": "branch:1087"
+        }
+      ],
+      "label": "showArrowLabel &&",
       "isAsync": false,
-      "order": 38
+      "order": 41
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:ArrowShapeUtil->packages/tldraw/src/lib/shapes/shared/defaultStyleDefs.tsx:getFillDefForCanvas",
@@ -42799,7 +42898,7 @@
       "target": "packages/tldraw/src/lib/shapes/shared/defaultStyleDefs.tsx:getFillDefForCanvas",
       "type": "direct-call",
       "isAsync": false,
-      "order": 39
+      "order": 42
     },
     {
       "id": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx:getArrowLength->packages/tldraw/src/lib/shapes/arrow/getArrowInfo.ts:getArrowInfo",
@@ -42842,7 +42941,7 @@
         {
           "condition": "else (!geometry)",
           "branch": "else",
-          "branchGroup": "branch:1162"
+          "branchGroup": "branch:1166"
         }
       ],
       "label": "else (!geometry)",
@@ -42858,7 +42957,7 @@
         {
           "condition": "else (!geometry)",
           "branch": "else",
-          "branchGroup": "branch:1162"
+          "branchGroup": "branch:1166"
         }
       ],
       "label": "else (!geometry)",
@@ -42874,17 +42973,17 @@
         {
           "condition": "else (!geometry)",
           "branch": "else",
-          "branchGroup": "branch:1162"
+          "branchGroup": "branch:1166"
         },
         {
           "condition": "else (!info?.isValid)",
           "branch": "else",
-          "branchGroup": "branch:1166"
+          "branchGroup": "branch:1170"
         },
         {
           "condition": "info.start.arrowhead &&",
           "branch": "&&",
-          "branchGroup": "branch:1172"
+          "branchGroup": "branch:1176"
         }
       ],
       "label": "else (!geometry) → else (!info?.isValid) → info.start.arrowhead &&",
@@ -42900,17 +42999,17 @@
         {
           "condition": "else (!geometry)",
           "branch": "else",
-          "branchGroup": "branch:1162"
+          "branchGroup": "branch:1166"
         },
         {
           "condition": "else (!info?.isValid)",
           "branch": "else",
-          "branchGroup": "branch:1166"
+          "branchGroup": "branch:1170"
         },
         {
           "condition": "info.end.arrowhead &&",
           "branch": "&&",
-          "branchGroup": "branch:1173"
+          "branchGroup": "branch:1177"
         }
       ],
       "label": "else (!geometry) → else (!info?.isValid) → info.end.arrowhead &&",
@@ -42926,17 +43025,17 @@
         {
           "condition": "else (!geometry)",
           "branch": "else",
-          "branchGroup": "branch:1162"
+          "branchGroup": "branch:1166"
         },
         {
           "condition": "else (!info?.isValid)",
           "branch": "else",
-          "branchGroup": "branch:1166"
+          "branchGroup": "branch:1170"
         },
         {
           "condition": "if (shouldDisplayHandles && (bindings.start || bindings.end))",
           "branch": "then",
-          "branchGroup": "branch:1175"
+          "branchGroup": "branch:1179"
         }
       ],
       "label": "else (!geometry) → else (!info?.isValid) → if (shouldDisplayHandles && (bindings.start || bindings.end))",
@@ -42952,12 +43051,12 @@
         {
           "condition": "else (!geometry)",
           "branch": "else",
-          "branchGroup": "branch:1162"
+          "branchGroup": "branch:1166"
         },
         {
           "condition": "else (!info?.isValid)",
           "branch": "else",
-          "branchGroup": "branch:1166"
+          "branchGroup": "branch:1170"
         }
       ],
       "label": "else (!geometry) → else (!info?.isValid)",
@@ -42973,12 +43072,12 @@
         {
           "condition": "else (!geometry)",
           "branch": "else",
-          "branchGroup": "branch:1162"
+          "branchGroup": "branch:1166"
         },
         {
           "condition": "else (!info?.isValid)",
           "branch": "else",
-          "branchGroup": "branch:1166"
+          "branchGroup": "branch:1170"
         }
       ],
       "label": "else (!geometry) → else (!info?.isValid)",
@@ -42994,12 +43093,12 @@
         {
           "condition": "else (!geometry)",
           "branch": "else",
-          "branchGroup": "branch:1162"
+          "branchGroup": "branch:1166"
         },
         {
           "condition": "else (!info?.isValid)",
           "branch": "else",
-          "branchGroup": "branch:1166"
+          "branchGroup": "branch:1170"
         }
       ],
       "label": "else (!geometry) → else (!info?.isValid)",
@@ -43015,17 +43114,17 @@
         {
           "condition": "else (!geometry)",
           "branch": "else",
-          "branchGroup": "branch:1162"
+          "branchGroup": "branch:1166"
         },
         {
           "condition": "else (!info?.isValid)",
           "branch": "else",
-          "branchGroup": "branch:1166"
+          "branchGroup": "branch:1170"
         },
         {
           "condition": "as && clipStartArrowhead && shape.props.fill !== 'none' &&",
           "branch": "&&",
-          "branchGroup": "branch:1254"
+          "branchGroup": "branch:1258"
         }
       ],
       "label": "else (!geometry) → else (!info?.isValid) → as && clipStartArrowhead && shape.props.fill !== 'none' &&",
@@ -43041,17 +43140,17 @@
         {
           "condition": "else (!geometry)",
           "branch": "else",
-          "branchGroup": "branch:1162"
+          "branchGroup": "branch:1166"
         },
         {
           "condition": "else (!info?.isValid)",
           "branch": "else",
-          "branchGroup": "branch:1166"
+          "branchGroup": "branch:1170"
         },
         {
           "condition": "ae && clipEndArrowhead && shape.props.fill !== 'none' &&",
           "branch": "&&",
-          "branchGroup": "branch:1263"
+          "branchGroup": "branch:1267"
         }
       ],
       "label": "else (!geometry) → else (!info?.isValid) → ae && clipEndArrowhead && shape.props.fill !== 'none' &&",
@@ -45365,6 +45464,27 @@
       "order": 4
     },
     {
+      "id": "packages/tldraw/src/lib/shapes/arrow/shared.ts:getArrowTerminalInArrowSpace->packages/tldraw/src/lib/shapes/arrow/shared.ts:clampNormalizedAnchor",
+      "source": "packages/tldraw/src/lib/shapes/arrow/shared.ts:getArrowTerminalInArrowSpace",
+      "target": "packages/tldraw/src/lib/shapes/arrow/shared.ts:clampNormalizedAnchor",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!boundShape)",
+          "branch": "else",
+          "branchGroup": "branch:78"
+        },
+        {
+          "condition": "if (shouldUsePreciseAnchor)",
+          "branch": "then",
+          "branchGroup": "branch:90"
+        }
+      ],
+      "label": "else (!boundShape) → if (shouldUsePreciseAnchor)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "packages/tldraw/src/lib/shapes/arrow/shared.ts:getArrowTerminalsInArrowSpace->packages/tldraw/src/lib/shapes/arrow/shared.ts:getBoundShapeRelationships",
       "source": "packages/tldraw/src/lib/shapes/arrow/shared.ts:getArrowTerminalsInArrowSpace",
       "target": "packages/tldraw/src/lib/shapes/arrow/shared.ts:getBoundShapeRelationships",
@@ -45381,7 +45501,7 @@
         {
           "condition": "if (bindings.start)",
           "branch": "then",
-          "branchGroup": "branch:138"
+          "branchGroup": "branch:143"
         }
       ],
       "label": "if (bindings.start)",
@@ -45397,7 +45517,7 @@
         {
           "condition": "if (bindings.end)",
           "branch": "then",
-          "branchGroup": "branch:148"
+          "branchGroup": "branch:153"
         }
       ],
       "label": "if (bindings.end)",
