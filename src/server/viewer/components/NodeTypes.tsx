@@ -27,7 +27,7 @@ function FilePath({ path, measuring }: { path: string; measuring?: boolean }) {
   const tooZoomedOut = zoom < 0.5;
 
   return (
-    <Tooltip delayDuration={250} open={tooZoomedOut ? false : undefined}>
+    <Tooltip delayDuration={1000} open={tooZoomedOut ? false : undefined}>
       <TooltipTrigger asChild>
         <div
           className="text-[10px] text-muted-foreground mt-0.5 truncate"
