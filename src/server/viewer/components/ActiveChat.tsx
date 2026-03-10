@@ -59,7 +59,7 @@ function ChatMarkdown({ content }: { content: string }) {
   const html = marked.parse(content, { async: false }) as string;
   return (
     <div
-      className="prose prose-sm dark:prose-invert max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+      className="prose prose-sm dark:prose-invert max-w-none break-words [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_pre]:overflow-x-auto [&_h1]:mt-[1em] [&_h2]:mt-[1em] [&_h3]:mt-[1em] [&_h4]:mt-[1em] [&_h1]:text-[1rem] [&_h2]:text-[0.935rem] [&_h3]:text-sm [&_h4]:text-sm [&_h5]:text-sm [&_h6]:text-sm"
       // biome-ignore lint/security/noDangerouslySetInnerHtml: rendered from markdown via marked
       dangerouslySetInnerHTML={{ __html: html }}
     />
@@ -373,7 +373,7 @@ export function ActiveChat({
   return (
     <>
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 pb-4">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden min-w-0 px-4 pb-4">
         <div className="space-y-4">
           {messages.length === 0 && !isLoading && (
             <Card className="p-3 text-center text-sm text-muted-foreground">
