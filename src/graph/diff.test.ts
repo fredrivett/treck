@@ -366,6 +366,50 @@ describe('diffGraphs', () => {
     expect(diff.impact.totalUpstream).toBe(1);
   });
 
+  it('populates removedNodes with full node objects from the base graph', () => {
+    const removedNode = makeNode({ id: 'b.ts:B', name: 'B', hash: 'gone', filePath: 'src/b.ts' });
+    const base = makeGraph([makeNode({ id: 'a.ts:A', name: 'A' }), removedNode]);
+    const head = makeGraph([makeNode({ id: 'a.ts:A', name: 'A' })]);
+
+    const diff = diffGraphs(base, head, { baseRef: 'main' });
+
+    expect(diff.removedNodes).toHaveLength(1);
+    expect(diff.removedNodes[0].id).toBe('b.ts:B');
+    expect(diff.removedNodes[0].filePath).toBe('src/b.ts');
+  });
+
+  it('populates removedEdges with edges connecting to/from removed nodes', () => {
+    const base = makeGraph(
+      [
+        makeNode({ id: 'a.ts:A', name: 'A' }),
+        makeNode({ id: 'b.ts:B', name: 'B' }),
+        makeNode({ id: 'c.ts:C', name: 'C' }),
+      ],
+      [
+        { id: 'e1', source: 'a.ts:A', target: 'b.ts:B', type: 'direct-call', isAsync: false },
+        { id: 'e2', source: 'b.ts:B', target: 'c.ts:C', type: 'direct-call', isAsync: false },
+      ],
+    );
+    const head = makeGraph([
+      makeNode({ id: 'a.ts:A', name: 'A' }),
+      makeNode({ id: 'c.ts:C', name: 'C' }),
+    ]);
+
+    const diff = diffGraphs(base, head, { baseRef: 'main' });
+
+    expect(diff.changes.removed).toEqual(['b.ts:B']);
+    expect(diff.removedEdges).toHaveLength(2);
+    expect(diff.removedEdges.map((e) => e.id).sort()).toEqual(['e1', 'e2']);
+  });
+
+  it('returns empty removedNodes and removedEdges when nothing is removed', () => {
+    const graph = makeGraph([makeNode({ id: 'a.ts:A', name: 'A' })]);
+    const diff = diffGraphs(graph, graph, { baseRef: 'main' });
+
+    expect(diff.removedNodes).toEqual([]);
+    expect(diff.removedEdges).toEqual([]);
+  });
+
   it('handles an added node with connections in head graph', () => {
     const base = makeGraph([makeNode({ id: 'a.ts:A', name: 'A', hash: 'same' })]);
     const head = makeGraph(

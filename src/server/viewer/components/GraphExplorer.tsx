@@ -13,11 +13,13 @@ import type { PanelImperativeHandle } from 'react-resizable-panels';
 import { Route, Routes, useLocation, useSearchParams } from 'react-router';
 import { buildIndexResponse, buildSymbolIndexFromGraph } from '../../../graph/symbol-index.js';
 import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
+import type { GraphDiff } from '../../../graph/diff.js';
 import { ChatPanel } from './ChatPanel';
 import { DocsTree } from './DocsTree';
 import { DocsViewer } from './DocsViewer';
-import { FlowControls } from './FlowControls';
+import { FlowControls, type DiffSummary } from './FlowControls';
 import { FlowGraph, getNodeCategory, type NodeCategory } from './FlowGraph';
+import { useLiveDiff } from './useLiveDiff';
 import { type GraphExplorerContextValue, GraphExplorerProvider } from './GraphExplorerContext';
 import { LoadingSpinner } from './LoadingSpinner';
 import { Sidebar } from './Sidebar';
@@ -137,6 +139,41 @@ export function GraphExplorer({
 
   const showConditionals = searchParams.get('conditionals') === 'true';
 
+  // --- Live diff state ---
+  const diffEnabled = searchParams.get('diff') === 'true';
+  const { diff: diffData, baseRef: diffBaseRef } = useLiveDiff(diffEnabled);
+  const [diffDepth, setDiffDepth] = useState(0);
+  const diffMaxDepth = diffData?.maxDepth ?? 0;
+
+  // Reset depth to 0 when diff is toggled on
+  useEffect(() => {
+    if (diffEnabled) setDiffDepth(0);
+  }, [diffEnabled]);
+
+  const diffSummary = useMemo<DiffSummary | null>(() => {
+    if (!diffData) return null;
+    return {
+      modified: diffData.changes.modified.length,
+      added: diffData.changes.added.length,
+      removed: diffData.changes.removed.length,
+    };
+  }, [diffData]);
+
+  /** Build a full FlowGraphData from the diff subgraph filtered by depth. */
+  const diffGraph = useMemo<FlowGraphData | null>(() => {
+    if (!diffData || !graph) return null;
+    const depths = diffData.nodeDepths;
+    // Filter nodes to those within the selected depth
+    const nodes = diffData.nodes.filter((n) => (depths[n.id] ?? 0) <= diffDepth);
+    // Include removed nodes (ghost nodes) — they have depth 0 (they are changed nodes)
+    const allNodes = [...nodes, ...diffData.removedNodes];
+    const nodeIds = new Set(allNodes.map((n) => n.id));
+    const edges = [...diffData.edges, ...diffData.removedEdges].filter(
+      (e) => nodeIds.has(e.source) && nodeIds.has(e.target),
+    );
+    return { ...graph, nodes: allNodes, edges };
+  }, [diffData, diffDepth, graph]);
+
   // --- Computed graph data ---
 
   const availableTypes = useMemo(() => {
@@ -156,7 +193,8 @@ export function GraphExplorer({
 
   const filteredGraph = useMemo(() => {
     if (!graph) return { nodes: [], edges: [] };
-    let filtered: Pick<FlowGraphData, 'nodes' | 'edges'> = graph;
+    // When diff is active, start from the diff subgraph instead of the full graph
+    let filtered: Pick<FlowGraphData, 'nodes' | 'edges'> = diffGraph ?? graph;
 
     if (enabledTypes) {
       const typeMatchIds = new Set(
@@ -191,7 +229,7 @@ export function GraphExplorer({
     }
 
     return filtered;
-  }, [graph, searchQuery, enabledTypes]);
+  }, [graph, searchQuery, enabledTypes, diffGraph]);
 
   const onToggleType = useCallback(
     (category: NodeCategory) => {
@@ -266,7 +304,8 @@ export function GraphExplorer({
       )}
       {graph && (
         <FlowGraph
-          graph={graph}
+          graph={diffEnabled && diffGraph ? diffGraph : graph}
+          diffData={diffData}
           onLayoutReady={onLayoutReady}
           searchQuery={searchQuery}
           enabledTypes={enabledTypes}
@@ -331,6 +370,13 @@ export function GraphExplorer({
             showConditionals={showConditionals}
             onToggleConditionals={() => setParam('conditionals', showConditionals ? null : 'true')}
             hasConditionalEdges={hasConditionalEdges}
+            diffEnabled={diffEnabled}
+            onToggleDiff={() => setParam('diff', diffEnabled ? null : 'true')}
+            baseRef={diffBaseRef}
+            diffSummary={diffSummary}
+            diffDepth={diffDepth}
+            diffMaxDepth={diffMaxDepth}
+            onDiffDepthChange={setDiffDepth}
           />
           <div className="border-t border-border" />
           <DocsTree visibleNames={visibleNames} />

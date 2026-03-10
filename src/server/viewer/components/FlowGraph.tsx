@@ -17,6 +17,7 @@ import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import '@xyflow/react/dist/style.css';
 
+import type { GraphDiff } from '../../../graph/diff.js';
 import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
 import { GRID_SIZE, snapCeil } from '../grid';
 import { edgeStyleByType, expandConditionals, toReactFlowNode } from './condition-expansion';
@@ -103,6 +104,8 @@ async function runElkLayout(
 
 interface FlowGraphProps {
   graph: FlowGraphData;
+  /** Diff data for annotating nodes with change status. Null when diff is inactive. */
+  diffData?: GraphDiff | null;
   onLayoutReady?: () => void;
   searchQuery: string;
   enabledTypes: Set<NodeCategory> | null;
@@ -139,6 +142,7 @@ function useDarkMode(): boolean {
 
 function FlowGraphInner({
   graph,
+  diffData,
   onLayoutReady,
   searchQuery,
   enabledTypes,
@@ -353,19 +357,45 @@ function FlowGraphInner({
   // First render: measure ALL nodes (behind loading screen). After: render filtered view.
   const renderGraph = initialMeasureDone ? focusFilteredGraph : graph;
 
+  // Build diff status sets when diff is active
+  const diffSets = useMemo(() => {
+    if (!diffData) return null;
+    return {
+      modified: new Set(diffData.changes.modified),
+      added: new Set(diffData.changes.added),
+      removed: new Set(diffData.changes.removed),
+    };
+  }, [diffData]);
+
   // Derive ReactFlow nodes and edges from the render graph + conditionals toggle.
   // This memo ensures toggling conditionals produces a new reference, following
   // the same pattern as the focus/filter pipeline above.
   const { rfNodes, rfEdges } = useMemo(() => {
+    let nodes: Node[];
+    let edges: Edge[];
     if (showConditionals) {
       const expanded = expandConditionals(renderGraph.nodes, renderGraph.edges);
-      return { rfNodes: expanded.rfNodes, rfEdges: expanded.rfEdges };
+      nodes = expanded.rfNodes;
+      edges = expanded.rfEdges;
+    } else {
+      nodes = renderGraph.nodes.map((n) => toReactFlowNode(n));
+      edges = toReactFlowEdges(renderGraph.edges, false);
     }
-    return {
-      rfNodes: renderGraph.nodes.map((n) => toReactFlowNode(n)),
-      rfEdges: toReactFlowEdges(renderGraph.edges, false),
-    };
-  }, [renderGraph, showConditionals]);
+
+    // Annotate nodes with diff status when diff is active
+    if (diffSets) {
+      nodes = nodes.map((node) => {
+        let diffStatus: string | undefined;
+        if (diffSets.modified.has(node.id)) diffStatus = 'modified';
+        else if (diffSets.added.has(node.id)) diffStatus = 'added';
+        else if (diffSets.removed.has(node.id)) diffStatus = 'removed';
+        else diffStatus = 'context';
+        return { ...node, data: { ...node.data, diffStatus } };
+      });
+    }
+
+    return { rfNodes: nodes, rfEdges: edges };
+  }, [renderGraph, showConditionals, diffSets]);
 
   // When the derived nodes/edges change: use cached sizes for instant layout,
   // or fall back to two-pass measurement.
@@ -569,6 +599,7 @@ function FlowGraphInner({
 /** ReactFlow-based graph visualization with ELK layout. */
 export function FlowGraph({
   graph,
+  diffData,
   onLayoutReady,
   searchQuery,
   enabledTypes,
@@ -580,6 +611,7 @@ export function FlowGraph({
     <ReactFlowProvider>
       <FlowGraphInner
         graph={graph}
+        diffData={diffData}
         onLayoutReady={onLayoutReady}
         searchQuery={searchQuery}
         enabledTypes={enabledTypes}

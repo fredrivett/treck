@@ -56,7 +56,24 @@ export function detectBaseRef(): string {
  */
 export function loadGraphAtRef(baseRef: string, graphPath: string): FlowGraph {
   try {
-    const raw = execFileSync('git', ['show', `${baseRef}:${graphPath}`], {
+    // Prefer the remote tracking branch so diffs reflect upstream, not a stale local branch.
+    // Only prefix bare branch names — skip if it already contains '/' or looks like a commit hash.
+    let gitRef = baseRef;
+    if (!baseRef.includes('/') && !/^[0-9a-f]{6,}$/i.test(baseRef)) {
+      // Fetch latest from remote so the diff is up to date (silently ignore failures for offline use)
+      try {
+        execFileSync('git', ['fetch', 'origin', baseRef], { stdio: 'ignore' });
+      } catch {
+        // Offline or remote unavailable — use whatever is cached locally
+      }
+      try {
+        execFileSync('git', ['rev-parse', '--verify', `origin/${baseRef}`], { stdio: 'ignore' });
+        gitRef = `origin/${baseRef}`;
+      } catch {
+        // Remote ref doesn't exist, use the ref as-is (local branch or tag)
+      }
+    }
+    const raw = execFileSync('git', ['show', `${gitRef}:${graphPath}`], {
       encoding: 'utf8',
     });
     return JSON.parse(raw);

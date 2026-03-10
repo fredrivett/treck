@@ -107,11 +107,38 @@ export function connectedSubgraph(
   startNodeIds: string[],
   depth = Number.POSITIVE_INFINITY,
 ): { nodes: GraphNode[]; edges: GraphEdge[] } {
+  const { nodes, edges } = connectedSubgraphWithDepths(graph, startNodeIds, depth);
+  return { nodes, edges };
+}
+
+/**
+ * Find all nodes connected to the start nodes via bidirectional BFS, tracking depth.
+ *
+ * Like `connectedSubgraph`, but also returns a map of node ID → minimum
+ * distance (in hops) from the nearest start node, and the maximum depth reached.
+ * Start nodes have depth 0.
+ *
+ * @param graph - The full flow graph
+ * @param startNodeIds - One or more node IDs to start traversal from
+ * @param depth - Maximum traversal depth (default: Infinity for full connected flow)
+ * @returns Subgraph with nodes, edges, per-node depths, and max depth
+ */
+export function connectedSubgraphWithDepths(
+  graph: FlowGraph,
+  startNodeIds: string[],
+  depth = Number.POSITIVE_INFINITY,
+): { nodes: GraphNode[]; edges: GraphEdge[]; nodeDepths: Record<string, number>; maxDepth: number } {
   const forward = buildAdjacencyList(graph);
   const reverse = buildReverseAdjacencyList(graph);
 
+  const depthMap = new Map<string, number>();
+  for (const id of startNodeIds) {
+    depthMap.set(id, 0);
+  }
+
   const visited = new Set<string>(startNodeIds);
   let frontier = new Set<string>(startNodeIds);
+  let maxReached = 0;
 
   for (let d = 0; d < depth; d++) {
     const nextFrontier = new Set<string>();
@@ -119,17 +146,20 @@ export function connectedSubgraph(
       for (const neighbor of forward.get(id) || []) {
         if (!visited.has(neighbor)) {
           visited.add(neighbor);
+          depthMap.set(neighbor, d + 1);
           nextFrontier.add(neighbor);
         }
       }
       for (const neighbor of reverse.get(id) || []) {
         if (!visited.has(neighbor)) {
           visited.add(neighbor);
+          depthMap.set(neighbor, d + 1);
           nextFrontier.add(neighbor);
         }
       }
     }
     if (nextFrontier.size === 0) break;
+    maxReached = d + 1;
     frontier = nextFrontier;
   }
 
@@ -140,7 +170,12 @@ export function connectedSubgraph(
 
   const edges = graph.edges.filter((e) => visited.has(e.source) && visited.has(e.target));
 
-  return { nodes, edges };
+  const nodeDepths: Record<string, number> = {};
+  for (const [id, d] of depthMap) {
+    nodeDepths[id] = d;
+  }
+
+  return { nodes, edges, nodeDepths, maxDepth: maxReached };
 }
 
 /**

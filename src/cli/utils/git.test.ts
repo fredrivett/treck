@@ -67,21 +67,47 @@ describe('detectBaseRef', () => {
 });
 
 describe('loadGraphAtRef', () => {
-  it('returns parsed FlowGraph from git show output', () => {
+  it('uses origin/ prefix when remote ref exists', () => {
     const graph = {
       version: '1.0',
       generatedAt: '2026-03-01T00:00:00Z',
       nodes: [],
       edges: [],
     };
-    mockExecFileSync.mockReturnValue(JSON.stringify(graph));
+    mockExecFileSync.mockImplementation((_cmd: string, args: string[]) => {
+      if (args[0] === 'fetch') return ''; // git fetch origin main
+      if (args[0] === 'rev-parse') return ''; // git rev-parse --verify origin/main
+      if (args[0] === 'show') return JSON.stringify(graph); // git show origin/main:path
+      return '';
+    });
 
     const result = loadGraphAtRef('main', '_treck/graph.json');
 
     expect(result).toEqual(graph);
-    expect(mockExecFileSync).toHaveBeenCalledWith('git', ['show', 'main:_treck/graph.json'], {
-      encoding: 'utf8',
+    expect(mockExecFileSync).toHaveBeenCalledWith(
+      'git',
+      ['show', 'origin/main:_treck/graph.json'],
+      { encoding: 'utf8' },
+    );
+  });
+
+  it('falls back to bare ref when remote is unavailable', () => {
+    const graph = { version: '1.0', generatedAt: '', nodes: [], edges: [] };
+    mockExecFileSync.mockImplementation((_cmd: string, args: string[]) => {
+      if (args[0] === 'fetch') throw new Error('offline');
+      if (args[0] === 'rev-parse') throw new Error('not found');
+      if (args[0] === 'show') return JSON.stringify(graph);
+      return '';
     });
+
+    const result = loadGraphAtRef('main', '_treck/graph.json');
+
+    expect(result).toEqual(graph);
+    expect(mockExecFileSync).toHaveBeenCalledWith(
+      'git',
+      ['show', 'main:_treck/graph.json'],
+      { encoding: 'utf8' },
+    );
   });
 
   it('throws with clear message when graph.json not found', () => {
@@ -97,14 +123,32 @@ describe('loadGraphAtRef', () => {
     );
   });
 
-  it('passes custom graph path to git show', () => {
-    mockExecFileSync.mockReturnValue('{"version":"1.0","generatedAt":"","nodes":[],"edges":[]}');
+  it('skips origin prefix for commit hashes', () => {
+    mockExecFileSync.mockImplementation((_cmd: string, args: string[]) => {
+      if (args[0] === 'show') return '{"version":"1.0","generatedAt":"","nodes":[],"edges":[]}';
+      return '';
+    });
 
     loadGraphAtRef('abc123', 'custom/path/graph.json');
 
     expect(mockExecFileSync).toHaveBeenCalledWith(
       'git',
       ['show', 'abc123:custom/path/graph.json'],
+      { encoding: 'utf8' },
+    );
+  });
+
+  it('skips origin prefix for refs already containing a slash', () => {
+    mockExecFileSync.mockImplementation((_cmd: string, args: string[]) => {
+      if (args[0] === 'show') return '{"version":"1.0","generatedAt":"","nodes":[],"edges":[]}';
+      return '';
+    });
+
+    loadGraphAtRef('origin/main', '_treck/graph.json');
+
+    expect(mockExecFileSync).toHaveBeenCalledWith(
+      'git',
+      ['show', 'origin/main:_treck/graph.json'],
       { encoding: 'utf8' },
     );
   });

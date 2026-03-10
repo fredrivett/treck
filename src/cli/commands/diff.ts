@@ -5,6 +5,8 @@
  * then shows the impact zone with call chain context.
  */
 
+import { watch } from 'node:fs';
+import { resolve } from 'node:path';
 import type { CAC } from 'cac';
 import { StaleChecker } from '../../checker/index.js';
 import { diffGraphs, diffToMermaid, formatDiffSummary, type GraphDiff } from '../../graph/diff.js';
@@ -19,6 +21,7 @@ interface DiffOptions {
   format?: 'mermaid' | 'json' | 'ascii';
   depth?: number;
   theme?: string;
+  watch?: boolean;
 }
 
 /**
@@ -50,6 +53,78 @@ export function formatDiffMermaid(diff: GraphDiff, options?: { asciiShapes?: boo
 }
 
 /**
+ * Run a single diff pass and output the result.
+ *
+ * Extracted from the action handler so it can be called repeatedly in watch mode.
+ *
+ * @param store - Graph store for reading graph.json
+ * @param baseGraph - The base graph snapshot (from a git ref)
+ * @param baseRef - Label for the base ref
+ * @param headGraph - The current graph snapshot
+ * @param options - Output format and depth options
+ */
+async function runDiff(
+  store: GraphStore,
+  baseGraph: FlowGraph,
+  baseRef: string,
+  headGraph: FlowGraph,
+  options: DiffOptions,
+): Promise<void> {
+  const depth = options.depth ? Number(options.depth) : undefined;
+  const diff = diffGraphs(baseGraph, headGraph, { baseRef, depth });
+
+  process.stderr.write(`${formatDiffSummary(diff)}\n`);
+
+  const hasChanges =
+    diff.changes.modified.length > 0 ||
+    diff.changes.added.length > 0 ||
+    diff.changes.removed.length > 0;
+
+  if (!hasChanges) return;
+
+  const format = options.format ?? 'mermaid';
+  switch (format) {
+    case 'json': {
+      process.stdout.write(`${formatDiffJson(diff)}\n`);
+      return;
+    }
+    case 'ascii': {
+      const MAX_ASCII_NODES = 80;
+      const asciiOpts = { asciiShapes: true };
+
+      if (diff.nodes.length <= MAX_ASCII_NODES) {
+        const mermaid = formatDiffMermaid(diff, asciiOpts);
+        const ascii = await beautifyMermaid(mermaid, options.theme);
+        process.stdout.write(`${ascii}\n`);
+        return;
+      }
+
+      for (const tryDepth of [3, 2, 1, 0]) {
+        const smaller = diffGraphs(baseGraph, headGraph, { baseRef, depth: tryDepth });
+        if (smaller.nodes.length <= MAX_ASCII_NODES) {
+          process.stderr.write(
+            `\x1b[1;33m⚠ Graph too large at full depth (${diff.nodes.length} nodes). Showing depth ${tryDepth} (${smaller.nodes.length} nodes).\x1b[0m\n`,
+          );
+          const mermaid = formatDiffMermaid(smaller, asciiOpts);
+          const ascii = await beautifyMermaid(mermaid, options.theme);
+          process.stdout.write(`${ascii}\n`);
+          return;
+        }
+      }
+
+      process.stderr.write(
+        `\x1b[1;33m⚠ Graph too large for ASCII rendering even at depth 0. Use --format mermaid or --format json instead.\x1b[0m\n`,
+      );
+      return;
+    }
+    default: {
+      process.stdout.write(`${formatDiffMermaid(diff)}\n`);
+      return;
+    }
+  }
+}
+
+/**
  * Register the `treck diff` CLI command.
  *
  * Compares the current graph against a base git ref and outputs changed
@@ -63,11 +138,13 @@ export function registerDiffCommand(cli: CAC) {
     .option('--format <format>', 'Output format: mermaid (default), json, ascii')
     .option('--depth <n>', 'Limit impact zone depth (default: full connected flow)')
     .option('--theme <name>', 'ASCII theme (e.g. zinc-dark, tokyo-night, github-light)')
+    .option('--watch', 'Re-run diff when graph.json changes')
     .example('treck diff')
     .example('treck diff --base main')
     .example('treck diff --format json')
     .example('treck diff --format ascii')
     .example('treck diff --depth 2')
+    .example('treck diff --watch')
     .action(async (options: DiffOptions) => {
       const config = loadConfig();
       if (!config) {
@@ -113,61 +190,25 @@ export function registerDiffCommand(cli: CAC) {
         process.exit(1);
       }
 
-      const depth = options.depth ? Number(options.depth) : undefined;
-      const diff = diffGraphs(baseGraph, headGraph, { baseRef, depth });
+      await runDiff(store, baseGraph, baseRef, headGraph, options);
 
-      // Always write summary to stderr
-      process.stderr.write(`${formatDiffSummary(diff)}\n`);
-
-      const hasChanges =
-        diff.changes.modified.length > 0 ||
-        diff.changes.added.length > 0 ||
-        diff.changes.removed.length > 0;
-
-      if (!hasChanges) return;
-
-      const format = options.format ?? 'mermaid';
-      switch (format) {
-        case 'json': {
-          process.stdout.write(`${formatDiffJson(diff)}\n`);
-          return;
-        }
-        case 'ascii': {
-          const MAX_ASCII_NODES = 80;
-          const asciiOpts = { asciiShapes: true };
-
-          // If graph fits, render directly
-          if (diff.nodes.length <= MAX_ASCII_NODES) {
-            const mermaid = formatDiffMermaid(diff, asciiOpts);
-            const ascii = await beautifyMermaid(mermaid, options.theme);
-            process.stdout.write(`${ascii}\n`);
-            return;
-          }
-
-          // Try progressively smaller depths to fit within the limit
-          for (const tryDepth of [3, 2, 1, 0]) {
-            const smaller = diffGraphs(baseGraph, headGraph, { baseRef, depth: tryDepth });
-            if (smaller.nodes.length <= MAX_ASCII_NODES) {
-              process.stderr.write(
-                `\x1b[1;33m⚠ Graph too large at full depth (${diff.nodes.length} nodes). Showing depth ${tryDepth} (${smaller.nodes.length} nodes).\x1b[0m\n`,
-              );
-              const mermaid = formatDiffMermaid(smaller, asciiOpts);
-              const ascii = await beautifyMermaid(mermaid, options.theme);
-              process.stdout.write(`${ascii}\n`);
-              return;
-            }
-          }
-
-          // Even depth 0 (changed nodes only) is too large
-          process.stderr.write(
-            `\x1b[1;33m⚠ Graph too large for ASCII rendering even at depth 0. Use --format mermaid or --format json instead.\x1b[0m\n`,
-          );
-          return;
-        }
-        default: {
-          process.stdout.write(`${formatDiffMermaid(diff)}\n`);
-          return;
-        }
+      if (options.watch) {
+        process.stderr.write('\x1b[2mWatching for changes... (Ctrl+C to stop)\x1b[0m\n');
+        const absOutputDir = resolve(process.cwd(), config.outputDir);
+        let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+        watch(absOutputDir, { recursive: true }, (_event, filename) => {
+          if (filename !== 'graph.json') return;
+          if (debounceTimer) clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(async () => {
+            const updatedGraph = store.read();
+            if (!updatedGraph) return;
+            process.stdout.write('\x1Bc'); // Clear terminal
+            await runDiff(store, baseGraph, baseRef, updatedGraph, options);
+            process.stderr.write('\x1b[2mWatching for changes... (Ctrl+C to stop)\x1b[0m\n');
+          }, 500);
+        });
+        // Keep process alive
+        await new Promise(() => {});
       }
     });
 }

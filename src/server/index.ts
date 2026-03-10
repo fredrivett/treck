@@ -6,11 +6,13 @@
  * changes and rebuilds the index automatically.
  */
 
+import { execFile } from 'node:child_process';
 import { existsSync, readFileSync, watch } from 'node:fs';
 import { createServer } from 'node:http';
 import { basename, dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getCurrentBranch } from '../cli/utils/git.js';
+import { detectBaseRef, getCurrentBranch, loadGraphAtRef } from '../cli/utils/git.js';
+import { diffGraphs, type GraphDiff } from '../graph/diff.js';
 import { GraphStore } from '../graph/graph-store.js';
 import { buildSearchIndex, type SearchIndex } from '../graph/search.js';
 import type { FlowGraph } from '../graph/types.js';
@@ -70,6 +72,48 @@ export async function startServer(outputDir: string, port: number) {
     : { entries: new Map(), byName: new Map() };
   let searchIndex: SearchIndex | undefined = graph ? buildSearchIndex(graph) : undefined;
 
+  // Diff state — lazily initialized on first /api/diff request
+  let baseGraph: FlowGraph | null = null;
+  let baseRef: string | null = null;
+  let currentDiff: GraphDiff | null = null;
+  const sseClients = new Set<import('node:http').ServerResponse>();
+
+  /** How often (ms) to re-fetch the base ref from the remote in the background. */
+  const BASE_FETCH_INTERVAL_MS = 60 * 1000;
+  let baseFetchTimer: ReturnType<typeof setInterval> | null = null;
+
+  /** Start a background interval that fetches the base ref and recomputes the diff if it changed. */
+  function startBaseFetchInterval() {
+    if (baseFetchTimer) return;
+    baseFetchTimer = setInterval(() => {
+      if (!baseRef || !graph) return;
+      // Async fetch so we don't block the event loop
+      execFile('git', ['fetch', 'origin', baseRef], () => {
+        try {
+          const graphPath = `${outputDir}/graph.json`;
+          const fresh = loadGraphAtRef(baseRef!, graphPath);
+          // Only recompute if the base graph actually changed
+          if (JSON.stringify(fresh) !== JSON.stringify(baseGraph)) {
+            baseGraph = fresh;
+            recomputeDiff();
+          }
+        } catch {
+          // Failed to refresh — keep using the cached base graph
+        }
+      });
+    }, BASE_FETCH_INTERVAL_MS);
+  }
+
+  /** Recompute diff if a base graph is loaded and push to SSE clients. */
+  function recomputeDiff() {
+    if (!baseGraph || !baseRef || !graph) return;
+    currentDiff = diffGraphs(baseGraph, graph, { baseRef });
+    const payload = `data: ${JSON.stringify(currentDiff)}\n\n`;
+    for (const client of sseClients) {
+      client.write(payload);
+    }
+  }
+
   // Watch output directory for graph.json changes and rebuild index
   const absOutputDir = resolve(process.cwd(), outputDir);
   let rebuildTimer: ReturnType<typeof setTimeout> | null = null;
@@ -82,6 +126,7 @@ export async function startServer(outputDir: string, port: number) {
         if (graph) {
           index = buildSymbolIndexFromGraph(graph);
           searchIndex = buildSearchIndex(graph);
+          recomputeDiff();
         }
       }, 500);
     });
@@ -130,6 +175,59 @@ export async function startServer(outputDir: string, port: number) {
         'Access-Control-Allow-Origin': '*',
       });
       res.end(JSON.stringify({ graphId: basename(process.cwd()), branch: getCurrentBranch() }));
+      return;
+    }
+
+    // Diff API — computes graph diff against a base git ref
+    if (url.pathname === '/api/diff') {
+      if (!graph) {
+        res.writeHead(404, {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        });
+        res.end(JSON.stringify({ error: 'Graph not found. Run: treck sync' }));
+        return;
+      }
+      try {
+        const requestedBase = url.searchParams.get('base');
+        const ref = requestedBase ?? baseRef ?? detectBaseRef();
+        if (!baseGraph || ref !== baseRef) {
+          const graphPath = `${outputDir}/graph.json`;
+          baseGraph = loadGraphAtRef(ref, graphPath);
+          baseRef = ref;
+          startBaseFetchInterval();
+        }
+        currentDiff = diffGraphs(baseGraph, graph, { baseRef: ref });
+        res.writeHead(200, {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        });
+        res.end(JSON.stringify(currentDiff));
+      } catch (err) {
+        res.writeHead(400, {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        });
+        res.end(JSON.stringify({ error: (err as Error).message }));
+      }
+      return;
+    }
+
+    // SSE stream for live diff updates
+    if (url.pathname === '/api/diff/stream') {
+      res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        Connection: 'keep-alive',
+        'Access-Control-Allow-Origin': '*',
+      });
+      sseClients.add(res);
+      if (currentDiff) {
+        res.write(`data: ${JSON.stringify(currentDiff)}\n\n`);
+      }
+      req.on('close', () => {
+        sseClients.delete(res);
+      });
       return;
     }
 

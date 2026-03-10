@@ -6,6 +6,13 @@ import { Kbd } from './ui/kbd';
 /** Debounce delay (ms) for search input updates. */
 const SEARCH_DEBOUNCE_MS = 150;
 
+/** Summary counts for the diff toggle display. */
+export interface DiffSummary {
+  modified: number;
+  added: number;
+  removed: number;
+}
+
 interface FlowControlsProps {
   loading: boolean;
   searchQuery: string;
@@ -20,6 +27,13 @@ interface FlowControlsProps {
   showConditionals: boolean;
   onToggleConditionals: () => void;
   hasConditionalEdges: boolean;
+  diffEnabled: boolean;
+  onToggleDiff: () => void;
+  baseRef: string | null;
+  diffSummary: DiffSummary | null;
+  diffDepth: number;
+  diffMaxDepth: number;
+  onDiffDepthChange: (depth: number) => void;
 }
 
 /** Graph filtering controls: search, node stats, type filters, conditionals toggle. */
@@ -37,6 +51,13 @@ export function FlowControls({
   showConditionals,
   onToggleConditionals,
   hasConditionalEdges,
+  diffEnabled,
+  onToggleDiff,
+  baseRef,
+  diffSummary,
+  diffDepth,
+  diffMaxDepth,
+  onDiffDepthChange,
 }: FlowControlsProps) {
   const searchRef = useRef<HTMLInputElement>(null);
   const [localQuery, setLocalQuery] = useState(searchQuery);
@@ -184,6 +205,59 @@ export function FlowControls({
             />
             <span>Show conditionals</span>
           </label>
+        </div>
+      )}
+
+      {!loading && (
+        <div className="mb-3">
+          <label className="flex items-center gap-1.5 text-xs text-foreground cursor-pointer">
+            <input
+              type="checkbox"
+              checked={diffEnabled}
+              onChange={onToggleDiff}
+              className="m-0 shrink-0"
+            />
+            <span>Diff vs {baseRef ?? 'base'}</span>
+          </label>
+          {diffEnabled && diffSummary && (
+            <div className="text-[11px] text-muted-foreground mt-1 ml-5">
+              {diffSummary.modified > 0 && (
+                <span className="text-amber-500">{diffSummary.modified} modified</span>
+              )}
+              {diffSummary.modified > 0 && (diffSummary.added > 0 || diffSummary.removed > 0) && ', '}
+              {diffSummary.added > 0 && (
+                <span className="text-green-500">{diffSummary.added} added</span>
+              )}
+              {diffSummary.added > 0 && diffSummary.removed > 0 && ', '}
+              {diffSummary.removed > 0 && (
+                <span className="text-red-500">{diffSummary.removed} removed</span>
+              )}
+              {diffSummary.modified === 0 && diffSummary.added === 0 && diffSummary.removed === 0 && (
+                <span>No changes</span>
+              )}
+            </div>
+          )}
+          {diffEnabled && diffMaxDepth > 0 && (
+            <div className="mt-2 ml-5">
+              <div className="flex items-center gap-2">
+                <label className="text-[11px] text-muted-foreground shrink-0" htmlFor="diff-depth">
+                  Depth
+                </label>
+                <input
+                  id="diff-depth"
+                  type="range"
+                  min={0}
+                  max={diffMaxDepth}
+                  value={diffDepth}
+                  onChange={(e) => onDiffDepthChange(Number(e.target.value))}
+                  className="flex-1 h-1 accent-foreground"
+                />
+                <span className="text-[11px] text-muted-foreground tabular-nums w-8 text-right">
+                  {diffDepth === diffMaxDepth ? 'all' : diffDepth}
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
