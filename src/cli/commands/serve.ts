@@ -1,6 +1,7 @@
 import { exec } from 'node:child_process';
 import * as p from '@clack/prompts';
 import type { CAC } from 'cac';
+import { syncGraph } from '../../graph/sync.js';
 import { startServer } from '../../server/index.js';
 import { loadConfig } from '../utils/config.js';
 import { explainUnresolved, resolveFocusTargets } from '../utils/resolve-targets.js';
@@ -34,6 +35,15 @@ export function registerServeCommand(cli: CAC) {
       if (!config) {
         p.cancel('Config not found. Run: treck init');
         process.exit(1);
+      }
+
+      const syncSpinner = p.spinner();
+      syncSpinner.start('Syncing graph...');
+      const syncResult = syncGraph(config);
+      if (syncResult) {
+        syncSpinner.stop(`Graph synced (${syncResult.nodeCount} nodes, ${syncResult.edgeCount} edges)`);
+      } else {
+        syncSpinner.stop('Sync complete (no source files matched)');
       }
 
       const port = options.port ? Number(options.port) : 3456;

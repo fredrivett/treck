@@ -8,9 +8,9 @@
 import { watch } from 'node:fs';
 import { resolve } from 'node:path';
 import type { CAC } from 'cac';
-import { StaleChecker } from '../../checker/index.js';
 import { diffGraphs, diffToMermaid, formatDiffSummary, type GraphDiff } from '../../graph/diff.js';
 import { GraphStore } from '../../graph/graph-store.js';
+import { syncGraph } from '../../graph/sync.js';
 import type { FlowGraph } from '../../graph/types.js';
 import { loadConfig } from '../utils/config.js';
 import { detectBaseRef, loadGraphAtRef } from '../utils/git.js';
@@ -152,25 +152,19 @@ export function registerDiffCommand(cli: CAC) {
         process.exit(1);
       }
 
+      process.stderr.write('Syncing graph...\n');
+      const syncResult = syncGraph(config);
+      if (syncResult) {
+        process.stderr.write(`Graph synced (${syncResult.nodeCount} nodes, ${syncResult.edgeCount} edges)\n`);
+      } else {
+        process.stderr.write('Sync: no source files matched\n');
+      }
+
       const store = new GraphStore(config.outputDir);
       const headGraph = store.read();
       if (!headGraph) {
         process.stderr.write('Error: No graph data. Run: treck sync\n');
         process.exit(1);
-      }
-
-      // Warn if graph is stale (source files changed since last sync)
-      try {
-        const checker = new StaleChecker();
-        const checkResult = checker.checkGraph(config.outputDir);
-        if (checkResult.staleDocs.length > 0) {
-          const n = checkResult.staleDocs.length;
-          process.stderr.write(
-            `\x1b[1;33m⚠ Warning: ${n} stale node${n === 1 ? '' : 's'} detected. Run: treck sync\x1b[0m\n`,
-          );
-        }
-      } catch {
-        // Staleness check is best-effort — don't block the diff
       }
 
       let baseRef: string;
