@@ -1,5 +1,7 @@
 import { Handle, type NodeProps, Position, useStore } from '@xyflow/react';
+import { useGraphExplorer } from './GraphExplorerContext';
 import { DIMMED_CLASSES, categoryBadgeVariant, getCategoryColors } from './node-categories';
+import { SymbolInfoIcon } from './SymbolTooltip';
 import { Badge, type BadgeVariant, variantLabels } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
@@ -85,6 +87,7 @@ const defaultConfig = {
 
 function EntryPointNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
+  const ctx = useGraphExplorer();
   const config = d.entryType ? entryTypeConfig(d.entryType) : defaultConfig;
   const badgeVariant = d.entryType ? categoryBadgeVariant[d.entryType] || 'default' : 'default';
   const typeLabel = d.entryType ? variantLabels[badgeVariant] || d.entryType : '';
@@ -112,6 +115,7 @@ function EntryPointNode({ data }: NodeProps) {
         )}
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        {!d.measuring && <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
       </div>
       <div className="font-semibold text-[13px] text-foreground">{d.label}</div>
       {(route || eventTrigger || taskId) && (
@@ -127,6 +131,7 @@ function EntryPointNode({ data }: NodeProps) {
 
 function ComponentNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
+  const ctx = useGraphExplorer();
   const c = getCategoryColors('component');
 
   return (
@@ -142,6 +147,7 @@ function ComponentNode({ data }: NodeProps) {
         <Badge variant="component">Component</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        {!d.measuring && <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
@@ -152,6 +158,7 @@ function ComponentNode({ data }: NodeProps) {
 
 function HookNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
+  const ctx = useGraphExplorer();
   const c = getCategoryColors('hook');
 
   return (
@@ -167,6 +174,7 @@ function HookNode({ data }: NodeProps) {
         <Badge variant="hook">Hook</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        {!d.measuring && <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
@@ -215,6 +223,7 @@ function ConditionNode({ data }: NodeProps) {
 
 function FunctionNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
+  const ctx = useGraphExplorer();
   const c = getCategoryColors('function');
 
   return (
@@ -230,6 +239,7 @@ function FunctionNode({ data }: NodeProps) {
         <span className="text-[10px] text-muted-foreground">{d.kind}</span>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        {!d.measuring && <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />

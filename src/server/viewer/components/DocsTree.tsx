@@ -6,8 +6,8 @@ import { docPathToUrl, urlToDocPath } from '../docs-utils';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
 import type { SymbolIndex } from '../../../graph/symbol-index.js';
-import { categoryBadgeVariant, getCategoryColors, getCategorySingularLabel, getNodeCategory } from './node-categories';
-import { Badge } from './ui/badge';
+import { getCategoryColors, getNodeCategory } from './node-categories';
+import { SymbolTooltipContent } from './SymbolTooltip';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { useNodeSelection } from './useNodeSelection';
 
@@ -73,40 +73,6 @@ function Guides({ guides, isLast }: { guides: boolean[]; isLast: boolean }) {
       ))}
       <span className={isLast ? guideCorner : guideTee} />
     </>
-  );
-}
-
-/** Rich tooltip content for a sidebar symbol, showing badges and overview. */
-function SymbolTooltipContent({
-  sym,
-  symbolIndex,
-}: {
-  sym: { name: string; docPath: string; kind?: string; entryType?: string; isTrivial?: boolean };
-  symbolIndex?: SymbolIndex;
-}) {
-  const entry = symbolIndex?.entries.get(sym.docPath);
-  const category = getNodeCategory(sym);
-  const colors = getCategoryColors(category);
-
-  return (
-    <div className="max-w-[280px] flex flex-col gap-1">
-      <div className="font-semibold text-[13px]" style={{ color: colors.handle }}>
-        {sym.name}
-      </div>
-      <div className="flex flex-wrap items-center gap-1">
-        <Badge variant={categoryBadgeVariant[category] || 'default'}>
-          {getCategorySingularLabel(category)}
-        </Badge>
-        {entry?.isAsync && <Badge variant="async">async</Badge>}
-        {entry?.hasJsDoc === false && !sym.isTrivial && <Badge variant="no-jsdoc">no jsdoc</Badge>}
-      </div>
-      {entry?.sourcePath && (
-        <div className="text-[11px] text-muted-foreground break-all">{entry.sourcePath}{entry.lineRange ? `:${entry.lineRange}` : ''}</div>
-      )}
-      {entry?.overview && (
-        <div className="text-[11px] text-foreground leading-relaxed">{entry.overview}</div>
-      )}
-    </div>
   );
 }
 
@@ -251,7 +217,7 @@ function TreeDir({
                     </button>
                   </TooltipTrigger>
                   <TooltipContent side="right" className={tooltipClasses} arrowClassName={`${colors.bg} fill-transparent`} style={{ filter: `drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex})` }}>
-                    <SymbolTooltipContent sym={item.sym} symbolIndex={symbolIndex} />
+                    <SymbolTooltipContent name={item.sym.name} kind={item.sym.kind} entryType={item.sym.entryType} isTrivial={item.sym.isTrivial} docPath={item.sym.docPath} symbolIndex={symbolIndex} />
                   </TooltipContent>
                 </Tooltip>
               );
@@ -269,7 +235,7 @@ function TreeDir({
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent side="right" className={tooltipClasses} arrowClassName={`${colors.bg} fill-transparent`} style={{ filter: `drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex})` }}>
-                  <SymbolTooltipContent sym={item.sym} symbolIndex={symbolIndex} />
+                  <SymbolTooltipContent name={item.sym.name} kind={item.sym.kind} entryType={item.sym.entryType} isTrivial={item.sym.isTrivial} docPath={item.sym.docPath} symbolIndex={symbolIndex} />
                 </TooltipContent>
               </Tooltip>
             );
