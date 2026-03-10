@@ -1,53 +1,19 @@
 import { ChevronsDownUp, ChevronsUpDown } from 'lucide-react';
+import type React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router';
+import type { SymbolIndex } from '../../../graph/symbol-index.js';
 import { docPathToUrl, urlToDocPath } from '../docs-utils';
+import { buildTree, type DocsIndex, type TreeNode } from './docs-tree-data';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
+import { getCategoryColors, getNodeCategory } from './node-categories';
+import { SymbolTooltipContent } from './SymbolTooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
+import { useNodeSelection } from './useNodeSelection';
 
-export type DocsIndex = Record<
-  string,
-  Array<{
-    name: string;
-    docPath: string;
-    overview: string;
-    hasJsDoc?: boolean;
-    isTrivial?: boolean;
-  }>
->;
-
-export interface TreeNode {
-  children: Record<string, TreeNode>;
-  symbols: Array<{
-    name: string;
-    docPath: string;
-    overview: string;
-    hasJsDoc?: boolean;
-    isTrivial?: boolean;
-  }>;
-}
-
-/** Build a tree from the docs index, optionally filtering to only visible symbol names. */
-export function buildTree(index: DocsIndex, visibleNames: Set<string> | null): TreeNode {
-  const root: TreeNode = { children: {}, symbols: [] };
-
-  for (const [dir, symbols] of Object.entries(index)) {
-    const filtered = visibleNames ? symbols.filter((s) => visibleNames.has(s.name)) : symbols;
-    if (filtered.length === 0) continue;
-
-    const parts = dir === '.' ? ['.'] : dir.split('/');
-    let node = root;
-    for (const part of parts) {
-      if (!node.children[part]) {
-        node.children[part] = { children: {}, symbols: [] };
-      }
-      node = node.children[part];
-    }
-    node.symbols.push(...filtered);
-  }
-
-  return root;
-}
+export { buildTree };
+export type { DocsIndex, TreeNode };
 
 const guideBase = 'w-4 shrink-0 relative self-stretch';
 const guideLine = `${guideBase} before:content-[''] before:absolute before:left-[7px] before:top-0 before:bottom-0 before:border-l before:border-border`;
@@ -76,6 +42,14 @@ interface TreeDirProps {
   collapsedDirs: Set<string>;
   onToggleDir: (path: string) => void;
   dirPath: string;
+  /** When set, symbols act as graph node selectors instead of doc links. */
+  onSymbolClick?: (nodeId: string, event: React.MouseEvent) => void;
+  /** Currently selected node IDs (for highlighting in graph view). */
+  selectedNodes?: Set<string>;
+  /** Map from symbol name to graph node ID. */
+  nameToNodeId?: Map<string, string>;
+  /** Symbol index for looking up full symbol details in tooltips. */
+  symbolIndex?: SymbolIndex;
 }
 
 function TreeDir({
@@ -88,6 +62,10 @@ function TreeDir({
   collapsedDirs,
   onToggleDir,
   dirPath,
+  onSymbolClick,
+  selectedNodes,
+  nameToNodeId,
+  symbolIndex,
 }: TreeDirProps) {
   const hasChildren = Object.keys(node.children).length > 0 || node.symbols.length > 0;
   if (!hasChildren) return null;
@@ -106,6 +84,8 @@ function TreeDir({
           overview: string;
           hasJsDoc?: boolean;
           isTrivial?: boolean;
+          kind?: string;
+          entryType?: string;
         };
       }
   > = [];
@@ -149,27 +129,99 @@ function TreeDir({
                   collapsedDirs={collapsedDirs}
                   onToggleDir={onToggleDir}
                   dirPath={`${dirPath}/${item.name}`}
+                  onSymbolClick={onSymbolClick}
+                  selectedNodes={selectedNodes}
+                  nameToNodeId={nameToNodeId}
+                  symbolIndex={symbolIndex}
                 />
               );
             }
-            const isActive = item.sym.docPath === activeDocPath;
-            return (
-              <Link
-                key={`sym-${item.sym.docPath}`}
-                to={docPathToUrl(item.sym.docPath)}
-                className={`flex items-center h-[26px] text-[13px] text-foreground no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis hover:bg-muted ${isActive ? 'bg-border font-medium' : ''}`}
-              >
+            const colors = getCategoryColors(getNodeCategory(item.sym));
+            const nodeId = nameToNodeId?.get(item.sym.name);
+            const isSelected = nodeId ? selectedNodes?.has(nodeId) : false;
+            const hasSelection = selectedNodes && selectedNodes.size > 0;
+            const isDimmed = hasSelection && !isSelected;
+            const symInner = (
+              <>
                 <Guides guides={childGuides} isLast={itemIsLast} />
-                <span className="ml-0.5 overflow-hidden text-ellipsis">{item.sym.name}</span>
+                <span
+                  className="ml-0.5 overflow-hidden text-ellipsis"
+                  style={{ color: colors.handle }}
+                >
+                  {item.sym.name}
+                </span>
                 {item.sym.hasJsDoc === false && !item.sym.isTrivial && (
-                  <span
-                    className="ml-auto text-[10px] text-amber-500 opacity-70"
-                    title="Missing JSDoc comment"
-                  >
+                  <span className="ml-auto shrink-0 inline-flex items-center justify-center w-4 h-4 rounded text-[10px] font-semibold bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-300">
                     !
                   </span>
                 )}
-              </Link>
+              </>
+            );
+
+            const tooltipClasses = `${colors.bg} text-foreground border-0 p-3`;
+
+            if (onSymbolClick && nodeId) {
+              return (
+                <Tooltip key={`sym-${item.sym.docPath}`}>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={(e) => onSymbolClick(nodeId, e)}
+                      className={`flex items-center w-full h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis bg-transparent border-none p-0 text-left font-[inherit] hover:bg-muted ${isSelected ? 'bg-border font-medium' : ''} ${isDimmed ? 'opacity-65' : ''}`}
+                    >
+                      {symInner}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent
+                    side="right"
+                    className={tooltipClasses}
+                    arrowClassName={`${colors.bg} fill-transparent`}
+                    style={{
+                      filter: `drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex})`,
+                    }}
+                  >
+                    <SymbolTooltipContent
+                      name={item.sym.name}
+                      kind={item.sym.kind}
+                      entryType={item.sym.entryType}
+                      isTrivial={item.sym.isTrivial}
+                      docPath={item.sym.docPath}
+                      symbolIndex={symbolIndex}
+                    />
+                  </TooltipContent>
+                </Tooltip>
+              );
+            }
+
+            const isActive = item.sym.docPath === activeDocPath;
+            return (
+              <Tooltip key={`sym-${item.sym.docPath}`}>
+                <TooltipTrigger asChild>
+                  <Link
+                    to={docPathToUrl(item.sym.docPath)}
+                    className={`flex items-center h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis hover:bg-muted ${isActive ? 'bg-border font-medium' : ''}`}
+                  >
+                    {symInner}
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="right"
+                  className={tooltipClasses}
+                  arrowClassName={`${colors.bg} fill-transparent`}
+                  style={{
+                    filter: `drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex})`,
+                  }}
+                >
+                  <SymbolTooltipContent
+                    name={item.sym.name}
+                    kind={item.sym.kind}
+                    entryType={item.sym.entryType}
+                    isTrivial={item.sym.isTrivial}
+                    docPath={item.sym.docPath}
+                    symbolIndex={symbolIndex}
+                  />
+                </TooltipContent>
+              </Tooltip>
             );
           })}
         </div>
@@ -188,8 +240,20 @@ export function DocsTree({ visibleNames }: DocsTreeProps) {
   const index: DocsIndex | null = ctx?.docsIndex ?? null;
   const [collapsedDirs, setCollapsedDirs] = useState<Set<string>>(new Set());
   const location = useLocation();
+  const isGraphView = location.pathname === '/';
+  const { selected, clickNode } = useNodeSelection();
 
   const activeDocPath = useMemo(() => urlToDocPath(location.pathname), [location.pathname]);
+
+  /** Map from symbol name to graph node ID for click-to-select in graph view. */
+  const nameToNodeId = useMemo(() => {
+    if (!ctx?.graph) return undefined;
+    const map = new Map<string, string>();
+    for (const node of ctx.graph.nodes) {
+      map.set(node.name, node.id);
+    }
+    return map;
+  }, [ctx?.graph]);
 
   // Auto-expand all directories when the search filter changes
   useEffect(() => {
@@ -282,6 +346,10 @@ export function DocsTree({ visibleNames }: DocsTreeProps) {
                 collapsedDirs={collapsedDirs}
                 onToggleDir={onToggleDir}
                 dirPath={`/${name}`}
+                onSymbolClick={isGraphView ? clickNode : undefined}
+                selectedNodes={isGraphView ? selected : undefined}
+                nameToNodeId={nameToNodeId}
+                symbolIndex={ctx?.symbolIndex}
               />
             ))}
       </nav>

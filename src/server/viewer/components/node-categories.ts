@@ -1,11 +1,82 @@
 /**
- * Shared color definitions for node categories.
+ * Node category definitions: derivation, labels, and colors.
  *
- * Single source of truth for bg, border, text, and ring colors per category.
- * Used by NodeTypes.tsx (graph nodes) and ActiveChat.tsx (chat badges).
+ * Single source of truth for how categories are determined from node/symbol
+ * metadata, their display labels, and visual styling. Used across the viewer UI.
  */
 
-import type { NodeCategory } from './FlowGraph';
+import type { BadgeVariant } from './ui/badge';
+
+/** Node category identifier (entry type or derived kind). */
+export type NodeCategory = string;
+
+/** Minimal shape needed to derive a node category. */
+interface Categorisable {
+  name: string;
+  kind?: string;
+  entryType?: string;
+}
+
+const entryTypeCategoryLabels: Record<string, string> = {
+  'api-route': 'API Routes',
+  page: 'Pages',
+  'inngest-function': 'Inngest Jobs',
+  'trigger-task': 'Trigger Tasks',
+  middleware: 'Middleware',
+  'server-action': 'Server Actions',
+};
+
+const nonEntryCategoryLabels: Record<string, string> = {
+  component: 'Components',
+  hook: 'Hooks',
+  function: 'Functions',
+};
+
+/**
+ * Returns the filter category for a node or symbol.
+ *
+ * @param node - Any object with name, kind, and optional entryType
+ */
+export function getNodeCategory(node: Categorisable): NodeCategory {
+  if (node.entryType) return node.entryType;
+  if (node.kind === 'component') return 'component';
+  if (node.kind === 'function' && /^use[A-Z]/.test(node.name)) return 'hook';
+  return 'function';
+}
+
+/** Maps node categories to badge variants for label lookups and badge rendering. */
+export const categoryBadgeVariant: Record<string, BadgeVariant> = {
+  'api-route': 'api-route',
+  page: 'page',
+  'inngest-function': 'job',
+  'trigger-task': 'job',
+  middleware: 'middleware',
+  'server-action': 'server-action',
+  component: 'component',
+  hook: 'hook',
+};
+
+/** Returns the human-readable plural label for a category (e.g. for filter legends). */
+export function getCategoryLabel(category: NodeCategory): string {
+  return entryTypeCategoryLabels[category] || nonEntryCategoryLabels[category] || category;
+}
+
+/** Singular display labels for each category. */
+const categorySingularLabels: Record<string, string> = {
+  'api-route': 'API',
+  page: 'Page',
+  'inngest-function': 'Job',
+  'trigger-task': 'Job',
+  middleware: 'Middleware',
+  'server-action': 'Action',
+  component: 'Component',
+  hook: 'Hook',
+};
+
+/** Returns the singular label for a category. */
+export function getCategorySingularLabel(category: NodeCategory): string {
+  return categorySingularLabels[category] || category.charAt(0).toUpperCase() + category.slice(1);
+}
 
 /** Color config for a node category. */
 export interface CategoryColors {
@@ -13,6 +84,8 @@ export interface CategoryColors {
   bg: string;
   /** Border color class. */
   border: string;
+  /** Border hex color (matches the border class shade). */
+  borderHex: string;
   /** Text color classes (light + dark). */
   text: string;
   /** Selection ring class. */
@@ -26,6 +99,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   component: {
     bg: 'bg-orange-100 dark:bg-orange-950',
     border: 'border-orange-600',
+    borderHex: '#ea580c',
     text: 'text-orange-800 dark:text-orange-200',
     ring: 'ring-orange-500/25',
     handle: '#f97316',
@@ -33,6 +107,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   hook: {
     bg: 'bg-lime-100 dark:bg-lime-950',
     border: 'border-lime-600',
+    borderHex: '#65a30d',
     text: 'text-lime-800 dark:text-lime-200',
     ring: 'ring-lime-500/25',
     handle: '#84cc16',
@@ -40,13 +115,15 @@ export const categoryColors: Record<string, CategoryColors> = {
   function: {
     bg: 'bg-blue-100 dark:bg-blue-950',
     border: 'border-blue-500',
+    borderHex: '#3b82f6',
     text: 'text-blue-800 dark:text-blue-200',
     ring: 'ring-blue-500/25',
-    handle: '#9ca3af',
+    handle: '#3b82f6',
   },
   'api-route': {
     bg: 'bg-blue-100 dark:bg-blue-950',
     border: 'border-blue-500',
+    borderHex: '#3b82f6',
     text: 'text-blue-800 dark:text-blue-200',
     ring: 'ring-blue-500/25',
     handle: '#3b82f6',
@@ -54,6 +131,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   page: {
     bg: 'bg-violet-100 dark:bg-violet-950',
     border: 'border-violet-500',
+    borderHex: '#8b5cf6',
     text: 'text-violet-800 dark:text-violet-200',
     ring: 'ring-violet-500/25',
     handle: '#8b5cf6',
@@ -61,6 +139,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   'inngest-function': {
     bg: 'bg-pink-100 dark:bg-pink-950',
     border: 'border-pink-500',
+    borderHex: '#ec4899',
     text: 'text-pink-800 dark:text-pink-200',
     ring: 'ring-pink-500/25',
     handle: '#ec4899',
@@ -68,6 +147,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   'trigger-task': {
     bg: 'bg-pink-100 dark:bg-pink-950',
     border: 'border-pink-500',
+    borderHex: '#ec4899',
     text: 'text-pink-800 dark:text-pink-200',
     ring: 'ring-pink-500/25',
     handle: '#ec4899',
@@ -75,6 +155,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   'trigger-scheduled-task': {
     bg: 'bg-pink-100 dark:bg-pink-950',
     border: 'border-pink-500',
+    borderHex: '#ec4899',
     text: 'text-pink-800 dark:text-pink-200',
     ring: 'ring-pink-500/25',
     handle: '#ec4899',
@@ -82,6 +163,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   middleware: {
     bg: 'bg-cyan-100 dark:bg-cyan-950',
     border: 'border-cyan-500',
+    borderHex: '#06b6d4',
     text: 'text-cyan-800 dark:text-cyan-200',
     ring: 'ring-cyan-500/25',
     handle: '#06b6d4',
@@ -89,6 +171,7 @@ export const categoryColors: Record<string, CategoryColors> = {
   'server-action': {
     bg: 'bg-emerald-100 dark:bg-emerald-950',
     border: 'border-emerald-500',
+    borderHex: '#10b981',
     text: 'text-emerald-800 dark:text-emerald-200',
     ring: 'ring-emerald-500/25',
     handle: '#10b981',

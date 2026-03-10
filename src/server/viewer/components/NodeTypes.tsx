@@ -1,5 +1,7 @@
 import { Handle, type NodeProps, Position, useStore } from '@xyflow/react';
-import { DIMMED_CLASSES, getCategoryColors } from './node-colors';
+import { useGraphExplorer } from './GraphExplorerContext';
+import { categoryBadgeVariant, DIMMED_CLASSES, getCategoryColors } from './node-categories';
+import { SymbolInfoIcon } from './SymbolTooltip';
 import { Badge, type BadgeVariant, variantLabels } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
@@ -25,7 +27,7 @@ function FilePath({ path, measuring }: { path: string; measuring?: boolean }) {
   const tooZoomedOut = zoom < 0.5;
 
   return (
-    <Tooltip delayDuration={250} open={tooZoomedOut ? false : undefined}>
+    <Tooltip delayDuration={1000} open={tooZoomedOut ? false : undefined}>
       <TooltipTrigger asChild>
         <div
           className="text-[10px] text-muted-foreground mt-0.5 truncate"
@@ -70,15 +72,6 @@ function entryTypeConfig(entryType: string) {
   return { border: c.border, bg: c.bg, ring: c.ring, handle: c.handle };
 }
 
-const entryTypeBadgeVariant: Record<string, BadgeVariant> = {
-  'api-route': 'api-route',
-  page: 'page',
-  'inngest-function': 'job',
-  'trigger-task': 'job',
-  middleware: 'middleware',
-  'server-action': 'server-action',
-};
-
 const entryTypeImpl: Record<string, { label: string; variant: BadgeVariant }> = {
   'inngest-function': { label: 'Inngest', variant: 'inngest' },
   'trigger-task': { label: 'Trigger', variant: 'trigger' },
@@ -93,8 +86,9 @@ const defaultConfig = {
 
 function EntryPointNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
+  const ctx = useGraphExplorer();
   const config = d.entryType ? entryTypeConfig(d.entryType) : defaultConfig;
-  const badgeVariant = d.entryType ? entryTypeBadgeVariant[d.entryType] || 'default' : 'default';
+  const badgeVariant = d.entryType ? categoryBadgeVariant[d.entryType] || 'default' : 'default';
   const typeLabel = d.entryType ? variantLabels[badgeVariant] || d.entryType : '';
   const impl = d.entryType ? entryTypeImpl[d.entryType] : undefined;
   const httpMethod = d.metadata?.httpMethod;
@@ -120,6 +114,17 @@ function EntryPointNode({ data }: NodeProps) {
         )}
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        {d.measuring ? (
+          <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
+        ) : (
+          <SymbolInfoIcon
+            name={d.label}
+            kind={d.kind}
+            entryType={d.entryType}
+            symbolIndex={ctx?.symbolIndex}
+            compact
+          />
+        )}
       </div>
       <div className="font-semibold text-[13px] text-foreground">{d.label}</div>
       {(route || eventTrigger || taskId) && (
@@ -135,6 +140,7 @@ function EntryPointNode({ data }: NodeProps) {
 
 function ComponentNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
+  const ctx = useGraphExplorer();
   const c = getCategoryColors('component');
 
   return (
@@ -150,6 +156,17 @@ function ComponentNode({ data }: NodeProps) {
         <Badge variant="component">Component</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        {d.measuring ? (
+          <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
+        ) : (
+          <SymbolInfoIcon
+            name={d.label}
+            kind={d.kind}
+            entryType={d.entryType}
+            symbolIndex={ctx?.symbolIndex}
+            compact
+          />
+        )}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
@@ -160,6 +177,7 @@ function ComponentNode({ data }: NodeProps) {
 
 function HookNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
+  const ctx = useGraphExplorer();
   const c = getCategoryColors('hook');
 
   return (
@@ -175,6 +193,17 @@ function HookNode({ data }: NodeProps) {
         <Badge variant="hook">Hook</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        {d.measuring ? (
+          <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
+        ) : (
+          <SymbolInfoIcon
+            name={d.label}
+            kind={d.kind}
+            entryType={d.entryType}
+            symbolIndex={ctx?.symbolIndex}
+            compact
+          />
+        )}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
@@ -223,6 +252,7 @@ function ConditionNode({ data }: NodeProps) {
 
 function FunctionNode({ data }: NodeProps) {
   const d = data as unknown as NodeData;
+  const ctx = useGraphExplorer();
   const c = getCategoryColors('function');
 
   return (
@@ -238,6 +268,17 @@ function FunctionNode({ data }: NodeProps) {
         <span className="text-[10px] text-muted-foreground">{d.kind}</span>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        {d.measuring ? (
+          <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
+        ) : (
+          <SymbolInfoIcon
+            name={d.label}
+            kind={d.kind}
+            entryType={d.entryType}
+            symbolIndex={ctx?.symbolIndex}
+            compact
+          />
+        )}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />

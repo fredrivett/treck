@@ -1,6 +1,6 @@
 import { type ChangeEvent, useEffect, useRef, useState } from 'react';
 import { isApplePlatform } from '../keyboard';
-import { getCategoryLabel, type NodeCategory } from './FlowGraph';
+import { getCategoryColors, getCategoryLabel, type NodeCategory } from './node-categories';
 import { Kbd } from './ui/kbd';
 
 /** Debounce delay (ms) for search input updates. */
@@ -154,7 +154,9 @@ export function FlowControls({
                       onChange={() => onToggleType(category)}
                       className="m-0 shrink-0"
                     />
-                    <span>{getCategoryLabel(category)}</span>
+                    <span style={{ color: getCategoryColors(category).handle }}>
+                      {getCategoryLabel(category)}
+                    </span>
                     <span className="text-muted-foreground text-[11px]">({count})</span>
                   </label>
                   <button

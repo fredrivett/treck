@@ -130,6 +130,8 @@ export function buildIndexResponse(index: SymbolIndex) {
       overview: string;
       hasJsDoc?: boolean;
       isTrivial?: boolean;
+      kind?: string;
+      entryType?: string;
     }[]
   > = {};
 
@@ -142,6 +144,8 @@ export function buildIndexResponse(index: SymbolIndex) {
       overview: entry.overview,
       hasJsDoc: entry.hasJsDoc,
       isTrivial: entry.isTrivial,
+      kind: entry.kind,
+      entryType: entry.entryType,
     });
   }
 
