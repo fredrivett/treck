@@ -1,4 +1,4 @@
-import { Handle, type NodeProps, Position } from '@xyflow/react';
+import { Handle, type NodeProps, Position, useStore } from '@xyflow/react';
 import { DIMMED_CLASSES, getCategoryColors } from './node-colors';
 import { Badge, type BadgeVariant, variantLabels } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
@@ -17,11 +17,15 @@ export const NODE_MAX_WIDTH = 160;
  * @param measuring - Whether the node is being measured for layout
  */
 function FilePath({ path, measuring }: { path: string; measuring?: boolean }) {
+  const zoom = useStore((s) => s.transform[2]);
   if (measuring) {
     return <div className="text-[10px] text-muted-foreground mt-0.5">{'\u00A0'}</div>;
   }
+
+  const tooZoomedOut = zoom < 0.5;
+
   return (
-    <Tooltip>
+    <Tooltip delayDuration={250} open={tooZoomedOut ? false : undefined}>
       <TooltipTrigger asChild>
         <div
           className="text-[10px] text-muted-foreground mt-0.5 truncate"
@@ -30,7 +34,7 @@ function FilePath({ path, measuring }: { path: string; measuring?: boolean }) {
           {path}
         </div>
       </TooltipTrigger>
-      <TooltipContent>{path}</TooltipContent>
+      <TooltipContent side="bottom">{path}</TooltipContent>
     </Tooltip>
   );
 }
