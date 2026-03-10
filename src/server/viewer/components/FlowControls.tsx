@@ -1,7 +1,10 @@
-import { type ChangeEvent, useEffect, useRef } from 'react';
+import { type ChangeEvent, useEffect, useRef, useState } from 'react';
 import { isApplePlatform } from '../keyboard';
 import { getCategoryLabel, type NodeCategory } from './FlowGraph';
 import { Kbd } from './ui/kbd';
+
+/** Debounce delay (ms) for search input updates. */
+const SEARCH_DEBOUNCE_MS = 150;
 
 interface FlowControlsProps {
   loading: boolean;
@@ -36,6 +39,27 @@ export function FlowControls({
   hasConditionalEdges,
 }: FlowControlsProps) {
   const searchRef = useRef<HTMLInputElement>(null);
+  const [localQuery, setLocalQuery] = useState(searchQuery);
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
+
+  // Sync local state when the prop changes externally (e.g. URL navigation)
+  useEffect(() => {
+    setLocalQuery(searchQuery);
+  }, [searchQuery]);
+
+  /** Update local state immediately and debounce the expensive onSearch callback. */
+  const handleSearchChange = (value: string) => {
+    setLocalQuery(value);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => onSearch(value), SEARCH_DEBOUNCE_MS);
+  };
+
+  /** Clear search immediately (no debounce needed). */
+  const handleClear = () => {
+    setLocalQuery('');
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    onSearch('');
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -59,20 +83,20 @@ export function FlowControls({
           ref={searchRef}
           type="text"
           placeholder="Search nodes..."
-          value={searchQuery}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => onSearch(e.target.value)}
+          value={localQuery}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => handleSearchChange(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Escape') e.currentTarget.blur();
           }}
           className={`peer w-full px-2.5 py-2 ${isApplePlatform() ? 'pr-10' : 'pr-16'} focus:pr-2.5 border border-border rounded-md text-[13px] outline-none bg-background text-foreground`}
         />
-        {searchQuery && (
+        {localQuery && (
           <button
             type="button"
             aria-label="Clear search"
             onMouseDown={(e) => {
               e.preventDefault();
-              onSearch('');
+              handleClear();
             }}
             className="absolute right-2 inset-y-0 items-center bg-transparent border-none p-0 cursor-pointer text-muted-foreground hover:text-foreground hidden peer-focus:flex"
           >
