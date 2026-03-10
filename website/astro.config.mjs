@@ -10,6 +10,7 @@ export default defineConfig({
     includeFiles: [
       './public/showcases/tldraw.json',
       './public/showcases/treck.json',
+      './public/showcases/cal-com.json',
       '../dist/index.mjs',
     ],
   }),
