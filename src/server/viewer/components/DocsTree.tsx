@@ -169,10 +169,11 @@ function TreeDir({
               >
                 <Guides guides={childGuides} isLast={itemIsLast} />
                 <span
-                  className="w-2 h-2 rounded-full shrink-0 ml-0.5 mr-1.5"
-                  style={{ backgroundColor: colors.handle }}
-                />
-                <span className="overflow-hidden text-ellipsis text-foreground">{item.sym.name}</span>
+                  className="ml-0.5 overflow-hidden text-ellipsis"
+                  style={{ color: colors.handle }}
+                >
+                  {item.sym.name}
+                </span>
                 {item.sym.hasJsDoc === false && !item.sym.isTrivial && (
                   <span
                     className="ml-auto text-[10px] text-amber-500 opacity-70"

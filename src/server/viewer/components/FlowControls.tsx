@@ -154,11 +154,9 @@ export function FlowControls({
                       onChange={() => onToggleType(category)}
                       className="m-0 shrink-0"
                     />
-                    <span
-                      className="w-2 h-2 rounded-full shrink-0"
-                      style={{ backgroundColor: getCategoryColors(category).handle }}
-                    />
-                    <span>{getCategoryLabel(category)}</span>
+                    <span style={{ color: getCategoryColors(category).handle }}>
+                      {getCategoryLabel(category)}
+                    </span>
                     <span className="text-muted-foreground text-[11px]">({count})</span>
                   </label>
                   <button
