@@ -29,7 +29,9 @@ jobs:
         run: pnpm exec tsdown src/cli/index.ts
 
       - name: Generate showcase graphs
-        run: pnpm exec tsx scripts/generate-showcase.ts tldraw
+        run: |
+          pnpm exec tsx scripts/generate-showcase.ts tldraw
+          pnpm exec tsx scripts/generate-showcase.ts cal-com
 
       - name: Commit and push if changed
         run: |

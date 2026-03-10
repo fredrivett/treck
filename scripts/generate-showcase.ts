@@ -30,6 +30,19 @@ const projects: Record<string, ProjectConfig> = {
       '**/*.d.ts',
     ],
   },
+  'cal-com': {
+    repo: 'https://github.com/calcom/cal.com.git',
+    include: [
+      'apps/web/**/*.{ts,tsx}',
+      'packages/trpc/**/*.{ts,tsx}',
+      'packages/features/**/*.{ts,tsx}',
+      'packages/lib/**/*.{ts,tsx}',
+      'packages/prisma/**/*.{ts,tsx}',
+      'packages/ui/**/*.{ts,tsx}',
+      'packages/atoms/**/*.{ts,tsx}',
+      'packages/platform/**/*.{ts,tsx}',
+    ],
+  },
 };
 
 const DEFAULT_EXCLUDES = [

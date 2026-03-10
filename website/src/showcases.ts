@@ -28,4 +28,10 @@ export const showcases: ShowcaseProject[] = [
     description: 'Your codebase, visualised. Evergreen maps of every code flow.',
     repo: 'https://github.com/fredrivett/treck',
   },
+  {
+    slug: 'cal-com',
+    name: 'Cal.com',
+    description: 'The open source Calendly alternative — scheduling infrastructure for everyone.',
+    repo: 'https://github.com/calcom/cal.com',
+  },
 ];
