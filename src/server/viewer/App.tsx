@@ -30,7 +30,8 @@ function GraphExplorerWithData() {
       .then((res) => (res.ok ? res.json() : null))
       .then((data: { graphId: string; branch?: string } | null) => {
         if (data?.graphId) setProject(data.graphId);
-        const title = data?.branch ? `[${data.branch}] treck` : 'treck';
+        const branchLabel = data?.branch?.split('/').pop();
+        const title = branchLabel ? `[${branchLabel}] treck` : 'treck';
         document.title = title;
       })
       .catch(() => {});
