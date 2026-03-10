@@ -70,12 +70,12 @@ describe('chat-store', () => {
       const loaded = await loadChat(chat.id);
 
       expect(loaded).toBeDefined();
-      expect(loaded!.id).toBe(chat.id);
-      expect(loaded!.graphId).toBe(chat.graphId);
-      expect(loaded!.title).toBe(chat.title);
-      expect(loaded!.messages).toHaveLength(2);
-      expect(loaded!.messages[0].parts[0]).toEqual({ type: 'text', text: 'hello' });
-      expect(loaded!.messages[1].parts[0]).toEqual({ type: 'text', text: 'hi there' });
+      expect(loaded?.id).toBe(chat.id);
+      expect(loaded?.graphId).toBe(chat.graphId);
+      expect(loaded?.title).toBe(chat.title);
+      expect(loaded?.messages).toHaveLength(2);
+      expect(loaded?.messages[0].parts[0]).toEqual({ type: 'text', text: 'hello' });
+      expect(loaded?.messages[1].parts[0]).toEqual({ type: 'text', text: 'hi there' });
     });
 
     it('preserves all StoredChat fields', async () => {
@@ -103,8 +103,8 @@ describe('chat-store', () => {
       await saveChat(chat);
 
       const loaded = await loadChat(chat.id);
-      expect(loaded!.title).toBe('Updated');
-      expect(loaded!.updatedAt).toBe(chat.updatedAt);
+      expect(loaded?.title).toBe('Updated');
+      expect(loaded?.updatedAt).toBe(chat.updatedAt);
     });
 
     it('updates messages on re-save', async () => {
@@ -116,8 +116,8 @@ describe('chat-store', () => {
       await saveChat(chat);
 
       const loaded = await loadChat(chat.id);
-      expect(loaded!.messages).toHaveLength(3);
-      expect(loaded!.messages[2].parts[0]).toEqual({ type: 'text', text: 'follow-up' });
+      expect(loaded?.messages).toHaveLength(3);
+      expect(loaded?.messages[2].parts[0]).toEqual({ type: 'text', text: 'follow-up' });
     });
 
     it('returns undefined for a missing chat', async () => {
@@ -135,7 +135,7 @@ describe('chat-store', () => {
       await saveChat(chat);
 
       const loaded = await loadChat(chat.id);
-      expect(loaded!.messages).toEqual([]);
+      expect(loaded?.messages).toEqual([]);
     });
 
     it('round-trips messages with tool call parts', async () => {
@@ -149,8 +149,8 @@ describe('chat-store', () => {
       await saveChat(chat);
       const loaded = await loadChat(chat.id);
 
-      expect(loaded!.messages).toHaveLength(2);
-      const loadedToolParts = loaded!.messages[1].parts;
+      expect(loaded?.messages).toHaveLength(2);
+      const loadedToolParts = loaded?.messages[1].parts;
       expect(loadedToolParts).toHaveLength(2);
       expect((loadedToolParts[1] as unknown as { output: unknown }).output).toEqual({
         selected: ['src/foo.ts:bar', 'src/baz.ts:qux'],
@@ -166,8 +166,8 @@ describe('chat-store', () => {
       await saveChat(chat);
 
       const loaded = await loadChat(chat.id);
-      expect(loaded!.messages).toHaveLength(100);
-      expect(loaded!.messages[99].parts[0]).toEqual({ type: 'text', text: 'Message 99' });
+      expect(loaded?.messages).toHaveLength(100);
+      expect(loaded?.messages[99].parts[0]).toEqual({ type: 'text', text: 'Message 99' });
     });
 
     it('stores multiple chats with the same graphId independently', async () => {
@@ -178,8 +178,8 @@ describe('chat-store', () => {
 
       const loaded1 = await loadChat(chat1.id);
       const loaded2 = await loadChat(chat2.id);
-      expect(loaded1!.title).toBe('Chat 1');
-      expect(loaded2!.title).toBe('Chat 2');
+      expect(loaded1?.title).toBe('Chat 1');
+      expect(loaded2?.title).toBe('Chat 2');
     });
   });
 
@@ -345,7 +345,7 @@ describe('chat-store', () => {
 
       const loaded = await loadChat(chat1.id);
       expect(loaded).toBeDefined();
-      expect(loaded!.title).toBe('Keep');
+      expect(loaded?.title).toBe('Keep');
     });
 
     it('does not affect chats in other graphs', async () => {
@@ -358,7 +358,7 @@ describe('chat-store', () => {
 
       const loadedB = await loadChat(chatB.id);
       expect(loadedB).toBeDefined();
-      expect(loadedB!.title).toBe('B');
+      expect(loadedB?.title).toBe('B');
     });
 
     it('can delete and re-create with the same ID', async () => {
@@ -368,7 +368,7 @@ describe('chat-store', () => {
 
       await saveChat(makeChat({ id, title: 'Second' }));
       const loaded = await loadChat(id);
-      expect(loaded!.title).toBe('Second');
+      expect(loaded?.title).toBe('Second');
     });
 
     it('double-delete does not throw', async () => {
@@ -469,7 +469,7 @@ describe('chat-store', () => {
 
       // Load
       const loaded = await loadChat(chat.id);
-      expect(loaded!.messages).toHaveLength(1);
+      expect(loaded?.messages).toHaveLength(1);
 
       // Update
       chat.messages.push(makeMessage('assistant', 'hi'));
@@ -478,8 +478,8 @@ describe('chat-store', () => {
       await saveChat(chat);
 
       const reloaded = await loadChat(chat.id);
-      expect(reloaded!.messages).toHaveLength(2);
-      expect(reloaded!.title).toBe('Updated lifecycle');
+      expect(reloaded?.messages).toHaveLength(2);
+      expect(reloaded?.title).toBe('Updated lifecycle');
 
       // Delete
       await deleteChat(chat.id);
