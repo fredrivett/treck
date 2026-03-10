@@ -115,7 +115,7 @@ function EntryPointNode({ data }: NodeProps) {
         )}
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
-        {!d.measuring && <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
+        {d.measuring ? <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" /> : <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
       </div>
       <div className="font-semibold text-[13px] text-foreground">{d.label}</div>
       {(route || eventTrigger || taskId) && (
@@ -147,7 +147,7 @@ function ComponentNode({ data }: NodeProps) {
         <Badge variant="component">Component</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
-        {!d.measuring && <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
+        {d.measuring ? <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" /> : <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
@@ -174,7 +174,7 @@ function HookNode({ data }: NodeProps) {
         <Badge variant="hook">Hook</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
-        {!d.measuring && <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
+        {d.measuring ? <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" /> : <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
@@ -239,7 +239,7 @@ function FunctionNode({ data }: NodeProps) {
         <span className="text-[10px] text-muted-foreground">{d.kind}</span>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
-        {!d.measuring && <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
+        {d.measuring ? <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" /> : <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
