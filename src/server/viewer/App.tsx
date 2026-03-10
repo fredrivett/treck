@@ -28,8 +28,10 @@ function GraphExplorerWithData() {
 
     fetch('/api/project-info')
       .then((res) => (res.ok ? res.json() : null))
-      .then((data: { graphId: string } | null) => {
+      .then((data: { graphId: string; branch?: string } | null) => {
         if (data?.graphId) setProject(data.graphId);
+        const title = data?.branch ? `[${data.branch}] treck` : 'treck';
+        document.title = title;
       })
       .catch(() => {});
   }, []);

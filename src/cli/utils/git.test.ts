@@ -4,13 +4,38 @@
 
 import { execFileSync } from 'node:child_process';
 import { describe, expect, it, type Mock, vi } from 'vitest';
-import { detectBaseRef, loadGraphAtRef } from './git.js';
+import { detectBaseRef, getCurrentBranch, loadGraphAtRef } from './git.js';
 
 vi.mock('node:child_process', () => ({
   execFileSync: vi.fn(),
 }));
 
 const mockExecFileSync = execFileSync as Mock;
+
+describe('getCurrentBranch', () => {
+  it('returns the current branch name', () => {
+    mockExecFileSync.mockReturnValue('main\n');
+
+    expect(getCurrentBranch()).toBe('main');
+    expect(mockExecFileSync).toHaveBeenCalledWith('git', ['rev-parse', '--abbrev-ref', 'HEAD'], {
+      encoding: 'utf8',
+    });
+  });
+
+  it('returns undefined in detached HEAD state', () => {
+    mockExecFileSync.mockReturnValue('HEAD\n');
+
+    expect(getCurrentBranch()).toBeUndefined();
+  });
+
+  it('returns undefined when not in a git repo', () => {
+    mockExecFileSync.mockImplementation(() => {
+      throw new Error('not a git repository');
+    });
+
+    expect(getCurrentBranch()).toBeUndefined();
+  });
+});
 
 describe('detectBaseRef', () => {
   it('returns the branch name when symbolic-ref exists', () => {
