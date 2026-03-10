@@ -159,7 +159,7 @@ function FlowGraphInner({
   } = useNodeSelection();
   const [layoutOptions, setLayoutOptions] = useState<LayoutOptions>(defaultLayoutOptions);
   const [needsLayout, setNeedsLayout] = useState(false);
-  const { fitView, getViewport } = useReactFlow();
+  const { fitView, getViewport, setViewport } = useReactFlow();
   const fittedViewportRef = useRef<{ x: number; y: number; zoom: number } | null>(null);
   const lastContainerSizeRef = useRef<{ width: number; height: number } | null>(null);
   const nodesInitialized = useNodesInitialized();
@@ -488,10 +488,45 @@ function FlowGraphInner({
     [clickNode],
   );
 
+  /** Pan the camera by a fixed pixel amount in the given direction. */
+  const panCamera = useCallback(
+    (dx: number, dy: number) => {
+      const { x, y, zoom } = getViewport();
+      setViewport({ x: x + dx, y: y + dy, zoom }, { duration: 150 });
+    },
+    [getViewport, setViewport],
+  );
+
   useEffect(() => {
+    const PAN_STEP = 80;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+      // Arrow keys and hjkl to pan the camera
+      switch (e.key) {
+        case 'ArrowLeft':
+        case 'h':
+          e.preventDefault();
+          panCamera(PAN_STEP, 0);
+          return;
+        case 'ArrowRight':
+        case 'l':
+          e.preventDefault();
+          panCamera(-PAN_STEP, 0);
+          return;
+        case 'ArrowUp':
+        case 'k':
+          e.preventDefault();
+          panCamera(0, PAN_STEP);
+          return;
+        case 'ArrowDown':
+        case 'j':
+          e.preventDefault();
+          panCamera(0, -PAN_STEP);
+          return;
+      }
 
       if (e.key === 'Escape') {
         clearSelection();
@@ -503,7 +538,7 @@ function FlowGraphInner({
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [clearSelection, selectedEntries, setFocusedEntries]);
+  }, [clearSelection, selectedEntries, setFocusedEntries, panCamera]);
 
   return (
     <div ref={containerRef} className="w-full h-full relative">
