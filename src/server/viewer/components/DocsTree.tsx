@@ -81,7 +81,7 @@ function SymbolTooltipContent({
   sym,
   symbolIndex,
 }: {
-  sym: { name: string; docPath: string; kind?: string; entryType?: string };
+  sym: { name: string; docPath: string; kind?: string; entryType?: string; isTrivial?: boolean };
   symbolIndex?: SymbolIndex;
 }) {
   const entry = symbolIndex?.entries.get(sym.docPath);
@@ -89,19 +89,19 @@ function SymbolTooltipContent({
   const colors = getCategoryColors(category);
 
   return (
-    <div className="max-w-[280px]">
-      <div className="font-semibold text-[13px] mb-1" style={{ color: colors.handle }}>
+    <div className="max-w-[280px] flex flex-col gap-1">
+      <div className="font-semibold text-[13px]" style={{ color: colors.handle }}>
         {sym.name}
       </div>
-      <div className="flex flex-wrap items-center gap-1 mb-1.5">
+      <div className="flex flex-wrap items-center gap-1">
         <Badge variant={categoryBadgeVariant[category] || 'default'}>
           {getCategorySingularLabel(category)}
         </Badge>
         {entry?.isAsync && <Badge variant="async">async</Badge>}
-        {entry?.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        {entry?.hasJsDoc === false && !sym.isTrivial && <Badge variant="no-jsdoc">no jsdoc</Badge>}
       </div>
       {entry?.sourcePath && (
-        <div className="text-[11px] text-muted-foreground mb-1 break-all">{entry.sourcePath}{entry.lineRange ? `:${entry.lineRange}` : ''}</div>
+        <div className="text-[11px] text-muted-foreground break-all">{entry.sourcePath}{entry.lineRange ? `:${entry.lineRange}` : ''}</div>
       )}
       {entry?.overview && (
         <div className="text-[11px] text-foreground leading-relaxed">{entry.overview}</div>
@@ -236,7 +236,7 @@ function TreeDir({
               </>
             );
 
-            const tooltipClasses = `${colors.bg} text-foreground border-0`;
+            const tooltipClasses = `${colors.bg} text-foreground border-0 p-3`;
 
             if (onSymbolClick && nodeId) {
               return (
