@@ -90,7 +90,7 @@ function DiffBadge({ status }: { status?: DiffStatus }) {
   const c = config[status];
   if (!c) return null;
   return (
-    <span className={`text-[9px] font-medium px-1 py-0.5 rounded ${c.className}`}>
+    <span className={`text-[9px] font-medium px-1 py-0.5 rounded whitespace-nowrap ${c.className}`}>
       {c.label}
     </span>
   );

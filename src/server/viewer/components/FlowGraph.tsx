@@ -170,6 +170,7 @@ function FlowGraphInner({
   const currentNodesRef = useRef<Node[]>([]);
   const visibleGraphRef = useRef<FlowGraphData | null>(null);
   const visualEdgesRef = useRef<Edge[]>([]);
+  const displayNodeIdsRef = useRef<Set<string>>(new Set());
   const sizeCache = useRef<SizeCache>(new Map());
   const [initialMeasureDone, setInitialMeasureDone] = useState(false);
 
@@ -367,6 +368,15 @@ function FlowGraphInner({
     };
   }, [diffData]);
 
+  // When diff status changes, clear size cache so nodes are re-measured with/without badges
+  const prevDiffSetsRef = useRef(diffSets);
+  useEffect(() => {
+    if (prevDiffSetsRef.current !== diffSets) {
+      sizeCache.current.clear();
+      prevDiffSetsRef.current = diffSets;
+    }
+  }, [diffSets]);
+
   // Derive ReactFlow nodes and edges from the render graph + conditionals toggle.
   // This memo ensures toggling conditionals produces a new reference, following
   // the same pattern as the focus/filter pipeline above.
@@ -402,6 +412,7 @@ function FlowGraphInner({
   useEffect(() => {
     visibleGraphRef.current = renderGraph;
     visualEdgesRef.current = rfEdges;
+    displayNodeIdsRef.current = new Set(rfNodes.map((n) => n.id));
     setEdges(rfEdges);
 
     let measuringNodes = rfNodes;
@@ -425,7 +436,26 @@ function FlowGraphInner({
       }
     }
 
-    const allNodes = [...measuringNodes, ...extraCondNodes];
+    // When diff is active, measure ALL diff nodes (at max depth) upfront so
+    // increasing the depth slider doesn't trigger re-measurement.
+    let extraDiffNodes: Node[] = [];
+    if (diffData && diffSets) {
+      const existingIds = new Set(measuringNodes.map((node) => node.id));
+      const allDiffGraphNodes = [...diffData.nodes, ...diffData.removedNodes];
+      extraDiffNodes = allDiffGraphNodes
+        .filter((n) => !existingIds.has(n.id))
+        .map((n) => {
+          const rfNode = toReactFlowNode(n, true);
+          let diffStatus: string;
+          if (diffSets.modified.has(n.id)) diffStatus = 'modified';
+          else if (diffSets.added.has(n.id)) diffStatus = 'added';
+          else if (diffSets.removed.has(n.id)) diffStatus = 'removed';
+          else diffStatus = 'context';
+          return { ...rfNode, data: { ...rfNode.data, diffStatus } };
+        });
+    }
+
+    const allNodes = [...measuringNodes, ...extraCondNodes, ...extraDiffNodes];
     const allCached = allNodes.every((n) => sizeCache.current.has(n.id));
     if (allCached && rfNodes.length > 0) {
       // Fast path: compute positions before rendering so nodes never appear at origin
@@ -447,6 +477,8 @@ function FlowGraphInner({
     applyPositionsAndFit,
     initialMeasureDone,
     showConditionals,
+    diffData,
+    diffSets,
   ]);
 
   // Update node data (selected/dimmed) without triggering re-layout
@@ -482,9 +514,9 @@ function FlowGraphInner({
 
     if (!initialMeasureDone) setInitialMeasureDone(true);
 
-    // Strip out measurement-only condition nodes that aren't part of the
-    // current visual edges (added only to cache their sizes), and restore
-    // file-path rendering once measurement is complete.
+    // Strip out measurement-only nodes (extra condition nodes and extra diff
+    // nodes added only to cache their sizes) and restore file-path rendering.
+    const displayIds = displayNodeIdsRef.current;
     const edgeNodeIds = new Set<string>();
     for (const edge of visualEdgesRef.current) {
       edgeNodeIds.add(edge.source);
@@ -495,7 +527,14 @@ function FlowGraphInner({
         ...node,
         data: { ...node.data, measuring: false },
       }))
-      .filter((node) => node.type !== 'conditionNode' || edgeNodeIds.has(node.id));
+      .filter((node) => {
+        // Keep nodes that are in the current display set
+        if (displayIds.has(node.id)) return true;
+        // Keep condition nodes that are referenced by visual edges
+        if (node.type === 'conditionNode' && edgeNodeIds.has(node.id)) return true;
+        // Strip all other measurement-only nodes
+        return false;
+      });
 
     runElkLayout(displayNodes, visualEdgesRef.current, layoutOptions, sizeCache.current).then(
       (positions) => applyPositionsAndFit(positions, displayNodes),
