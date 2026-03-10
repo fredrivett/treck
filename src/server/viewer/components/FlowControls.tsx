@@ -100,7 +100,15 @@ export function FlowControls({
             }}
             className="absolute right-2 inset-y-0 items-center bg-transparent border-none p-0 cursor-pointer text-muted-foreground hover:text-foreground hidden peer-focus:flex"
           >
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
               <path d="M4 4l8 8M12 4l-8 8" />
             </svg>
           </button>
