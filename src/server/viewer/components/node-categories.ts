@@ -82,7 +82,7 @@ export const categoryColors: Record<string, CategoryColors> = {
     border: 'border-blue-500',
     text: 'text-blue-800 dark:text-blue-200',
     ring: 'ring-blue-500/25',
-    handle: '#9ca3af',
+    handle: '#3b82f6',
   },
   'api-route': {
     bg: 'bg-blue-100 dark:bg-blue-950',
