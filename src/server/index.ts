@@ -6,7 +6,6 @@
  * changes and rebuilds the index automatically.
  */
 
-import { execFile } from 'node:child_process';
 import { existsSync, readFileSync, watch } from 'node:fs';
 import { createServer } from 'node:http';
 import { basename, dirname, extname, resolve } from 'node:path';
@@ -87,20 +86,18 @@ export async function startServer(outputDir: string, port: number) {
     if (baseFetchTimer) return;
     baseFetchTimer = setInterval(() => {
       if (!baseRef || !graph) return;
-      // Async fetch so we don't block the event loop
-      execFile('git', ['fetch', 'origin', baseRef], () => {
-        try {
-          const graphPath = `${outputDir}/graph.json`;
-          const fresh = loadGraphAtRef(baseRef!, graphPath);
+      const graphPath = `${outputDir}/graph.json`;
+      loadGraphAtRef(baseRef, graphPath)
+        .then((fresh) => {
           // Only recompute if the base graph actually changed
           if (JSON.stringify(fresh) !== JSON.stringify(baseGraph)) {
             baseGraph = fresh;
             recomputeDiff();
           }
-        } catch {
+        })
+        .catch(() => {
           // Failed to refresh — keep using the cached base graph
-        }
-      });
+        });
     }, BASE_FETCH_INTERVAL_MS);
   }
 
@@ -188,27 +185,34 @@ export async function startServer(outputDir: string, port: number) {
         res.end(JSON.stringify({ error: 'Graph not found. Run: treck sync' }));
         return;
       }
-      try {
-        const requestedBase = url.searchParams.get('base');
-        const ref = requestedBase ?? baseRef ?? detectBaseRef();
-        if (!baseGraph || ref !== baseRef) {
-          const graphPath = `${outputDir}/graph.json`;
-          baseGraph = loadGraphAtRef(ref, graphPath);
-          baseRef = ref;
-          startBaseFetchInterval();
-        }
-        currentDiff = diffGraphs(baseGraph, graph, { baseRef: ref });
+      const requestedBase = url.searchParams.get('base');
+      const ref = requestedBase ?? baseRef ?? detectBaseRef();
+      const respondWithDiff = () => {
+        currentDiff = diffGraphs(baseGraph!, graph!, { baseRef: ref });
         res.writeHead(200, {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
         });
         res.end(JSON.stringify(currentDiff));
-      } catch (err) {
-        res.writeHead(400, {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        });
-        res.end(JSON.stringify({ error: (err as Error).message }));
+      };
+      if (baseGraph && ref === baseRef) {
+        respondWithDiff();
+      } else {
+        const graphPath = `${outputDir}/graph.json`;
+        loadGraphAtRef(ref, graphPath)
+          .then((loaded) => {
+            baseGraph = loaded;
+            baseRef = ref;
+            startBaseFetchInterval();
+            respondWithDiff();
+          })
+          .catch((err) => {
+            res.writeHead(400, {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+            });
+            res.end(JSON.stringify({ error: (err as Error).message }));
+          });
       }
       return;
     }

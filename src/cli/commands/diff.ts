@@ -185,7 +185,7 @@ export function registerDiffCommand(cli: CAC) {
       let baseGraph: FlowGraph;
       try {
         const graphPath = `${config.outputDir}/graph.json`;
-        baseGraph = loadGraphAtRef(baseRef, graphPath);
+        baseGraph = await loadGraphAtRef(baseRef, graphPath);
       } catch (err) {
         p.cancel((err as Error).message);
         process.exit(1);

@@ -279,15 +279,15 @@ export function handleGetGraphSummary(graph: FlowGraph): McpTextResponse {
  * @param graphPath - Relative path to graph.json from repo root
  * @param currentGraph - The current in-memory graph
  */
-export function handleDiffGraph(
+export async function handleDiffGraph(
   baseRef: string,
   depth: number | undefined,
   graphPath: string,
   currentGraph: FlowGraph,
-): McpTextResponse {
+): Promise<McpTextResponse> {
   let baseGraph: FlowGraph;
   try {
-    baseGraph = loadGraphAtRef(baseRef, graphPath);
+    baseGraph = await loadGraphAtRef(baseRef, graphPath);
   } catch (err) {
     return {
       content: [{ type: 'text', text: (err as Error).message }],
