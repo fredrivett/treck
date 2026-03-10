@@ -6,6 +6,7 @@ import { docPathToUrl, urlToDocPath } from '../docs-utils';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
 import { getCategoryColors, getNodeCategory } from './node-categories';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { useNodeSelection } from './useNodeSelection';
 
 export type DocsIndex = Record<
@@ -188,12 +189,14 @@ function TreeDir({
                   {item.sym.name}
                 </span>
                 {item.sym.hasJsDoc === false && !item.sym.isTrivial && (
-                  <span
-                    className="ml-auto text-[10px] text-amber-500 opacity-70"
-                    title="Missing JSDoc comment"
-                  >
-                    !
-                  </span>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="ml-auto shrink-0 inline-flex items-center justify-center w-4 h-4 rounded text-[10px] font-semibold bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-300">
+                        !
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent side="right">Missing JSDoc</TooltipContent>
+                  </Tooltip>
                 )}
               </>
             );
