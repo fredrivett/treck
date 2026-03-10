@@ -7,6 +7,7 @@
 
 import { watch } from 'node:fs';
 import { resolve } from 'node:path';
+import * as p from '@clack/prompts';
 import type { CAC } from 'cac';
 import { diffGraphs, diffToMermaid, formatDiffSummary, type GraphDiff } from '../../graph/diff.js';
 import { GraphStore } from '../../graph/graph-store.js';
@@ -73,19 +74,22 @@ async function runDiff(
   const depth = options.depth ? Number(options.depth) : undefined;
   const diff = diffGraphs(baseGraph, headGraph, { baseRef, depth });
 
-  process.stderr.write(`${formatDiffSummary(diff)}\n`);
+  p.log.message(formatDiffSummary(diff));
 
   const hasChanges =
     diff.changes.modified.length > 0 ||
     diff.changes.added.length > 0 ||
     diff.changes.removed.length > 0;
 
-  if (!hasChanges) return;
+  if (!hasChanges) {
+    p.outro('No changes');
+    return;
+  }
 
   const format = options.format ?? 'mermaid';
   switch (format) {
     case 'json': {
-      process.stdout.write(`${formatDiffJson(diff)}\n`);
+      p.log.message(formatDiffJson(diff));
       return;
     }
     case 'ascii': {
@@ -95,30 +99,30 @@ async function runDiff(
       if (diff.nodes.length <= MAX_ASCII_NODES) {
         const mermaid = formatDiffMermaid(diff, asciiOpts);
         const ascii = await beautifyMermaid(mermaid, options.theme);
-        process.stdout.write(`${ascii}\n`);
+        p.log.message(ascii);
         return;
       }
 
       for (const tryDepth of [3, 2, 1, 0]) {
         const smaller = diffGraphs(baseGraph, headGraph, { baseRef, depth: tryDepth });
         if (smaller.nodes.length <= MAX_ASCII_NODES) {
-          process.stderr.write(
-            `\x1b[1;33m⚠ Graph too large at full depth (${diff.nodes.length} nodes). Showing depth ${tryDepth} (${smaller.nodes.length} nodes).\x1b[0m\n`,
+          p.log.warn(
+            `Graph too large at full depth (${diff.nodes.length} nodes). Showing depth ${tryDepth} (${smaller.nodes.length} nodes).`,
           );
           const mermaid = formatDiffMermaid(smaller, asciiOpts);
           const ascii = await beautifyMermaid(mermaid, options.theme);
-          process.stdout.write(`${ascii}\n`);
+          p.log.message(ascii);
           return;
         }
       }
 
-      process.stderr.write(
-        `\x1b[1;33m⚠ Graph too large for ASCII rendering even at depth 0. Use --format mermaid or --format json instead.\x1b[0m\n`,
+      p.log.warn(
+        'Graph too large for ASCII rendering even at depth 0. Use --format mermaid or --format json instead.',
       );
       return;
     }
     default: {
-      process.stdout.write(`${formatDiffMermaid(diff)}\n`);
+      p.log.message(formatDiffMermaid(diff));
       return;
     }
   }
@@ -146,24 +150,27 @@ export function registerDiffCommand(cli: CAC) {
     .example('treck diff --depth 2')
     .example('treck diff --watch')
     .action(async (options: DiffOptions) => {
+      p.intro('treck diff');
+
       const config = loadConfig();
       if (!config) {
-        process.stderr.write('Error: Config not found. Run: treck init\n');
+        p.cancel('Config not found. Run: treck init');
         process.exit(1);
       }
 
-      process.stderr.write('Syncing graph...\n');
+      const syncSpinner = p.spinner();
+      syncSpinner.start('Syncing graph...');
       const syncResult = syncGraph(config);
       if (syncResult) {
-        process.stderr.write(`Graph synced (${syncResult.nodeCount} nodes, ${syncResult.edgeCount} edges)\n`);
+        syncSpinner.stop(`Graph synced (${syncResult.nodeCount} nodes, ${syncResult.edgeCount} edges)`);
       } else {
-        process.stderr.write('Sync: no source files matched\n');
+        syncSpinner.stop('Sync complete (no source files matched)');
       }
 
       const store = new GraphStore(config.outputDir);
       const headGraph = store.read();
       if (!headGraph) {
-        process.stderr.write('Error: No graph data. Run: treck sync\n');
+        p.cancel('No graph data. Run: treck sync');
         process.exit(1);
       }
 
@@ -171,7 +178,7 @@ export function registerDiffCommand(cli: CAC) {
       try {
         baseRef = options.base ?? detectBaseRef();
       } catch (err) {
-        process.stderr.write(`Error: ${(err as Error).message}\n`);
+        p.cancel((err as Error).message);
         process.exit(1);
       }
 
@@ -180,14 +187,14 @@ export function registerDiffCommand(cli: CAC) {
         const graphPath = `${config.outputDir}/graph.json`;
         baseGraph = loadGraphAtRef(baseRef, graphPath);
       } catch (err) {
-        process.stderr.write(`Error: ${(err as Error).message}\n`);
+        p.cancel((err as Error).message);
         process.exit(1);
       }
 
       await runDiff(store, baseGraph, baseRef, headGraph, options);
 
       if (options.watch) {
-        process.stderr.write('\x1b[2mWatching for changes... (Ctrl+C to stop)\x1b[0m\n');
+        p.log.info('Watching for changes... (Ctrl+C to stop)');
         const absOutputDir = resolve(process.cwd(), config.outputDir);
         let debounceTimer: ReturnType<typeof setTimeout> | null = null;
         watch(absOutputDir, { recursive: true }, (_event, filename) => {
@@ -198,7 +205,7 @@ export function registerDiffCommand(cli: CAC) {
             if (!updatedGraph) return;
             process.stdout.write('\x1Bc'); // Clear terminal
             await runDiff(store, baseGraph, baseRef, updatedGraph, options);
-            process.stderr.write('\x1b[2mWatching for changes... (Ctrl+C to stop)\x1b[0m\n');
+            p.log.info('Watching for changes... (Ctrl+C to stop)');
           }, 500);
         });
         // Keep process alive
