@@ -1,10 +1,12 @@
 import { ChevronsDownUp, ChevronsUpDown } from 'lucide-react';
+import type React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { docPathToUrl, urlToDocPath } from '../docs-utils';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
 import { getCategoryColors, getNodeCategory } from './node-categories';
+import { useNodeSelection } from './useNodeSelection';
 
 export type DocsIndex = Record<
   string,
@@ -81,6 +83,12 @@ interface TreeDirProps {
   collapsedDirs: Set<string>;
   onToggleDir: (path: string) => void;
   dirPath: string;
+  /** When set, symbols act as graph node selectors instead of doc links. */
+  onSymbolClick?: (nodeId: string, event: React.MouseEvent) => void;
+  /** Currently selected node IDs (for highlighting in graph view). */
+  selectedNodes?: Set<string>;
+  /** Map from symbol name to graph node ID. */
+  nameToNodeId?: Map<string, string>;
 }
 
 function TreeDir({
@@ -93,6 +101,9 @@ function TreeDir({
   collapsedDirs,
   onToggleDir,
   dirPath,
+  onSymbolClick,
+  selectedNodes,
+  nameToNodeId,
 }: TreeDirProps) {
   const hasChildren = Object.keys(node.children).length > 0 || node.symbols.length > 0;
   if (!hasChildren) return null;
@@ -156,17 +167,17 @@ function TreeDir({
                   collapsedDirs={collapsedDirs}
                   onToggleDir={onToggleDir}
                   dirPath={`${dirPath}/${item.name}`}
+                  onSymbolClick={onSymbolClick}
+                  selectedNodes={selectedNodes}
+                  nameToNodeId={nameToNodeId}
                 />
               );
             }
-            const isActive = item.sym.docPath === activeDocPath;
             const colors = getCategoryColors(getNodeCategory(item.sym));
-            return (
-              <Link
-                key={`sym-${item.sym.docPath}`}
-                to={docPathToUrl(item.sym.docPath)}
-                className={`flex items-center h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis hover:bg-muted ${isActive ? 'bg-border font-medium' : ''}`}
-              >
+            const nodeId = nameToNodeId?.get(item.sym.name);
+            const isSelected = nodeId ? selectedNodes?.has(nodeId) : false;
+            const symContent = (
+              <>
                 <Guides guides={childGuides} isLast={itemIsLast} />
                 <span
                   className="ml-0.5 overflow-hidden text-ellipsis"
@@ -182,6 +193,30 @@ function TreeDir({
                     !
                   </span>
                 )}
+              </>
+            );
+
+            if (onSymbolClick && nodeId) {
+              return (
+                <button
+                  key={`sym-${item.sym.docPath}`}
+                  type="button"
+                  onClick={(e) => onSymbolClick(nodeId, e)}
+                  className={`flex items-center w-full h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis bg-transparent border-none p-0 text-left font-[inherit] hover:bg-muted ${isSelected ? 'bg-border font-medium' : ''}`}
+                >
+                  {symContent}
+                </button>
+              );
+            }
+
+            const isActive = item.sym.docPath === activeDocPath;
+            return (
+              <Link
+                key={`sym-${item.sym.docPath}`}
+                to={docPathToUrl(item.sym.docPath)}
+                className={`flex items-center h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis hover:bg-muted ${isActive ? 'bg-border font-medium' : ''}`}
+              >
+                {symContent}
               </Link>
             );
           })}
@@ -201,8 +236,20 @@ export function DocsTree({ visibleNames }: DocsTreeProps) {
   const index: DocsIndex | null = ctx?.docsIndex ?? null;
   const [collapsedDirs, setCollapsedDirs] = useState<Set<string>>(new Set());
   const location = useLocation();
+  const isGraphView = location.pathname === '/';
+  const { selected, clickNode } = useNodeSelection();
 
   const activeDocPath = useMemo(() => urlToDocPath(location.pathname), [location.pathname]);
+
+  /** Map from symbol name to graph node ID for click-to-select in graph view. */
+  const nameToNodeId = useMemo(() => {
+    if (!ctx?.graph) return undefined;
+    const map = new Map<string, string>();
+    for (const node of ctx.graph.nodes) {
+      map.set(node.name, node.id);
+    }
+    return map;
+  }, [ctx?.graph]);
 
   // Auto-expand all directories when the search filter changes
   useEffect(() => {
@@ -295,6 +342,9 @@ export function DocsTree({ visibleNames }: DocsTreeProps) {
                 collapsedDirs={collapsedDirs}
                 onToggleDir={onToggleDir}
                 dirPath={`/${name}`}
+                onSymbolClick={isGraphView ? clickNode : undefined}
+                selectedNodes={isGraphView ? selected : undefined}
+                nameToNodeId={nameToNodeId}
               />
             ))}
       </nav>
