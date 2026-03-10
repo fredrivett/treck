@@ -34,6 +34,9 @@ interface FlowControlsProps {
   diffDepth: number;
   diffMaxDepth: number;
   onDiffDepthChange: (depth: number) => void;
+  focusDepth: number;
+  focusMaxDepth: number;
+  onFocusDepthChange: (depth: number) => void;
 }
 
 /** Graph filtering controls: search, node stats, type filters, conditionals toggle. */
@@ -58,6 +61,9 @@ export function FlowControls({
   diffDepth,
   diffMaxDepth,
   onDiffDepthChange,
+  focusDepth,
+  focusMaxDepth,
+  onFocusDepthChange,
 }: FlowControlsProps) {
   const searchRef = useRef<HTMLInputElement>(null);
   const [localQuery, setLocalQuery] = useState(searchQuery);
@@ -96,6 +102,35 @@ export function FlowControls({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  // Unified depth slider — picks whichever source is active (diff takes priority)
+  const activeDepth = diffEnabled && diffMaxDepth > 0
+    ? { value: diffDepth, max: diffMaxDepth, onChange: onDiffDepthChange, id: 'diff-depth' }
+    : focusMaxDepth > 0
+      ? { value: focusDepth, max: focusMaxDepth, onChange: onFocusDepthChange, id: 'focus-depth' }
+      : null;
+
+  const depthSlider = activeDepth && (
+    <div className="mb-3">
+      <div className="flex items-center gap-2">
+        <label className="text-[11px] text-muted-foreground shrink-0" htmlFor={activeDepth.id}>
+          Depth
+        </label>
+        <input
+          id={activeDepth.id}
+          type="range"
+          min={0}
+          max={activeDepth.max}
+          value={activeDepth.value}
+          onChange={(e) => activeDepth.onChange(Number(e.target.value))}
+          className="flex-1 h-1 accent-foreground"
+        />
+        <span className="text-[11px] text-muted-foreground tabular-nums w-8 text-right">
+          {activeDepth.value === activeDepth.max ? 'all' : activeDepth.value}
+        </span>
+      </div>
+    </div>
+  );
 
   return (
     <div className="p-4">
@@ -145,6 +180,8 @@ export function FlowControls({
           {nodeCount} nodes, {edgeCount} edges
         </div>
       )}
+
+      {!loading && depthSlider}
 
       {!loading && availableTypes.size > 0 && (
         <div className="mb-3">
@@ -235,27 +272,6 @@ export function FlowControls({
               {diffSummary.modified === 0 && diffSummary.added === 0 && diffSummary.removed === 0 && (
                 <span>No changes</span>
               )}
-            </div>
-          )}
-          {diffEnabled && diffMaxDepth > 0 && (
-            <div className="mt-2 ml-5">
-              <div className="flex items-center gap-2">
-                <label className="text-[11px] text-muted-foreground shrink-0" htmlFor="diff-depth">
-                  Depth
-                </label>
-                <input
-                  id="diff-depth"
-                  type="range"
-                  min={0}
-                  max={diffMaxDepth}
-                  value={diffDepth}
-                  onChange={(e) => onDiffDepthChange(Number(e.target.value))}
-                  className="flex-1 h-1 accent-foreground"
-                />
-                <span className="text-[11px] text-muted-foreground tabular-nums w-8 text-right">
-                  {diffDepth === diffMaxDepth ? 'all' : diffDepth}
-                </span>
-              </div>
             </div>
           )}
         </div>

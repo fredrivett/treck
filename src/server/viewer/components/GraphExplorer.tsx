@@ -150,6 +150,16 @@ export function GraphExplorer({
     if (diffEnabled) setDiffDepth(0);
   }, [diffEnabled]);
 
+  // --- Focus depth state ---
+  const [focusDepth, setFocusDepth] = useState(Number.POSITIVE_INFINITY);
+  const [focusMaxDepth, setFocusMaxDepth] = useState(0);
+
+  /** When focus max depth changes, reset to show all. */
+  const handleFocusMaxDepthChange = useCallback((maxDepth: number) => {
+    setFocusMaxDepth(maxDepth);
+    setFocusDepth(maxDepth);
+  }, []);
+
   const diffSummary = useMemo<DiffSummary | null>(() => {
     if (!diffData) return null;
     return {
@@ -306,6 +316,8 @@ export function GraphExplorer({
         <FlowGraph
           graph={diffEnabled && diffGraph ? diffGraph : graph}
           diffData={diffData}
+          focusDepth={focusDepth}
+          onFocusMaxDepthChange={handleFocusMaxDepthChange}
           onLayoutReady={onLayoutReady}
           searchQuery={searchQuery}
           enabledTypes={enabledTypes}
@@ -377,6 +389,9 @@ export function GraphExplorer({
             diffDepth={diffDepth}
             diffMaxDepth={diffMaxDepth}
             onDiffDepthChange={setDiffDepth}
+            focusDepth={focusDepth}
+            focusMaxDepth={focusMaxDepth}
+            onFocusDepthChange={setFocusDepth}
           />
           <div className="border-t border-border" />
           <DocsTree visibleNames={visibleNames} />

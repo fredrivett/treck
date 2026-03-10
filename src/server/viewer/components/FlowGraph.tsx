@@ -18,6 +18,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import '@xyflow/react/dist/style.css';
 
 import type { GraphDiff } from '../../../graph/diff.js';
+import { connectedSubgraphWithDepths } from '../../../graph/graph-query.js';
 import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
 import { GRID_SIZE, snapCeil } from '../grid';
 import { edgeStyleByType, expandConditionals, toReactFlowNode } from './condition-expansion';
@@ -106,6 +107,10 @@ interface FlowGraphProps {
   graph: FlowGraphData;
   /** Diff data for annotating nodes with change status. Null when diff is inactive. */
   diffData?: GraphDiff | null;
+  /** Current focus depth limit. Nodes farther than this from focused nodes are hidden. */
+  focusDepth: number;
+  /** Called when the maximum available focus depth changes (e.g. new focused nodes). */
+  onFocusMaxDepthChange?: (maxDepth: number) => void;
   onLayoutReady?: () => void;
   searchQuery: string;
   enabledTypes: Set<NodeCategory> | null;
@@ -143,6 +148,8 @@ function useDarkMode(): boolean {
 function FlowGraphInner({
   graph,
   diffData,
+  focusDepth,
+  onFocusMaxDepthChange,
   onLayoutReady,
   searchQuery,
   enabledTypes,
@@ -268,37 +275,28 @@ function FlowGraphInner({
     onOffCenterChange?.(offCenter);
   }, [getViewport, onOffCenterChange]);
 
-  // Compute visible node IDs: union of connected subgraphs from all focused entries
-  const visibleIds = useMemo(() => {
+  // Compute visible node IDs with depth info from focused entries
+  const focusSubgraph = useMemo(() => {
     if (focusedEntries.size === 0) return null;
-    const connected = new Set<string>(focusedEntries);
+    return connectedSubgraphWithDepths(graph, [...focusedEntries]);
+  }, [focusedEntries, graph]);
 
-    // BFS downward from all focused entries (callees)
-    const downQueue = [...focusedEntries];
-    while (downQueue.length > 0) {
-      const current = downQueue.shift() as string;
-      for (const edge of graph.edges) {
-        if (edge.source === current && !connected.has(edge.target)) {
-          connected.add(edge.target);
-          downQueue.push(edge.target);
-        }
-      }
+  // Report focus max depth changes to parent
+  const focusMaxDepth = focusSubgraph?.maxDepth ?? 0;
+  useEffect(() => {
+    onFocusMaxDepthChange?.(focusMaxDepth);
+  }, [focusMaxDepth, onFocusMaxDepthChange]);
+
+  // Filter visible IDs by focus depth
+  const visibleIds = useMemo(() => {
+    if (!focusSubgraph) return null;
+    const depths = focusSubgraph.nodeDepths;
+    const visible = new Set<string>();
+    for (const [id, d] of Object.entries(depths)) {
+      if (d <= focusDepth) visible.add(id);
     }
-
-    // BFS upward from all focused entries (callers)
-    const upQueue = [...focusedEntries];
-    while (upQueue.length > 0) {
-      const current = upQueue.shift() as string;
-      for (const edge of graph.edges) {
-        if (edge.target === current && !connected.has(edge.source)) {
-          connected.add(edge.source);
-          upQueue.push(edge.source);
-        }
-      }
-    }
-
-    return connected;
-  }, [focusedEntries, graph.edges]);
+    return visible;
+  }, [focusSubgraph, focusDepth]);
 
   // Apply type and search filters
   const filteredGraph = useMemo(() => {
@@ -639,6 +637,8 @@ function FlowGraphInner({
 export function FlowGraph({
   graph,
   diffData,
+  focusDepth,
+  onFocusMaxDepthChange,
   onLayoutReady,
   searchQuery,
   enabledTypes,
@@ -651,6 +651,8 @@ export function FlowGraph({
       <FlowGraphInner
         graph={graph}
         diffData={diffData}
+        focusDepth={focusDepth}
+        onFocusMaxDepthChange={onFocusMaxDepthChange}
         onLayoutReady={onLayoutReady}
         searchQuery={searchQuery}
         enabledTypes={enabledTypes}
