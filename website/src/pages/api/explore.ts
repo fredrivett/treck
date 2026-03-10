@@ -7,22 +7,18 @@
  */
 
 import { execFileSync } from 'node:child_process';
-import {
-  existsSync,
-  mkdirSync,
-  readdirSync,
-  readFileSync,
-  readlinkSync,
-  rmSync,
-  writeFileSync,
-} from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { Redis } from '@upstash/redis';
 import type { APIRoute } from 'astro';
 import {
+  checkRateLimit,
+  generateConfig,
+  removeUnsafeSymlinks,
+  trackView,
+} from '../../lib/explore-helpers';
+import {
   CACHE_TTL_SECONDS,
-  DEFAULT_EXCLUDE,
-  DEFAULT_INCLUDE,
   FILE_COUNT_LIMIT,
   parseGitHubUrl,
   REPO_SIZE_LIMIT_KB,
@@ -30,10 +26,6 @@ import {
 } from '../../lib/explore-utils';
 
 export const prerender = false;
-
-/** Rate limit: max requests per IP within the window. */
-const RATE_LIMIT = 5;
-const RATE_WINDOW_SECONDS = 60;
 
 /** Shape of cached data in Redis. */
 interface CachedGraph {
@@ -52,21 +44,6 @@ function getRedis(): Redis | null {
   const token = import.meta.env.UPSTASH_REDIS_REST_TOKEN;
   if (!url || !token) return null;
   return new Redis({ url, token });
-}
-
-/**
- * Check and increment rate limit for an IP address.
- *
- * @returns true if the request is allowed, false if rate-limited
- */
-async function checkRateLimit(redis: Redis | null, ip: string): Promise<boolean> {
-  if (!redis) return true; // skip in local dev
-  const key = `rate:${ip}`;
-  const count = await redis.incr(key);
-  if (count === 1) {
-    await redis.expire(key, RATE_WINDOW_SECONDS);
-  }
-  return count <= RATE_LIMIT;
 }
 
 /**
@@ -99,92 +76,6 @@ async function getRepoSizeKb(owner: string, repo: string): Promise<number> {
   }
   const data = (await res.json()) as { size: number };
   return data.size;
-}
-
-/**
- * Generate a treck config YAML string for the default scope.
- *
- * @returns YAML config content
- */
-function generateConfig(): string {
-  const includeYaml = DEFAULT_INCLUDE.map((p) => `    - ${p}`).join('\n');
-  const excludeYaml = DEFAULT_EXCLUDE.map((p) => `    - ${p}`).join('\n');
-
-  return `output:
-  dir: _treck
-
-scope:
-  include:
-${includeYaml}
-
-  exclude:
-${excludeYaml}
-`;
-}
-
-/**
- * Recursively remove symlinks that point outside the given root directory.
- *
- * Symlinks within the repo are kept (they're legitimate). Symlinks pointing
- * outside could be used for data exfiltration.
- *
- * @param dir - Directory to scan
- * @param root - The clone root — symlinks must resolve within this
- */
-function removeUnsafeSymlinks(dir: string, root: string): void {
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const fullPath = join(dir, entry.name);
-    if (entry.isSymbolicLink()) {
-      try {
-        const linkTarget = readlinkSync(fullPath, 'utf-8');
-        const resolved = resolve(dir, linkTarget);
-        if (!resolved.startsWith(root)) {
-          rmSync(fullPath);
-        }
-      } catch {
-        // If we can't resolve it, remove it to be safe
-        rmSync(fullPath);
-      }
-    } else if (entry.isDirectory()) {
-      removeUnsafeSymlinks(fullPath, root);
-    }
-  }
-}
-
-/** Redis keys for view tracking. */
-const VIEWS_SORTED_SET = 'explore:views';
-const VIEWS_LAST_SEEN = 'explore:lastViewedAt';
-
-/**
- * Get today's date as YYYY-MM-DD for the daily views key.
- *
- * @returns Date string in YYYY-MM-DD format
- */
-function todayKey(): string {
-  return new Date().toISOString().slice(0, 10);
-}
-
-/**
- * Record a view for a repo. Increments the count in both an all-time
- * sorted set and a daily sorted set (with 48h TTL). Also updates the
- * last-viewed timestamp. Non-blocking — errors are silently ignored.
- *
- * @param redis - Redis client (or null in local dev without Redis)
- * @param repoSlug - The `owner/repo` key
- */
-async function trackView(redis: Redis | null, repoSlug: string): Promise<void> {
-  if (!redis) return;
-  try {
-    const dailyKey = `explore:views:${todayKey()}`;
-    await Promise.all([
-      redis.zincrby(VIEWS_SORTED_SET, 1, repoSlug),
-      redis.zincrby(dailyKey, 1, repoSlug),
-      redis.expire(dailyKey, 48 * 60 * 60),
-      redis.hset(VIEWS_LAST_SEEN, { [repoSlug]: Date.now() }),
-    ]);
-  } catch {
-    // Non-critical — never block the response
-  }
 }
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
