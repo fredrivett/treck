@@ -18,15 +18,35 @@ import {
 } from '@treck/graph/chat-helpers.js';
 import { buildSearchIndex } from '@treck/graph/search.js';
 import type { FlowGraph } from '@treck/graph/types.js';
+import { Redis } from '@upstash/redis';
 import { convertToModelMessages, stepCountIs, streamText, tool, type UIMessage } from 'ai';
 import type { APIRoute } from 'astro';
 import { z } from 'zod';
+import { parseGitHubUrl } from '../../lib/explore-utils';
 import { showcases } from '../../showcases';
 
 export const prerender = false;
 
 /** Valid showcase slugs — used to prevent path traversal. */
 const VALID_SLUGS = new Set(showcases.map((s) => s.slug));
+
+/** Prefix for explored (non-showcase) repos. */
+const EXPLORE_PREFIX = 'explore:';
+
+/**
+ * Load a graph for an explored repo from Upstash Redis.
+ *
+ * @returns The cached FlowGraph, or null if not found
+ */
+async function loadExploredGraph(repoSlug: string): Promise<FlowGraph | null> {
+  const url = import.meta.env.UPSTASH_REDIS_REST_URL;
+  const token = import.meta.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+
+  const redis = new Redis({ url, token });
+  const cached = await redis.get<{ graph: FlowGraph }>(`graph:${repoSlug}`);
+  return cached?.graph ?? null;
+}
 
 /** POST /api/chat */
 export const POST: APIRoute = async (context) => {
@@ -42,7 +62,15 @@ export const POST: APIRoute = async (context) => {
 
   const { project } = body;
 
-  if (!project || !VALID_SLUGS.has(project)) {
+  if (!project) {
+    return new Response(JSON.stringify({ error: 'Invalid or missing project' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  const isExplore = project.startsWith(EXPLORE_PREFIX);
+  if (!isExplore && !VALID_SLUGS.has(project)) {
     return new Response(JSON.stringify({ error: 'Invalid or missing project' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
@@ -56,32 +84,54 @@ export const POST: APIRoute = async (context) => {
     });
   }
 
-  // Read the graph JSON from the filesystem.
-  // In local dev, cwd is the website/ dir; on Vercel, files are at <func-root>/website/.
-  const fileName = `${project}.json`;
   let graph: FlowGraph;
-  try {
-    const candidates = [
-      join(process.cwd(), 'public', 'showcases', fileName),
-      join(process.cwd(), 'website', 'public', 'showcases', fileName),
-    ];
-    let raw: string | undefined;
-    for (const p of candidates) {
-      try {
-        raw = readFileSync(p, 'utf8');
-        break;
-      } catch {
-        // try next candidate
-      }
+
+  if (isExplore) {
+    // Load explored repo graph from Redis cache
+    const repoSlug = project.slice(EXPLORE_PREFIX.length);
+    // Validate the repo slug format
+    const parsed = parseGitHubUrl(`https://github.com/${repoSlug}`);
+    if (!parsed) {
+      return new Response(JSON.stringify({ error: 'Invalid explore project slug' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
-    if (!raw) throw new Error(`Graph file not found (tried ${candidates.join(', ')})`);
-    graph = JSON.parse(raw) as FlowGraph;
-  } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    return new Response(JSON.stringify({ error: `Failed to load graph: ${message}` }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+
+    const cachedGraph = await loadExploredGraph(`${parsed.owner}/${parsed.repo}`);
+    if (!cachedGraph) {
+      return new Response(
+        JSON.stringify({ error: 'Graph not found in cache. Try exploring the repo again.' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } },
+      );
+    }
+    graph = cachedGraph;
+  } else {
+    // Load pre-bundled showcase graph from filesystem
+    const fileName = `${project}.json`;
+    try {
+      const candidates = [
+        join(process.cwd(), 'public', 'showcases', fileName),
+        join(process.cwd(), 'website', 'public', 'showcases', fileName),
+      ];
+      let raw: string | undefined;
+      for (const p of candidates) {
+        try {
+          raw = readFileSync(p, 'utf8');
+          break;
+        } catch {
+          // try next candidate
+        }
+      }
+      if (!raw) throw new Error(`Graph file not found (tried ${candidates.join(', ')})`);
+      graph = JSON.parse(raw) as FlowGraph;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      return new Response(JSON.stringify({ error: `Failed to load graph: ${message}` }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
   }
 
   const searchIndex = buildSearchIndex(graph);

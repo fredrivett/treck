@@ -7,7 +7,7 @@ interface ShowcaseViewerProps {
   /** Pre-loaded graph data for the showcased project. */
   graph: FlowGraphData;
   /** Showcase project slug — used to route chat requests to the correct graph. */
-  project: string;
+  project?: string;
 }
 
 /** Standalone graph viewer for showcasing analysed projects on the website. */

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-08T22:21:58.136Z",
+  "generatedAt": "2026-03-10T16:14:53.705Z",
   "nodes": [
     {
       "id": "scripts/generate-showcase.ts:generateConfig",
@@ -10,8 +10,8 @@
       "isAsync": false,
       "hash": "de36ca063f023acc1c3bdc360a9d56956a07ca2dc778ae1a73ea1b4d952c9156",
       "lineRange": [
-        45,
-        62
+        58,
+        75
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -33,8 +33,8 @@
       "isAsync": false,
       "hash": "28239770146ed813df60b506b2a10b287d7f90b4cefdaaaf7d79b562c4477221",
       "lineRange": [
-        62,
-        67
+        75,
+        80
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -62,8 +62,8 @@
       "isAsync": false,
       "hash": "1008bdae4de044c778cd3f4326c00d5f1373cb5b0da512c0836634fb16aad91a",
       "lineRange": [
-        84,
-        84
+        97,
+        97
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -76,8 +76,8 @@
       "isAsync": false,
       "hash": "849a323622a5d1ec650ad5e4a9eb9ac909d348e516927c822b7d5231925f840e",
       "lineRange": [
-        85,
-        85
+        98,
+        98
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -90,8 +90,8 @@
       "isAsync": false,
       "hash": "5121eeea6b9cfeb8e56b0c264d22b54490a387e474b1c858127a18550cdd6ae7",
       "lineRange": [
-        86,
-        86
+        99,
+        99
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -104,8 +104,8 @@
       "isAsync": false,
       "hash": "57a477492bc147ef3092436034dcebb92a4a053c02bda28ef515ecc313650dca",
       "lineRange": [
-        87,
-        87
+        100,
+        100
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -118,8 +118,8 @@
       "isAsync": false,
       "hash": "450b28e232f75b08fe2ca01d0f56f4830a24687a8aef6f29b7fd9f36e968ffcd",
       "lineRange": [
-        109,
-        109
+        122,
+        122
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -132,8 +132,8 @@
       "isAsync": false,
       "hash": "505f7fb001347d14d4f0ca38b92abe2a2543b7f3f481cbb8650a5c4ca4bdad17",
       "lineRange": [
-        119,
-        119
+        132,
+        132
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -146,8 +146,8 @@
       "isAsync": false,
       "hash": "35431f59a29dd5538d92bb45d8d81aa423b89ed2e075627b47fef5cfbed993fe",
       "lineRange": [
-        130,
-        130
+        143,
+        143
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -442,10 +442,10 @@
       "kind": "function",
       "filePath": "src/cli/commands/mcp.ts",
       "isAsync": false,
-      "hash": "d2938b74954345650ebb748c79c78a7a6740ef334d6961c7c34f84cdc2b418e5",
+      "hash": "710bca37e25ef746937d297242fca3b3e9a76531c9a6e3fee1ac7437a4fa308f",
       "lineRange": [
-        21,
-        34
+        22,
+        40
       ],
       "hasJsDoc": true,
       "description": "Handle `search_nodes` tool — find symbols by name, file path, or description.",
@@ -463,6 +463,13 @@
           "isOptional": false,
           "isRest": false,
           "description": "The flow graph to search"
+        },
+        {
+          "name": "index",
+          "type": "SearchIndex",
+          "isOptional": true,
+          "isRest": false,
+          "description": "Optional pre-built search index for better matching"
         }
       ],
       "returnType": "McpTextResponse",
@@ -476,8 +483,8 @@
       "isAsync": false,
       "hash": "aa93e81815a5ba10c1e3d8e997dc2974398a6731a0af54c81b0138e5d6cd4eba",
       "lineRange": [
-        34,
-        66
+        40,
+        72
       ],
       "hasJsDoc": true,
       "description": "Handle `show_symbol` tool — get the connected subgraph for one or more targets.",
@@ -515,8 +522,8 @@
       "isAsync": false,
       "hash": "5cdf9c1d445cff42ce1e3e580773956f0d2ff3ea51de1152aa8f4c595b3a931a",
       "lineRange": [
-        66,
-        90
+        72,
+        96
       ],
       "hasJsDoc": true,
       "description": "Handle `list_entry_points` tool — list all entry points in the project.",
@@ -547,8 +554,8 @@
       "isAsync": false,
       "hash": "a4401ec3290d68ab5f4ddc3c54b4506d2d428d386f3a5342b4a25aafed67635d",
       "lineRange": [
-        90,
-        150
+        96,
+        156
       ],
       "hasJsDoc": true,
       "description": "Handle `find_callers` tool — find all symbols that call a given symbol.",
@@ -586,8 +593,8 @@
       "isAsync": false,
       "hash": "cf29510209de1af63cd29fc019097d67048ba1ca4570945625034c63e47036c9",
       "lineRange": [
-        150,
-        210
+        156,
+        216
       ],
       "hasJsDoc": true,
       "description": "Handle `find_callees` tool — find all symbols that a given symbol calls.",
@@ -625,8 +632,8 @@
       "isAsync": false,
       "hash": "62a37eb47f40ae657bac643dd3a5f6f077eac04ec84833d2175d5c3fd150a6f6",
       "lineRange": [
-        210,
-        235
+        216,
+        241
       ],
       "hasJsDoc": true,
       "description": "Handle `paths_between` tool — find call paths between two symbols.",
@@ -671,8 +678,8 @@
       "isAsync": false,
       "hash": "643666387e391e4e68d5c14bd572d6ed3f76fe53295a790ff8f3a33f4d96d2bd",
       "lineRange": [
-        235,
-        263
+        241,
+        269
       ],
       "hasJsDoc": true,
       "description": "Handle `get_graph_summary` tool — overview stats for the project graph.",
@@ -696,8 +703,8 @@
       "isAsync": false,
       "hash": "5aa35f4039f3e1a9b6d6c5f12d841c23394f761ca659163f701cbe51328c301e",
       "lineRange": [
-        263,
-        296
+        269,
+        302
       ],
       "hasJsDoc": true,
       "description": "Handle `diff_graph` tool — compare current graph against a base git ref.\n\nLoads graph.json from the base ref via `git show` and diffs it against\nthe current in-memory graph by node hash.",
@@ -740,10 +747,10 @@
       "kind": "function",
       "filePath": "src/cli/commands/mcp.ts",
       "isAsync": true,
-      "hash": "ee80487d8cbdb5a78f12eb186f803fe64038e15928fb29d34dcb04ece1740588",
+      "hash": "7e98712602c2b56e6d5de87a027e8b9840f7623c349558a103c7f383982e685e",
       "lineRange": [
-        296,
-        513
+        302,
+        522
       ],
       "hasJsDoc": true,
       "description": "Register the `treck mcp` CLI command.\n\nStarts an MCP server over stdio, exposing graph queries as tools\nfor AI agents like Claude Code, Cursor, and Windsurf.",
@@ -1402,6 +1409,22 @@
       "isExported": true
     },
     {
+      "id": "src/cli/utils/git.ts:getCurrentBranch",
+      "name": "getCurrentBranch",
+      "kind": "function",
+      "filePath": "src/cli/utils/git.ts",
+      "isAsync": false,
+      "hash": "24c56679a8b93db678c56d77d789fdc5e3b2b32d82195aaf88b2bbf9767171d9",
+      "lineRange": [
+        6,
+        24
+      ],
+      "hasJsDoc": true,
+      "description": "Get the current git branch name.\n\nUses `git rev-parse --abbrev-ref HEAD` to determine the current branch.",
+      "returnType": "string | undefined",
+      "isExported": true
+    },
+    {
       "id": "src/cli/utils/git.ts:detectBaseRef",
       "name": "detectBaseRef",
       "kind": "function",
@@ -1409,8 +1432,8 @@
       "isAsync": false,
       "hash": "17678a5b5d4220fd266934f1d1802fb1cc7dde66f4b4ea8f76ebe7aa63872028",
       "lineRange": [
-        6,
-        26
+        24,
+        44
       ],
       "hasJsDoc": true,
       "description": "Detect the default branch of the remote origin.\n\nUses `git symbolic-ref refs/remotes/origin/HEAD` to find the remote's\ndefault branch name (e.g. \"main\" or \"master\").",
@@ -1428,8 +1451,8 @@
       "isAsync": false,
       "hash": "7c778b6433eaf7c6aa7f3679440749ec88026e81fd6f474f4bef0004fb55a924",
       "lineRange": [
-        26,
-        51
+        44,
+        69
       ],
       "hasJsDoc": true,
       "description": "Load and parse graph.json from a specific git ref.\n\nUses `git show <ref>:<path>` to read the file contents at that commit\nwithout checking out the branch.",
@@ -2194,8 +2217,8 @@
       "isAsync": false,
       "hash": "c703f4919aa0e8a2950d4510d1a208b7909b721a4371431cfddaac55440e9a26",
       "lineRange": [
-        9,
-        55
+        10,
+        56
       ],
       "hasJsDoc": true,
       "description": "Pick example nodes for the system prompt.\n\nSelects entry points and the most-connected nodes to teach the AI the\nID format and give it a sense of the codebase structure.",
@@ -2219,8 +2242,8 @@
       "isAsync": false,
       "hash": "f73405a0cbb472cc1b234378b8168389bc2b5129ccccca1332e07b453685365b",
       "lineRange": [
-        55,
-        80
+        56,
+        81
       ],
       "hasJsDoc": true,
       "description": "Build the system prompt with example nodes and instructions.",
@@ -2242,13 +2265,13 @@
       "kind": "function",
       "filePath": "src/graph/chat-helpers.ts",
       "isAsync": false,
-      "hash": "ae7330ed4723025919710010b1c94ad8168ae114cb90c49f48401adb5877e7ed",
+      "hash": "04b9873a54b3cb7b9ec868fb9e8ab3589c4a7c6c4f6683f66dbc287405b9dc2f",
       "lineRange": [
-        80,
-        108
+        81,
+        143
       ],
       "hasJsDoc": true,
-      "description": "Execute a search_nodes tool call against the graph.",
+      "description": "Execute a search_nodes tool call against the graph.\n\nWhen a `SearchIndex` is provided, uses MiniSearch for multi-word,\ncamelCase-aware, fuzzy matching with relevance scoring. Without an\nindex, falls back to simple case-insensitive substring matching.",
       "structuredParams": [
         {
           "name": "query",
@@ -2263,6 +2286,13 @@
           "isOptional": false,
           "isRest": false,
           "description": "The full flow graph"
+        },
+        {
+          "name": "index",
+          "type": "SearchIndex",
+          "isOptional": true,
+          "isRest": false,
+          "description": "Optional pre-built search index for better matching"
         }
       ],
       "isExported": true
@@ -2275,8 +2305,8 @@
       "isAsync": false,
       "hash": "ff58fa130f78a86e434864364646821c06998ecf208a8c3141863015654494e4",
       "lineRange": [
-        108,
-        127
+        143,
+        162
       ],
       "hasJsDoc": true,
       "description": "Validate node IDs for a select_nodes tool call.",
@@ -3178,6 +3208,57 @@
       "isExported": true
     },
     {
+      "id": "src/graph/search.ts:camelCaseTokenize",
+      "name": "camelCaseTokenize",
+      "kind": "function",
+      "filePath": "src/graph/search.ts",
+      "isAsync": false,
+      "hash": "5251408776ca1795b0fe8cbbfd7c159ed33a63d20d8b8e2ce98046fd6fd2174e",
+      "lineRange": [
+        13,
+        35
+      ],
+      "hasJsDoc": true,
+      "isTrivial": true,
+      "description": "Tokenize text by splitting on camelCase boundaries and common separators.\n\nSplits `useDarkMode` into `[\"use\", \"dark\", \"mode\"]` and\n`src/api/route.ts:POST` into `[\"src\", \"api\", \"route\", \"ts\", \"post\"]`.",
+      "structuredParams": [
+        {
+          "name": "text",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Raw text to tokenize"
+        }
+      ],
+      "returnType": "string[]",
+      "isExported": true
+    },
+    {
+      "id": "src/graph/search.ts:buildSearchIndex",
+      "name": "buildSearchIndex",
+      "kind": "function",
+      "filePath": "src/graph/search.ts",
+      "isAsync": false,
+      "hash": "8132c3cd703c194152983bd4e8a9a63490f947c492a3788d2c332781d7c92f19",
+      "lineRange": [
+        35,
+        72
+      ],
+      "hasJsDoc": true,
+      "description": "Build a MiniSearch index from a flow graph.\n\nIndex once after loading the graph, then pass the result to\n`executeSearchNodes` for fast, repeated searches.",
+      "structuredParams": [
+        {
+          "name": "graph",
+          "type": "FlowGraph",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The flow graph to index"
+        }
+      ],
+      "returnType": "SearchIndex",
+      "isExported": true
+    },
+    {
       "id": "src/graph/symbol-index.ts:dirnameBrowser",
       "name": "dirnameBrowser",
       "kind": "function",
@@ -3552,10 +3633,10 @@
       "kind": "function",
       "filePath": "src/server/chat.ts",
       "isAsync": true,
-      "hash": "291c01d077fc723ffab8e0d145f4312fd0c64d9b09bcd86799f10f09e6c43f42",
+      "hash": "fcb88808fb42ab04c354e1685e7d90e2987ee8c65e363c216b167ba1377c274b",
       "lineRange": [
-        18,
-        101
+        19,
+        104
       ],
       "hasJsDoc": true,
       "description": "Handle a POST /api/chat request.\n\nStreams responses from the Anthropic API with graph context,\nautomatically handling the tool-use loop for search_nodes and\nselect_nodes via the AI SDK.",
@@ -3580,6 +3661,13 @@
           "isOptional": false,
           "isRest": false,
           "description": "The current flow graph"
+        },
+        {
+          "name": "searchIndex",
+          "type": "SearchIndex",
+          "isOptional": true,
+          "isRest": false,
+          "description": "Optional pre-built search index for better matching"
         }
       ],
       "returnType": "Promise<void>",
@@ -3593,8 +3681,8 @@
       "isAsync": false,
       "hash": "8131a9f57e256532d6becf8708767698b20d05275c71283f82ec56dd42c8d0a8",
       "lineRange": [
-        30,
-        47
+        32,
+        49
       ],
       "hasJsDoc": true,
       "description": "Serve a static file with the appropriate Content-Type header.",
@@ -3623,10 +3711,10 @@
       "kind": "function",
       "filePath": "src/server/index.ts",
       "isAsync": true,
-      "hash": "7f2f45824031978588c8fca339bbd20b411b437e39725bdd36e4375235661eb6",
+      "hash": "8c45db1e4213245e2e455e79d664061d029b193077dfe9702de8b6e518829457",
       "lineRange": [
-        47,
-        224
+        49,
+        228
       ],
       "hasJsDoc": true,
       "description": "Start the treck documentation viewer HTTP server.\n\nServes the single-page viewer app, a JSON API for the symbol index and\nindividual doc pages, and the graph data. Watches graph.json for changes\nand rebuilds the index automatically.\n\nIf the requested port is taken, retries up to 10 consecutive ports.",
@@ -3695,10 +3783,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/App.tsx",
       "isAsync": false,
-      "hash": "6b12b3ae1d444e3fa536d8df8805d2c8250cb967f44c60d3ae6ccfcf092e8a0e",
+      "hash": "58b783bd249ea86dd1aa21b2b3f7ffc024f1c032698c7c826d9ac396912f0c12",
       "lineRange": [
         5,
-        38
+        41
       ],
       "hasJsDoc": true,
       "description": "Fetches graph data and project info, then renders the GraphExplorer.",
@@ -3712,8 +3800,8 @@
       "isAsync": false,
       "hash": "e82282bdb62977213d25af3965402d3813f7df99b64925e92602f25e45df2caa",
       "lineRange": [
-        38,
-        49
+        41,
+        52
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -3728,8 +3816,8 @@
       "isAsync": false,
       "hash": "a33a4d8344eeb3518fd73ee05f1ff4b6c826167f46ead657548e27a9786ab444",
       "lineRange": [
-        39,
-        51
+        51,
+        63
       ],
       "hasJsDoc": true,
       "description": "Renders markdown content from assistant messages.",
@@ -3744,15 +3832,102 @@
       "isExported": false
     },
     {
+      "id": "src/server/viewer/components/ActiveChat.tsx:InlineSpinner",
+      "name": "InlineSpinner",
+      "kind": "component",
+      "filePath": "src/server/viewer/components/ActiveChat.tsx",
+      "isAsync": false,
+      "hash": "491ec223e646c36188a26624beb29afaac07e8b2ca8eaebe42500b49ce62d88b",
+      "lineRange": [
+        63,
+        70
+      ],
+      "hasJsDoc": true,
+      "isTrivial": true,
+      "description": "Small inline spinner for in-progress tool calls.",
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/ActiveChat.tsx:ToolCallIndicator",
+      "name": "ToolCallIndicator",
+      "kind": "component",
+      "filePath": "src/server/viewer/components/ActiveChat.tsx",
+      "isAsync": false,
+      "hash": "80b26700182d66b4114bb45b16a01719e4a2a24265e4b5af257f1218a0e7c941",
+      "lineRange": [
+        70,
+        177
+      ],
+      "hasJsDoc": true,
+      "description": "Standalone tool call indicator rendered outside chat bubbles.",
+      "structuredParams": [
+        {
+          "name": "part",
+          "type": "ToolPart",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "onSelectNode",
+          "type": "(ids: string[], event: React.MouseEvent) => void",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "getCategory",
+          "type": "(nodeId: string) => NodeCategory",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "selectedNodes",
+          "type": "Set<string>",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/ActiveChat.tsx:segmentAssistantParts",
+      "name": "segmentAssistantParts",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/ActiveChat.tsx",
+      "isAsync": false,
+      "hash": "89b817ad525b9a6465464ed55641885cc06039028fd8c8670fc5850c4b77514a",
+      "lineRange": [
+        182,
+        218
+      ],
+      "hasJsDoc": true,
+      "description": "Split an assistant message's parts into segments for rendering.\n\nGroups consecutive text parts into a single text segment; each tool\npart becomes its own segment. This allows text to render in bubbles\nand tool calls to render as standalone indicators between them.",
+      "structuredParams": [
+        {
+          "name": "msgId",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "parts",
+          "type": "UIMessage['parts']",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "MessageSegment[]",
+      "isExported": false
+    },
+    {
       "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat",
       "name": "ActiveChat",
       "kind": "component",
       "filePath": "src/server/viewer/components/ActiveChat.tsx",
       "isAsync": false,
-      "hash": "9c930602b30e9b96fffde481d7cc30459fe61bcddf783ecb9b6cd1033ef380a4",
+      "hash": "5870962d6aff2c6adbef1c2e9ddfd90b8fd144ce6ea0f962286629e4463f667e",
       "lineRange": [
-        51,
-        302
+        218,
+        465
       ],
       "hasJsDoc": true,
       "description": "Active chat conversation with message thread and input.",
@@ -3937,7 +4112,7 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/ChatPanel.tsx",
       "isAsync": false,
-      "hash": "d638d4812a7193162791250f0fcf88853e6cde85d56560e0390484e872f249af",
+      "hash": "c98fac6d39a57f5d66847b899bc26497443d421acde7ad2ad404125fdbf307e5",
       "lineRange": [
         116,
         340
@@ -4409,10 +4584,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/FlowControls.tsx",
       "isAsync": false,
-      "hash": "ef29eb7b261ffc632490f7badb24bffacd34bba502ddd9033f8b1c71c476f726",
+      "hash": "bdb97ac183ae59e55fa20eef230608eeeb4d875aaea7a1802fd42222e5e5274a",
       "lineRange": [
-        20,
-        141
+        23,
+        189
       ],
       "hasJsDoc": true,
       "description": "Graph filtering controls: search, node stats, type filters, conditionals toggle.",
@@ -4639,10 +4814,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/FlowGraph.tsx",
       "isAsync": true,
-      "hash": "edffc701007eb3f97e98839cf44d87484ab94f1cf4ff8a289c8e4516b94e6da2",
+      "hash": "497e9861fab86d01bb6d08937727ec1724f1b79c3d25b946243971220e6a5750",
       "lineRange": [
         164,
-        665
+        593
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -4699,514 +4874,8 @@
       "isAsync": false,
       "hash": "5e3a62e0203f193e421af51476ba4e43843f71026d6ca0b76582392d5b53c49d",
       "lineRange": [
-        665,
-        690
-      ],
-      "hasJsDoc": true,
-      "isTrivial": true,
-      "description": "ReactFlow-based graph visualization with ELK layout.",
-      "structuredParams": [
-        {
-          "name": "graph",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "onLayoutReady",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "searchQuery",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "enabledTypes",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "showConditionals",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "recenterRef",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "onOffCenterChange",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "isExported": true
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:getNodeCategory",
-      "name": "getNodeCategory",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "d8bb9027fbd1e97c6e68c2fbc8b73510a052e8187eaa846d0319fb34df328584",
-      "lineRange": [
-        46,
-        54
-      ],
-      "hasJsDoc": true,
-      "description": "Returns the filter category for a graph node (entry type or kind-based).",
-      "structuredParams": [
-        {
-          "name": "node",
-          "type": "GraphNode",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "returnType": "NodeCategory",
-      "isExported": true
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:getCategoryLabel",
-      "name": "getCategoryLabel",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "2715c980acd3228c2eca1f77b3c4709e28a62dfe251d32aa76c481fd8bef6137",
-      "lineRange": [
-        54,
-        58
-      ],
-      "hasJsDoc": false,
-      "isTrivial": true,
-      "structuredParams": [
-        {
-          "name": "category",
-          "type": "NodeCategory",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "returnType": "string",
-      "isExported": true
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:toReactFlowEdges",
-      "name": "toReactFlowEdges",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "03cab612f2b8123180317c144968b5655533e105b8464433386b14a3f44097c3",
-      "lineRange": [
-        58,
-        84
-      ],
-      "hasJsDoc": false,
-      "isTrivial": true,
-      "structuredParams": [
-        {
-          "name": "graphEdges",
-          "type": "FlowGraphData['edges']",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "showConditionals",
-          "type": "boolean",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "returnType": "Edge[]",
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:runElkLayout",
-      "name": "runElkLayout",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": true,
-      "hash": "bad6297cd150543075044d1c000e24424ef9075bd53056ca3f1a004253ec9c82",
-      "lineRange": [
-        93,
-        128
-      ],
-      "hasJsDoc": false,
-      "structuredParams": [
-        {
-          "name": "currentNodes",
-          "type": "Node[]",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "edges",
-          "type": "LayoutEdge[]",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "layoutOptions",
-          "type": "LayoutOptions",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "sizeCache",
-          "type": "SizeCache",
-          "isOptional": true,
-          "isRest": false
-        }
-      ],
-      "returnType": "Promise<Map<string, { x: number; y: number }>>",
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:useDarkMode",
-      "name": "useDarkMode",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "a29b93857b4333d45e51efadc3741851fc4e82633a0198479eb66ffe9c95f1f0",
-      "lineRange": [
-        140,
-        164
-      ],
-      "hasJsDoc": true,
-      "description": "Detect dark mode by checking for a `.dark` class on the document root.\n\nObserves class mutations on `<html>` so the value updates when the\ntheme is toggled at runtime.",
-      "returnType": "boolean",
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
-      "name": "FlowGraphInner",
-      "kind": "component",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": true,
-      "hash": "edffc701007eb3f97e98839cf44d87484ab94f1cf4ff8a289c8e4516b94e6da2",
-      "lineRange": [
-        164,
-        665
-      ],
-      "hasJsDoc": false,
-      "structuredParams": [
-        {
-          "name": "graph",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "onLayoutReady",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "searchQuery",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "enabledTypes",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "showConditionals",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "recenterRef",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "onOffCenterChange",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraph",
-      "name": "FlowGraph",
-      "kind": "component",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "5e3a62e0203f193e421af51476ba4e43843f71026d6ca0b76582392d5b53c49d",
-      "lineRange": [
-        665,
-        690
-      ],
-      "hasJsDoc": true,
-      "isTrivial": true,
-      "description": "ReactFlow-based graph visualization with ELK layout.",
-      "structuredParams": [
-        {
-          "name": "graph",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "onLayoutReady",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "searchQuery",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "enabledTypes",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "showConditionals",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "recenterRef",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "onOffCenterChange",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "isExported": true
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:getNodeCategory",
-      "name": "getNodeCategory",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "d8bb9027fbd1e97c6e68c2fbc8b73510a052e8187eaa846d0319fb34df328584",
-      "lineRange": [
-        46,
-        54
-      ],
-      "hasJsDoc": true,
-      "description": "Returns the filter category for a graph node (entry type or kind-based).",
-      "structuredParams": [
-        {
-          "name": "node",
-          "type": "GraphNode",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "returnType": "NodeCategory",
-      "isExported": true
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:getCategoryLabel",
-      "name": "getCategoryLabel",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "2715c980acd3228c2eca1f77b3c4709e28a62dfe251d32aa76c481fd8bef6137",
-      "lineRange": [
-        54,
-        58
-      ],
-      "hasJsDoc": false,
-      "isTrivial": true,
-      "structuredParams": [
-        {
-          "name": "category",
-          "type": "NodeCategory",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "returnType": "string",
-      "isExported": true
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:toReactFlowEdges",
-      "name": "toReactFlowEdges",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "03cab612f2b8123180317c144968b5655533e105b8464433386b14a3f44097c3",
-      "lineRange": [
-        58,
-        84
-      ],
-      "hasJsDoc": false,
-      "isTrivial": true,
-      "structuredParams": [
-        {
-          "name": "graphEdges",
-          "type": "FlowGraphData['edges']",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "showConditionals",
-          "type": "boolean",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "returnType": "Edge[]",
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:runElkLayout",
-      "name": "runElkLayout",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": true,
-      "hash": "bad6297cd150543075044d1c000e24424ef9075bd53056ca3f1a004253ec9c82",
-      "lineRange": [
-        93,
-        128
-      ],
-      "hasJsDoc": false,
-      "structuredParams": [
-        {
-          "name": "currentNodes",
-          "type": "Node[]",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "edges",
-          "type": "LayoutEdge[]",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "layoutOptions",
-          "type": "LayoutOptions",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "sizeCache",
-          "type": "SizeCache",
-          "isOptional": true,
-          "isRest": false
-        }
-      ],
-      "returnType": "Promise<Map<string, { x: number; y: number }>>",
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:useDarkMode",
-      "name": "useDarkMode",
-      "kind": "function",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "a29b93857b4333d45e51efadc3741851fc4e82633a0198479eb66ffe9c95f1f0",
-      "lineRange": [
-        140,
-        164
-      ],
-      "hasJsDoc": true,
-      "description": "Detect dark mode by checking for a `.dark` class on the document root.\n\nObserves class mutations on `<html>` so the value updates when the\ntheme is toggled at runtime.",
-      "returnType": "boolean",
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
-      "name": "FlowGraphInner",
-      "kind": "component",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": true,
-      "hash": "edffc701007eb3f97e98839cf44d87484ab94f1cf4ff8a289c8e4516b94e6da2",
-      "lineRange": [
-        164,
-        665
-      ],
-      "hasJsDoc": false,
-      "structuredParams": [
-        {
-          "name": "graph",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "onLayoutReady",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "searchQuery",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "enabledTypes",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "showConditionals",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "recenterRef",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "onOffCenterChange",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraph",
-      "name": "FlowGraph",
-      "kind": "component",
-      "filePath": "src/server/viewer/components/FlowGraph.tsx",
-      "isAsync": false,
-      "hash": "5e3a62e0203f193e421af51476ba4e43843f71026d6ca0b76582392d5b53c49d",
-      "lineRange": [
-        665,
-        690
+        593,
+        618
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -5263,10 +4932,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/GraphExplorer.tsx",
       "isAsync": false,
-      "hash": "c2e978301211cd1ac773e1e0ba5b71779109872e693504f24ca73a41eaa27ad2",
+      "hash": "8ba94bf0cacd37d82e4ccda0d2d45bdfc1f9c4988bf3bcd23e7868175acbdaac",
       "lineRange": [
-        36,
-        342
+        43,
+        434
       ],
       "hasJsDoc": true,
       "description": "Standalone graph explorer — renders sidebar, graph, and docs from a single graph prop.",
@@ -5429,10 +5098,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
-      "hash": "ac04d29459723b738d0cdd2c152958c448af238b5f6187a1190a4a50e09483c4",
+      "hash": "4faa548971c05a498edf77525cb7c3f67fa841f3f36e0188ae0ec2a72145720b",
       "lineRange": [
-        6,
-        35
+        7,
+        40
       ],
       "hasJsDoc": true,
       "description": "Display a file path, truncating from the start when it overflows.\n\nDuring measurement, renders as a non-breaking space so the path\ncontributes height but not width to the node sizing.\nShows the full path in a native tooltip on hover.",
@@ -5460,10 +5129,10 @@
       "kind": "function",
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
-      "hash": "ac8faa600df4ca7e7b53e288c2241dd895f2893ac2a2555dfe9017bdc02a95be",
+      "hash": "8c298c4d16a03cb445012138657a3b48ad5bb59476af881a85eda5139eacd072",
       "lineRange": [
-        56,
-        60
+        61,
+        65
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -5484,15 +5153,38 @@
       "isExported": false
     },
     {
+      "id": "src/server/viewer/components/NodeTypes.tsx:entryTypeConfig",
+      "name": "entryTypeConfig",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/NodeTypes.tsx",
+      "isAsync": false,
+      "hash": "b78b0199c619f86ccb47d6a9631d99ecdd77e4fcfee46d65e58850304149d3d9",
+      "lineRange": [
+        65,
+        71
+      ],
+      "hasJsDoc": true,
+      "description": "Resolve entry type config from shared category colors.",
+      "structuredParams": [
+        {
+          "name": "entryType",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "isExported": false
+    },
+    {
       "id": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode",
       "name": "EntryPointNode",
       "kind": "component",
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
-      "hash": "8c5fc986a5d74292b42a3e5fb622a3e5e98b64c9e10cfe027f35f47764cefde0",
+      "hash": "825a9d2967b4975a3e2126a64967f9817059b46997ce7d6549ad495a559725f8",
       "lineRange": [
-        123,
-        165
+        92,
+        134
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -5511,10 +5203,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
-      "hash": "ed8f814a092aa9b40d8b7fe56aff5ca311e933c6952b47918981ea43d182411a",
+      "hash": "75050f011af6c27fc2a1057bfe1c38e88ed1920f87028549c8ef6d3eb30aeaed",
       "lineRange": [
-        165,
-        189
+        134,
+        159
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -5533,10 +5225,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
-      "hash": "1e9a7d9677a093613afefb40fe33c21309771424da6d0ea1502faac63ce43a44",
+      "hash": "7d110a743145341748741628e134be74c821b73543065e4bdee713dfe8b1a633",
       "lineRange": [
-        189,
-        213
+        159,
+        184
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -5555,10 +5247,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
-      "hash": "df4a3f99cd1556aa6a9e59b89f661b1debd3973af81b51fa221257d14fb3a503",
+      "hash": "e0ec6afd3f612a279fa783cb682f6badebe84f2e638199182db4560fed279981",
       "lineRange": [
-        213,
-        251
+        184,
+        222
       ],
       "hasJsDoc": true,
       "description": "Angled-corner condition node (hexagonal shape via CSS clip-path on a background layer).",
@@ -5578,10 +5270,10 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/NodeTypes.tsx",
       "isAsync": false,
-      "hash": "bd4ff4c603e3dc4c91abcdbc0b4b70ee584ac511aac3ac601a5eb44e77453a76",
+      "hash": "e2ef643893c0440430c79653da4f183633b25e18273715042574e839a2e21728",
       "lineRange": [
-        251,
-        275
+        222,
+        247
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -5684,13 +5376,14 @@
       "kind": "component",
       "filePath": "src/server/viewer/components/Sidebar.tsx",
       "isAsync": false,
-      "hash": "2f581ed1c1f797bbad05afd5534606150ef7fc9f1715fe43bd1100c37da6e60b",
+      "hash": "cfcb2c027ac87f60cfdc3b703bcca97acce9b8e312d4e2537d2fa9daa8d8e6c2",
       "lineRange": [
         5,
-        13
+        10
       ],
-      "hasJsDoc": false,
+      "hasJsDoc": true,
       "isTrivial": true,
+      "description": "Left sidebar shell — width is controlled by the parent resizable panel.",
       "structuredParams": [
         {
           "name": "children",
@@ -5912,116 +5605,55 @@
       "isExported": true
     },
     {
-      "id": "src/server/viewer/components/ui/badge.tsx:badgeVariants",
-      "name": "badgeVariants",
-      "kind": "const",
-      "filePath": "src/server/viewer/components/ui/badge.tsx",
+      "id": "src/server/viewer/components/node-colors.ts:getCategoryColors",
+      "name": "getCategoryColors",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/node-colors.ts",
       "isAsync": false,
-      "hash": "a59db91b64be8a09f18086b222b4427ca7dab3466e17b4bc707de922210c0769",
+      "hash": "157446004e97847fdf522b0232bfab3ed4277db71d29b89a1edc738c80b9706b",
       "lineRange": [
-        31,
-        68
-      ],
-      "hasJsDoc": false,
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/ui/badge.tsx:Badge",
-      "name": "Badge",
-      "kind": "component",
-      "filePath": "src/server/viewer/components/ui/badge.tsx",
-      "isAsync": false,
-      "hash": "acc416519946ab7c2c276b0ac9d7396c8699cfcfa67d4d02e4560a587c72958f",
-      "lineRange": [
-        95,
-        103
+        102,
+        111
       ],
       "hasJsDoc": true,
-      "description": "Renders a styled badge component.",
+      "isTrivial": true,
+      "description": "Get the color config for a node category.",
       "structuredParams": [
         {
-          "name": "className",
-          "type": "unknown",
+          "name": "category",
+          "type": "string",
           "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "variant",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "asChild",
-          "type": "unknown",
-          "isOptional": true,
           "isRest": false,
-          "defaultValue": "false"
-        },
-        {
-          "name": "props",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
+          "description": "The node category from `getNodeCategory`"
         }
       ],
-      "isExported": false
+      "returnType": "CategoryColors",
+      "isExported": true
     },
     {
-      "id": "src/server/viewer/components/ui/badge.tsx:badgeVariants",
-      "name": "badgeVariants",
-      "kind": "const",
-      "filePath": "src/server/viewer/components/ui/badge.tsx",
+      "id": "src/server/viewer/components/node-colors.ts:categoryBadgeClasses",
+      "name": "categoryBadgeClasses",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/node-colors.ts",
       "isAsync": false,
-      "hash": "a59db91b64be8a09f18086b222b4427ca7dab3466e17b4bc707de922210c0769",
+      "hash": "c56c7b47288e7f5a5413f57b3aa8d36dd95f5848e9a97fee86b2acc9698a10cb",
       "lineRange": [
-        31,
-        68
-      ],
-      "hasJsDoc": false,
-      "isExported": false
-    },
-    {
-      "id": "src/server/viewer/components/ui/badge.tsx:Badge",
-      "name": "Badge",
-      "kind": "component",
-      "filePath": "src/server/viewer/components/ui/badge.tsx",
-      "isAsync": false,
-      "hash": "acc416519946ab7c2c276b0ac9d7396c8699cfcfa67d4d02e4560a587c72958f",
-      "lineRange": [
-        95,
-        103
+        111,
+        124
       ],
       "hasJsDoc": true,
-      "description": "Renders a styled badge component.",
+      "description": "Get interactive badge classes for a node category.\n\nCombines bg, text, and hover classes. Consumers should add `border-0`\nto suppress the border when used as pill badges.",
       "structuredParams": [
         {
-          "name": "className",
-          "type": "unknown",
+          "name": "category",
+          "type": "NodeCategory",
           "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "variant",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
-        },
-        {
-          "name": "asChild",
-          "type": "unknown",
-          "isOptional": true,
           "isRest": false,
-          "defaultValue": "false"
-        },
-        {
-          "name": "props",
-          "type": "unknown",
-          "isOptional": false,
-          "isRest": false
+          "description": "The node category from `getNodeCategory`"
         }
       ],
-      "isExported": false
+      "returnType": "string",
+      "isExported": true
     },
     {
       "id": "src/server/viewer/components/ui/badge.tsx:badgeVariants",
@@ -7181,6 +6813,51 @@
       "isExported": true
     },
     {
+      "id": "src/server/viewer/components/ui/resizable.tsx:ResizablePanelGroup",
+      "name": "ResizablePanelGroup",
+      "kind": "component",
+      "filePath": "src/server/viewer/components/ui/resizable.tsx",
+      "isAsync": false,
+      "hash": "cfa19645418233309f206c44375f0c9104c7950b0b7e2f4d4aedf5cbed32d3f5",
+      "lineRange": [
+        11,
+        21
+      ],
+      "hasJsDoc": true,
+      "isTrivial": true,
+      "description": "Container that groups resizable panels in a horizontal or vertical layout.",
+      "structuredParams": [
+        {
+          "name": "className",
+          "type": "unknown",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "props",
+          "type": "unknown",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/ui/resizable.tsx:ResizableHandle",
+      "name": "ResizableHandle",
+      "kind": "const",
+      "filePath": "src/server/viewer/components/ui/resizable.tsx",
+      "isAsync": false,
+      "hash": "6367f6aba7b352a4484296d260a9e1f3cd187b6e61b78d47fc5930a0b6dca9ba",
+      "lineRange": [
+        27,
+        37
+      ],
+      "hasJsDoc": true,
+      "description": "Drag handle between two resizable panels.",
+      "isExported": false
+    },
+    {
       "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer",
       "name": "SheetOrDrawer",
       "kind": "component",
@@ -7849,6 +7526,102 @@
         }
       ],
       "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/useNodeSelection.ts:parseParamSet",
+      "name": "parseParamSet",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/useNodeSelection.ts",
+      "isAsync": false,
+      "hash": "1138dacb044e448cec1f674e11ac77395a6a96312e47badf48a3bea6958ffa2b",
+      "lineRange": [
+        10,
+        15
+      ],
+      "hasJsDoc": true,
+      "isTrivial": true,
+      "description": "Parse a comma-separated, URL-encoded param into a Set.",
+      "structuredParams": [
+        {
+          "name": "value",
+          "type": "string | null",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "Set<string>",
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/useNodeSelection.ts:encodeParamSet",
+      "name": "encodeParamSet",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/useNodeSelection.ts",
+      "isAsync": false,
+      "hash": "cf4e32ddbe33aeb6dc516e354c3dcd4f5faec30da370aeb7c3bec8b86b3dbf28",
+      "lineRange": [
+        15,
+        20
+      ],
+      "hasJsDoc": true,
+      "isTrivial": true,
+      "description": "Encode a Set into a comma-separated, URL-encoded string.",
+      "structuredParams": [
+        {
+          "name": "set",
+          "type": "Set<string>",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "string",
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/useNodeSelection.ts:setsEqual",
+      "name": "setsEqual",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/useNodeSelection.ts",
+      "isAsync": false,
+      "hash": "967dc8dfbb8e2b225944506b3f4e1e30e9428c9260d0053b4ad70584be5eef11",
+      "lineRange": [
+        20,
+        29
+      ],
+      "hasJsDoc": true,
+      "description": "Whether two sets contain the same values.",
+      "structuredParams": [
+        {
+          "name": "a",
+          "type": "Set<string>",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "b",
+          "type": "Set<string>",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "boolean",
+      "isExported": false
+    },
+    {
+      "id": "src/server/viewer/components/useNodeSelection.ts:useNodeSelection",
+      "name": "useNodeSelection",
+      "kind": "function",
+      "filePath": "src/server/viewer/components/useNodeSelection.ts",
+      "isAsync": false,
+      "hash": "a237e7058c3a96de851b05cf8765d79c94745bed4803f5259e171c9a98953169",
+      "lineRange": [
+        52,
+        154
+      ],
+      "hasJsDoc": true,
+      "description": "Hook for managing node selection and focus state.\n\nState is kept in React state (for synchronous access during rendering)\nand synced bidirectionally with URL search params (for deep linking and\ncross-component communication).",
+      "returnType": "NodeSelection",
+      "isExported": true
     },
     {
       "id": "src/server/viewer/docs-utils.ts:docPathToUrl",
@@ -8820,7 +8593,7 @@
         {
           "condition": "else (nodeIds.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:47"
+          "branchGroup": "branch:53"
         }
       ],
       "label": "else (nodeIds.length === 0)",
@@ -8876,12 +8649,20 @@
       "order": 1
     },
     {
+      "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/graph/search.ts:buildSearchIndex",
+      "source": "src/cli/commands/mcp.ts:registerMcpCommand",
+      "target": "src/graph/search.ts:buildSearchIndex",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
       "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleSearchNodes",
       "source": "src/cli/commands/mcp.ts:registerMcpCommand",
       "target": "src/cli/commands/mcp.ts:handleSearchNodes",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleShowSymbol",
@@ -8889,7 +8670,7 @@
       "target": "src/cli/commands/mcp.ts:handleShowSymbol",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleListEntryPoints",
@@ -8897,7 +8678,7 @@
       "target": "src/cli/commands/mcp.ts:handleListEntryPoints",
       "type": "direct-call",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleFindCallers",
@@ -8905,7 +8686,7 @@
       "target": "src/cli/commands/mcp.ts:handleFindCallers",
       "type": "direct-call",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleFindCallees",
@@ -8913,7 +8694,7 @@
       "target": "src/cli/commands/mcp.ts:handleFindCallees",
       "type": "direct-call",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handlePathsBetween",
@@ -8921,7 +8702,7 @@
       "target": "src/cli/commands/mcp.ts:handlePathsBetween",
       "type": "direct-call",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleGetGraphSummary",
@@ -8929,7 +8710,7 @@
       "target": "src/cli/commands/mcp.ts:handleGetGraphSummary",
       "type": "direct-call",
       "isAsync": false,
-      "order": 8
+      "order": 9
     },
     {
       "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/cli/commands/mcp.ts:handleDiffGraph",
@@ -8937,7 +8718,7 @@
       "target": "src/cli/commands/mcp.ts:handleDiffGraph",
       "type": "direct-call",
       "isAsync": false,
-      "order": 9
+      "order": 10
     },
     {
       "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/checker/index.ts:StaleChecker",
@@ -8945,7 +8726,7 @@
       "target": "src/checker/index.ts:StaleChecker",
       "type": "direct-call",
       "isAsync": false,
-      "order": 10
+      "order": 11
     },
     {
       "id": "src/cli/commands/mcp.ts:registerMcpCommand->src/graph/sync.ts:syncGraph",
@@ -8956,17 +8737,17 @@
         {
           "condition": "else (checkResult.errors.length > 0)",
           "branch": "else",
-          "branchGroup": "branch:434"
+          "branchGroup": "branch:442"
         },
         {
           "condition": "else (checkResult.staleDocs.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:446"
+          "branchGroup": "branch:454"
         }
       ],
       "label": "else (checkResult.errors.length > 0) → else (checkResult.staleDocs.length === 0)",
       "isAsync": false,
-      "order": 11
+      "order": 12
     },
     {
       "id": "src/cli/commands/serve.ts:registerServeCommand->src/cli/utils/config.ts:loadConfig",
@@ -10696,7 +10477,7 @@
         {
           "condition": "else (!body.apiKey)",
           "branch": "else",
-          "branchGroup": "branch:49"
+          "branchGroup": "branch:52"
         }
       ],
       "label": "else (!body.apiKey)",
@@ -10712,7 +10493,7 @@
         {
           "condition": "else (!body.apiKey)",
           "branch": "else",
-          "branchGroup": "branch:49"
+          "branchGroup": "branch:52"
         }
       ],
       "label": "else (!body.apiKey)",
@@ -10728,7 +10509,7 @@
         {
           "condition": "else (!body.apiKey)",
           "branch": "else",
-          "branchGroup": "branch:49"
+          "branchGroup": "branch:52"
         }
       ],
       "label": "else (!body.apiKey)",
@@ -10752,7 +10533,7 @@
         {
           "condition": "if (graph)",
           "branch": "then",
-          "branchGroup": "branch:65"
+          "branchGroup": "branch:67"
         }
       ],
       "label": "if (graph)",
@@ -10768,17 +10549,54 @@
         {
           "condition": "else (filename !== 'graph.json')",
           "branch": "else",
-          "branchGroup": "branch:73"
+          "branchGroup": "branch:76"
         },
         {
           "condition": "if (graph)",
           "branch": "then",
-          "branchGroup": "branch:77"
+          "branchGroup": "branch:80"
         }
       ],
       "label": "else (filename !== 'graph.json') → if (graph)",
       "isAsync": false,
       "order": 2
+    },
+    {
+      "id": "src/server/index.ts:startServer->src/graph/search.ts:buildSearchIndex",
+      "source": "src/server/index.ts:startServer",
+      "target": "src/graph/search.ts:buildSearchIndex",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (graph)",
+          "branch": "then",
+          "branchGroup": "branch:70"
+        }
+      ],
+      "label": "if (graph)",
+      "isAsync": false,
+      "order": 3
+    },
+    {
+      "id": "src/server/index.ts:startServer->src/graph/search.ts:buildSearchIndex::1",
+      "source": "src/server/index.ts:startServer",
+      "target": "src/graph/search.ts:buildSearchIndex",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (filename !== 'graph.json')",
+          "branch": "else",
+          "branchGroup": "branch:76"
+        },
+        {
+          "condition": "if (graph)",
+          "branch": "then",
+          "branchGroup": "branch:80"
+        }
+      ],
+      "label": "else (filename !== 'graph.json') → if (graph)",
+      "isAsync": false,
+      "order": 4
     },
     {
       "id": "src/server/index.ts:startServer->src/graph/symbol-index.ts:buildIndexResponse",
@@ -10789,17 +10607,43 @@
         {
           "condition": "else (url.pathname === '/api/graph')",
           "branch": "else",
-          "branchGroup": "branch:93"
+          "branchGroup": "branch:97"
         },
         {
           "condition": "if (url.pathname === '/api/index')",
           "branch": "then",
-          "branchGroup": "branch:111"
+          "branchGroup": "branch:115"
         }
       ],
       "label": "else (url.pathname === '/api/graph') → if (url.pathname === '/api/index')",
       "isAsync": false,
-      "order": 3
+      "order": 5
+    },
+    {
+      "id": "src/server/index.ts:startServer->src/cli/utils/git.ts:getCurrentBranch",
+      "source": "src/server/index.ts:startServer",
+      "target": "src/cli/utils/git.ts:getCurrentBranch",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (url.pathname === '/api/graph')",
+          "branch": "else",
+          "branchGroup": "branch:97"
+        },
+        {
+          "condition": "else (url.pathname === '/api/index')",
+          "branch": "else",
+          "branchGroup": "branch:115"
+        },
+        {
+          "condition": "if (url.pathname === '/api/project-info')",
+          "branch": "then",
+          "branchGroup": "branch:124"
+        }
+      ],
+      "label": "else (url.pathname === '/api/graph') → else (url.pathname === '/api/index') → if (url.pathname === '/api/project-info')",
+      "isAsync": false,
+      "order": 6
     },
     {
       "id": "src/server/index.ts:startServer->src/server/chat.ts:handleChatRequest",
@@ -10810,37 +10654,37 @@
         {
           "condition": "else (url.pathname === '/api/graph')",
           "branch": "else",
-          "branchGroup": "branch:93"
+          "branchGroup": "branch:97"
         },
         {
           "condition": "else (url.pathname === '/api/index')",
           "branch": "else",
-          "branchGroup": "branch:111"
+          "branchGroup": "branch:115"
         },
         {
           "condition": "else (url.pathname === '/api/project-info')",
           "branch": "else",
-          "branchGroup": "branch:120"
+          "branchGroup": "branch:124"
         },
         {
           "condition": "else (req.method === 'OPTIONS' && url.pathname === '/api/chat')",
           "branch": "else",
-          "branchGroup": "branch:129"
+          "branchGroup": "branch:133"
         },
         {
           "condition": "if (url.pathname === '/api/chat' && req.method === 'POST')",
           "branch": "then",
-          "branchGroup": "branch:140"
+          "branchGroup": "branch:144"
         },
         {
           "condition": "else (!graph)",
           "branch": "else",
-          "branchGroup": "branch:142"
+          "branchGroup": "branch:146"
         }
       ],
       "label": "else (url.pathname === '/api/graph') → else (url.pathname === '/api/index') → else (url.pathname === '/api/project-info') → else (req.method === 'OPTIONS' && url.pathname === '/api/chat') → if (url.pathname === '/api/chat' && req.method === 'POST') → else (!graph)",
       "isAsync": true,
-      "order": 4
+      "order": 7
     },
     {
       "id": "src/server/index.ts:startServer->src/server/symbol-index.ts:buildDocResponseWithSVG",
@@ -10851,47 +10695,47 @@
         {
           "condition": "else (url.pathname === '/api/graph')",
           "branch": "else",
-          "branchGroup": "branch:93"
+          "branchGroup": "branch:97"
         },
         {
           "condition": "else (url.pathname === '/api/index')",
           "branch": "else",
-          "branchGroup": "branch:111"
+          "branchGroup": "branch:115"
         },
         {
           "condition": "else (url.pathname === '/api/project-info')",
           "branch": "else",
-          "branchGroup": "branch:120"
+          "branchGroup": "branch:124"
         },
         {
           "condition": "else (req.method === 'OPTIONS' && url.pathname === '/api/chat')",
           "branch": "else",
-          "branchGroup": "branch:129"
+          "branchGroup": "branch:133"
         },
         {
           "condition": "else (url.pathname === '/api/chat' && req.method === 'POST')",
           "branch": "else",
-          "branchGroup": "branch:140"
+          "branchGroup": "branch:144"
         },
         {
           "condition": "if (url.pathname === '/api/doc')",
           "branch": "then",
-          "branchGroup": "branch:153"
+          "branchGroup": "branch:157"
         },
         {
           "condition": "else (!docPath)",
           "branch": "else",
-          "branchGroup": "branch:156"
+          "branchGroup": "branch:160"
         },
         {
           "condition": "else (!graph)",
           "branch": "else",
-          "branchGroup": "branch:161"
+          "branchGroup": "branch:165"
         }
       ],
       "label": "else (url.pathname === '/api/graph') → else (url.pathname === '/api/index') → else (url.pathname === '/api/project-info') → else (req.method === 'OPTIONS' && url.pathname === '/api/chat') → else (url.pathname === '/api/chat' && req.method === 'POST') → if (url.pathname === '/api/doc') → else (!docPath) → else (!graph)",
       "isAsync": false,
-      "order": 5
+      "order": 8
     },
     {
       "id": "src/server/index.ts:startServer->src/server/index.ts:serveStaticFile",
@@ -10902,47 +10746,47 @@
         {
           "condition": "else (url.pathname === '/api/graph')",
           "branch": "else",
-          "branchGroup": "branch:93"
+          "branchGroup": "branch:97"
         },
         {
           "condition": "else (url.pathname === '/api/index')",
           "branch": "else",
-          "branchGroup": "branch:111"
+          "branchGroup": "branch:115"
         },
         {
           "condition": "else (url.pathname === '/api/project-info')",
           "branch": "else",
-          "branchGroup": "branch:120"
+          "branchGroup": "branch:124"
         },
         {
           "condition": "else (req.method === 'OPTIONS' && url.pathname === '/api/chat')",
           "branch": "else",
-          "branchGroup": "branch:129"
+          "branchGroup": "branch:133"
         },
         {
           "condition": "else (url.pathname === '/api/chat' && req.method === 'POST')",
           "branch": "else",
-          "branchGroup": "branch:140"
+          "branchGroup": "branch:144"
         },
         {
           "condition": "else (url.pathname === '/api/doc')",
           "branch": "else",
-          "branchGroup": "branch:153"
+          "branchGroup": "branch:157"
         },
         {
           "condition": "if (url.pathname.startsWith('/assets/'))",
           "branch": "then",
-          "branchGroup": "branch:182"
+          "branchGroup": "branch:186"
         },
         {
           "condition": "assetPath.startsWith(`${viewerDistDir}/`) &&",
           "branch": "&&",
-          "branchGroup": "branch:188"
+          "branchGroup": "branch:192"
         }
       ],
       "label": "else (url.pathname === '/api/graph') → else (url.pathname === '/api/index') → else (url.pathname === '/api/project-info') → else (req.method === 'OPTIONS' && url.pathname === '/api/chat') → else (url.pathname === '/api/chat' && req.method === 'POST') → else (url.pathname === '/api/doc') → if (url.pathname.startsWith('/assets/')) → assetPath.startsWith(`${viewerDistDir}/`) &&",
       "isAsync": false,
-      "order": 6
+      "order": 9
     },
     {
       "id": "src/server/index.ts:startServer->src/server/index.ts:serveStaticFile::1",
@@ -10953,37 +10797,37 @@
         {
           "condition": "else (url.pathname === '/api/graph')",
           "branch": "else",
-          "branchGroup": "branch:93"
+          "branchGroup": "branch:97"
         },
         {
           "condition": "else (url.pathname === '/api/index')",
           "branch": "else",
-          "branchGroup": "branch:111"
+          "branchGroup": "branch:115"
         },
         {
           "condition": "else (url.pathname === '/api/project-info')",
           "branch": "else",
-          "branchGroup": "branch:120"
+          "branchGroup": "branch:124"
         },
         {
           "condition": "else (req.method === 'OPTIONS' && url.pathname === '/api/chat')",
           "branch": "else",
-          "branchGroup": "branch:129"
+          "branchGroup": "branch:133"
         },
         {
           "condition": "else (url.pathname === '/api/chat' && req.method === 'POST')",
           "branch": "else",
-          "branchGroup": "branch:140"
+          "branchGroup": "branch:144"
         },
         {
           "condition": "else (url.pathname === '/api/doc')",
           "branch": "else",
-          "branchGroup": "branch:153"
+          "branchGroup": "branch:157"
         }
       ],
       "label": "else (url.pathname === '/api/graph') → else (url.pathname === '/api/index') → else (url.pathname === '/api/project-info') → else (req.method === 'OPTIONS' && url.pathname === '/api/chat') → else (url.pathname === '/api/chat' && req.method === 'POST') → else (url.pathname === '/api/doc')",
       "isAsync": false,
-      "order": 7
+      "order": 10
     },
     {
       "id": "src/server/symbol-index.ts:buildDocResponseWithSVG->src/graph/symbol-index.ts:buildDocResponse",
@@ -11018,6 +10862,77 @@
       "order": 1
     },
     {
+      "id": "src/server/viewer/components/ActiveChat.tsx:ToolCallIndicator->src/server/viewer/components/ActiveChat.tsx:InlineSpinner",
+      "source": "src/server/viewer/components/ActiveChat.tsx:ToolCallIndicator",
+      "target": "src/server/viewer/components/ActiveChat.tsx:InlineSpinner",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ActiveChat.tsx:ToolCallIndicator->src/server/viewer/components/node-colors.ts:categoryBadgeClasses",
+      "source": "src/server/viewer/components/ActiveChat.tsx:ToolCallIndicator",
+      "target": "src/server/viewer/components/node-colors.ts:categoryBadgeClasses",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (toolName === 'search_nodes')",
+          "branch": "else",
+          "branchGroup": "branch:86"
+        },
+        {
+          "condition": "if (toolName === 'select_nodes')",
+          "branch": "then",
+          "branchGroup": "branch:132"
+        },
+        {
+          "condition": "else (isLoading)",
+          "branch": "else",
+          "branchGroup": "branch:134"
+        },
+        {
+          "condition": "else (selected.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:147"
+        }
+      ],
+      "label": "else (toolName === 'search_nodes') → if (toolName === 'select_nodes') → else (isLoading) → else (selected.length === 0)",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat->src/server/viewer/components/useNodeSelection.ts:useNodeSelection",
+      "source": "src/server/viewer/components/ActiveChat.tsx:ActiveChat",
+      "target": "src/server/viewer/components/useNodeSelection.ts:useNodeSelection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat->src/server/viewer/components/GraphExplorerContext.tsx:useGraphExplorer",
+      "source": "src/server/viewer/components/ActiveChat.tsx:ActiveChat",
+      "target": "src/server/viewer/components/GraphExplorerContext.tsx:useGraphExplorer",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat->src/server/viewer/components/FlowGraph.tsx:getNodeCategory",
+      "source": "src/server/viewer/components/ActiveChat.tsx:ActiveChat",
+      "target": "src/server/viewer/components/FlowGraph.tsx:getNodeCategory",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!graphCtx)",
+          "branch": "else",
+          "branchGroup": "branch:237"
+        }
+      ],
+      "label": "else (!graphCtx)",
+      "isAsync": false,
+      "order": 2
+    },
+    {
       "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat->src/server/viewer/lib/chat-store.ts:deriveTitle",
       "source": "src/server/viewer/components/ActiveChat.tsx:ActiveChat",
       "target": "src/server/viewer/lib/chat-store.ts:deriveTitle",
@@ -11026,12 +10941,12 @@
         {
           "condition": "else (status !== 'ready' || messages.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:140"
+          "branchGroup": "branch:316"
         }
       ],
       "label": "else (status !== 'ready' || messages.length === 0)",
       "isAsync": false,
-      "order": 0
+      "order": 3
     },
     {
       "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat->src/server/viewer/lib/chat-store.ts:saveChat",
@@ -11042,12 +10957,12 @@
         {
           "condition": "else (status !== 'ready' || messages.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:140"
+          "branchGroup": "branch:316"
         }
       ],
       "label": "else (status !== 'ready' || messages.length === 0)",
       "isAsync": true,
-      "order": 1
+      "order": 4
     },
     {
       "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat->src/server/viewer/components/ui/card.tsx:Card",
@@ -11058,12 +10973,54 @@
         {
           "condition": "messages.length === 0 && !isLoading &&",
           "branch": "&&",
-          "branchGroup": "branch:212"
+          "branchGroup": "branch:373"
         }
       ],
       "label": "messages.length === 0 && !isLoading &&",
       "isAsync": false,
-      "order": 2
+      "order": 5
+    },
+    {
+      "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat->src/server/viewer/components/ActiveChat.tsx:segmentAssistantParts",
+      "source": "src/server/viewer/components/ActiveChat.tsx:ActiveChat",
+      "target": "src/server/viewer/components/ActiveChat.tsx:segmentAssistantParts",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (msg.role === 'user')",
+          "branch": "else",
+          "branchGroup": "branch:378"
+        }
+      ],
+      "label": "else (msg.role === 'user')",
+      "isAsync": false,
+      "order": 6
+    },
+    {
+      "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat->src/server/viewer/components/ActiveChat.tsx:ToolCallIndicator",
+      "source": "src/server/viewer/components/ActiveChat.tsx:ActiveChat",
+      "target": "src/server/viewer/components/ActiveChat.tsx:ToolCallIndicator",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (msg.role === 'user')",
+          "branch": "else",
+          "branchGroup": "branch:378"
+        },
+        {
+          "condition": "else (segments.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:395"
+        },
+        {
+          "condition": "if (seg.kind === 'tool')",
+          "branch": "then",
+          "branchGroup": "branch:400"
+        }
+      ],
+      "label": "else (msg.role === 'user') → else (segments.length === 0) → if (seg.kind === 'tool')",
+      "isAsync": false,
+      "order": 7
     },
     {
       "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat->src/server/viewer/components/ActiveChat.tsx:ChatMarkdown",
@@ -11072,24 +11029,40 @@
       "type": "conditional-call",
       "conditions": [
         {
-          "condition": "else (!textContent && selectedNodeIds.length === 0)",
-          "branch": "else",
-          "branchGroup": "branch:222"
-        },
-        {
-          "condition": "textContent &&",
-          "branch": "&&",
-          "branchGroup": "branch:236"
-        },
-        {
           "condition": "else (msg.role === 'user')",
           "branch": "else",
-          "branchGroup": "branch:237"
+          "branchGroup": "branch:378"
+        },
+        {
+          "condition": "else (segments.length === 0)",
+          "branch": "else",
+          "branchGroup": "branch:395"
+        },
+        {
+          "condition": "else (seg.kind === 'tool')",
+          "branch": "else",
+          "branchGroup": "branch:400"
         }
       ],
-      "label": "else (!textContent && selectedNodeIds.length === 0) → textContent && → else (msg.role === 'user')",
+      "label": "else (msg.role === 'user') → else (segments.length === 0) → else (seg.kind === 'tool')",
       "isAsync": false,
-      "order": 3
+      "order": 8
+    },
+    {
+      "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat->src/server/viewer/components/ActiveChat.tsx:InlineSpinner",
+      "source": "src/server/viewer/components/ActiveChat.tsx:ActiveChat",
+      "target": "src/server/viewer/components/ActiveChat.tsx:InlineSpinner",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "status === 'submitted' &&",
+          "branch": "&&",
+          "branchGroup": "branch:423"
+        }
+      ],
+      "label": "status === 'submitted' &&",
+      "isAsync": false,
+      "order": 9
     },
     {
       "id": "src/server/viewer/components/ActiveChat.tsx:ActiveChat->src/server/viewer/components/LoadingEllipsis.tsx:LoadingEllipsis",
@@ -11100,12 +11073,12 @@
         {
           "condition": "status === 'submitted' &&",
           "branch": "&&",
-          "branchGroup": "branch:261"
+          "branchGroup": "branch:423"
         }
       ],
       "label": "status === 'submitted' &&",
       "isAsync": false,
-      "order": 4
+      "order": 10
     },
     {
       "id": "src/server/viewer/components/ChatList.tsx:ChatList->src/server/viewer/lib/chat-store.ts:listChatsForGraph",
@@ -12247,7 +12220,7 @@
         {
           "condition": "!loading && availableTypes.size > 0 &&",
           "branch": "&&",
-          "branchGroup": "branch:79"
+          "branchGroup": "branch:127"
         }
       ],
       "label": "!loading && availableTypes.size > 0 &&",
@@ -12271,6 +12244,14 @@
       "order": 0
     },
     {
+      "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/useNodeSelection.ts:useNodeSelection",
+      "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
+      "target": "src/server/viewer/components/useNodeSelection.ts:useNodeSelection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:getNodeCategory",
       "source": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
       "target": "src/server/viewer/components/FlowGraph.tsx:getNodeCategory",
@@ -12279,12 +12260,12 @@
         {
           "condition": "if (enabledTypes)",
           "branch": "then",
-          "branchGroup": "branch:369"
+          "branchGroup": "branch:325"
         }
       ],
       "label": "if (enabledTypes)",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/condition-expansion.ts:expandConditionals",
@@ -12295,12 +12276,12 @@
         {
           "condition": "if (showConditionals)",
           "branch": "then",
-          "branchGroup": "branch:428"
+          "branchGroup": "branch:384"
         }
       ],
       "label": "if (showConditionals)",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/condition-expansion.ts:expandConditionals::1",
@@ -12311,17 +12292,17 @@
         {
           "condition": "if (!initialMeasureDone)",
           "branch": "then",
-          "branchGroup": "branch:446"
+          "branchGroup": "branch:402"
         },
         {
           "condition": "if (showConditionals)",
           "branch": "then",
-          "branchGroup": "branch:448"
+          "branchGroup": "branch:404"
         }
       ],
       "label": "if (!initialMeasureDone) → if (showConditionals)",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/condition-expansion.ts:expandConditionals::2",
@@ -12332,17 +12313,17 @@
         {
           "condition": "if (!initialMeasureDone && !showConditionals)",
           "branch": "then",
-          "branchGroup": "branch:455"
+          "branchGroup": "branch:411"
         },
         {
           "condition": "if (hasConditionals)",
           "branch": "then",
-          "branchGroup": "branch:459"
+          "branchGroup": "branch:415"
         }
       ],
       "label": "if (!initialMeasureDone && !showConditionals) → if (hasConditionals)",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/condition-expansion.ts:toReactFlowNode",
@@ -12353,12 +12334,12 @@
         {
           "condition": "else (showConditionals)",
           "branch": "else",
-          "branchGroup": "branch:428"
+          "branchGroup": "branch:384"
         }
       ],
       "label": "else (showConditionals)",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/condition-expansion.ts:toReactFlowNode::1",
@@ -12369,17 +12350,17 @@
         {
           "condition": "if (!initialMeasureDone)",
           "branch": "then",
-          "branchGroup": "branch:446"
+          "branchGroup": "branch:402"
         },
         {
           "condition": "else (showConditionals)",
           "branch": "else",
-          "branchGroup": "branch:448"
+          "branchGroup": "branch:404"
         }
       ],
       "label": "if (!initialMeasureDone) → else (showConditionals)",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:toReactFlowEdges",
@@ -12390,12 +12371,12 @@
         {
           "condition": "else (showConditionals)",
           "branch": "else",
-          "branchGroup": "branch:428"
+          "branchGroup": "branch:384"
         }
       ],
       "label": "else (showConditionals)",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:runElkLayout",
@@ -12406,12 +12387,12 @@
         {
           "condition": "if (allCached && rfNodes.length > 0)",
           "branch": "then",
-          "branchGroup": "branch:468"
+          "branchGroup": "branch:424"
         }
       ],
       "label": "if (allCached && rfNodes.length > 0)",
       "isAsync": true,
-      "order": 8
+      "order": 9
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:runElkLayout::1",
@@ -12422,12 +12403,12 @@
         {
           "condition": "else (!needsLayout || !nodesInitialized || !visibleGraphRef.curren)",
           "branch": "else",
-          "branchGroup": "branch:512"
+          "branchGroup": "branch:464"
         }
       ],
       "label": "else (!needsLayout || !nodesInitialized || !visibleGraphRef.curren)",
       "isAsync": true,
-      "order": 9
+      "order": 10
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/FlowGraph.tsx:runElkLayout::2",
@@ -12438,12 +12419,12 @@
         {
           "condition": "else (!visibleGraphRef.current || needsLayout)",
           "branch": "else",
-          "branchGroup": "branch:550"
+          "branchGroup": "branch:502"
         }
       ],
       "label": "else (!visibleGraphRef.current || needsLayout)",
       "isAsync": true,
-      "order": 10
+      "order": 11
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/grid.ts:snapCeil",
@@ -12454,17 +12435,17 @@
         {
           "condition": "else (!needsLayout || !nodesInitialized || !visibleGraphRef.curren)",
           "branch": "else",
-          "branchGroup": "branch:512"
+          "branchGroup": "branch:464"
         },
         {
           "condition": "if (node.measured?.width && node.measured?.height)",
           "branch": "then",
-          "branchGroup": "branch:517"
+          "branchGroup": "branch:469"
         }
       ],
       "label": "else (!needsLayout || !nodesInitialized || !visibleGraphRef.curren) → if (node.measured?.width && node.measured?.height)",
       "isAsync": false,
-      "order": 11
+      "order": 12
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/LayoutSettings.tsx:LayoutSettings",
@@ -12472,7 +12453,7 @@
       "target": "src/server/viewer/components/LayoutSettings.tsx:LayoutSettings",
       "type": "direct-call",
       "isAsync": false,
-      "order": 13
+      "order": 14
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/ui/kbd.tsx:Kbd",
@@ -12483,17 +12464,17 @@
         {
           "condition": "(selectedEntries.size > 0 || focusedEntries.size > 0) &&",
           "branch": "&&",
-          "branchGroup": "branch:608"
+          "branchGroup": "branch:536"
         },
         {
           "condition": "(selectedEntries.size !== focusedEntries.size ||\n            &&",
           "branch": "&&",
-          "branchGroup": "branch:611"
+          "branchGroup": "branch:539"
         }
       ],
       "label": "(selectedEntries.size > 0 || focusedEntries.size > 0) && → (selectedEntries.size !== focusedEntries.size ||\n            &&",
       "isAsync": false,
-      "order": 14
+      "order": 15
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/ui/kbd.tsx:Kbd::1",
@@ -12504,12 +12485,12 @@
         {
           "condition": "(selectedEntries.size > 0 || focusedEntries.size > 0) &&",
           "branch": "&&",
-          "branchGroup": "branch:608"
+          "branchGroup": "branch:536"
         }
       ],
       "label": "(selectedEntries.size > 0 || focusedEntries.size > 0) &&",
       "isAsync": false,
-      "order": 15
+      "order": 16
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraphInner->src/server/viewer/components/DocPanel.tsx:DocPanel",
@@ -12517,7 +12498,7 @@
       "target": "src/server/viewer/components/DocPanel.tsx:DocPanel",
       "type": "direct-call",
       "isAsync": false,
-      "order": 16
+      "order": 17
     },
     {
       "id": "src/server/viewer/components/FlowGraph.tsx:FlowGraph->src/server/viewer/components/FlowGraph.tsx:FlowGraphInner",
@@ -12536,7 +12517,7 @@
         {
           "condition": "else (!graph)",
           "branch": "else",
-          "branchGroup": "branch:102"
+          "branchGroup": "branch:141"
         }
       ],
       "label": "else (!graph)",
@@ -12552,12 +12533,12 @@
         {
           "condition": "else (!graph)",
           "branch": "else",
-          "branchGroup": "branch:117"
+          "branchGroup": "branch:156"
         },
         {
           "condition": "if (enabledTypes)",
           "branch": "then",
-          "branchGroup": "branch:119"
+          "branchGroup": "branch:158"
         }
       ],
       "label": "else (!graph) → if (enabledTypes)",
@@ -12573,7 +12554,7 @@
         {
           "condition": "if (graph)",
           "branch": "then",
-          "branchGroup": "branch:180"
+          "branchGroup": "branch:219"
         }
       ],
       "label": "if (graph)",
@@ -12589,7 +12570,7 @@
         {
           "condition": "if (symbolIndex)",
           "branch": "then",
-          "branchGroup": "branch:183"
+          "branchGroup": "branch:222"
         }
       ],
       "label": "if (symbolIndex)",
@@ -12605,7 +12586,7 @@
         {
           "condition": "!layoutReady &&",
           "branch": "&&",
-          "branchGroup": "branch:204"
+          "branchGroup": "branch:243"
         }
       ],
       "label": "!layoutReady &&",
@@ -12621,7 +12602,7 @@
         {
           "condition": "graph &&",
           "branch": "&&",
-          "branchGroup": "branch:227"
+          "branchGroup": "branch:266"
         }
       ],
       "label": "graph &&",
@@ -12629,12 +12610,20 @@
       "order": 5
     },
     {
+      "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ui/resizable.tsx:ResizablePanelGroup",
+      "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "target": "src/server/viewer/components/ui/resizable.tsx:ResizablePanelGroup",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 6
+    },
+    {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/Sidebar.tsx:Sidebar",
       "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
       "target": "src/server/viewer/components/Sidebar.tsx:Sidebar",
       "type": "direct-call",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ViewNav.tsx:ViewNav",
@@ -12642,7 +12631,7 @@
       "target": "src/server/viewer/components/ViewNav.tsx:ViewNav",
       "type": "direct-call",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/FlowControls.tsx:FlowControls",
@@ -12650,7 +12639,7 @@
       "target": "src/server/viewer/components/FlowControls.tsx:FlowControls",
       "type": "direct-call",
       "isAsync": false,
-      "order": 8
+      "order": 9
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/DocsTree.tsx:DocsTree",
@@ -12658,7 +12647,15 @@
       "target": "src/server/viewer/components/DocsTree.tsx:DocsTree",
       "type": "direct-call",
       "isAsync": false,
-      "order": 9
+      "order": 10
+    },
+    {
+      "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ui/resizable.tsx:ResizableHandle",
+      "source": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer",
+      "target": "src/server/viewer/components/ui/resizable.tsx:ResizableHandle",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 11
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/DocsViewer.tsx:DocsViewer",
@@ -12666,7 +12663,7 @@
       "target": "src/server/viewer/components/DocsViewer.tsx:DocsViewer",
       "type": "direct-call",
       "isAsync": false,
-      "order": 10
+      "order": 12
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ui/button.tsx:Button",
@@ -12677,12 +12674,12 @@
         {
           "condition": "isGraphView &&",
           "branch": "&&",
-          "branchGroup": "branch:269"
+          "branchGroup": "branch:346"
         }
       ],
       "label": "isGraphView &&",
       "isAsync": false,
-      "order": 11
+      "order": 13
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ui/kbd.tsx:Kbd",
@@ -12693,12 +12690,12 @@
         {
           "condition": "isGraphView &&",
           "branch": "&&",
-          "branchGroup": "branch:269"
+          "branchGroup": "branch:346"
         }
       ],
       "label": "isGraphView &&",
       "isAsync": false,
-      "order": 12
+      "order": 14
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ui/kbd.tsx:Kbd::1",
@@ -12709,17 +12706,17 @@
         {
           "condition": "isGraphView &&",
           "branch": "&&",
-          "branchGroup": "branch:269"
+          "branchGroup": "branch:346"
         },
         {
           "condition": "isOffCenter &&",
           "branch": "&&",
-          "branchGroup": "branch:295"
+          "branchGroup": "branch:372"
         }
       ],
       "label": "isGraphView && → isOffCenter &&",
       "isAsync": false,
-      "order": 13
+      "order": 15
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ui/button.tsx:buttonVariants",
@@ -12730,17 +12727,17 @@
         {
           "condition": "isGraphView &&",
           "branch": "&&",
-          "branchGroup": "branch:269"
+          "branchGroup": "branch:346"
         },
         {
           "condition": "isOffCenter &&",
           "branch": "&&",
-          "branchGroup": "branch:295"
+          "branchGroup": "branch:372"
         }
       ],
       "label": "isGraphView && → isOffCenter &&",
       "isAsync": false,
-      "order": 14
+      "order": 16
     },
     {
       "id": "src/server/viewer/components/GraphExplorer.tsx:GraphExplorer->src/server/viewer/components/ChatPanel.tsx:ChatPanel",
@@ -12751,12 +12748,12 @@
         {
           "condition": "chatOpen &&",
           "branch": "&&",
-          "branchGroup": "branch:332"
+          "branchGroup": "branch:423"
         }
       ],
       "label": "chatOpen &&",
       "isAsync": false,
-      "order": 15
+      "order": 17
     },
     {
       "id": "src/server/viewer/components/LayoutSettings.tsx:LayoutSettings->src/server/viewer/components/ui/button.tsx:Button",
@@ -12783,7 +12780,7 @@
         {
           "condition": "else (measuring)",
           "branch": "else",
-          "branchGroup": "branch:17"
+          "branchGroup": "branch:19"
         }
       ],
       "label": "else (measuring)",
@@ -12799,7 +12796,7 @@
         {
           "condition": "else (measuring)",
           "branch": "else",
-          "branchGroup": "branch:17"
+          "branchGroup": "branch:19"
         }
       ],
       "label": "else (measuring)",
@@ -12815,7 +12812,7 @@
         {
           "condition": "else (measuring)",
           "branch": "else",
-          "branchGroup": "branch:17"
+          "branchGroup": "branch:19"
         }
       ],
       "label": "else (measuring)",
@@ -12823,12 +12820,36 @@
       "order": 2
     },
     {
+      "id": "src/server/viewer/components/NodeTypes.tsx:entryTypeConfig->src/server/viewer/components/node-colors.ts:getCategoryColors",
+      "source": "src/server/viewer/components/NodeTypes.tsx:entryTypeConfig",
+      "target": "src/server/viewer/components/node-colors.ts:getCategoryColors",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode->src/server/viewer/components/NodeTypes.tsx:entryTypeConfig",
+      "source": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode",
+      "target": "src/server/viewer/components/NodeTypes.tsx:entryTypeConfig",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (d.entryType)",
+          "branch": "then",
+          "branchGroup": "branch:95"
+        }
+      ],
+      "label": "if (d.entryType)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode->src/server/viewer/components/NodeTypes.tsx:nodeClass",
       "source": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode",
       "target": "src/server/viewer/components/NodeTypes.tsx:nodeClass",
       "type": "direct-call",
       "isAsync": false,
-      "order": 0
+      "order": 1
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode->src/server/viewer/components/ui/badge.tsx:Badge",
@@ -12836,7 +12857,7 @@
       "target": "src/server/viewer/components/ui/badge.tsx:Badge",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:EntryPointNode->src/server/viewer/components/NodeTypes.tsx:FilePath",
@@ -12844,7 +12865,15 @@
       "target": "src/server/viewer/components/NodeTypes.tsx:FilePath",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
+    },
+    {
+      "id": "src/server/viewer/components/NodeTypes.tsx:ComponentNode->src/server/viewer/components/node-colors.ts:getCategoryColors",
+      "source": "src/server/viewer/components/NodeTypes.tsx:ComponentNode",
+      "target": "src/server/viewer/components/node-colors.ts:getCategoryColors",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:ComponentNode->src/server/viewer/components/NodeTypes.tsx:nodeClass",
@@ -12852,7 +12881,7 @@
       "target": "src/server/viewer/components/NodeTypes.tsx:nodeClass",
       "type": "direct-call",
       "isAsync": false,
-      "order": 0
+      "order": 1
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:ComponentNode->src/server/viewer/components/ui/badge.tsx:Badge",
@@ -12860,7 +12889,7 @@
       "target": "src/server/viewer/components/ui/badge.tsx:Badge",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:ComponentNode->src/server/viewer/components/NodeTypes.tsx:FilePath",
@@ -12868,7 +12897,15 @@
       "target": "src/server/viewer/components/NodeTypes.tsx:FilePath",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
+    },
+    {
+      "id": "src/server/viewer/components/NodeTypes.tsx:HookNode->src/server/viewer/components/node-colors.ts:getCategoryColors",
+      "source": "src/server/viewer/components/NodeTypes.tsx:HookNode",
+      "target": "src/server/viewer/components/node-colors.ts:getCategoryColors",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:HookNode->src/server/viewer/components/NodeTypes.tsx:nodeClass",
@@ -12876,7 +12913,7 @@
       "target": "src/server/viewer/components/NodeTypes.tsx:nodeClass",
       "type": "direct-call",
       "isAsync": false,
-      "order": 0
+      "order": 1
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:HookNode->src/server/viewer/components/ui/badge.tsx:Badge",
@@ -12884,7 +12921,7 @@
       "target": "src/server/viewer/components/ui/badge.tsx:Badge",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:HookNode->src/server/viewer/components/NodeTypes.tsx:FilePath",
@@ -12892,7 +12929,15 @@
       "target": "src/server/viewer/components/NodeTypes.tsx:FilePath",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
+    },
+    {
+      "id": "src/server/viewer/components/NodeTypes.tsx:FunctionNode->src/server/viewer/components/node-colors.ts:getCategoryColors",
+      "source": "src/server/viewer/components/NodeTypes.tsx:FunctionNode",
+      "target": "src/server/viewer/components/node-colors.ts:getCategoryColors",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:FunctionNode->src/server/viewer/components/NodeTypes.tsx:nodeClass",
@@ -12900,7 +12945,7 @@
       "target": "src/server/viewer/components/NodeTypes.tsx:nodeClass",
       "type": "direct-call",
       "isAsync": false,
-      "order": 0
+      "order": 1
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:FunctionNode->src/server/viewer/components/ui/badge.tsx:Badge",
@@ -12911,12 +12956,12 @@
         {
           "condition": "d.isAsync &&",
           "branch": "&&",
-          "branchGroup": "branch:266"
+          "branchGroup": "branch:238"
         }
       ],
       "label": "d.isAsync &&",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:FunctionNode->src/server/viewer/components/ui/badge.tsx:Badge::1",
@@ -12927,12 +12972,12 @@
         {
           "condition": "d.hasJsDoc === false &&",
           "branch": "&&",
-          "branchGroup": "branch:267"
+          "branchGroup": "branch:239"
         }
       ],
       "label": "d.hasJsDoc === false &&",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "src/server/viewer/components/NodeTypes.tsx:FunctionNode->src/server/viewer/components/NodeTypes.tsx:FilePath",
@@ -12940,7 +12985,7 @@
       "target": "src/server/viewer/components/NodeTypes.tsx:FilePath",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "src/server/viewer/components/SettingsDialog.tsx:SettingsButton->src/server/viewer/keyboard.ts:isApplePlatform",
@@ -13130,6 +13175,14 @@
       "label": "if (edge.type === 'conditional-call' && edge.conditions?.length) → if (!seenNodeIds.has(condNodeId))",
       "isAsync": false,
       "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/node-colors.ts:categoryBadgeClasses->src/server/viewer/components/node-colors.ts:getCategoryColors",
+      "source": "src/server/viewer/components/node-colors.ts:categoryBadgeClasses",
+      "target": "src/server/viewer/components/node-colors.ts:getCategoryColors",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
     },
     {
       "id": "src/server/viewer/components/ui/badge.tsx:Badge->src/server/viewer/lib/utils.ts:cn",
@@ -13596,6 +13649,22 @@
       "order": 0
     },
     {
+      "id": "src/server/viewer/components/ui/resizable.tsx:ResizablePanelGroup->src/server/viewer/lib/utils.ts:cn",
+      "source": "src/server/viewer/components/ui/resizable.tsx:ResizablePanelGroup",
+      "target": "src/server/viewer/lib/utils.ts:cn",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/ui/resizable.tsx:ResizableHandle->src/server/viewer/lib/utils.ts:cn",
+      "source": "src/server/viewer/components/ui/resizable.tsx:ResizableHandle",
+      "target": "src/server/viewer/lib/utils.ts:cn",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer->src/server/viewer/components/ui/sheet.tsx:Sheet",
       "source": "src/server/viewer/components/ui/sheet-or-drawer.tsx:SheetOrDrawer",
       "target": "src/server/viewer/components/ui/sheet.tsx:Sheet",
@@ -13938,6 +14007,54 @@
       "type": "direct-call",
       "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/useNodeSelection.ts:useNodeSelection->src/server/viewer/components/useNodeSelection.ts:parseParamSet",
+      "source": "src/server/viewer/components/useNodeSelection.ts:useNodeSelection",
+      "target": "src/server/viewer/components/useNodeSelection.ts:parseParamSet",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "src/server/viewer/components/useNodeSelection.ts:useNodeSelection->src/server/viewer/components/useNodeSelection.ts:encodeParamSet",
+      "source": "src/server/viewer/components/useNodeSelection.ts:useNodeSelection",
+      "target": "src/server/viewer/components/useNodeSelection.ts:encodeParamSet",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (selected.size > 0)",
+          "branch": "then",
+          "branchGroup": "branch:78"
+        }
+      ],
+      "label": "if (selected.size > 0)",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "src/server/viewer/components/useNodeSelection.ts:useNodeSelection->src/server/viewer/components/useNodeSelection.ts:encodeParamSet::1",
+      "source": "src/server/viewer/components/useNodeSelection.ts:useNodeSelection",
+      "target": "src/server/viewer/components/useNodeSelection.ts:encodeParamSet",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (focused.size > 0)",
+          "branch": "then",
+          "branchGroup": "branch:83"
+        }
+      ],
+      "label": "if (focused.size > 0)",
+      "isAsync": false,
+      "order": 2
+    },
+    {
+      "id": "src/server/viewer/components/useNodeSelection.ts:useNodeSelection->src/server/viewer/components/useNodeSelection.ts:setsEqual",
+      "source": "src/server/viewer/components/useNodeSelection.ts:useNodeSelection",
+      "target": "src/server/viewer/components/useNodeSelection.ts:setsEqual",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 3
     },
     {
       "id": "src/server/viewer/keyboard.ts:getModifierKeySymbol->src/server/viewer/keyboard.ts:isApplePlatform",
