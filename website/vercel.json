@@ -1,3 +1,8 @@
 {
-  "buildCommand": "pnpm run build"
+  "buildCommand": "pnpm run build",
+  "functions": {
+    "api/explore.ts": {
+      "maxDuration": 60
+    }
+  }
 }

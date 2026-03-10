@@ -1,5 +1,6 @@
 ---
 import Nav from '../../components/Nav.astro';
+import { RepoSearchBar } from '../../components/RepoSearchBar';
 import Base from '../../layouts/Base.astro';
 import { showcases } from '../../showcases';
 ---
@@ -11,8 +12,10 @@ import { showcases } from '../../showcases';
 		<main class="flex-1 px-6 pt-12 sm:pt-16 max-w-3xl mx-auto w-full">
 			<h1 class="font-mono text-3xl font-bold tracking-tight mb-3">Showcases</h1>
 			<p class="text-muted-foreground text-sm mb-10 max-w-lg">
-				See how treck maps real-world TypeScript projects. Click a project to explore its interactive flow graph.
+				See how treck maps real-world TypeScript projects. Explore a curated showcase below, or paste any GitHub URL to try your own.
 			</p>
+
+			<RepoSearchBar client:load />
 
 			<div class="grid gap-px bg-border">
 				{showcases.map((project) => (

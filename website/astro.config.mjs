@@ -7,7 +7,11 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   output: 'static',
   adapter: vercel({
-    includeFiles: ['./public/showcases/tldraw.json', './public/showcases/treck.json'],
+    includeFiles: [
+      './public/showcases/tldraw.json',
+      './public/showcases/treck.json',
+      '../dist/index.mjs',
+    ],
   }),
   site: 'https://treck.dev',
   integrations: [react()],
