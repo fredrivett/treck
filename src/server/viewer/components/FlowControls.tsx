@@ -66,6 +66,21 @@ export function FlowControls({
           }}
           className={`peer w-full px-2.5 py-2 ${isApplePlatform() ? 'pr-10' : 'pr-16'} focus:pr-2.5 border border-border rounded-md text-[13px] outline-none bg-background text-foreground`}
         />
+        {searchQuery && (
+          <button
+            type="button"
+            aria-label="Clear search"
+            onMouseDown={(e) => {
+              e.preventDefault();
+              onSearch('');
+            }}
+            className="absolute right-2 inset-y-0 items-center bg-transparent border-none p-0 cursor-pointer text-muted-foreground hover:text-foreground hidden peer-focus:flex"
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M4 4l8 8M12 4l-8 8" />
+            </svg>
+          </button>
+        )}
         <div className="absolute right-2 inset-y-0 flex items-center pointer-events-none peer-focus:hidden">
           <Kbd mod>K</Kbd>
         </div>
