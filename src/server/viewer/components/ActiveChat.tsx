@@ -59,7 +59,7 @@ function ChatMarkdown({ content }: { content: string }) {
   const html = marked.parse(content, { async: false }) as string;
   return (
     <div
-      className="prose prose-sm dark:prose-invert max-w-none break-words [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_pre]:overflow-x-auto"
+      className="prose prose-sm dark:prose-invert max-w-none break-words [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_pre]:overflow-x-auto [&_h1]:mt-[1em] [&_h2]:mt-[1em] [&_h3]:mt-[1em] [&_h4]:mt-[1em] [&_h1]:text-[1rem] [&_h2]:text-[0.935rem] [&_h3]:text-sm [&_h4]:text-sm [&_h5]:text-sm [&_h6]:text-sm"
       // biome-ignore lint/security/noDangerouslySetInnerHtml: rendered from markdown via marked
       dangerouslySetInnerHTML={{ __html: html }}
     />
