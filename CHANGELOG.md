@@ -1,5 +1,18 @@
 # treck
 
+## 0.2.5
+
+### Patch Changes
+
+- 9520022: Add Cal.com showcase
+- 43679e7: Enhance chat UI with tool call visibility, node selection sync, and improved styling. Surface search_nodes and select_nodes tool calls as step indicators in chat. Add useNodeSelection hook for shared selection state between graph and chat with cmd+click toggle support. Implement badge colors matching node categories with consistent dimming. Extract shared color definitions and dimmed opacity classes.
+- 2c927f1: Replace substring search with MiniSearch for multi-word, camelCase-aware search with fuzzy matching and relevance scoring
+- 22e3c62: Prefix page title with git branch name for worktree identification
+- 5bec47d: Use collapsible chat panel to prevent sidebar width shift when toggling chat visibility. Instead of conditionally mounting/unmounting the chat panel (which caused proportional resizing of other panels), the panel is now always mounted and collapsed/expanded imperatively.
+- 63771e2: Add category-colored tooltips to sidebar and info icons to graph nodes
+- 730a284: Add clear button to search input and debounce search to prevent dropped keystrokes
+- 844b5cf: Tweak file path tooltip positioning, delay, and zoom threshold.
+
 ## 0.2.4
 
 ### Patch Changes
