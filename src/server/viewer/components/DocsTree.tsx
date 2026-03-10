@@ -176,6 +176,8 @@ function TreeDir({
             const colors = getCategoryColors(getNodeCategory(item.sym));
             const nodeId = nameToNodeId?.get(item.sym.name);
             const isSelected = nodeId ? selectedNodes?.has(nodeId) : false;
+            const hasSelection = selectedNodes && selectedNodes.size > 0;
+            const isDimmed = hasSelection && !isSelected;
             const symContent = (
               <>
                 <Guides guides={childGuides} isLast={itemIsLast} />
@@ -202,7 +204,7 @@ function TreeDir({
                   key={`sym-${item.sym.docPath}`}
                   type="button"
                   onClick={(e) => onSymbolClick(nodeId, e)}
-                  className={`flex items-center w-full h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis bg-transparent border-none p-0 text-left font-[inherit] hover:bg-muted ${isSelected ? 'bg-border font-medium' : ''}`}
+                  className={`flex items-center w-full h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis bg-transparent border-none p-0 text-left font-[inherit] hover:bg-muted ${isSelected ? 'bg-border font-medium' : ''} ${isDimmed ? 'opacity-65' : ''}`}
                 >
                   {symContent}
                 </button>
