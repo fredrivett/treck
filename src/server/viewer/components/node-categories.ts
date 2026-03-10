@@ -1,11 +1,51 @@
 /**
- * Shared color definitions for node categories.
+ * Node category definitions: derivation, labels, and colors.
  *
- * Single source of truth for bg, border, text, and ring colors per category.
- * Used by NodeTypes.tsx (graph nodes) and ActiveChat.tsx (chat badges).
+ * Single source of truth for how categories are determined from node/symbol
+ * metadata, their display labels, and visual styling. Used across the viewer UI.
  */
 
-import type { NodeCategory } from './FlowGraph';
+/** Node category identifier (entry type or derived kind). */
+export type NodeCategory = string;
+
+/** Minimal shape needed to derive a node category. */
+interface Categorisable {
+  name: string;
+  kind?: string;
+  entryType?: string;
+}
+
+const entryTypeCategoryLabels: Record<string, string> = {
+  'api-route': 'API Routes',
+  page: 'Pages',
+  'inngest-function': 'Inngest Jobs',
+  'trigger-task': 'Trigger Tasks',
+  middleware: 'Middleware',
+  'server-action': 'Server Actions',
+};
+
+const nonEntryCategoryLabels: Record<string, string> = {
+  component: 'Components',
+  hook: 'Hooks',
+  function: 'Functions',
+};
+
+/**
+ * Returns the filter category for a node or symbol.
+ *
+ * @param node - Any object with name, kind, and optional entryType
+ */
+export function getNodeCategory(node: Categorisable): NodeCategory {
+  if (node.entryType) return node.entryType;
+  if (node.kind === 'component') return 'component';
+  if (node.kind === 'function' && /^use[A-Z]/.test(node.name)) return 'hook';
+  return 'function';
+}
+
+/** Returns the human-readable label for a category. */
+export function getCategoryLabel(category: NodeCategory): string {
+  return entryTypeCategoryLabels[category] || nonEntryCategoryLabels[category] || category;
+}
 
 /** Color config for a node category. */
 export interface CategoryColors {

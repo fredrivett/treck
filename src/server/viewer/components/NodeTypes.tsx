@@ -1,5 +1,5 @@
 import { Handle, type NodeProps, Position, useStore } from '@xyflow/react';
-import { DIMMED_CLASSES, getCategoryColors } from './node-colors';
+import { DIMMED_CLASSES, getCategoryColors } from './node-categories';
 import { Badge, type BadgeVariant, variantLabels } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 

@@ -12,10 +12,9 @@ import { DefaultChatTransport } from 'ai';
 import { marked } from 'marked';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { deriveTitle, type StoredChat, saveChat } from '../lib/chat-store';
-import { getNodeCategory, type NodeCategory } from './FlowGraph';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
-import { categoryBadgeClasses, DIMMED_CLASSES } from './node-colors';
+import { categoryBadgeClasses, DIMMED_CLASSES, getNodeCategory, type NodeCategory } from './node-categories';
 import { Card } from './ui/card';
 import { useNodeSelection } from './useNodeSelection';
 

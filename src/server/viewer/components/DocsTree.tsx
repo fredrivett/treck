@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router';
 import { docPathToUrl, urlToDocPath } from '../docs-utils';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
+import { getCategoryColors, getNodeCategory } from './node-categories';
 
 export type DocsIndex = Record<
   string,
@@ -13,6 +14,8 @@ export type DocsIndex = Record<
     overview: string;
     hasJsDoc?: boolean;
     isTrivial?: boolean;
+    kind?: string;
+    entryType?: string;
   }>
 >;
 
@@ -24,6 +27,8 @@ export interface TreeNode {
     overview: string;
     hasJsDoc?: boolean;
     isTrivial?: boolean;
+    kind?: string;
+    entryType?: string;
   }>;
 }
 
@@ -106,6 +111,8 @@ function TreeDir({
           overview: string;
           hasJsDoc?: boolean;
           isTrivial?: boolean;
+          kind?: string;
+          entryType?: string;
         };
       }
   > = [];
@@ -153,14 +160,19 @@ function TreeDir({
               );
             }
             const isActive = item.sym.docPath === activeDocPath;
+            const colors = getCategoryColors(getNodeCategory(item.sym));
             return (
               <Link
                 key={`sym-${item.sym.docPath}`}
                 to={docPathToUrl(item.sym.docPath)}
-                className={`flex items-center h-[26px] text-[13px] text-foreground no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis hover:bg-muted ${isActive ? 'bg-border font-medium' : ''}`}
+                className={`flex items-center h-[26px] text-[13px] no-underline cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis hover:bg-muted ${isActive ? 'bg-border font-medium' : ''}`}
               >
                 <Guides guides={childGuides} isLast={itemIsLast} />
-                <span className="ml-0.5 overflow-hidden text-ellipsis">{item.sym.name}</span>
+                <span
+                  className="w-2 h-2 rounded-full shrink-0 ml-0.5 mr-1.5"
+                  style={{ backgroundColor: colors.handle }}
+                />
+                <span className="overflow-hidden text-ellipsis text-foreground">{item.sym.name}</span>
                 {item.sym.hasJsDoc === false && !item.sym.isTrivial && (
                   <span
                     className="ml-auto text-[10px] text-amber-500 opacity-70"

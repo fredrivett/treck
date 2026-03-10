@@ -17,45 +17,19 @@ import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import '@xyflow/react/dist/style.css';
 
-import type { FlowGraph as FlowGraphData, GraphNode } from '../../../graph/types.js';
+import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
 import { GRID_SIZE, snapCeil } from '../grid';
 import { edgeStyleByType, expandConditionals, toReactFlowNode } from './condition-expansion';
 import { DocPanel } from './DocPanel';
 import { defaultLayoutOptions, type LayoutOptions, LayoutSettings } from './LayoutSettings';
+import { type NodeCategory, getCategoryLabel, getNodeCategory } from './node-categories';
 import { nodeTypes } from './NodeTypes';
 import { Kbd } from './ui/kbd';
 import { useNodeSelection } from './useNodeSelection';
 
+export { type NodeCategory, getCategoryLabel, getNodeCategory };
+
 const elk = new ELK();
-
-export type NodeCategory = string;
-
-const entryTypeCategoryLabels: Record<string, string> = {
-  'api-route': 'API Routes',
-  page: 'Pages',
-  'inngest-function': 'Inngest Jobs',
-  'trigger-task': 'Trigger Tasks',
-  middleware: 'Middleware',
-  'server-action': 'Server Actions',
-};
-
-const nonEntryCategoryLabels: Record<string, string> = {
-  component: 'Components',
-  hook: 'Hooks',
-  function: 'Functions',
-};
-
-/** Returns the filter category for a graph node (entry type or kind-based). */
-export function getNodeCategory(node: GraphNode): NodeCategory {
-  if (node.entryType) return node.entryType;
-  if (node.kind === 'component') return 'component';
-  if (node.kind === 'function' && /^use[A-Z]/.test(node.name)) return 'hook';
-  return 'function';
-}
-
-export function getCategoryLabel(category: NodeCategory): string {
-  return entryTypeCategoryLabels[category] || nonEntryCategoryLabels[category] || category;
-}
 
 function toReactFlowEdges(graphEdges: FlowGraphData['edges'], showConditionals: boolean): Edge[] {
   return graphEdges.map((edge) => {
