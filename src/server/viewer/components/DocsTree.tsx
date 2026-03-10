@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import type { SymbolIndex } from '../../../graph/symbol-index.js';
 import { docPathToUrl, urlToDocPath } from '../docs-utils';
-import { type DocsIndex, type TreeNode, buildTree } from './docs-tree-data';
+import { buildTree, type DocsIndex, type TreeNode } from './docs-tree-data';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
 import { getCategoryColors, getNodeCategory } from './node-categories';
