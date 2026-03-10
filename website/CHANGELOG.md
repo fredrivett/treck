@@ -1,5 +1,11 @@
 # @treck/website
 
+## 0.0.3
+
+### Patch Changes
+
+- 6fadc1e: Fix TooltipProvider context error in showcase viewer by wrapping GraphExplorer with TooltipProvider
+
 ## 0.0.2
 
 ### Patch Changes
