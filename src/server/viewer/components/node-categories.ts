@@ -5,7 +5,7 @@
  * metadata, their display labels, and visual styling. Used across the viewer UI.
  */
 
-import { type BadgeVariant, variantLabels } from './ui/badge';
+import type { BadgeVariant } from './ui/badge';
 
 /** Node category identifier (entry type or derived kind). */
 export type NodeCategory = string;
@@ -61,12 +61,21 @@ export function getCategoryLabel(category: NodeCategory): string {
   return entryTypeCategoryLabels[category] || nonEntryCategoryLabels[category] || category;
 }
 
-/** Returns the singular label for a category, derived from badge variant labels. */
+/** Singular display labels for each category. */
+const categorySingularLabels: Record<string, string> = {
+  'api-route': 'API',
+  page: 'Page',
+  'inngest-function': 'Job',
+  'trigger-task': 'Job',
+  middleware: 'Middleware',
+  'server-action': 'Action',
+  component: 'Component',
+  hook: 'Hook',
+};
+
+/** Returns the singular label for a category. */
 export function getCategorySingularLabel(category: NodeCategory): string {
-  const variant = categoryBadgeVariant[category];
-  if (variant) return variantLabels[variant] || category;
-  // Capitalize the category name as fallback (e.g. 'function' → 'Function')
-  return category.charAt(0).toUpperCase() + category.slice(1);
+  return categorySingularLabels[category] || category.charAt(0).toUpperCase() + category.slice(1);
 }
 
 /** Color config for a node category. */

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import type { SymbolIndex } from '../../../graph/symbol-index.js';
 import { docPathToUrl, urlToDocPath } from '../docs-utils';
+import { type DocsIndex, type TreeNode, buildTree } from './docs-tree-data';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
 import { getCategoryColors, getNodeCategory } from './node-categories';
@@ -11,53 +12,8 @@ import { SymbolTooltipContent } from './SymbolTooltip';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { useNodeSelection } from './useNodeSelection';
 
-export type DocsIndex = Record<
-  string,
-  Array<{
-    name: string;
-    docPath: string;
-    overview: string;
-    hasJsDoc?: boolean;
-    isTrivial?: boolean;
-    kind?: string;
-    entryType?: string;
-  }>
->;
-
-export interface TreeNode {
-  children: Record<string, TreeNode>;
-  symbols: Array<{
-    name: string;
-    docPath: string;
-    overview: string;
-    hasJsDoc?: boolean;
-    isTrivial?: boolean;
-    kind?: string;
-    entryType?: string;
-  }>;
-}
-
-/** Build a tree from the docs index, optionally filtering to only visible symbol names. */
-export function buildTree(index: DocsIndex, visibleNames: Set<string> | null): TreeNode {
-  const root: TreeNode = { children: {}, symbols: [] };
-
-  for (const [dir, symbols] of Object.entries(index)) {
-    const filtered = visibleNames ? symbols.filter((s) => visibleNames.has(s.name)) : symbols;
-    if (filtered.length === 0) continue;
-
-    const parts = dir === '.' ? ['.'] : dir.split('/');
-    let node = root;
-    for (const part of parts) {
-      if (!node.children[part]) {
-        node.children[part] = { children: {}, symbols: [] };
-      }
-      node = node.children[part];
-    }
-    node.symbols.push(...filtered);
-  }
-
-  return root;
-}
+export { buildTree };
+export type { DocsIndex, TreeNode };
 
 const guideBase = 'w-4 shrink-0 relative self-stretch';
 const guideLine = `${guideBase} before:content-[''] before:absolute before:left-[7px] before:top-0 before:bottom-0 before:border-l before:border-border`;

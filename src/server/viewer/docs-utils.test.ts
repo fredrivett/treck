@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { DocsIndex } from './components/DocsTree';
-import { buildTree } from './components/DocsTree';
+import type { DocsIndex } from './components/docs-tree-data';
+import { buildTree } from './components/docs-tree-data';
 import { docPathToUrl, escapeHtml, urlToDocPath } from './docs-utils';
 
 describe('docPathToUrl', () => {
