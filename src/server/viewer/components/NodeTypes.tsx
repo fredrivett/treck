@@ -1,6 +1,6 @@
 import { Handle, type NodeProps, Position, useStore } from '@xyflow/react';
 import { useGraphExplorer } from './GraphExplorerContext';
-import { DIMMED_CLASSES, categoryBadgeVariant, getCategoryColors } from './node-categories';
+import { categoryBadgeVariant, DIMMED_CLASSES, getCategoryColors } from './node-categories';
 import { SymbolInfoIcon } from './SymbolTooltip';
 import { Badge, type BadgeVariant, variantLabels } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
@@ -72,7 +72,6 @@ function entryTypeConfig(entryType: string) {
   return { border: c.border, bg: c.bg, ring: c.ring, handle: c.handle };
 }
 
-
 const entryTypeImpl: Record<string, { label: string; variant: BadgeVariant }> = {
   'inngest-function': { label: 'Inngest', variant: 'inngest' },
   'trigger-task': { label: 'Trigger', variant: 'trigger' },
@@ -115,7 +114,17 @@ function EntryPointNode({ data }: NodeProps) {
         )}
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
-        {d.measuring ? <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" /> : <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
+        {d.measuring ? (
+          <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
+        ) : (
+          <SymbolInfoIcon
+            name={d.label}
+            kind={d.kind}
+            entryType={d.entryType}
+            symbolIndex={ctx?.symbolIndex}
+            compact
+          />
+        )}
       </div>
       <div className="font-semibold text-[13px] text-foreground">{d.label}</div>
       {(route || eventTrigger || taskId) && (
@@ -147,7 +156,17 @@ function ComponentNode({ data }: NodeProps) {
         <Badge variant="component">Component</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
-        {d.measuring ? <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" /> : <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
+        {d.measuring ? (
+          <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
+        ) : (
+          <SymbolInfoIcon
+            name={d.label}
+            kind={d.kind}
+            entryType={d.entryType}
+            symbolIndex={ctx?.symbolIndex}
+            compact
+          />
+        )}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
@@ -174,7 +193,17 @@ function HookNode({ data }: NodeProps) {
         <Badge variant="hook">Hook</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
-        {d.measuring ? <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" /> : <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
+        {d.measuring ? (
+          <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
+        ) : (
+          <SymbolInfoIcon
+            name={d.label}
+            kind={d.kind}
+            entryType={d.entryType}
+            symbolIndex={ctx?.symbolIndex}
+            compact
+          />
+        )}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />
@@ -239,7 +268,17 @@ function FunctionNode({ data }: NodeProps) {
         <span className="text-[10px] text-muted-foreground">{d.kind}</span>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
-        {d.measuring ? <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" /> : <SymbolInfoIcon name={d.label} kind={d.kind} entryType={d.entryType} symbolIndex={ctx?.symbolIndex} compact />}
+        {d.measuring ? (
+          <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
+        ) : (
+          <SymbolInfoIcon
+            name={d.label}
+            kind={d.kind}
+            entryType={d.entryType}
+            symbolIndex={ctx?.symbolIndex}
+            compact
+          />
+        )}
       </div>
       <div className="font-medium text-[13px] text-foreground">{d.label}</div>
       <FilePath path={d.filePath} measuring={d.measuring} />

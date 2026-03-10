@@ -6,8 +6,13 @@
  */
 
 import { Info } from 'lucide-react';
-import { categoryBadgeVariant, getCategoryColors, getCategorySingularLabel, getNodeCategory } from './node-categories';
 import type { SymbolIndex } from '../../../graph/symbol-index.js';
+import {
+  categoryBadgeVariant,
+  getCategoryColors,
+  getCategorySingularLabel,
+  getNodeCategory,
+} from './node-categories';
 import { Badge } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
@@ -40,9 +45,7 @@ export function SymbolTooltipContent({
   compact,
 }: SymbolTooltipContentProps) {
   // Look up entry by docPath first, fall back to byName
-  const entry = docPath
-    ? symbolIndex?.entries.get(docPath)
-    : symbolIndex?.byName.get(name)?.[0];
+  const entry = docPath ? symbolIndex?.entries.get(docPath) : symbolIndex?.byName.get(name)?.[0];
   const category = getNodeCategory({ name, kind, entryType });
   const colors = getCategoryColors(category);
 
@@ -90,7 +93,11 @@ export function SymbolInfoIcon(props: SymbolTooltipContentProps) {
   // In compact mode, only show when there's an overview to display
   if (props.compact && !entry?.overview) return null;
 
-  const category = getNodeCategory({ name: props.name, kind: props.kind, entryType: props.entryType });
+  const category = getNodeCategory({
+    name: props.name,
+    kind: props.kind,
+    entryType: props.entryType,
+  });
   const colors = getCategoryColors(category);
   const tooltipClasses = `${colors.bg} text-foreground border-0 p-3`;
 

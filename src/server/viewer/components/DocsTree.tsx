@@ -2,10 +2,10 @@ import { ChevronsDownUp, ChevronsUpDown } from 'lucide-react';
 import type React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router';
+import type { SymbolIndex } from '../../../graph/symbol-index.js';
 import { docPathToUrl, urlToDocPath } from '../docs-utils';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
-import type { SymbolIndex } from '../../../graph/symbol-index.js';
 import { getCategoryColors, getNodeCategory } from './node-categories';
 import { SymbolTooltipContent } from './SymbolTooltip';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
@@ -216,8 +216,22 @@ function TreeDir({
                       {symInner}
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="right" className={tooltipClasses} arrowClassName={`${colors.bg} fill-transparent`} style={{ filter: `drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex})` }}>
-                    <SymbolTooltipContent name={item.sym.name} kind={item.sym.kind} entryType={item.sym.entryType} isTrivial={item.sym.isTrivial} docPath={item.sym.docPath} symbolIndex={symbolIndex} />
+                  <TooltipContent
+                    side="right"
+                    className={tooltipClasses}
+                    arrowClassName={`${colors.bg} fill-transparent`}
+                    style={{
+                      filter: `drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex})`,
+                    }}
+                  >
+                    <SymbolTooltipContent
+                      name={item.sym.name}
+                      kind={item.sym.kind}
+                      entryType={item.sym.entryType}
+                      isTrivial={item.sym.isTrivial}
+                      docPath={item.sym.docPath}
+                      symbolIndex={symbolIndex}
+                    />
                   </TooltipContent>
                 </Tooltip>
               );
@@ -234,8 +248,22 @@ function TreeDir({
                     {symInner}
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right" className={tooltipClasses} arrowClassName={`${colors.bg} fill-transparent`} style={{ filter: `drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex})` }}>
-                  <SymbolTooltipContent name={item.sym.name} kind={item.sym.kind} entryType={item.sym.entryType} isTrivial={item.sym.isTrivial} docPath={item.sym.docPath} symbolIndex={symbolIndex} />
+                <TooltipContent
+                  side="right"
+                  className={tooltipClasses}
+                  arrowClassName={`${colors.bg} fill-transparent`}
+                  style={{
+                    filter: `drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex}) drop-shadow(0 0 1px ${colors.borderHex})`,
+                  }}
+                >
+                  <SymbolTooltipContent
+                    name={item.sym.name}
+                    kind={item.sym.kind}
+                    entryType={item.sym.entryType}
+                    isTrivial={item.sym.isTrivial}
+                    docPath={item.sym.docPath}
+                    symbolIndex={symbolIndex}
+                  />
                 </TooltipContent>
               </Tooltip>
             );

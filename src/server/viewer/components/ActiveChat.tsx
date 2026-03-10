@@ -14,7 +14,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { deriveTitle, type StoredChat, saveChat } from '../lib/chat-store';
 import { useGraphExplorer } from './GraphExplorerContext';
 import { LoadingEllipsis } from './LoadingEllipsis';
-import { categoryBadgeClasses, DIMMED_CLASSES, getNodeCategory, type NodeCategory } from './node-categories';
+import {
+  categoryBadgeClasses,
+  DIMMED_CLASSES,
+  getNodeCategory,
+  type NodeCategory,
+} from './node-categories';
 import { Card } from './ui/card';
 import { useNodeSelection } from './useNodeSelection';
 

@@ -22,8 +22,8 @@ import { GRID_SIZE, snapCeil } from '../grid';
 import { edgeStyleByType, expandConditionals, toReactFlowNode } from './condition-expansion';
 import { DocPanel } from './DocPanel';
 import { defaultLayoutOptions, type LayoutOptions, LayoutSettings } from './LayoutSettings';
-import { type NodeCategory, getCategoryLabel, getNodeCategory } from './node-categories';
 import { nodeTypes } from './NodeTypes';
+import { getCategoryLabel, getNodeCategory, type NodeCategory } from './node-categories';
 import { Kbd } from './ui/kbd';
 import { useNodeSelection } from './useNodeSelection';
 
