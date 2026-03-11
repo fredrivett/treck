@@ -65,7 +65,7 @@ export function formatDiffMermaid(diff: GraphDiff, options?: { asciiShapes?: boo
  * @param options - Output format and depth options
  */
 async function runDiff(
-  store: GraphStore,
+  _store: GraphStore,
   baseGraph: FlowGraph,
   baseRef: string,
   headGraph: FlowGraph,
@@ -162,7 +162,9 @@ export function registerDiffCommand(cli: CAC) {
       syncSpinner.start('Syncing graph...');
       const syncResult = syncGraph(config);
       if (syncResult) {
-        syncSpinner.stop(`Graph synced (${syncResult.nodeCount} nodes, ${syncResult.edgeCount} edges)`);
+        syncSpinner.stop(
+          `Graph synced (${syncResult.nodeCount} nodes, ${syncResult.edgeCount} edges)`,
+        );
       } else {
         syncSpinner.stop('Sync complete (no source files matched)');
       }

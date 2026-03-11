@@ -96,7 +96,12 @@ export function diffGraphs(
   const { nodes, edges, nodeDepths, maxDepth } =
     changedIds.length > 0
       ? connectedSubgraphWithDepths(headGraph, changedIds, depth)
-      : { nodes: [] as GraphNode[], edges: [] as GraphEdge[], nodeDepths: {} as Record<string, number>, maxDepth: 0 };
+      : {
+          nodes: [] as GraphNode[],
+          edges: [] as GraphEdge[],
+          nodeDepths: {} as Record<string, number>,
+          maxDepth: 0,
+        };
 
   const entryPointsAffected = nodes.filter((n) => n.entryType).map((n) => n.id);
 

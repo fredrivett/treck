@@ -13,19 +13,18 @@ import type { PanelImperativeHandle } from 'react-resizable-panels';
 import { Route, Routes, useLocation, useSearchParams } from 'react-router';
 import { buildIndexResponse, buildSymbolIndexFromGraph } from '../../../graph/symbol-index.js';
 import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
-import type { GraphDiff } from '../../../graph/diff.js';
 import { ChatPanel } from './ChatPanel';
 import { DocsTree } from './DocsTree';
 import { DocsViewer } from './DocsViewer';
-import { FlowControls, type DiffSummary } from './FlowControls';
+import { type DiffSummary, FlowControls } from './FlowControls';
 import { FlowGraph, getNodeCategory, type NodeCategory } from './FlowGraph';
-import { useLiveDiff } from './useLiveDiff';
 import { type GraphExplorerContextValue, GraphExplorerProvider } from './GraphExplorerContext';
 import { LoadingSpinner } from './LoadingSpinner';
 import { Sidebar } from './Sidebar';
 import { Button, buttonVariants } from './ui/button';
 import { Kbd } from './ui/kbd';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './ui/resizable';
+import { useLiveDiff } from './useLiveDiff';
 import { ViewNav } from './ViewNav';
 
 /** Default size (pixels) for the left sidebar panel. */
@@ -65,10 +64,6 @@ export function GraphExplorer({
   const savedSidebarSize = useMemo(() => {
     const v = localStorage.getItem('treck-sidebar-width');
     return v ? Number(v) : SIDEBAR_DEFAULT_SIZE;
-  }, []);
-  const savedChatSize = useMemo(() => {
-    const v = localStorage.getItem('treck-chat-width');
-    return v ? Number(v) : CHAT_DEFAULT_SIZE;
   }, []);
 
   /** Toggle chat panel via collapse/expand on the always-mounted panel. */

@@ -83,9 +83,18 @@ function nodeClass(d: NodeData, ...classes: string[]) {
 function DiffBadge({ status }: { status?: DiffStatus }) {
   if (!status || status === 'context') return null;
   const config: Record<string, { label: string; className: string }> = {
-    modified: { label: 'Modified', className: 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300' },
-    added: { label: 'New', className: 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300' },
-    removed: { label: 'Removed', className: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300' },
+    modified: {
+      label: 'Modified',
+      className: 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300',
+    },
+    added: {
+      label: 'New',
+      className: 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300',
+    },
+    removed: {
+      label: 'Removed',
+      className: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300',
+    },
   };
   const c = config[status];
   if (!c) return null;

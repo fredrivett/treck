@@ -374,11 +374,6 @@ function FlowGraphInner({
   const prevDiffSetsRef = useRef(diffSets);
   useEffect(() => {
     if (prevDiffSetsRef.current !== diffSets) {
-      console.log('[layout] diffSets changed, clearing size cache', {
-        wasDiff: !!prevDiffSetsRef.current,
-        isDiff: !!diffSets,
-        cacheSize: sizeCache.current.size,
-      });
       sizeCache.current.clear();
       prevDiffSetsRef.current = diffSets;
     }
@@ -424,23 +419,12 @@ function FlowGraphInner({
 
     // Fast path: all display nodes have cached sizes — skip measurement entirely.
     const allCached = rfNodes.length > 0 && rfNodes.every((n) => sizeCache.current.has(n.id));
-    console.log('[layout] effect fired', {
-      allCached,
-      initialMeasureDone,
-      rfNodeCount: rfNodes.length,
-      cacheSize: sizeCache.current.size,
-      hasDiffSets: !!diffSets,
-      hasDiffData: !!diffData,
-    });
     if (allCached && initialMeasureDone) {
-      console.log('[layout] FAST PATH — using cached sizes');
       runElkLayout(rfNodes, rfEdges, layoutOptions, sizeCache.current).then((positions) =>
         applyPositionsAndFit(positions, rfNodes),
       );
       return;
     }
-
-    console.log('[layout] SLOW PATH — measuring nodes');
     // Slow path: build measurement-mode nodes (measuring: true hides file paths
     // for consistent sizing) and render them so React Flow can measure.
     let measuringNodes = showConditionals
@@ -533,18 +517,6 @@ function FlowGraphInner({
     if (!hasMeasurements) return;
 
     setNeedsLayout(false);
-
-    const measuredCount = nodes.filter((n) => n.measured?.width && n.measured?.height).length;
-    console.log('[layout] Pass 2 — caching measurements', {
-      totalNodes: nodes.length,
-      measuredCount,
-      nodesInitialized,
-      sampleMeasured: nodes.slice(0, 3).map((n) => ({
-        id: n.id,
-        measured: n.measured,
-        diffStatus: n.data?.diffStatus,
-      })),
-    });
 
     // Cache measured sizes for future fast-path layouts
     for (const node of nodes) {

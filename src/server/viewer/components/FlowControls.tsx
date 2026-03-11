@@ -248,7 +248,9 @@ export function FlowControls({
               {diffSummary.modified > 0 && (
                 <span className="text-amber-500">{diffSummary.modified} modified</span>
               )}
-              {diffSummary.modified > 0 && (diffSummary.added > 0 || diffSummary.removed > 0) && ', '}
+              {diffSummary.modified > 0 &&
+                (diffSummary.added > 0 || diffSummary.removed > 0) &&
+                ', '}
               {diffSummary.added > 0 && (
                 <span className="text-green-500">{diffSummary.added} added</span>
               )}
@@ -256,9 +258,9 @@ export function FlowControls({
               {diffSummary.removed > 0 && (
                 <span className="text-red-500">{diffSummary.removed} removed</span>
               )}
-              {diffSummary.modified === 0 && diffSummary.added === 0 && diffSummary.removed === 0 && (
-                <span>No changes</span>
-              )}
+              {diffSummary.modified === 0 &&
+                diffSummary.added === 0 &&
+                diffSummary.removed === 0 && <span>No changes</span>}
             </div>
           )}
         </div>

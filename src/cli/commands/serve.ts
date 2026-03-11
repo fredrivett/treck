@@ -41,7 +41,9 @@ export function registerServeCommand(cli: CAC) {
       syncSpinner.start('Syncing graph...');
       const syncResult = syncGraph(config);
       if (syncResult) {
-        syncSpinner.stop(`Graph synced (${syncResult.nodeCount} nodes, ${syncResult.edgeCount} edges)`);
+        syncSpinner.stop(
+          `Graph synced (${syncResult.nodeCount} nodes, ${syncResult.edgeCount} edges)`,
+        );
       } else {
         syncSpinner.stop('Sync complete (no source files matched)');
       }

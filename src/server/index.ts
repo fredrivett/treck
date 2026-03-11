@@ -188,7 +188,15 @@ export async function startServer(outputDir: string, port: number) {
       const requestedBase = url.searchParams.get('base');
       const ref = requestedBase ?? baseRef ?? detectBaseRef();
       const respondWithDiff = () => {
-        currentDiff = diffGraphs(baseGraph!, graph!, { baseRef: ref });
+        if (!baseGraph || !graph) {
+          res.writeHead(500, {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          });
+          res.end(JSON.stringify({ error: 'Graph not available' }));
+          return;
+        }
+        currentDiff = diffGraphs(baseGraph, graph, { baseRef: ref });
         res.writeHead(200, {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',

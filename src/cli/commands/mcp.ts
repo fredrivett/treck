@@ -322,7 +322,9 @@ export function registerMcpCommand(cli: CAC) {
       process.stderr.write('Syncing graph...\n');
       const syncResult = syncGraph(config);
       if (syncResult) {
-        process.stderr.write(`Graph synced (${syncResult.nodeCount} nodes, ${syncResult.edgeCount} edges)\n`);
+        process.stderr.write(
+          `Graph synced (${syncResult.nodeCount} nodes, ${syncResult.edgeCount} edges)\n`,
+        );
       } else {
         process.stderr.write('Sync: no source files matched\n');
       }

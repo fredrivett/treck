@@ -20,19 +20,17 @@ const mockExecFile = execFile as unknown as Mock;
  * @param handler - Maps (cmd, args) to a result string, or throws to simulate failure
  */
 function mockExecFileAsync(handler: (cmd: string, args: string[]) => string) {
-  mockExecFile.mockImplementation(
-    (cmd: string, args: string[], ...rest: unknown[]) => {
-      const callback = rest.find((a) => typeof a === 'function') as
-        | ((err: Error | null, result?: { stdout: string; stderr: string }) => void)
-        | undefined;
-      try {
-        const result = handler(cmd, args);
-        callback?.(null, { stdout: result, stderr: '' });
-      } catch (err) {
-        callback?.(err as Error);
-      }
-    },
-  );
+  mockExecFile.mockImplementation((cmd: string, args: string[], ...rest: unknown[]) => {
+    const callback = rest.find((a) => typeof a === 'function') as
+      | ((err: Error | null, result?: { stdout: string; stderr: string }) => void)
+      | undefined;
+    try {
+      const result = handler(cmd, args);
+      callback?.(null, { stdout: result, stderr: '' });
+    } catch (err) {
+      callback?.(err as Error);
+    }
+  });
 }
 
 describe('getCurrentBranch', () => {

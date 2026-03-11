@@ -127,7 +127,12 @@ export function connectedSubgraphWithDepths(
   graph: FlowGraph,
   startNodeIds: string[],
   depth = Number.POSITIVE_INFINITY,
-): { nodes: GraphNode[]; edges: GraphEdge[]; nodeDepths: Record<string, number>; maxDepth: number } {
+): {
+  nodes: GraphNode[];
+  edges: GraphEdge[];
+  nodeDepths: Record<string, number>;
+  maxDepth: number;
+} {
   const forward = buildAdjacencyList(graph);
   const reverse = buildReverseAdjacencyList(graph);
 
