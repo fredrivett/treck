@@ -370,6 +370,11 @@ function FlowGraphInner({
   const prevDiffSetsRef = useRef(diffSets);
   useEffect(() => {
     if (prevDiffSetsRef.current !== diffSets) {
+      console.log('[layout] diffSets changed, clearing size cache', {
+        wasDiff: !!prevDiffSetsRef.current,
+        isDiff: !!diffSets,
+        cacheSize: sizeCache.current.size,
+      });
       sizeCache.current.clear();
       prevDiffSetsRef.current = diffSets;
     }
@@ -413,17 +418,46 @@ function FlowGraphInner({
     displayNodeIdsRef.current = new Set(rfNodes.map((n) => n.id));
     setEdges(rfEdges);
 
-    let measuringNodes = rfNodes;
-    if (!initialMeasureDone) {
-      measuringNodes = showConditionals
-        ? expandConditionals(renderGraph.nodes, renderGraph.edges, true).rfNodes
-        : renderGraph.nodes.map((node) => toReactFlowNode(node, true));
+    // Fast path: all display nodes have cached sizes — skip measurement entirely.
+    const allCached = rfNodes.length > 0 && rfNodes.every((n) => sizeCache.current.has(n.id));
+    console.log('[layout] effect fired', {
+      allCached,
+      initialMeasureDone,
+      rfNodeCount: rfNodes.length,
+      cacheSize: sizeCache.current.size,
+      hasDiffSets: !!diffSets,
+      hasDiffData: !!diffData,
+    });
+    if (allCached && initialMeasureDone) {
+      console.log('[layout] FAST PATH — using cached sizes');
+      runElkLayout(rfNodes, rfEdges, layoutOptions, sizeCache.current).then((positions) =>
+        applyPositionsAndFit(positions, rfNodes),
+      );
+      return;
     }
 
-    // During the initial measurement pass, also expand conditionals so their
-    // nodes get measured and cached — but only for sizing, not for display.
+    console.log('[layout] SLOW PATH — measuring nodes');
+    // Slow path: build measurement-mode nodes (measuring: true hides file paths
+    // for consistent sizing) and render them so React Flow can measure.
+    let measuringNodes = showConditionals
+      ? expandConditionals(renderGraph.nodes, renderGraph.edges, true).rfNodes
+      : renderGraph.nodes.map((node) => toReactFlowNode(node, true));
+
+    // Annotate measuring nodes with diff status so badges are included in sizing.
+    if (diffSets) {
+      measuringNodes = measuringNodes.map((node) => {
+        let diffStatus: string;
+        if (diffSets.modified.has(node.id)) diffStatus = 'modified';
+        else if (diffSets.added.has(node.id)) diffStatus = 'added';
+        else if (diffSets.removed.has(node.id)) diffStatus = 'removed';
+        else diffStatus = 'context';
+        return { ...node, data: { ...node.data, diffStatus } };
+      });
+    }
+
+    // Also expand conditionals so their nodes get measured and cached.
     let extraCondNodes: Node[] = [];
-    if (!initialMeasureDone && !showConditionals) {
+    if (!showConditionals) {
       const hasConditionals = renderGraph.edges.some(
         (e) => e.type === 'conditional-call' && e.conditions?.length,
       );
@@ -453,18 +487,8 @@ function FlowGraphInner({
         });
     }
 
-    const allNodes = [...measuringNodes, ...extraCondNodes, ...extraDiffNodes];
-    const allCached = allNodes.every((n) => sizeCache.current.has(n.id));
-    if (allCached && rfNodes.length > 0) {
-      // Fast path: compute positions before rendering so nodes never appear at origin
-      runElkLayout(rfNodes, rfEdges, layoutOptions, sizeCache.current).then((positions) =>
-        applyPositionsAndFit(positions, rfNodes),
-      );
-    } else {
-      // Slow path: render at origin so React Flow can measure with file paths hidden.
-      setNodes(allNodes);
-      setNeedsLayout(true);
-    }
+    setNodes([...measuringNodes, ...extraCondNodes, ...extraDiffNodes]);
+    setNeedsLayout(true);
   }, [
     rfNodes,
     rfEdges,
@@ -498,7 +522,25 @@ function FlowGraphInner({
   // biome-ignore lint/correctness/useExhaustiveDependencies: initialMeasureDone is write-only here
   useEffect(() => {
     if (!needsLayout || !nodesInitialized || !visibleGraphRef.current) return;
+
+    // Guard against stale nodesInitialized — React Flow may report true for
+    // same-ID nodes before ResizeObserver has measured the updated DOM.
+    const hasMeasurements = nodes.some((n) => n.measured?.width && n.measured?.height);
+    if (!hasMeasurements) return;
+
     setNeedsLayout(false);
+
+    const measuredCount = nodes.filter((n) => n.measured?.width && n.measured?.height).length;
+    console.log('[layout] Pass 2 — caching measurements', {
+      totalNodes: nodes.length,
+      measuredCount,
+      nodesInitialized,
+      sampleMeasured: nodes.slice(0, 3).map((n) => ({
+        id: n.id,
+        measured: n.measured,
+        diffStatus: n.data?.diffStatus,
+      })),
+    });
 
     // Cache measured sizes for future fast-path layouts
     for (const node of nodes) {
