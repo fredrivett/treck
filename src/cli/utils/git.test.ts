@@ -2,15 +2,36 @@
  * Tests for git helper utilities
  */
 
-import { execFileSync } from 'node:child_process';
+import { execFile, execFileSync } from 'node:child_process';
 import { describe, expect, it, type Mock, vi } from 'vitest';
 import { detectBaseRef, getCurrentBranch, loadGraphAtRef } from './git.js';
 
 vi.mock('node:child_process', () => ({
   execFileSync: vi.fn(),
+  execFile: vi.fn(),
 }));
 
 const mockExecFileSync = execFileSync as Mock;
+const mockExecFile = execFile as unknown as Mock;
+
+/**
+ * Configure the execFile mock to simulate async git commands.
+ *
+ * @param handler - Maps (cmd, args) to a result string, or throws to simulate failure
+ */
+function mockExecFileAsync(handler: (cmd: string, args: string[]) => string) {
+  mockExecFile.mockImplementation((cmd: string, args: string[], ...rest: unknown[]) => {
+    const callback = rest.find((a) => typeof a === 'function') as
+      | ((err: Error | null, result?: { stdout: string; stderr: string }) => void)
+      | undefined;
+    try {
+      const result = handler(cmd, args);
+      callback?.(null, { stdout: result, stderr: '' });
+    } catch (err) {
+      callback?.(err as Error);
+    }
+  });
+}
 
 describe('getCurrentBranch', () => {
   it('returns the current branch name', () => {
@@ -67,45 +88,93 @@ describe('detectBaseRef', () => {
 });
 
 describe('loadGraphAtRef', () => {
-  it('returns parsed FlowGraph from git show output', () => {
+  it('uses origin/ prefix when remote ref exists', async () => {
     const graph = {
       version: '1.0',
       generatedAt: '2026-03-01T00:00:00Z',
       nodes: [],
       edges: [],
     };
-    mockExecFileSync.mockReturnValue(JSON.stringify(graph));
+    mockExecFileAsync((_cmd: string, args: string[]) => {
+      if (args[0] === 'fetch') return '';
+      if (args[0] === 'rev-parse') return '';
+      if (args[0] === 'show') return JSON.stringify(graph);
+      return '';
+    });
 
-    const result = loadGraphAtRef('main', '_treck/graph.json');
+    const result = await loadGraphAtRef('main', '_treck/graph.json');
 
     expect(result).toEqual(graph);
-    expect(mockExecFileSync).toHaveBeenCalledWith('git', ['show', 'main:_treck/graph.json'], {
-      encoding: 'utf8',
-    });
+    expect(mockExecFile).toHaveBeenCalledWith(
+      'git',
+      ['show', 'origin/main:_treck/graph.json'],
+      { encoding: 'utf8' },
+      expect.any(Function),
+    );
   });
 
-  it('throws with clear message when graph.json not found', () => {
-    mockExecFileSync.mockImplementation(() => {
+  it('falls back to bare ref when remote is unavailable', async () => {
+    const graph = { version: '1.0', generatedAt: '', nodes: [], edges: [] };
+    mockExecFileAsync((_cmd: string, args: string[]) => {
+      if (args[0] === 'fetch') throw new Error('offline');
+      if (args[0] === 'rev-parse') throw new Error('not found');
+      if (args[0] === 'show') return JSON.stringify(graph);
+      return '';
+    });
+
+    const result = await loadGraphAtRef('main', '_treck/graph.json');
+
+    expect(result).toEqual(graph);
+    expect(mockExecFile).toHaveBeenCalledWith(
+      'git',
+      ['show', 'main:_treck/graph.json'],
+      { encoding: 'utf8' },
+      expect.any(Function),
+    );
+  });
+
+  it('throws with clear message when graph.json not found', async () => {
+    mockExecFileAsync(() => {
       throw new Error('path not found');
     });
 
-    expect(() => loadGraphAtRef('main', '_treck/graph.json')).toThrow(
+    await expect(loadGraphAtRef('main', '_treck/graph.json')).rejects.toThrow(
       'No graph.json found at main:_treck/graph.json',
     );
-    expect(() => loadGraphAtRef('main', '_treck/graph.json')).toThrow(
+    await expect(loadGraphAtRef('main', '_treck/graph.json')).rejects.toThrow(
       'Ensure graph.json is committed on the base branch',
     );
   });
 
-  it('passes custom graph path to git show', () => {
-    mockExecFileSync.mockReturnValue('{"version":"1.0","generatedAt":"","nodes":[],"edges":[]}');
+  it('skips origin prefix for commit hashes', async () => {
+    mockExecFileAsync((_cmd: string, args: string[]) => {
+      if (args[0] === 'show') return '{"version":"1.0","generatedAt":"","nodes":[],"edges":[]}';
+      return '';
+    });
 
-    loadGraphAtRef('abc123', 'custom/path/graph.json');
+    await loadGraphAtRef('abc123', 'custom/path/graph.json');
 
-    expect(mockExecFileSync).toHaveBeenCalledWith(
+    expect(mockExecFile).toHaveBeenCalledWith(
       'git',
       ['show', 'abc123:custom/path/graph.json'],
       { encoding: 'utf8' },
+      expect.any(Function),
+    );
+  });
+
+  it('skips origin prefix for refs already containing a slash', async () => {
+    mockExecFileAsync((_cmd: string, args: string[]) => {
+      if (args[0] === 'show') return '{"version":"1.0","generatedAt":"","nodes":[],"edges":[]}';
+      return '';
+    });
+
+    await loadGraphAtRef('origin/main', '_treck/graph.json');
+
+    expect(mockExecFile).toHaveBeenCalledWith(
+      'git',
+      ['show', 'origin/main:_treck/graph.json'],
+      { encoding: 'utf8' },
+      expect.any(Function),
     );
   });
 });

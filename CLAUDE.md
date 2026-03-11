@@ -29,6 +29,10 @@ When modifying CLI commands (adding/removing/renaming flags, changing descriptio
 - `.option()` and `.example()` registrations
 - Then rebuild (`npm run build`) and verify with `treck <command>` and `treck <command> --help`
 
+## Graph freshness
+
+All commands that display graph state (CLI and MCP) must auto-sync before showing data. Call `syncGraph(config)` at startup — never read a potentially stale `graph.json` without syncing first. This applies to `serve`, `diff`, `mcp`, and any future commands that read the graph.
+
 ## Code style
 
 - Don't re-export types from wrapper files — update imports to point to the source directly, unless there's a good reason not to

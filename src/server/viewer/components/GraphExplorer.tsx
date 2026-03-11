@@ -16,7 +16,7 @@ import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
 import { ChatPanel } from './ChatPanel';
 import { DocsTree } from './DocsTree';
 import { DocsViewer } from './DocsViewer';
-import { FlowControls } from './FlowControls';
+import { type DiffSummary, FlowControls } from './FlowControls';
 import { FlowGraph, getNodeCategory, type NodeCategory } from './FlowGraph';
 import { type GraphExplorerContextValue, GraphExplorerProvider } from './GraphExplorerContext';
 import { LoadingSpinner } from './LoadingSpinner';
@@ -24,6 +24,7 @@ import { Sidebar } from './Sidebar';
 import { Button, buttonVariants } from './ui/button';
 import { Kbd } from './ui/kbd';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './ui/resizable';
+import { useLiveDiff } from './useLiveDiff';
 import { ViewNav } from './ViewNav';
 
 /** Default size (pixels) for the left sidebar panel. */
@@ -63,10 +64,6 @@ export function GraphExplorer({
   const savedSidebarSize = useMemo(() => {
     const v = localStorage.getItem('treck-sidebar-width');
     return v ? Number(v) : SIDEBAR_DEFAULT_SIZE;
-  }, []);
-  const savedChatSize = useMemo(() => {
-    const v = localStorage.getItem('treck-chat-width');
-    return v ? Number(v) : CHAT_DEFAULT_SIZE;
   }, []);
 
   /** Toggle chat panel via collapse/expand on the always-mounted panel. */
@@ -137,6 +134,49 @@ export function GraphExplorer({
 
   const showConditionals = searchParams.get('conditionals') === 'true';
 
+  // --- Live diff state ---
+  const diffEnabled = searchParams.get('diff') === 'true';
+  const { diff: diffData, baseRef: diffBaseRef } = useLiveDiff(diffEnabled);
+
+  // --- Unified depth state (single URL param for both diff and focus) ---
+  const [focusMaxDepth, setFocusMaxDepth] = useState(0);
+  const maxDepth = diffEnabled ? (diffData?.maxDepth ?? 0) : focusMaxDepth;
+  const depthParam = searchParams.get('depth');
+  const depth = depthParam != null ? Math.min(Number(depthParam), maxDepth) : maxDepth;
+  const setDepth = useCallback(
+    (d: number) => setParam('depth', d < maxDepth ? String(d) : null),
+    [setParam, maxDepth],
+  );
+
+  /** When focus max depth changes, update the max. */
+  const handleFocusMaxDepthChange = useCallback((maxDepth: number) => {
+    setFocusMaxDepth(maxDepth);
+  }, []);
+
+  const diffSummary = useMemo<DiffSummary | null>(() => {
+    if (!diffData) return null;
+    return {
+      modified: diffData.changes.modified.length,
+      added: diffData.changes.added.length,
+      removed: diffData.changes.removed.length,
+    };
+  }, [diffData]);
+
+  /** Build a full FlowGraphData from the diff subgraph filtered by depth. */
+  const diffGraph = useMemo<FlowGraphData | null>(() => {
+    if (!diffData || !graph) return null;
+    const depths = diffData.nodeDepths;
+    // Filter nodes to those within the selected depth
+    const nodes = diffData.nodes.filter((n) => (depths[n.id] ?? 0) <= depth);
+    // Include removed nodes (ghost nodes) — they have depth 0 (they are changed nodes)
+    const allNodes = [...nodes, ...diffData.removedNodes];
+    const nodeIds = new Set(allNodes.map((n) => n.id));
+    const edges = [...diffData.edges, ...diffData.removedEdges].filter(
+      (e) => nodeIds.has(e.source) && nodeIds.has(e.target),
+    );
+    return { ...graph, nodes: allNodes, edges };
+  }, [diffData, depth, graph]);
+
   // --- Computed graph data ---
 
   const availableTypes = useMemo(() => {
@@ -156,7 +196,8 @@ export function GraphExplorer({
 
   const filteredGraph = useMemo(() => {
     if (!graph) return { nodes: [], edges: [] };
-    let filtered: Pick<FlowGraphData, 'nodes' | 'edges'> = graph;
+    // When diff is active, start from the diff subgraph instead of the full graph
+    let filtered: Pick<FlowGraphData, 'nodes' | 'edges'> = diffGraph ?? graph;
 
     if (enabledTypes) {
       const typeMatchIds = new Set(
@@ -191,7 +232,7 @@ export function GraphExplorer({
     }
 
     return filtered;
-  }, [graph, searchQuery, enabledTypes]);
+  }, [graph, searchQuery, enabledTypes, diffGraph]);
 
   const onToggleType = useCallback(
     (category: NodeCategory) => {
@@ -266,7 +307,10 @@ export function GraphExplorer({
       )}
       {graph && (
         <FlowGraph
-          graph={graph}
+          graph={diffEnabled && diffGraph ? diffGraph : graph}
+          diffData={diffData}
+          focusDepth={depth}
+          onFocusMaxDepthChange={handleFocusMaxDepthChange}
           onLayoutReady={onLayoutReady}
           searchQuery={searchQuery}
           enabledTypes={enabledTypes}
@@ -331,6 +375,24 @@ export function GraphExplorer({
             showConditionals={showConditionals}
             onToggleConditionals={() => setParam('conditionals', showConditionals ? null : 'true')}
             hasConditionalEdges={hasConditionalEdges}
+            diffEnabled={diffEnabled}
+            onToggleDiff={() => {
+              setSearchParams((prev) => {
+                if (diffEnabled) {
+                  prev.delete('diff');
+                  prev.delete('depth');
+                } else {
+                  prev.set('diff', 'true');
+                  prev.set('depth', '0'); // diff starts at depth 0 (changed nodes only)
+                }
+                return prev;
+              });
+            }}
+            baseRef={diffBaseRef}
+            diffSummary={diffSummary}
+            depth={depth}
+            maxDepth={maxDepth}
+            onDepthChange={setDepth}
           />
           <div className="border-t border-border" />
           <DocsTree visibleNames={visibleNames} />

@@ -367,14 +367,14 @@ describe('handleDiffGraph', () => {
       makeNode({ id: 'src/a.ts:funcA', name: 'funcA', hash: 'old', filePath: 'src/a.ts' }),
       makeNode({ id: 'src/b.ts:funcB', name: 'funcB', hash: 'same', filePath: 'src/b.ts' }),
     ]);
-    mockLoad.mockReturnValue(baseGraph);
+    mockLoad.mockResolvedValue(baseGraph);
 
     const currentGraph = makeGraph([
       makeNode({ id: 'src/a.ts:funcA', name: 'funcA', hash: 'new', filePath: 'src/a.ts' }),
       makeNode({ id: 'src/b.ts:funcB', name: 'funcB', hash: 'same', filePath: 'src/b.ts' }),
     ]);
 
-    const result = handleDiffGraph('main', undefined, '_treck/graph.json', currentGraph);
+    const result = await handleDiffGraph('main', undefined, '_treck/graph.json', currentGraph);
     const parsed = JSON.parse(result.content[0].text);
 
     expect(result.isError).toBeUndefined();
@@ -388,11 +388,9 @@ describe('handleDiffGraph', () => {
   it('returns isError when base graph cannot be loaded', async () => {
     const { loadGraphAtRef } = await import('../utils/git.js');
     const mockLoad = vi.mocked(loadGraphAtRef);
-    mockLoad.mockImplementation(() => {
-      throw new Error('No graph.json found at bad-ref:_treck/graph.json');
-    });
+    mockLoad.mockRejectedValue(new Error('No graph.json found at bad-ref:_treck/graph.json'));
 
-    const result = handleDiffGraph('bad-ref', undefined, '_treck/graph.json', emptyGraph);
+    const result = await handleDiffGraph('bad-ref', undefined, '_treck/graph.json', emptyGraph);
 
     expect(result.isError).toBe(true);
     expect(result.content[0].text).toContain('No graph.json found');
@@ -405,9 +403,9 @@ describe('handleDiffGraph', () => {
     const graph = makeGraph([
       makeNode({ id: 'src/a.ts:funcA', name: 'funcA', filePath: 'src/a.ts' }),
     ]);
-    mockLoad.mockReturnValue(graph);
+    mockLoad.mockResolvedValue(graph);
 
-    const result = handleDiffGraph('main', undefined, '_treck/graph.json', graph);
+    const result = await handleDiffGraph('main', undefined, '_treck/graph.json', graph);
     const parsed = JSON.parse(result.content[0].text);
 
     expect(parsed.changes.modified).toEqual([]);
@@ -432,7 +430,7 @@ describe('handleDiffGraph', () => {
         { id: 'e2', source: 'c.ts:C', target: 'b.ts:B', type: 'direct-call', isAsync: false },
       ],
     );
-    mockLoad.mockReturnValue(baseGraph);
+    mockLoad.mockResolvedValue(baseGraph);
 
     const currentGraph = makeGraph(
       [
@@ -446,7 +444,7 @@ describe('handleDiffGraph', () => {
       ],
     );
 
-    const result = handleDiffGraph('main', 1, '_treck/graph.json', currentGraph);
+    const result = await handleDiffGraph('main', 1, '_treck/graph.json', currentGraph);
     const parsed = JSON.parse(result.content[0].text);
 
     const nodeIds = parsed.nodes.map((n: { id: string }) => n.id);

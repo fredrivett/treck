@@ -5,7 +5,7 @@
  * then builds an impact subgraph showing the call chain context.
  */
 
-import { connectedSubgraph } from './graph-query.js';
+import { connectedSubgraphWithDepths } from './graph-query.js';
 import {
   edgeArrow,
   edgeTypeLabel,
@@ -40,6 +40,14 @@ export interface GraphDiff {
   nodes: GraphNode[];
   /** Edges in the impact subgraph. */
   edges: GraphEdge[];
+  /** Full node objects from the base graph for removed symbols. */
+  removedNodes: GraphNode[];
+  /** Edges from the base graph that connect to/from removed nodes. */
+  removedEdges: GraphEdge[];
+  /** Map of node ID → minimum distance (hops) from a changed node. Changed nodes have depth 0. */
+  nodeDepths: Record<string, number>;
+  /** Maximum depth reached in the impact subgraph (0 if only changed nodes exist). */
+  maxDepth: number;
 }
 
 /**
@@ -85,10 +93,15 @@ export function diffGraphs(
   const changedIds = [...modified, ...added];
   const depth = options.depth ?? Number.POSITIVE_INFINITY;
 
-  const { nodes, edges } =
+  const { nodes, edges, nodeDepths, maxDepth } =
     changedIds.length > 0
-      ? connectedSubgraph(headGraph, changedIds, depth)
-      : { nodes: [] as GraphNode[], edges: [] as GraphEdge[] };
+      ? connectedSubgraphWithDepths(headGraph, changedIds, depth)
+      : {
+          nodes: [] as GraphNode[],
+          edges: [] as GraphEdge[],
+          nodeDepths: {} as Record<string, number>,
+          maxDepth: 0,
+        };
 
   const entryPointsAffected = nodes.filter((n) => n.entryType).map((n) => n.id);
 
@@ -104,6 +117,12 @@ export function diffGraphs(
     }
   }
 
+  const removedSet = new Set(removed);
+  const removedNodes = removed.map((id) => baseNodes.get(id)).filter((n): n is GraphNode => !!n);
+  const removedEdges = baseGraph.edges.filter(
+    (e) => removedSet.has(e.source) || removedSet.has(e.target),
+  );
+
   return {
     base: options.baseRef,
     head: 'HEAD',
@@ -115,6 +134,10 @@ export function diffGraphs(
     },
     nodes,
     edges,
+    removedNodes,
+    removedEdges,
+    nodeDepths,
+    maxDepth,
   };
 }
 

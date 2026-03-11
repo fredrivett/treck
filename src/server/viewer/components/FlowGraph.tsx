@@ -17,6 +17,8 @@ import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import '@xyflow/react/dist/style.css';
 
+import type { GraphDiff } from '../../../graph/diff.js';
+import { connectedSubgraphWithDepths } from '../../../graph/graph-query.js';
 import type { FlowGraph as FlowGraphData } from '../../../graph/types.js';
 import { GRID_SIZE, snapCeil } from '../grid';
 import { edgeStyleByType, expandConditionals, toReactFlowNode } from './condition-expansion';
@@ -103,6 +105,12 @@ async function runElkLayout(
 
 interface FlowGraphProps {
   graph: FlowGraphData;
+  /** Diff data for annotating nodes with change status. Null when diff is inactive. */
+  diffData?: GraphDiff | null;
+  /** Current focus depth limit. Nodes farther than this from focused nodes are hidden. */
+  focusDepth: number;
+  /** Called when the maximum available focus depth changes (e.g. new focused nodes). */
+  onFocusMaxDepthChange?: (maxDepth: number) => void;
   onLayoutReady?: () => void;
   searchQuery: string;
   enabledTypes: Set<NodeCategory> | null;
@@ -139,6 +147,9 @@ function useDarkMode(): boolean {
 
 function FlowGraphInner({
   graph,
+  diffData,
+  focusDepth,
+  onFocusMaxDepthChange,
   onLayoutReady,
   searchQuery,
   enabledTypes,
@@ -166,6 +177,7 @@ function FlowGraphInner({
   const currentNodesRef = useRef<Node[]>([]);
   const visibleGraphRef = useRef<FlowGraphData | null>(null);
   const visualEdgesRef = useRef<Edge[]>([]);
+  const displayNodeIdsRef = useRef<Set<string>>(new Set());
   const sizeCache = useRef<SizeCache>(new Map());
   const [initialMeasureDone, setInitialMeasureDone] = useState(false);
 
@@ -263,37 +275,32 @@ function FlowGraphInner({
     onOffCenterChange?.(offCenter);
   }, [getViewport, onOffCenterChange]);
 
-  // Compute visible node IDs: union of connected subgraphs from all focused entries
-  const visibleIds = useMemo(() => {
+  // Compute visible node IDs with depth info from focused entries
+  const focusSubgraph = useMemo(() => {
     if (focusedEntries.size === 0) return null;
-    const connected = new Set<string>(focusedEntries);
+    return connectedSubgraphWithDepths(graph, [...focusedEntries]);
+  }, [focusedEntries, graph]);
 
-    // BFS downward from all focused entries (callees)
-    const downQueue = [...focusedEntries];
-    while (downQueue.length > 0) {
-      const current = downQueue.shift() as string;
-      for (const edge of graph.edges) {
-        if (edge.source === current && !connected.has(edge.target)) {
-          connected.add(edge.target);
-          downQueue.push(edge.target);
-        }
-      }
+  // Report focus max depth changes to parent
+  const focusMaxDepth = focusSubgraph?.maxDepth ?? 0;
+  const prevFocusMaxDepthRef = useRef(-1);
+  useEffect(() => {
+    if (prevFocusMaxDepthRef.current !== focusMaxDepth) {
+      prevFocusMaxDepthRef.current = focusMaxDepth;
+      onFocusMaxDepthChange?.(focusMaxDepth);
     }
+  }, [focusMaxDepth, onFocusMaxDepthChange]);
 
-    // BFS upward from all focused entries (callers)
-    const upQueue = [...focusedEntries];
-    while (upQueue.length > 0) {
-      const current = upQueue.shift() as string;
-      for (const edge of graph.edges) {
-        if (edge.target === current && !connected.has(edge.source)) {
-          connected.add(edge.source);
-          upQueue.push(edge.source);
-        }
-      }
+  // Filter visible IDs by focus depth
+  const visibleIds = useMemo(() => {
+    if (!focusSubgraph) return null;
+    const depths = focusSubgraph.nodeDepths;
+    const visible = new Set<string>();
+    for (const [id, d] of Object.entries(depths)) {
+      if (d <= focusDepth) visible.add(id);
     }
-
-    return connected;
-  }, [focusedEntries, graph.edges]);
+    return visible;
+  }, [focusSubgraph, focusDepth]);
 
   // Apply type and search filters
   const filteredGraph = useMemo(() => {
@@ -353,38 +360,92 @@ function FlowGraphInner({
   // First render: measure ALL nodes (behind loading screen). After: render filtered view.
   const renderGraph = initialMeasureDone ? focusFilteredGraph : graph;
 
+  // Build diff status sets when diff is active
+  const diffSets = useMemo(() => {
+    if (!diffData) return null;
+    return {
+      modified: new Set(diffData.changes.modified),
+      added: new Set(diffData.changes.added),
+      removed: new Set(diffData.changes.removed),
+    };
+  }, [diffData]);
+
+  // When diff status changes, clear size cache so nodes are re-measured with/without badges
+  const prevDiffSetsRef = useRef(diffSets);
+  useEffect(() => {
+    if (prevDiffSetsRef.current !== diffSets) {
+      sizeCache.current.clear();
+      prevDiffSetsRef.current = diffSets;
+    }
+  }, [diffSets]);
+
   // Derive ReactFlow nodes and edges from the render graph + conditionals toggle.
   // This memo ensures toggling conditionals produces a new reference, following
   // the same pattern as the focus/filter pipeline above.
   const { rfNodes, rfEdges } = useMemo(() => {
+    let nodes: Node[];
+    let edges: Edge[];
     if (showConditionals) {
       const expanded = expandConditionals(renderGraph.nodes, renderGraph.edges);
-      return { rfNodes: expanded.rfNodes, rfEdges: expanded.rfEdges };
+      nodes = expanded.rfNodes;
+      edges = expanded.rfEdges;
+    } else {
+      nodes = renderGraph.nodes.map((n) => toReactFlowNode(n));
+      edges = toReactFlowEdges(renderGraph.edges, false);
     }
-    return {
-      rfNodes: renderGraph.nodes.map((n) => toReactFlowNode(n)),
-      rfEdges: toReactFlowEdges(renderGraph.edges, false),
-    };
-  }, [renderGraph, showConditionals]);
+
+    // Annotate nodes with diff status when diff is active
+    if (diffSets) {
+      nodes = nodes.map((node) => {
+        let diffStatus: string | undefined;
+        if (diffSets.modified.has(node.id)) diffStatus = 'modified';
+        else if (diffSets.added.has(node.id)) diffStatus = 'added';
+        else if (diffSets.removed.has(node.id)) diffStatus = 'removed';
+        else diffStatus = 'context';
+        return { ...node, data: { ...node.data, diffStatus } };
+      });
+    }
+
+    return { rfNodes: nodes, rfEdges: edges };
+  }, [renderGraph, showConditionals, diffSets]);
 
   // When the derived nodes/edges change: use cached sizes for instant layout,
   // or fall back to two-pass measurement.
   useEffect(() => {
     visibleGraphRef.current = renderGraph;
     visualEdgesRef.current = rfEdges;
+    displayNodeIdsRef.current = new Set(rfNodes.map((n) => n.id));
     setEdges(rfEdges);
 
-    let measuringNodes = rfNodes;
-    if (!initialMeasureDone) {
-      measuringNodes = showConditionals
-        ? expandConditionals(renderGraph.nodes, renderGraph.edges, true).rfNodes
-        : renderGraph.nodes.map((node) => toReactFlowNode(node, true));
+    // Fast path: all display nodes have cached sizes — skip measurement entirely.
+    const allCached = rfNodes.length > 0 && rfNodes.every((n) => sizeCache.current.has(n.id));
+    if (allCached && initialMeasureDone) {
+      runElkLayout(rfNodes, rfEdges, layoutOptions, sizeCache.current).then((positions) =>
+        applyPositionsAndFit(positions, rfNodes),
+      );
+      return;
+    }
+    // Slow path: build measurement-mode nodes (measuring: true hides file paths
+    // for consistent sizing) and render them so React Flow can measure.
+    let measuringNodes = showConditionals
+      ? expandConditionals(renderGraph.nodes, renderGraph.edges, true).rfNodes
+      : renderGraph.nodes.map((node) => toReactFlowNode(node, true));
+
+    // Annotate measuring nodes with diff status so badges are included in sizing.
+    if (diffSets) {
+      measuringNodes = measuringNodes.map((node) => {
+        let diffStatus: string;
+        if (diffSets.modified.has(node.id)) diffStatus = 'modified';
+        else if (diffSets.added.has(node.id)) diffStatus = 'added';
+        else if (diffSets.removed.has(node.id)) diffStatus = 'removed';
+        else diffStatus = 'context';
+        return { ...node, data: { ...node.data, diffStatus } };
+      });
     }
 
-    // During the initial measurement pass, also expand conditionals so their
-    // nodes get measured and cached — but only for sizing, not for display.
+    // Also expand conditionals so their nodes get measured and cached.
     let extraCondNodes: Node[] = [];
-    if (!initialMeasureDone && !showConditionals) {
+    if (!showConditionals) {
       const hasConditionals = renderGraph.edges.some(
         (e) => e.type === 'conditional-call' && e.conditions?.length,
       );
@@ -395,18 +456,27 @@ function FlowGraphInner({
       }
     }
 
-    const allNodes = [...measuringNodes, ...extraCondNodes];
-    const allCached = allNodes.every((n) => sizeCache.current.has(n.id));
-    if (allCached && rfNodes.length > 0) {
-      // Fast path: compute positions before rendering so nodes never appear at origin
-      runElkLayout(rfNodes, rfEdges, layoutOptions, sizeCache.current).then((positions) =>
-        applyPositionsAndFit(positions, rfNodes),
-      );
-    } else {
-      // Slow path: render at origin so React Flow can measure with file paths hidden.
-      setNodes(allNodes);
-      setNeedsLayout(true);
+    // When diff is active, measure ALL diff nodes (at max depth) upfront so
+    // increasing the depth slider doesn't trigger re-measurement.
+    let extraDiffNodes: Node[] = [];
+    if (diffData && diffSets) {
+      const existingIds = new Set(measuringNodes.map((node) => node.id));
+      const allDiffGraphNodes = [...diffData.nodes, ...diffData.removedNodes];
+      extraDiffNodes = allDiffGraphNodes
+        .filter((n) => !existingIds.has(n.id))
+        .map((n) => {
+          const rfNode = toReactFlowNode(n, true);
+          let diffStatus: string;
+          if (diffSets.modified.has(n.id)) diffStatus = 'modified';
+          else if (diffSets.added.has(n.id)) diffStatus = 'added';
+          else if (diffSets.removed.has(n.id)) diffStatus = 'removed';
+          else diffStatus = 'context';
+          return { ...rfNode, data: { ...rfNode.data, diffStatus } };
+        });
     }
+
+    setNodes([...measuringNodes, ...extraCondNodes, ...extraDiffNodes]);
+    setNeedsLayout(true);
   }, [
     rfNodes,
     rfEdges,
@@ -417,6 +487,8 @@ function FlowGraphInner({
     applyPositionsAndFit,
     initialMeasureDone,
     showConditionals,
+    diffData,
+    diffSets,
   ]);
 
   // Update node data (selected/dimmed) without triggering re-layout
@@ -438,6 +510,12 @@ function FlowGraphInner({
   // biome-ignore lint/correctness/useExhaustiveDependencies: initialMeasureDone is write-only here
   useEffect(() => {
     if (!needsLayout || !nodesInitialized || !visibleGraphRef.current) return;
+
+    // Guard against stale nodesInitialized — React Flow may report true for
+    // same-ID nodes before ResizeObserver has measured the updated DOM.
+    const hasMeasurements = nodes.some((n) => n.measured?.width && n.measured?.height);
+    if (!hasMeasurements) return;
+
     setNeedsLayout(false);
 
     // Cache measured sizes for future fast-path layouts
@@ -452,9 +530,9 @@ function FlowGraphInner({
 
     if (!initialMeasureDone) setInitialMeasureDone(true);
 
-    // Strip out measurement-only condition nodes that aren't part of the
-    // current visual edges (added only to cache their sizes), and restore
-    // file-path rendering once measurement is complete.
+    // Strip out measurement-only nodes (extra condition nodes and extra diff
+    // nodes added only to cache their sizes) and restore file-path rendering.
+    const displayIds = displayNodeIdsRef.current;
     const edgeNodeIds = new Set<string>();
     for (const edge of visualEdgesRef.current) {
       edgeNodeIds.add(edge.source);
@@ -465,7 +543,14 @@ function FlowGraphInner({
         ...node,
         data: { ...node.data, measuring: false },
       }))
-      .filter((node) => node.type !== 'conditionNode' || edgeNodeIds.has(node.id));
+      .filter((node) => {
+        // Keep nodes that are in the current display set
+        if (displayIds.has(node.id)) return true;
+        // Keep condition nodes that are referenced by visual edges
+        if (node.type === 'conditionNode' && edgeNodeIds.has(node.id)) return true;
+        // Strip all other measurement-only nodes
+        return false;
+      });
 
     runElkLayout(displayNodes, visualEdgesRef.current, layoutOptions, sizeCache.current).then(
       (positions) => applyPositionsAndFit(positions, displayNodes),
@@ -604,6 +689,9 @@ function FlowGraphInner({
 /** ReactFlow-based graph visualization with ELK layout. */
 export function FlowGraph({
   graph,
+  diffData,
+  focusDepth,
+  onFocusMaxDepthChange,
   onLayoutReady,
   searchQuery,
   enabledTypes,
@@ -615,6 +703,9 @@ export function FlowGraph({
     <ReactFlowProvider>
       <FlowGraphInner
         graph={graph}
+        diffData={diffData}
+        focusDepth={focusDepth}
+        onFocusMaxDepthChange={onFocusMaxDepthChange}
         onLayoutReady={onLayoutReady}
         searchQuery={searchQuery}
         enabledTypes={enabledTypes}

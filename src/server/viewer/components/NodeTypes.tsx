@@ -41,6 +41,9 @@ function FilePath({ path, measuring }: { path: string; measuring?: boolean }) {
   );
 }
 
+/** Diff change status applied to a node when live diff is active. */
+type DiffStatus = 'modified' | 'added' | 'removed' | 'context';
+
 interface NodeData {
   label: string;
   kind: string;
@@ -57,13 +60,49 @@ interface NodeData {
   selected?: boolean;
   hasJsDoc?: boolean;
   measuring?: boolean;
+  diffStatus?: DiffStatus;
 }
 
 const BASE_NODE_CLASSES =
   'h-full flex flex-col justify-center transition-all duration-200 overflow-hidden';
 
+/** CSS for dashed outline indicating diff change type. */
+const DIFF_CLASSES: Record<string, string> = {
+  modified: 'outline-[3px] outline-dashed outline-amber-400 outline-offset-2',
+  added: 'outline-[3px] outline-dashed outline-green-400 outline-offset-2',
+  removed: 'outline-[3px] outline-dashed outline-red-400 outline-offset-2 opacity-50',
+  context: 'opacity-60',
+};
+
 function nodeClass(d: NodeData, ...classes: string[]) {
-  return `${BASE_NODE_CLASSES} ${d.isAsync ? 'border-dashed' : ''} ${d.dimmed ? DIMMED_CLASSES : ''} ${classes.join(' ')}`;
+  const diffClass = d.diffStatus ? (DIFF_CLASSES[d.diffStatus] ?? '') : '';
+  return `${BASE_NODE_CLASSES} ${d.isAsync && d.diffStatus !== 'removed' ? 'border-dashed' : ''} ${d.dimmed ? DIMMED_CLASSES : ''} ${diffClass} ${classes.join(' ')}`;
+}
+
+/** Small badge showing the diff change type. */
+function DiffBadge({ status }: { status?: DiffStatus }) {
+  if (!status || status === 'context') return null;
+  const config: Record<string, { label: string; className: string }> = {
+    modified: {
+      label: 'Modified',
+      className: 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300',
+    },
+    added: {
+      label: 'New',
+      className: 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300',
+    },
+    removed: {
+      label: 'Removed',
+      className: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300',
+    },
+  };
+  const c = config[status];
+  if (!c) return null;
+  return (
+    <span className={`text-[9px] font-medium px-1 py-0.5 rounded whitespace-nowrap ${c.className}`}>
+      {c.label}
+    </span>
+  );
 }
 
 /** Resolve entry type config from shared category colors. */
@@ -114,6 +153,7 @@ function EntryPointNode({ data }: NodeProps) {
         )}
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        <DiffBadge status={d.diffStatus} />
         {d.measuring ? (
           <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
         ) : (
@@ -156,6 +196,7 @@ function ComponentNode({ data }: NodeProps) {
         <Badge variant="component">Component</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        <DiffBadge status={d.diffStatus} />
         {d.measuring ? (
           <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
         ) : (
@@ -193,6 +234,7 @@ function HookNode({ data }: NodeProps) {
         <Badge variant="hook">Hook</Badge>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        <DiffBadge status={d.diffStatus} />
         {d.measuring ? (
           <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
         ) : (
@@ -268,6 +310,7 @@ function FunctionNode({ data }: NodeProps) {
         <span className="text-[10px] text-muted-foreground">{d.kind}</span>
         {d.isAsync && <Badge variant="async">async</Badge>}
         {d.hasJsDoc === false && <Badge variant="no-jsdoc">no jsdoc</Badge>}
+        <DiffBadge status={d.diffStatus} />
         {d.measuring ? (
           <span className="inline-flex items-center justify-center w-4 h-4 shrink-0" />
         ) : (
