@@ -142,22 +142,27 @@ export function GraphExplorer({
   // --- Live diff state ---
   const diffEnabled = searchParams.get('diff') === 'true';
   const { diff: diffData, baseRef: diffBaseRef } = useLiveDiff(diffEnabled);
-  const [diffDepth, setDiffDepth] = useState(0);
   const diffMaxDepth = diffData?.maxDepth ?? 0;
+  const diffDepthParam = searchParams.get('depth');
+  const diffDepth = diffDepthParam != null ? Number(diffDepthParam) : 0;
+  const setDiffDepth = useCallback(
+    (d: number) => setParam('depth', d > 0 ? String(d) : null),
+    [setParam],
+  );
 
-  // Reset depth to 0 when diff is toggled on
-  useEffect(() => {
-    if (diffEnabled) setDiffDepth(0);
-  }, [diffEnabled]);
 
-  // --- Focus depth state ---
-  const [focusDepth, setFocusDepth] = useState(Number.POSITIVE_INFINITY);
+  // --- Focus depth state (URL-persisted, reset atomically via useNodeSelection) ---
   const [focusMaxDepth, setFocusMaxDepth] = useState(0);
+  const focusDepthParam = searchParams.get('focusDepth');
+  const focusDepth = focusDepthParam != null ? Number(focusDepthParam) : focusMaxDepth;
+  const setFocusDepth = useCallback(
+    (d: number) => setParam('focusDepth', d < focusMaxDepth ? String(d) : null),
+    [setParam, focusMaxDepth],
+  );
 
-  /** When focus max depth changes, reset to show all. */
+  /** When focus max depth changes, update the max (focusDepth resets via useNodeSelection). */
   const handleFocusMaxDepthChange = useCallback((maxDepth: number) => {
     setFocusMaxDepth(maxDepth);
-    setFocusDepth(maxDepth);
   }, []);
 
   const diffSummary = useMemo<DiffSummary | null>(() => {
@@ -383,7 +388,17 @@ export function GraphExplorer({
             onToggleConditionals={() => setParam('conditionals', showConditionals ? null : 'true')}
             hasConditionalEdges={hasConditionalEdges}
             diffEnabled={diffEnabled}
-            onToggleDiff={() => setParam('diff', diffEnabled ? null : 'true')}
+            onToggleDiff={() => {
+              setSearchParams((prev) => {
+                if (diffEnabled) {
+                  prev.delete('diff');
+                } else {
+                  prev.set('diff', 'true');
+                  prev.delete('depth'); // reset depth when enabling
+                }
+                return prev;
+              });
+            }}
             baseRef={diffBaseRef}
             diffSummary={diffSummary}
             diffDepth={diffDepth}

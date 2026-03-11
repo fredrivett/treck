@@ -86,6 +86,7 @@ export function useNodeSelection(): NodeSelection {
         prev.set('focused', encodeParamSet(focused));
       } else {
         prev.delete('focused');
+        prev.delete('focusDepth');
       }
       return prev;
     });

@@ -283,8 +283,12 @@ function FlowGraphInner({
 
   // Report focus max depth changes to parent
   const focusMaxDepth = focusSubgraph?.maxDepth ?? 0;
+  const prevFocusMaxDepthRef = useRef(-1);
   useEffect(() => {
-    onFocusMaxDepthChange?.(focusMaxDepth);
+    if (prevFocusMaxDepthRef.current !== focusMaxDepth) {
+      prevFocusMaxDepthRef.current = focusMaxDepth;
+      onFocusMaxDepthChange?.(focusMaxDepth);
+    }
   }, [focusMaxDepth, onFocusMaxDepthChange]);
 
   // Filter visible IDs by focus depth
