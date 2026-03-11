@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-10T04:31:01.305Z",
+  "generatedAt": "2026-03-11T04:31:16.562Z",
   "nodes": [
     {
       "id": "packages/editor/src/lib/TldrawEditor.tsx:TldrawEditor",
@@ -2491,10 +2491,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/editor/Editor.ts",
       "isAsync": true,
-      "hash": "d0c776da3bb2edfa7b8e8e335d291b0d503dd57a5e9830ed2d8116d5ada109d1",
+      "hash": "6e4e4b0572ce02caf43eb7658fe45c218f833d2a984035aa20e186c8b62ca4da",
       "lineRange": [
         288,
-        10828
+        10837
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -2507,8 +2507,8 @@
       "isAsync": false,
       "hash": "52d8f1d0369fd28a3d6386fce8db0a1b7f7a1df9de87ef4f939f5b64afa45b8e",
       "lineRange": [
-        10828,
-        10833
+        10837,
+        10842
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -2536,8 +2536,8 @@
       "isAsync": false,
       "hash": "3cfae07aa46b4b548c51fd34936ff449ec09259d72a837e8959002c51046b7be",
       "lineRange": [
-        10833,
-        10871
+        10842,
+        10880
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -2565,8 +2565,8 @@
       "isAsync": false,
       "hash": "cdad6f7150d0a65e5914f4e0ef5e36676b219eaa7e89dfd9b5a8091b43f4eced",
       "lineRange": [
-        10871,
-        10881
+        10880,
+        10890
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -2600,8 +2600,8 @@
       "isAsync": false,
       "hash": "19f1aa23d782d69c18cc8921f2eaeb6b58e2b633f533f51c292e28a4744e4b43",
       "lineRange": [
-        10881,
-        10939
+        10890,
+        10948
       ],
       "hasJsDoc": true,
       "description": "Run `callback` in a world where all bindings from the shapes in `shapeIds` to shapes not in\n`shapeIds` are removed. This is useful when you want to duplicate/copy shapes without worrying\nabout bindings that might be pointing to shapes that are not being duplicated.\n\nThe callback is given the set of bindings that should be maintained.",
@@ -2636,8 +2636,8 @@
       "isAsync": false,
       "hash": "684f3404de518bd8bd72e6a1cd76cbbe1f936d7e196c5fc27c121359983d8ca9",
       "lineRange": [
-        10939,
-        10951
+        10948,
+        10960
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -3584,7 +3584,7 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/editor/tools/BaseBoxShapeTool/children/Pointing.ts",
       "isAsync": false,
-      "hash": "49af5424b98ed048408e8df37ea85dc77dc7f5547e287aca933a2f27d4f8e973",
+      "hash": "05f8b318a7d4e4caed3408cf902660a9706c2dacd6e1a86d76063d47d4351c42",
       "lineRange": [
         8,
         144
@@ -5017,10 +5017,10 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/hooks/useCanvasEvents.ts",
       "isAsync": true,
-      "hash": "2aa438bc4b8f28b0c6cbcac933611d15d724f8cc904ef9098eda5babdfc979c8",
+      "hash": "0bdcbd537807b9de8628c0f3dcecac638aa077b603be56f0d9c05bc9d83c95c7",
       "lineRange": [
-        7,
-        202
+        12,
+        206
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -5433,10 +5433,10 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/hooks/useFixSafariDoubleTapZoomPencilEvents.ts",
       "isAsync": false,
-      "hash": "242cbf6a5c454afcc65cefde6b8e2dee53bee38cf17b7171858154bfbc6cf4f7",
+      "hash": "73ceb62031fd2d3938f910ab51a4a1ef1de8aec213e782fa3f3ab3a8781c8952",
       "lineRange": [
-        5,
-        45
+        3,
+        42
       ],
       "hasJsDoc": true,
       "description": "When double tapping with the pencil in iOS, it enables a little zoom window in the UI. We don't\nwant this for drawing operations and can disable it by setting 'disableDoubleTapZoom' in the main\neditor.",
@@ -9490,24 +9490,54 @@
       "isExported": true
     },
     {
+      "id": "packages/editor/src/lib/utils/dom.ts:elementShouldCaptureKeys",
+      "name": "elementShouldCaptureKeys",
+      "kind": "function",
+      "filePath": "packages/editor/src/lib/utils/dom.ts",
+      "isAsync": false,
+      "hash": "b6047aa1dafb872ed90cd56f13cfb5cb4d6caeed65f64ffe730cd27c41b67aae",
+      "lineRange": [
+        98,
+        113
+      ],
+      "hasJsDoc": false,
+      "structuredParams": [
+        {
+          "name": "el",
+          "type": "Element | null",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "includeButtonsAndMenus",
+          "type": "unknown",
+          "isOptional": true,
+          "isRest": false,
+          "defaultValue": "true"
+        }
+      ],
+      "isExported": true
+    },
+    {
       "id": "packages/editor/src/lib/utils/dom.ts:activeElementShouldCaptureKeys",
       "name": "activeElementShouldCaptureKeys",
       "kind": "function",
       "filePath": "packages/editor/src/lib/utils/dom.ts",
       "isAsync": false,
-      "hash": "fe702e084755f982dfed7ca6981bd939762370903122e99662a98e698ab24d2e",
+      "hash": "6a3944d015f4380da67a7820008351234676b206b064645e42f0f9289604b506",
       "lineRange": [
-        98,
-        110
+        113,
+        118
       ],
       "hasJsDoc": false,
+      "isTrivial": true,
       "structuredParams": [
         {
-          "name": "ignoreButtons",
+          "name": "includeButtonsAndMenus",
           "type": "unknown",
           "isOptional": true,
           "isRest": false,
-          "defaultValue": "false"
+          "defaultValue": "true"
         }
       ],
       "isExported": true
@@ -10542,10 +10572,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/Tldraw.tsx",
       "isAsync": false,
-      "hash": "9e0e361895fcd29bdc35646233cbaf1cd7b862a398a9dbfda0ba13cd151966bb",
+      "hash": "59480cb87efb1d2b0bd258945e6779ec4551ac50754269183a7e25e68280f244",
       "lineRange": [
-        105,
-        250
+        107,
+        255
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -10566,8 +10596,8 @@
       "isAsync": false,
       "hash": "4e66fcacf58443e0663092c8f57358221fc5126ec501d07e797d368c991d09b2",
       "lineRange": [
-        250,
-        314
+        255,
+        319
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -14852,7 +14882,7 @@
       "kind": "class",
       "filePath": "packages/tldraw/src/lib/shapes/arrow/toolStates/Pointing.tsx",
       "isAsync": false,
-      "hash": "0fdd47869b8c42f122308db4c34b6650d9c73f7c21d78b0a14406665a23533d4",
+      "hash": "3bea7ad2fd53632e7446465a782afc4a1ed10a122b75b8bbd5b9f1ca2487af86",
       "lineRange": [
         3,
         197
@@ -15522,7 +15552,7 @@
       "kind": "class",
       "filePath": "packages/tldraw/src/lib/shapes/draw/toolStates/Drawing.ts",
       "isAsync": false,
-      "hash": "58572aa3db85b701d45be3dba1d14beeafb1e082b192f2b7bce8c594bd3764bc",
+      "hash": "7459ebbc2c38d48e20416e162f058c177e0f74325303544f4352143695d0debc",
       "lineRange": [
         25,
         743
@@ -15573,10 +15603,10 @@
       "kind": "class",
       "filePath": "packages/tldraw/src/lib/shapes/embed/EmbedShapeUtil.tsx",
       "isAsync": false,
-      "hash": "94ce3938f449d0258e472d89348bcb185f4f645d822eba64d8458c97c1a8e55b",
+      "hash": "cf9171133a2edc95fbdb2498a023355879f11cd0b44c01b24311f8572be409b7",
       "lineRange": [
-        37,
-        288
+        43,
+        304
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -15589,8 +15619,8 @@
       "isAsync": false,
       "hash": "55893db467bf24f2b7364825d12e395397dbb213858cf9317cc742d89f7e4c60",
       "lineRange": [
-        288,
-        351
+        304,
+        367
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -16492,7 +16522,7 @@
       "kind": "class",
       "filePath": "packages/tldraw/src/lib/shapes/geo/toolStates/Pointing.ts",
       "isAsync": false,
-      "hash": "0aaaba385e64e6b8f74c08eb0063b7da385e197511c6cbe7a42522a049cce3cf",
+      "hash": "3990122c898b2b44c190713d3b916f050a6665b9ccafed61b44bfdd933053d4c",
       "lineRange": [
         9,
         141
@@ -17326,7 +17356,7 @@
       "kind": "class",
       "filePath": "packages/tldraw/src/lib/shapes/line/toolStates/Pointing.ts",
       "isAsync": false,
-      "hash": "81c42ce9ea65328caa0e3e07c712bf5de777c7eff738757e0b6d684a377de351",
+      "hash": "d919f10cd23d6e0c0d32a2213c3b90c75134e6d7666b355a7e4ec39bd018a153",
       "lineRange": [
         15,
         163
@@ -17777,7 +17807,7 @@
       "kind": "class",
       "filePath": "packages/tldraw/src/lib/shapes/note/toolStates/Pointing.ts",
       "isAsync": false,
-      "hash": "2fc877efb86716685e52c8aa1a7af4237077e7f9ddef40ef45e63b2773be9689",
+      "hash": "7660af3fdf40d8d53ff6045a5d88067e412de913b92e30101d5db0a1a115ddb0",
       "lineRange": [
         16,
         99
@@ -17825,7 +17855,7 @@
       "kind": "function",
       "filePath": "packages/tldraw/src/lib/shapes/note/toolStates/Pointing.ts",
       "isAsync": false,
-      "hash": "97f47f7dd6ee2df0b6c867de0a476272f9e89a85181b2dc9f1b2f77f2f2aa13f",
+      "hash": "37ccc4570f304be7ece84a570d7828919ad9f19aaa2e1d5e02081dbc21816648",
       "lineRange": [
         114,
         149
@@ -19778,7 +19808,7 @@
       "kind": "class",
       "filePath": "packages/tldraw/src/lib/shapes/text/toolStates/Pointing.ts",
       "isAsync": false,
-      "hash": "4d6deac0cb605940e1c34b520a9ae71d32c2f5e9dc45618db44236c04c574a33",
+      "hash": "ad48b68a7bb2cb804d21fdb072352a31f27d38dc8ab15ea73d473edcd884138e",
       "lineRange": [
         12,
         197
@@ -20148,10 +20178,10 @@
       "kind": "class",
       "filePath": "packages/tldraw/src/lib/tools/SelectTool/childStates/EditingShape.ts",
       "isAsync": false,
-      "hash": "f3d49c17309d635c4b201dd4aad591a9945e9974c268ed2d4826113c4f24824f",
+      "hash": "8f65e59bfac70e513491b5d3e307ce8864a18cb4e55713aa389068abd2c59d9e",
       "lineRange": [
-        16,
-        239
+        17,
+        235
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -20328,10 +20358,10 @@
       "kind": "class",
       "filePath": "packages/tldraw/src/lib/tools/SelectTool/childStates/PointingShape.ts",
       "isAsync": false,
-      "hash": "a6cbf23ecfb331b07e375642c273d6b301a1b3fbb567ab444f5882130cf1f5ef",
+      "hash": "a24e3909c312f4ce5a96e2a97977fafd0b2d4a5a95c5a57bcb109a2359cb435e",
       "lineRange": [
         3,
-        244
+        251
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -21893,8 +21923,8 @@
       "isAsync": false,
       "hash": "149fece253e69c3496ce89404becc6236c930ffdd92bec12791534bc6abec7a5",
       "lineRange": [
-        38,
-        53
+        37,
+        52
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -21908,8 +21938,8 @@
       "isAsync": false,
       "hash": "e573793b580f0d67ff84ed1e76b0f2572b630c75bd1d2dd20134f704cce2e012",
       "lineRange": [
-        53,
-        68
+        52,
+        67
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -21923,8 +21953,8 @@
       "isAsync": false,
       "hash": "3b2ea42835471136d68af2c994b7c678486674e45085de6127e079c897febe3a",
       "lineRange": [
-        68,
-        84
+        67,
+        83
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -21938,8 +21968,8 @@
       "isAsync": false,
       "hash": "dc93b0f633ba050e82b9074de71191196178eaf5d14646b83aad2ccfc57ac2d2",
       "lineRange": [
-        84,
-        101
+        83,
+        100
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -21953,8 +21983,8 @@
       "isAsync": false,
       "hash": "7ec3e749fd9902ce298db385962232a1e55023d8acc27ee5c9a2819e6f0b9367",
       "lineRange": [
-        101,
-        111
+        100,
+        110
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -21968,8 +21998,8 @@
       "isAsync": false,
       "hash": "ed2b2d7458ba46c3bb3bac6a1bde2888b1d9f55ae4126288b4a1108639c29e9d",
       "lineRange": [
-        111,
-        123
+        110,
+        122
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -21982,8 +22012,8 @@
       "isAsync": false,
       "hash": "4c66fcf4cc3b077276eb7e9c6f73e79fba3b4610e3098cd1b005240087afe545",
       "lineRange": [
-        123,
-        138
+        122,
+        137
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -21997,8 +22027,8 @@
       "isAsync": false,
       "hash": "f65d0a82c969baada23f049d143f5a85034b4ad81f21034d6ed099fea1cb9129",
       "lineRange": [
-        138,
-        148
+        137,
+        147
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -22010,10 +22040,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx",
       "isAsync": false,
-      "hash": "e3c57fdbc4eb6d4026765c1ee0a1f9ced0df66782d3f02dc9a16eaafad2de052",
+      "hash": "1fefdff5ccd10d2be07e84e5e5b78bae9c8e1e60ffb5684baeb1369cf1a16049",
       "lineRange": [
-        148,
-        178
+        147,
+        177
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -22350,10 +22380,10 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/components/PageMenu/DefaultPageMenu.tsx",
       "isAsync": false,
-      "hash": "042d1b3f21cce68da1bf9df8b1fb785f7b6a95aca2f89a707565b3cf2ad43697",
+      "hash": "da17f8ac59c082f7016dd3a51ddf8d34076dcd4e0b6f0da3b0e90c15e62fdeb3",
       "lineRange": [
         31,
-        492
+        500
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -22410,10 +22440,10 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/components/PageMenu/PageItemSubmenu.tsx",
       "isAsync": false,
-      "hash": "d8a61181657f2d22788c6bdee30e6520dd43b5ec36e239d262242398a594b253",
+      "hash": "27f876622ae6ab8ea4d7023f0c3c8910547d79d2fc88f7d0ce498870d2c0688d",
       "lineRange": [
         24,
-        99
+        103
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -22894,8 +22924,8 @@
       "isAsync": false,
       "hash": "7c84792b634e9cc3d9dbd2f9caff06b96ef8a213bf7ceaff4d817ce38a99aa54",
       "lineRange": [
-        35,
-        47
+        36,
+        48
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -22914,10 +22944,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/StylePanel/StylePanelButtonPicker.tsx",
       "isAsync": false,
-      "hash": "cc5a678a5656e50c2e8f3692a32e719272dd1119d28cad8ed6b82e9e466742ad",
+      "hash": "cf34f8fbdbb2f0ed73f8caf628c142ea88ed7d00078006dae20ab0d19e204c81",
       "lineRange": [
-        47,
-        184
+        48,
+        182
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -23981,7 +24011,7 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/Toolbar/OverflowingToolbar.tsx",
       "isAsync": false,
-      "hash": "83f78f77724ce0d45c672fdb93663062ae88f39ed7e94ce384b7974f43834f82",
+      "hash": "d11ffab3a8560b222277d482d331b2d5fd57da2901ba6052b237df21b8c1a572",
       "lineRange": [
         52,
         342
@@ -24918,10 +24948,10 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx",
       "isAsync": false,
-      "hash": "01cf3f8cee9b32dc0811a510760cedbc58afadd0d2c3e03a906b0ab8ed251442",
+      "hash": "8b38d67e80fb6adc67e9b4d28d28c8a55f833779d5098146f325bacedea96707",
       "lineRange": [
-        24,
-        43
+        26,
+        54
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -28013,8 +28043,8 @@
       "isAsync": false,
       "hash": "e41fa9fc069a092ffc712382dbacb08badbf6e4ed6f1c14ceff6059440539de7",
       "lineRange": [
-        32,
-        44
+        33,
+        45
       ],
       "hasJsDoc": true,
       "description": "Strip HTML tags from a string.",
@@ -28037,8 +28067,8 @@
       "isAsync": false,
       "hash": "7dcf15912b9a440818defaa99075d1b8b44b159391f5e7977ff0538b633a55a4",
       "lineRange": [
-        47,
-        54
+        48,
+        55
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -28059,8 +28089,8 @@
       "isAsync": false,
       "hash": "e01895db33a43b73ac1e6dfc58f476dd2f22855d8017bbb51475b18cb5fab652",
       "lineRange": [
-        57,
-        70
+        58,
+        71
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -28081,8 +28111,8 @@
       "isAsync": false,
       "hash": "9177be8252661f82eaea8256ab33324ab944546df1620abdd88d698a3e51eed1",
       "lineRange": [
-        73,
-        75
+        74,
+        76
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -28102,12 +28132,13 @@
       "kind": "function",
       "filePath": "packages/tldraw/src/lib/ui/hooks/useClipboardEvents.ts",
       "isAsync": false,
-      "hash": "ebf436b943374e0c15c67b8f4c0afae37d33d2ddfde28fdb7ce1036d1c15eaef",
+      "hash": "e0ea18e7daa5db2f0e6d0f33031f1525bbdcd506369e0ff4bb7670cf8315efc3",
       "lineRange": [
-        77,
-        93
+        76,
+        85
       ],
       "hasJsDoc": true,
+      "isTrivial": true,
       "description": "Get whether to disallow clipboard events.",
       "structuredParams": [
         {
@@ -28127,8 +28158,8 @@
       "isAsync": false,
       "hash": "ed09667f749ab765403190344458a6d5e3a676259c01949fcd144ccc6d080175",
       "lineRange": [
-        102,
-        132
+        94,
+        124
       ],
       "hasJsDoc": true,
       "description": "Handle text pasted into the editor.",
@@ -28171,8 +28202,8 @@
       "isAsync": true,
       "hash": "153159325814f049a0810ce6a53e8fcba9fcdcf171adc8e12731d1dd73607b0f",
       "lineRange": [
-        174,
-        219
+        166,
+        211
       ],
       "hasJsDoc": true,
       "description": "Handle a paste using event clipboard data. This is the \"original\"\npaste method that uses the clipboard data from the paste event.\nhttps://developer.mozilla.org/en-US/docs/Web/API/ClipboardEvent/clipboardData",
@@ -28209,8 +28240,8 @@
       "isAsync": true,
       "hash": "7a333d81e19b2ceff988ec3425cf637685d79467e2a4c24d1fc6660d2f992da7",
       "lineRange": [
-        230,
-        308
+        222,
+        300
       ],
       "hasJsDoc": true,
       "description": "Handle a paste using items retrieved from the Clipboard API.\nhttps://developer.mozilla.org/en-US/docs/Web/API/ClipboardItem",
@@ -28253,8 +28284,8 @@
       "isAsync": true,
       "hash": "9846d47bdfd141841289f76e7c13a009f254079e5959fcb289c427c29854caea",
       "lineRange": [
-        308,
-        580
+        300,
+        572
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -28287,8 +28318,8 @@
       "isAsync": true,
       "hash": "64b3b74babfc8d9a10ecc6cfc4ea812e195a84d63384bf3e6fcdd97b46d9cd9b",
       "lineRange": [
-        588,
-        653
+        580,
+        645
       ],
       "hasJsDoc": true,
       "description": "When the user copies, write the contents to local storage and to the clipboard",
@@ -28311,8 +28342,8 @@
       "isAsync": true,
       "hash": "fb1494149a7c7e6382ec7ba4e93d48042185957128b519e3bd3cc8cbd863d380",
       "lineRange": [
-        653,
-        713
+        645,
+        705
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -28325,8 +28356,8 @@
       "isAsync": true,
       "hash": "2422fe07d47f83fcf5c53e2de2eda97be94c86e6770bfd2a6d2f369b3f26c2b0",
       "lineRange": [
-        713,
-        835
+        705,
+        827
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -28715,10 +28746,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/hooks/useTools.tsx",
       "isAsync": false,
-      "hash": "1c17a624ba8b5f92653a0e291ed9ca90f01d62402b92468ed1e7d5244c1b2aa1",
+      "hash": "6e748019ed3ec1e88983e4c8904543a28879a4ec988c3fcae6f75ef066f36eda",
       "lineRange": [
         62,
-        323
+        343
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -28745,8 +28776,8 @@
       "isAsync": false,
       "hash": "feab5f02c951708dbacfb69f783368892d7cb6e707302675f826da55dad30ef1",
       "lineRange": [
-        323,
-        334
+        343,
+        354
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -28759,8 +28790,8 @@
       "isAsync": false,
       "hash": "970f5e2b10bdc53911464895653559efc5ac50a10a5e1c28716f639d62685b8c",
       "lineRange": [
-        350,
-        389
+        370,
+        409
       ],
       "hasJsDoc": true,
       "description": "/**\n * A helper method to use in {@link tldraw#TLUiToolItem.onDragStart}to create a shape by dragging it from\n * the toolbar.\n * ",
@@ -34027,12 +34058,12 @@
         {
           "condition": "else (!cameraOptions.constraints)",
           "branch": "else",
-          "branchGroup": "branch:2830"
+          "branchGroup": "branch:2839"
         },
         {
           "condition": "else (cameraOptions.constraints.initialZoom === 'default')",
           "branch": "else",
-          "branchGroup": "branch:2832"
+          "branchGroup": "branch:2841"
         }
       ],
       "label": "else (!cameraOptions.constraints) → else (cameraOptions.constraints.initialZoom === 'default')",
@@ -34048,12 +34079,12 @@
         {
           "condition": "else (!cameraOptions.constraints)",
           "branch": "else",
-          "branchGroup": "branch:2880"
+          "branchGroup": "branch:2889"
         },
         {
           "condition": "else (cameraOptions.constraints.baseZoom === 'default')",
           "branch": "else",
-          "branchGroup": "branch:2882"
+          "branchGroup": "branch:2891"
         }
       ],
       "label": "else (!cameraOptions.constraints) → else (cameraOptions.constraints.baseZoom === 'default')",
@@ -34069,17 +34100,17 @@
         {
           "condition": "if (!opts?.force)",
           "branch": "then",
-          "branchGroup": "branch:2969"
+          "branchGroup": "branch:2978"
         },
         {
           "condition": "if (cameraOptions.constraints)",
           "branch": "then",
-          "branchGroup": "branch:2982"
+          "branchGroup": "branch:2991"
         },
         {
           "condition": "if (z < minZ || z > maxZ)",
           "branch": "then",
-          "branchGroup": "branch:3010"
+          "branchGroup": "branch:3019"
         }
       ],
       "label": "if (!opts?.force) → if (cameraOptions.constraints) → if (z < minZ || z > maxZ)",
@@ -34095,27 +34126,27 @@
         {
           "condition": "if (!opts?.force)",
           "branch": "then",
-          "branchGroup": "branch:2969"
+          "branchGroup": "branch:2978"
         },
         {
           "condition": "if (cameraOptions.constraints)",
           "branch": "then",
-          "branchGroup": "branch:2982"
+          "branchGroup": "branch:2991"
         },
         {
           "condition": "else (opts?.reset)",
           "branch": "else",
-          "branchGroup": "branch:3037"
+          "branchGroup": "branch:3046"
         },
         {
           "condition": "switch (behaviorX): case 'contain'",
           "branch": "case 'contain'",
-          "branchGroup": "branch:3045"
+          "branchGroup": "branch:3054"
         },
         {
           "condition": "else (z < zx)",
           "branch": "else",
-          "branchGroup": "branch:3053"
+          "branchGroup": "branch:3062"
         }
       ],
       "label": "if (!opts?.force) → if (cameraOptions.constraints) → else (opts?.reset) → switch (behaviorX): case 'contain' → else (z < zx)",
@@ -34131,27 +34162,27 @@
         {
           "condition": "if (!opts?.force)",
           "branch": "then",
-          "branchGroup": "branch:2969"
+          "branchGroup": "branch:2978"
         },
         {
           "condition": "if (cameraOptions.constraints)",
           "branch": "then",
-          "branchGroup": "branch:2982"
+          "branchGroup": "branch:2991"
         },
         {
           "condition": "else (opts?.reset)",
           "branch": "else",
-          "branchGroup": "branch:3037"
+          "branchGroup": "branch:3046"
         },
         {
           "condition": "switch (behaviorX): case 'inside'",
           "branch": "case 'inside'",
-          "branchGroup": "branch:3045"
+          "branchGroup": "branch:3054"
         },
         {
           "condition": "if (z < zx)",
           "branch": "then",
-          "branchGroup": "branch:3060"
+          "branchGroup": "branch:3069"
         }
       ],
       "label": "if (!opts?.force) → if (cameraOptions.constraints) → else (opts?.reset) → switch (behaviorX): case 'inside' → if (z < zx)",
@@ -34167,27 +34198,27 @@
         {
           "condition": "if (!opts?.force)",
           "branch": "then",
-          "branchGroup": "branch:2969"
+          "branchGroup": "branch:2978"
         },
         {
           "condition": "if (cameraOptions.constraints)",
           "branch": "then",
-          "branchGroup": "branch:2982"
+          "branchGroup": "branch:2991"
         },
         {
           "condition": "else (opts?.reset)",
           "branch": "else",
-          "branchGroup": "branch:3037"
+          "branchGroup": "branch:3046"
         },
         {
           "condition": "switch (behaviorX): case 'inside'",
           "branch": "case 'inside'",
-          "branchGroup": "branch:3045"
+          "branchGroup": "branch:3054"
         },
         {
           "condition": "else (z < zx)",
           "branch": "else",
-          "branchGroup": "branch:3060"
+          "branchGroup": "branch:3069"
         }
       ],
       "label": "if (!opts?.force) → if (cameraOptions.constraints) → else (opts?.reset) → switch (behaviorX): case 'inside' → else (z < zx)",
@@ -34203,22 +34234,22 @@
         {
           "condition": "if (!opts?.force)",
           "branch": "then",
-          "branchGroup": "branch:2969"
+          "branchGroup": "branch:2978"
         },
         {
           "condition": "if (cameraOptions.constraints)",
           "branch": "then",
-          "branchGroup": "branch:2982"
+          "branchGroup": "branch:2991"
         },
         {
           "condition": "else (opts?.reset)",
           "branch": "else",
-          "branchGroup": "branch:3037"
+          "branchGroup": "branch:3046"
         },
         {
           "condition": "switch (behaviorX): case 'outside'",
           "branch": "case 'outside'",
-          "branchGroup": "branch:3045"
+          "branchGroup": "branch:3054"
         }
       ],
       "label": "if (!opts?.force) → if (cameraOptions.constraints) → else (opts?.reset) → switch (behaviorX): case 'outside'",
@@ -34234,17 +34265,17 @@
         {
           "condition": "if (!opts?.force)",
           "branch": "then",
-          "branchGroup": "branch:2969"
+          "branchGroup": "branch:2978"
         },
         {
           "condition": "else (cameraOptions.constraints)",
           "branch": "else",
-          "branchGroup": "branch:2982"
+          "branchGroup": "branch:2991"
         },
         {
           "condition": "if (z > zoomMax || z < zoomMin)",
           "branch": "then",
-          "branchGroup": "branch:3111"
+          "branchGroup": "branch:3120"
         }
       ],
       "label": "if (!opts?.force) → else (cameraOptions.constraints) → if (z > zoomMax || z < zoomMin)",
@@ -34260,7 +34291,7 @@
         {
           "condition": "else (cameraOptions.isLocked && !opts?.force)",
           "branch": "else",
-          "branchGroup": "branch:3475"
+          "branchGroup": "branch:3484"
         }
       ],
       "label": "else (cameraOptions.isLocked && !opts?.force)",
@@ -34276,32 +34307,32 @@
         {
           "condition": "else (!leaderPresence)",
           "branch": "else",
-          "branchGroup": "branch:3971"
+          "branchGroup": "branch:3980"
         },
         {
           "condition": "else (!leaderPresence)",
           "branch": "else",
-          "branchGroup": "branch:4018"
+          "branchGroup": "branch:4027"
         },
         {
           "condition": "else (this._isLockedOnFollowingUser.get())",
           "branch": "else",
-          "branchGroup": "branch:4022"
+          "branchGroup": "branch:4031"
         },
         {
           "condition": "else (animationSpeed === 0)",
           "branch": "else",
-          "branchGroup": "branch:4026"
+          "branchGroup": "branch:4035"
         },
         {
           "condition": "else (!targetViewport)",
           "branch": "else",
-          "branchGroup": "branch:4033"
+          "branchGroup": "branch:4042"
         },
         {
           "condition": "else (diffX < this.options.followChaseViewportSnap &&\n\t\t\t\t\tdiffY <)",
           "branch": "else",
-          "branchGroup": "branch:4045"
+          "branchGroup": "branch:4054"
         }
       ],
       "label": "else (!leaderPresence) → else (!leaderPresence) → else (this._isLockedOnFollowingUser.get()) → else (animationSpeed === 0) → else (!targetViewport) → else (diffX < this.options.followChaseViewportSnap &&\n\t\t\t\t\tdiffY <)",
@@ -34333,12 +34364,12 @@
         {
           "condition": "else (this.getIsReadonly())",
           "branch": "else",
-          "branchGroup": "branch:4449"
+          "branchGroup": "branch:4458"
         },
         {
           "condition": "else (this.getPages().length >= this.options.maxPages)",
           "branch": "else",
-          "branchGroup": "branch:4450"
+          "branchGroup": "branch:4459"
         }
       ],
       "label": "else (this.getIsReadonly()) → else (this.getPages().length >= this.options.maxPages)",
@@ -34354,12 +34385,12 @@
         {
           "condition": "else (isPageId(shape.parentId))",
           "branch": "else",
-          "branchGroup": "branch:4945"
+          "branchGroup": "branch:4954"
         },
         {
           "condition": "else (clipPaths.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:4957"
+          "branchGroup": "branch:4966"
         }
       ],
       "label": "else (isPageId(shape.parentId)) → else (clipPaths.length === 0)",
@@ -34375,22 +34406,22 @@
         {
           "condition": "else (!pageBounds)",
           "branch": "else",
-          "branchGroup": "branch:5013"
+          "branchGroup": "branch:5022"
         },
         {
           "condition": "if (pageMask)",
           "branch": "then",
-          "branchGroup": "branch:5015"
+          "branchGroup": "branch:5024"
         },
         {
           "condition": "else (pageMask.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:5016"
+          "branchGroup": "branch:5025"
         },
         {
           "condition": "else (corners.every((p, i) => p && Vec.Equals(p, pageMask[i])))",
           "branch": "else",
-          "branchGroup": "branch:5018"
+          "branchGroup": "branch:5027"
         }
       ],
       "label": "else (!pageBounds) → if (pageMask) → else (pageMask.length === 0) → else (corners.every((p, i) => p && Vec.Equals(p, pageMask[i])))",
@@ -34414,17 +34445,17 @@
         {
           "condition": "else (!candidateIds.has(shape.id) && !this.isShapeOfType(shape, 'f)",
           "branch": "else",
-          "branchGroup": "branch:5296"
+          "branchGroup": "branch:5305"
         },
         {
           "condition": "else ((shape.isLocked && !hitLocked) ||\n\t\t\t\tthis.isShapeHidden(sha)",
           "branch": "else",
-          "branchGroup": "branch:5298"
+          "branchGroup": "branch:5307"
         },
         {
           "condition": "pageMask &&",
           "branch": "&&",
-          "branchGroup": "branch:5307"
+          "branchGroup": "branch:5316"
         }
       ],
       "label": "else (!candidateIds.has(shape.id) && !this.isShapeOfType(shape, 'f) → else ((shape.isLocked && !hitLocked) ||\n\t\t\t\tthis.isShapeHidden(sha) → pageMask &&",
@@ -34440,7 +34471,7 @@
         {
           "condition": "pageMask &&",
           "branch": "&&",
-          "branchGroup": "branch:5553"
+          "branchGroup": "branch:5562"
         }
       ],
       "label": "pageMask &&",
@@ -34480,7 +34511,7 @@
         {
           "condition": "else (ids.length <= 0)",
           "branch": "else",
-          "branchGroup": "branch:6325"
+          "branchGroup": "branch:6334"
         }
       ],
       "label": "else (ids.length <= 0)",
@@ -34496,12 +34527,12 @@
         {
           "condition": "else (ids.length <= 0)",
           "branch": "else",
-          "branchGroup": "branch:6325"
+          "branchGroup": "branch:6334"
         },
         {
           "condition": "else (!snapshot)",
           "branch": "else",
-          "branchGroup": "branch:6329"
+          "branchGroup": "branch:6338"
         }
       ],
       "label": "else (ids.length <= 0) → else (!snapshot)",
@@ -34517,7 +34548,7 @@
         {
           "condition": "else (ids.length <= 0)",
           "branch": "else",
-          "branchGroup": "branch:6427"
+          "branchGroup": "branch:6436"
         }
       ],
       "label": "else (ids.length <= 0)",
@@ -34533,12 +34564,12 @@
         {
           "condition": "else (!ids)",
           "branch": "else",
-          "branchGroup": "branch:9073"
+          "branchGroup": "branch:9082"
         },
         {
           "condition": "else (ids.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:9075"
+          "branchGroup": "branch:9084"
         }
       ],
       "label": "else (!ids) → else (ids.length === 0)",
@@ -34554,12 +34585,12 @@
         {
           "condition": "else (ids.length <= 0)",
           "branch": "else",
-          "branchGroup": "branch:6427"
+          "branchGroup": "branch:6436"
         },
         {
           "condition": "if (!this.canCreateShapes(shapesToCreate))",
           "branch": "then",
-          "branchGroup": "branch:6505"
+          "branchGroup": "branch:6514"
         }
       ],
       "label": "else (ids.length <= 0) → if (!this.canCreateShapes(shapesToCreate))",
@@ -34575,32 +34606,32 @@
         {
           "condition": "else (ids.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:6560"
+          "branchGroup": "branch:6569"
         },
         {
           "condition": "else (this.getIsReadonly())",
           "branch": "else",
-          "branchGroup": "branch:6562"
+          "branchGroup": "branch:6571"
         },
         {
           "condition": "else (pageId === currentPageId)",
           "branch": "else",
-          "branchGroup": "branch:6565"
+          "branchGroup": "branch:6574"
         },
         {
           "condition": "else (!this.store.has(pageId))",
           "branch": "else",
-          "branchGroup": "branch:6567"
+          "branchGroup": "branch:6576"
         },
         {
           "condition": "else (!content)",
           "branch": "else",
-          "branchGroup": "branch:6571"
+          "branchGroup": "branch:6580"
         },
         {
           "condition": "if (this.getPageShapeIds(pageId).size + content.shapes.length > )",
           "branch": "then",
-          "branchGroup": "branch:6574"
+          "branchGroup": "branch:6583"
         }
       ],
       "label": "else (ids.length === 0) → else (this.getIsReadonly()) → else (pageId === currentPageId) → else (!this.store.has(pageId)) → else (!content) → if (this.getPageShapeIds(pageId).size + content.shapes.length > )",
@@ -34616,22 +34647,22 @@
         {
           "condition": "else (!Array.isArray(shapes))",
           "branch": "else",
-          "branchGroup": "branch:7901"
+          "branchGroup": "branch:7910"
         },
         {
           "condition": "else (this.getIsReadonly())",
           "branch": "else",
-          "branchGroup": "branch:7904"
+          "branchGroup": "branch:7913"
         },
         {
           "condition": "else (shapes.length <= 0)",
           "branch": "else",
-          "branchGroup": "branch:7905"
+          "branchGroup": "branch:7914"
         },
         {
           "condition": "if (maxShapesReached)",
           "branch": "then",
-          "branchGroup": "branch:7911"
+          "branchGroup": "branch:7920"
         }
       ],
       "label": "else (!Array.isArray(shapes)) → else (this.getIsReadonly()) → else (shapes.length <= 0) → if (maxShapesReached)",
@@ -34647,22 +34678,22 @@
         {
           "condition": "else (this.getIsReadonly())",
           "branch": "else",
-          "branchGroup": "branch:9187"
+          "branchGroup": "branch:9196"
         },
         {
           "condition": "else (!content.schema)",
           "branch": "else",
-          "branchGroup": "branch:9188"
+          "branchGroup": "branch:9197"
         },
         {
           "condition": "else (result.type === 'error')",
           "branch": "else",
-          "branchGroup": "branch:9220"
+          "branchGroup": "branch:9229"
         },
         {
           "condition": "if (newShapes.length + this.getCurrentPageShapeIds().size > this)",
           "branch": "then",
-          "branchGroup": "branch:9364"
+          "branchGroup": "branch:9373"
         }
       ],
       "label": "else (this.getIsReadonly()) → else (!content.schema) → else (result.type === 'error') → if (newShapes.length + this.getCurrentPageShapeIds().size > this)",
@@ -34686,32 +34717,32 @@
         {
           "condition": "else (this.getIsReadonly())",
           "branch": "else",
-          "branchGroup": "branch:7553"
+          "branchGroup": "branch:7562"
         },
         {
           "condition": "else (!initialShape)",
           "branch": "else",
-          "branchGroup": "branch:7559"
+          "branchGroup": "branch:7568"
         },
         {
           "condition": "else (!scaleOrigin)",
           "branch": "else",
-          "branchGroup": "branch:7562"
+          "branchGroup": "branch:7571"
         },
         {
           "condition": "else (!pageTransform)",
           "branch": "else",
-          "branchGroup": "branch:7567"
+          "branchGroup": "branch:7576"
         },
         {
           "condition": "else (pageRotation == null)",
           "branch": "else",
-          "branchGroup": "branch:7570"
+          "branchGroup": "branch:7579"
         },
         {
           "condition": "else (!initialBounds)",
           "branch": "else",
-          "branchGroup": "branch:7576"
+          "branchGroup": "branch:7585"
         }
       ],
       "label": "else (this.getIsReadonly()) → else (!initialShape) → else (!scaleOrigin) → else (!pageTransform) → else (pageRotation == null) → else (!initialBounds)",
@@ -34735,22 +34766,22 @@
         {
           "condition": "else (this.getIsReadonly())",
           "branch": "else",
-          "branchGroup": "branch:9187"
+          "branchGroup": "branch:9196"
         },
         {
           "condition": "else (!content.schema)",
           "branch": "else",
-          "branchGroup": "branch:9188"
+          "branchGroup": "branch:9197"
         },
         {
           "condition": "else (result.type === 'error')",
           "branch": "else",
-          "branchGroup": "branch:9220"
+          "branchGroup": "branch:9229"
         },
         {
           "condition": "else (newShapes.length + this.getCurrentPageShapeIds().size > this)",
           "branch": "else",
-          "branchGroup": "branch:9364"
+          "branchGroup": "branch:9373"
         }
       ],
       "label": "else (this.getIsReadonly()) → else (!content.schema) → else (result.type === 'error') → else (newShapes.length + this.getCurrentPageShapeIds().size > this)",
@@ -34766,27 +34797,27 @@
         {
           "condition": "else (this.getIsReadonly())",
           "branch": "else",
-          "branchGroup": "branch:9187"
+          "branchGroup": "branch:9196"
         },
         {
           "condition": "else (!content.schema)",
           "branch": "else",
-          "branchGroup": "branch:9188"
+          "branchGroup": "branch:9197"
         },
         {
           "condition": "else (result.type === 'error')",
           "branch": "else",
-          "branchGroup": "branch:9220"
+          "branchGroup": "branch:9229"
         },
         {
           "condition": "else (newShapes.length + this.getCurrentPageShapeIds().size > this)",
           "branch": "else",
-          "branchGroup": "branch:9364"
+          "branchGroup": "branch:9373"
         },
         {
           "condition": "if (isPageId(pasteParentId))",
           "branch": "then",
-          "branchGroup": "branch:9493"
+          "branchGroup": "branch:9502"
         }
       ],
       "label": "else (this.getIsReadonly()) → else (!content.schema) → else (result.type === 'error') → else (newShapes.length + this.getCurrentPageShapeIds().size > this) → if (isPageId(pasteParentId))",
@@ -34802,27 +34833,27 @@
         {
           "condition": "else (this.getIsReadonly())",
           "branch": "else",
-          "branchGroup": "branch:9187"
+          "branchGroup": "branch:9196"
         },
         {
           "condition": "else (!content.schema)",
           "branch": "else",
-          "branchGroup": "branch:9188"
+          "branchGroup": "branch:9197"
         },
         {
           "condition": "else (result.type === 'error')",
           "branch": "else",
-          "branchGroup": "branch:9220"
+          "branchGroup": "branch:9229"
         },
         {
           "condition": "else (newShapes.length + this.getCurrentPageShapeIds().size > this)",
           "branch": "else",
-          "branchGroup": "branch:9364"
+          "branchGroup": "branch:9373"
         },
         {
           "condition": "if (shapesToKickout.length > 0)",
           "branch": "then",
-          "branchGroup": "branch:9534"
+          "branchGroup": "branch:9543"
         }
       ],
       "label": "else (this.getIsReadonly()) → else (!content.schema) → else (result.type === 'error') → else (newShapes.length + this.getCurrentPageShapeIds().size > this) → if (shapesToKickout.length > 0)",
@@ -34838,7 +34869,7 @@
         {
           "condition": "else (ids.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:9560"
+          "branchGroup": "branch:9569"
         }
       ],
       "label": "else (ids.length === 0)",
@@ -34854,12 +34885,12 @@
         {
           "condition": "else (!result)",
           "branch": "else",
-          "branchGroup": "branch:9605"
+          "branchGroup": "branch:9614"
         },
         {
           "condition": "switch (withDefaults.format): case 'jpeg' | 'png' | 'webp'",
           "branch": "case 'jpeg' | 'png' | 'webp'",
-          "branchGroup": "branch:9606"
+          "branchGroup": "branch:9615"
         }
       ],
       "label": "else (!result) → switch (withDefaults.format): case 'jpeg' | 'png' | 'webp'",
@@ -34891,12 +34922,12 @@
         {
           "condition": "else (opts && 'type' in opts)",
           "branch": "else",
-          "branchGroup": "branch:9928"
+          "branchGroup": "branch:9937"
         },
         {
           "condition": "else (!deepLinkString)",
           "branch": "else",
-          "branchGroup": "branch:9935"
+          "branchGroup": "branch:9944"
         }
       ],
       "label": "else (opts && 'type' in opts) → else (!deepLinkString)",
@@ -34928,7 +34959,7 @@
         {
           "condition": "else (!shape)",
           "branch": "else",
-          "branchGroup": "branch:10873"
+          "branchGroup": "branch:10882"
         }
       ],
       "label": "else (!shape)",
@@ -37011,12 +37042,12 @@
         {
           "condition": "else (editor.wasEventAlreadyHandled(e))",
           "branch": "else",
-          "branchGroup": "branch:15"
+          "branchGroup": "branch:20"
         },
         {
           "condition": "if (e.button === RIGHT_MOUSE_BUTTON)",
           "branch": "then",
-          "branchGroup": "branch:16"
+          "branchGroup": "branch:21"
         }
       ],
       "label": "else (editor.wasEventAlreadyHandled(e)) → if (e.button === RIGHT_MOUSE_BUTTON)",
@@ -37032,17 +37063,17 @@
         {
           "condition": "else (editor.wasEventAlreadyHandled(e))",
           "branch": "else",
-          "branchGroup": "branch:15"
+          "branchGroup": "branch:20"
         },
         {
           "condition": "else (e.button === RIGHT_MOUSE_BUTTON)",
           "branch": "else",
-          "branchGroup": "branch:16"
+          "branchGroup": "branch:21"
         },
         {
           "condition": "else (e.button !== 0 && e.button !== 1 && e.button !== 5)",
           "branch": "else",
-          "branchGroup": "branch:26"
+          "branchGroup": "branch:31"
         }
       ],
       "label": "else (editor.wasEventAlreadyHandled(e)) → else (e.button === RIGHT_MOUSE_BUTTON) → else (e.button !== 0 && e.button !== 1 && e.button !== 5)",
@@ -37058,12 +37089,12 @@
         {
           "condition": "else (editor.wasEventAlreadyHandled(e))",
           "branch": "else",
-          "branchGroup": "branch:40"
+          "branchGroup": "branch:45"
         },
         {
           "condition": "else (e.button !== 0 && e.button !== 1 && e.button !== 2 && e.butt)",
           "branch": "else",
-          "branchGroup": "branch:41"
+          "branchGroup": "branch:46"
         }
       ],
       "label": "else (editor.wasEventAlreadyHandled(e)) → else (e.button !== 0 && e.button !== 1 && e.button !== 2 && e.butt)",
@@ -37079,12 +37110,12 @@
         {
           "condition": "else (editor.wasEventAlreadyHandled(e))",
           "branch": "else",
-          "branchGroup": "branch:165"
+          "branchGroup": "branch:169"
         },
         {
           "condition": "else (e.clientX === lastX && e.clientY === lastY)",
           "branch": "else",
-          "branchGroup": "branch:167"
+          "branchGroup": "branch:171"
         }
       ],
       "label": "else (editor.wasEventAlreadyHandled(e)) → else (e.clientX === lastX && e.clientY === lastY)",
@@ -37100,17 +37131,17 @@
         {
           "condition": "else (editor.wasEventAlreadyHandled(e))",
           "branch": "else",
-          "branchGroup": "branch:15"
+          "branchGroup": "branch:20"
         },
         {
           "condition": "else (e.button === RIGHT_MOUSE_BUTTON)",
           "branch": "else",
-          "branchGroup": "branch:16"
+          "branchGroup": "branch:21"
         },
         {
           "condition": "else (e.button !== 0 && e.button !== 1 && e.button !== 5)",
           "branch": "else",
-          "branchGroup": "branch:26"
+          "branchGroup": "branch:31"
         }
       ],
       "label": "else (editor.wasEventAlreadyHandled(e)) → else (e.button === RIGHT_MOUSE_BUTTON) → else (e.button !== 0 && e.button !== 1 && e.button !== 5)",
@@ -37126,12 +37157,12 @@
         {
           "condition": "else (editor.wasEventAlreadyHandled(e))",
           "branch": "else",
-          "branchGroup": "branch:40"
+          "branchGroup": "branch:45"
         },
         {
           "condition": "else (e.button !== 0 && e.button !== 1 && e.button !== 2 && e.butt)",
           "branch": "else",
-          "branchGroup": "branch:41"
+          "branchGroup": "branch:46"
         }
       ],
       "label": "else (editor.wasEventAlreadyHandled(e)) → else (e.button !== 0 && e.button !== 1 && e.button !== 2 && e.butt)",
@@ -37147,7 +37178,7 @@
         {
           "condition": "else (editor.wasEventAlreadyHandled(e))",
           "branch": "else",
-          "branchGroup": "branch:68"
+          "branchGroup": "branch:73"
         }
       ],
       "label": "else (editor.wasEventAlreadyHandled(e))",
@@ -37163,17 +37194,17 @@
         {
           "condition": "else (editor.wasEventAlreadyHandled(e))",
           "branch": "else",
-          "branchGroup": "branch:74"
+          "branchGroup": "branch:79"
         },
         {
           "condition": "else (!(e.target instanceof HTMLElement))",
           "branch": "else",
-          "branchGroup": "branch:76"
+          "branchGroup": "branch:81"
         },
         {
           "condition": "if (!(editingShapeId && e.target.closest(`[data-shape-id=\"${edit)",
           "branch": "then",
-          "branchGroup": "branch:80"
+          "branchGroup": "branch:85"
         }
       ],
       "label": "else (editor.wasEventAlreadyHandled(e)) → else (!(e.target instanceof HTMLElement)) → if (!(editingShapeId && e.target.closest(`[data-shape-id=\"${edit)",
@@ -37189,7 +37220,7 @@
         {
           "condition": "else (editor.wasEventAlreadyHandled(e))",
           "branch": "else",
-          "branchGroup": "branch:94"
+          "branchGroup": "branch:98"
         }
       ],
       "label": "else (editor.wasEventAlreadyHandled(e))",
@@ -37205,12 +37236,38 @@
         {
           "condition": "else (editor.wasEventAlreadyHandled(e))",
           "branch": "else",
-          "branchGroup": "branch:99"
+          "branchGroup": "branch:103"
         }
       ],
       "label": "else (editor.wasEventAlreadyHandled(e))",
       "isAsync": false,
       "order": 10
+    },
+    {
+      "id": "packages/editor/src/lib/hooks/useCanvasEvents.ts:useCanvasEvents->packages/editor/src/lib/utils/dom.ts:elementShouldCaptureKeys",
+      "source": "packages/editor/src/lib/hooks/useCanvasEvents.ts:useCanvasEvents",
+      "target": "packages/editor/src/lib/utils/dom.ts:elementShouldCaptureKeys",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (editor.wasEventAlreadyHandled(e))",
+          "branch": "else",
+          "branchGroup": "branch:79"
+        },
+        {
+          "condition": "else (!(e.target instanceof HTMLElement))",
+          "branch": "else",
+          "branchGroup": "branch:81"
+        },
+        {
+          "condition": "!(editingShapeId && e.target.closest(`[data-shape-id=\"${edit &&",
+          "branch": "&&",
+          "branchGroup": "branch:86"
+        }
+      ],
+      "label": "else (editor.wasEventAlreadyHandled(e)) → else (!(e.target instanceof HTMLElement)) → !(editingShapeId && e.target.closest(`[data-shape-id=\"${edit &&",
+      "isAsync": false,
+      "order": 11
     },
     {
       "id": "packages/editor/src/lib/hooks/useCoarsePointer.ts:useCoarsePointer->packages/editor/src/lib/hooks/useEditor.tsx:useEditor",
@@ -37749,6 +37806,27 @@
       "order": 0
     },
     {
+      "id": "packages/editor/src/lib/hooks/useFixSafariDoubleTapZoomPencilEvents.ts:useFixSafariDoubleTapZoomPencilEvents->packages/editor/src/lib/utils/dom.ts:elementShouldCaptureKeys",
+      "source": "packages/editor/src/lib/hooks/useFixSafariDoubleTapZoomPencilEvents.ts:useFixSafariDoubleTapZoomPencilEvents",
+      "target": "packages/editor/src/lib/utils/dom.ts:elementShouldCaptureKeys",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!elm)",
+          "branch": "else",
+          "branchGroup": "branch:13"
+        },
+        {
+          "condition": "if (e instanceof PointerEvent && e.pointerType === 'pen')",
+          "branch": "then",
+          "branchGroup": "branch:17"
+        }
+      ],
+      "label": "else (!elm) → if (e instanceof PointerEvent && e.pointerType === 'pen')",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "packages/editor/src/lib/hooks/useFixSafariDoubleTapZoomPencilEvents.ts:useFixSafariDoubleTapZoomPencilEvents->packages/editor/src/lib/utils/dom.ts:preventDefault",
       "source": "packages/editor/src/lib/hooks/useFixSafariDoubleTapZoomPencilEvents.ts:useFixSafariDoubleTapZoomPencilEvents",
       "target": "packages/editor/src/lib/utils/dom.ts:preventDefault",
@@ -37757,22 +37835,22 @@
         {
           "condition": "else (!elm)",
           "branch": "else",
-          "branchGroup": "branch:15"
+          "branchGroup": "branch:13"
         },
         {
           "condition": "if (e instanceof PointerEvent && e.pointerType === 'pen')",
           "branch": "then",
-          "branchGroup": "branch:19"
+          "branchGroup": "branch:17"
         },
         {
-          "condition": "else (IGNORED_TAGS.includes((target as Element).tagName?.toLocaleL)",
+          "condition": "else (elementShouldCaptureKeys(target instanceof Element ? target )",
           "branch": "else",
-          "branchGroup": "branch:22"
+          "branchGroup": "branch:20"
         }
       ],
-      "label": "else (!elm) → if (e instanceof PointerEvent && e.pointerType === 'pen') → else (IGNORED_TAGS.includes((target as Element).tagName?.toLocaleL)",
+      "label": "else (!elm) → if (e instanceof PointerEvent && e.pointerType === 'pen') → else (elementShouldCaptureKeys(target instanceof Element ? target )",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "packages/editor/src/lib/hooks/useGestureEvents.ts:useGestureEvents->packages/editor/src/lib/hooks/useEditor.tsx:useEditor",
@@ -40651,6 +40729,14 @@
       "order": 0
     },
     {
+      "id": "packages/editor/src/lib/utils/dom.ts:activeElementShouldCaptureKeys->packages/editor/src/lib/utils/dom.ts:elementShouldCaptureKeys",
+      "source": "packages/editor/src/lib/utils/dom.ts:activeElementShouldCaptureKeys",
+      "target": "packages/editor/src/lib/utils/dom.ts:elementShouldCaptureKeys",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "packages/editor/src/lib/utils/getPointerInfo.ts:getPointerInfo->packages/editor/src/lib/utils/keyboard.ts:isAccelKey",
       "source": "packages/editor/src/lib/utils/getPointerInfo.ts:getPointerInfo",
       "target": "packages/editor/src/lib/utils/keyboard.ts:isAccelKey",
@@ -41201,12 +41287,12 @@
         {
           "condition": "else (rest.hideUi)",
           "branch": "else",
-          "branchGroup": "branch:130"
+          "branchGroup": "branch:134"
         },
         {
           "condition": "else (!CustomInFrontOfTheCanvas)",
           "branch": "else",
-          "branchGroup": "branch:131"
+          "branchGroup": "branch:135"
         }
       ],
       "label": "else (rest.hideUi) → else (!CustomInFrontOfTheCanvas)",
@@ -46156,22 +46242,22 @@
         {
           "condition": "else (svgExport)",
           "branch": "else",
-          "branchGroup": "branch:155"
+          "branchGroup": "branch:171"
         },
         {
           "condition": "else (isIframe && embedInfo?.definition.type === 'tldraw')",
           "branch": "else",
-          "branchGroup": "branch:180"
+          "branchGroup": "branch:196"
         },
         {
           "condition": "if (embedInfo?.definition.type === 'github_gist')",
           "branch": "then",
-          "branchGroup": "branch:181"
+          "branchGroup": "branch:197"
         },
         {
           "condition": "else (!idFromGistUrl)",
           "branch": "else",
-          "branchGroup": "branch:184"
+          "branchGroup": "branch:200"
         }
       ],
       "label": "else (svgExport) → else (isIframe && embedInfo?.definition.type === 'tldraw') → if (embedInfo?.definition.type === 'github_gist') → else (!idFromGistUrl)",
@@ -46187,17 +46273,17 @@
         {
           "condition": "else (svgExport)",
           "branch": "else",
-          "branchGroup": "branch:155"
+          "branchGroup": "branch:171"
         },
         {
           "condition": "else (isIframe && embedInfo?.definition.type === 'tldraw')",
           "branch": "else",
-          "branchGroup": "branch:180"
+          "branchGroup": "branch:196"
         },
         {
           "condition": "else (embedInfo?.definition.type === 'github_gist')",
           "branch": "else",
-          "branchGroup": "branch:181"
+          "branchGroup": "branch:197"
         }
       ],
       "label": "else (svgExport) → else (isIframe && embedInfo?.definition.type === 'tldraw') → else (embedInfo?.definition.type === 'github_gist')",
@@ -46213,22 +46299,22 @@
         {
           "condition": "else (svgExport)",
           "branch": "else",
-          "branchGroup": "branch:155"
+          "branchGroup": "branch:171"
         },
         {
           "condition": "else (isIframe && embedInfo?.definition.type === 'tldraw')",
           "branch": "else",
-          "branchGroup": "branch:180"
+          "branchGroup": "branch:196"
         },
         {
           "condition": "else (embedInfo?.definition.type === 'github_gist')",
           "branch": "else",
-          "branchGroup": "branch:181"
+          "branchGroup": "branch:197"
         },
         {
           "condition": "else (embedInfo?.definition)",
           "branch": "else",
-          "branchGroup": "branch:207"
+          "branchGroup": "branch:223"
         }
       ],
       "label": "else (svgExport) → else (isIframe && embedInfo?.definition.type === 'tldraw') → else (embedInfo?.definition.type === 'github_gist') → else (embedInfo?.definition)",
@@ -46244,7 +46330,7 @@
         {
           "condition": "else (embedInfo?.definition)",
           "branch": "else",
-          "branchGroup": "branch:246"
+          "branchGroup": "branch:262"
         }
       ],
       "label": "else (embedInfo?.definition)",
@@ -46260,7 +46346,7 @@
         {
           "condition": "else (!id.match(/^[0-9a-f]+$/))",
           "branch": "else",
-          "branchGroup": "branch:303"
+          "branchGroup": "branch:319"
         }
       ],
       "label": "else (!id.match(/^[0-9a-f]+$/))",
@@ -49830,7 +49916,7 @@
         {
           "condition": "else (!editingShape)",
           "branch": "else",
-          "branchGroup": "branch:35"
+          "branchGroup": "branch:31"
         }
       ],
       "label": "else (!editingShape)",
@@ -49846,12 +49932,12 @@
         {
           "condition": "else (this.hitLabelOnShapeForPointerUp && this.editor.inputs.getIs)",
           "branch": "else",
-          "branchGroup": "branch:62"
+          "branchGroup": "branch:58"
         },
         {
           "condition": "switch (info.target): case 'shape' | 'canvas'",
           "branch": "case 'shape' | 'canvas'",
-          "branchGroup": "branch:91"
+          "branchGroup": "branch:87"
         }
       ],
       "label": "else (this.hitLabelOnShapeForPointerUp && this.editor.inputs.getIs) → switch (info.target): case 'shape' | 'canvas'",
@@ -49867,12 +49953,12 @@
         {
           "condition": "else (!hitShape)",
           "branch": "else",
-          "branchGroup": "branch:199"
+          "branchGroup": "branch:195"
         },
         {
           "condition": "else (hitShape.isLocked)",
           "branch": "else",
-          "branchGroup": "branch:204"
+          "branchGroup": "branch:200"
         }
       ],
       "label": "else (!hitShape) → else (hitShape.isLocked)",
@@ -49888,7 +49974,7 @@
         {
           "condition": "switch (info.target): case 'canvas'",
           "branch": "case 'canvas'",
-          "branchGroup": "branch:104"
+          "branchGroup": "branch:100"
         }
       ],
       "label": "switch (info.target): case 'canvas'",
@@ -49904,12 +49990,12 @@
         {
           "condition": "switch (info.target): case 'shape'",
           "branch": "case 'shape'",
-          "branchGroup": "branch:104"
+          "branchGroup": "branch:100"
         },
         {
           "condition": "else (!editingShape)",
           "branch": "else",
-          "branchGroup": "branch:126"
+          "branchGroup": "branch:122"
         }
       ],
       "label": "switch (info.target): case 'shape' → else (!editingShape)",
@@ -49925,17 +50011,17 @@
         {
           "condition": "switch (info.target): case 'shape'",
           "branch": "case 'shape'",
-          "branchGroup": "branch:104"
+          "branchGroup": "branch:100"
         },
         {
           "condition": "else (!editingShape)",
           "branch": "else",
-          "branchGroup": "branch:126"
+          "branchGroup": "branch:122"
         },
         {
           "condition": "this.editor.isShapeOfType(editingShape, 'text') &&",
           "branch": "&&",
-          "branchGroup": "branch:137"
+          "branchGroup": "branch:133"
         }
       ],
       "label": "switch (info.target): case 'shape' → else (!editingShape) → this.editor.isShapeOfType(editingShape, 'text') &&",
@@ -53485,20 +53571,12 @@
       "order": 9
     },
     {
-      "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:PreferencesGroup->packages/tldraw/src/lib/ui/components/menu-items.tsx:ToggleDebugModeItem",
-      "source": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:PreferencesGroup",
-      "target": "packages/tldraw/src/lib/ui/components/menu-items.tsx:ToggleDebugModeItem",
-      "type": "direct-call",
-      "isAsync": false,
-      "order": 10
-    },
-    {
       "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:PreferencesGroup->packages/tldraw/src/lib/ui/components/ColorSchemeMenu.tsx:ColorSchemeMenu",
       "source": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:PreferencesGroup",
       "target": "packages/tldraw/src/lib/ui/components/ColorSchemeMenu.tsx:ColorSchemeMenu",
       "type": "direct-call",
       "isAsync": false,
-      "order": 11
+      "order": 10
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:PreferencesGroup->packages/tldraw/src/lib/ui/components/AccessibilityMenu.tsx:AccessibilityMenu",
@@ -53506,7 +53584,7 @@
       "target": "packages/tldraw/src/lib/ui/components/AccessibilityMenu.tsx:AccessibilityMenu",
       "type": "direct-call",
       "isAsync": false,
-      "order": 12
+      "order": 11
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:PreferencesGroup->packages/tldraw/src/lib/ui/components/InputModeMenu.tsx:InputModeMenu",
@@ -53514,7 +53592,7 @@
       "target": "packages/tldraw/src/lib/ui/components/InputModeMenu.tsx:InputModeMenu",
       "type": "direct-call",
       "isAsync": false,
-      "order": 13
+      "order": 12
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:PreferencesGroup->packages/tldraw/src/lib/ui/components/LanguageMenu.tsx:LanguageMenu",
@@ -53522,12 +53600,20 @@
       "target": "packages/tldraw/src/lib/ui/components/LanguageMenu.tsx:LanguageMenu",
       "type": "direct-call",
       "isAsync": false,
-      "order": 14
+      "order": 13
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:PreferencesGroup->packages/tldraw/src/lib/ui/components/HelpMenu/DefaultHelpMenuContent.tsx:KeyboardShortcutsMenuItem",
       "source": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:PreferencesGroup",
       "target": "packages/tldraw/src/lib/ui/components/HelpMenu/DefaultHelpMenuContent.tsx:KeyboardShortcutsMenuItem",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 14
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:PreferencesGroup->packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuActionItem.tsx:TldrawUiMenuActionItem",
+      "source": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:PreferencesGroup",
+      "target": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuActionItem.tsx:TldrawUiMenuActionItem",
       "type": "direct-call",
       "isAsync": false,
       "order": 15
@@ -54298,7 +54384,7 @@
         {
           "condition": "!isReadonlyMode &&",
           "branch": "&&",
-          "branchGroup": "branch:331"
+          "branchGroup": "branch:332"
         }
       ],
       "label": "!isReadonlyMode &&",
@@ -54330,12 +54416,12 @@
         {
           "condition": "if (isEditing)",
           "branch": "then",
-          "branchGroup": "branch:369"
+          "branchGroup": "branch:376"
         },
         {
           "condition": "else (shouldUseWindowPrompt)",
           "branch": "else",
-          "branchGroup": "branch:393"
+          "branchGroup": "branch:400"
         }
       ],
       "label": "if (isEditing) → else (shouldUseWindowPrompt)",
@@ -55443,7 +55529,7 @@
         {
           "condition": "enhancedA11yMode &&",
           "branch": "&&",
-          "branchGroup": "branch:40"
+          "branchGroup": "branch:41"
         }
       ],
       "label": "enhancedA11yMode &&",
@@ -59151,6 +59237,22 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton->packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TldrawUiTooltip",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
+      "target": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TldrawUiTooltip",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "if (tooltip)",
+          "branch": "then",
+          "branchGroup": "branch:45"
+        }
+      ],
+      "label": "if (tooltip)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonCheck.tsx:TldrawUiButtonCheck->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useTranslation",
       "source": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonCheck.tsx:TldrawUiButtonCheck",
       "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useTranslation",
@@ -61199,7 +61301,7 @@
         {
           "condition": "if (validUrlList)",
           "branch": "then",
-          "branchGroup": "branch:107"
+          "branchGroup": "branch:99"
         }
       ],
       "label": "if (validUrlList)",
@@ -61215,7 +61317,7 @@
         {
           "condition": "else if (isValidHttpURL(data))",
           "branch": "else-if",
-          "branchGroup": "branch:107"
+          "branchGroup": "branch:99"
         }
       ],
       "label": "else if (isValidHttpURL(data))",
@@ -61247,12 +61349,12 @@
         {
           "condition": "else (editor.getEditingShapeId() !== null)",
           "branch": "else",
-          "branchGroup": "branch:177"
+          "branchGroup": "branch:169"
         },
         {
           "condition": "else (!clipboardData)",
           "branch": "else",
-          "branchGroup": "branch:179"
+          "branchGroup": "branch:171"
         }
       ],
       "label": "else (editor.getEditingShapeId() !== null) → else (!clipboardData)",
@@ -61268,7 +61370,7 @@
         {
           "condition": "if (item.types.includes(type))",
           "branch": "then",
-          "branchGroup": "branch:248"
+          "branchGroup": "branch:240"
         }
       ],
       "label": "if (item.types.includes(type))",
@@ -61292,12 +61394,12 @@
         {
           "condition": "if (files.length)",
           "branch": "then",
-          "branchGroup": "branch:317"
+          "branchGroup": "branch:309"
         },
         {
           "condition": "else (files.length > editor.options.maxFilesAtOnce)",
           "branch": "else",
-          "branchGroup": "branch:320"
+          "branchGroup": "branch:312"
         }
       ],
       "label": "if (files.length) → else (files.length > editor.options.maxFilesAtOnce)",
@@ -61313,17 +61415,17 @@
         {
           "condition": "else (files.length)",
           "branch": "else",
-          "branchGroup": "branch:317"
+          "branchGroup": "branch:309"
         },
         {
           "condition": "if (result.type === 'text' && result.subtype === 'html')",
           "branch": "then",
-          "branchGroup": "branch:492"
+          "branchGroup": "branch:484"
         },
         {
           "condition": "if (isHtmlSingleLink)",
           "branch": "then",
-          "branchGroup": "branch:507"
+          "branchGroup": "branch:499"
         }
       ],
       "label": "else (files.length) → if (result.type === 'text' && result.subtype === 'html') → if (isHtmlSingleLink)",
@@ -61339,27 +61441,27 @@
         {
           "condition": "else (files.length)",
           "branch": "else",
-          "branchGroup": "branch:317"
+          "branchGroup": "branch:309"
         },
         {
           "condition": "if (result.type === 'text' && result.subtype === 'html')",
           "branch": "then",
-          "branchGroup": "branch:492"
+          "branchGroup": "branch:484"
         },
         {
           "condition": "else (isHtmlSingleLink)",
           "branch": "else",
-          "branchGroup": "branch:507"
+          "branchGroup": "branch:499"
         },
         {
           "condition": "if (!results.some((r) => r.type === 'text' && r.subtype !== 'htm)",
           "branch": "then",
-          "branchGroup": "branch:513"
+          "branchGroup": "branch:505"
         },
         {
           "condition": "if (html)",
           "branch": "then",
-          "branchGroup": "branch:517"
+          "branchGroup": "branch:509"
         }
       ],
       "label": "else (files.length) → if (result.type === 'text' && result.subtype === 'html') → else (isHtmlSingleLink) → if (!results.some((r) => r.type === 'text' && r.subtype !== 'htm) → if (html)",
@@ -61375,17 +61477,17 @@
         {
           "condition": "else (files.length)",
           "branch": "else",
-          "branchGroup": "branch:317"
+          "branchGroup": "branch:309"
         },
         {
           "condition": "if (result.type === 'text' && result.subtype === 'text' && resul)",
           "branch": "then",
-          "branchGroup": "branch:539"
+          "branchGroup": "branch:531"
         },
         {
           "condition": "if (isSingleIframe)",
           "branch": "then",
-          "branchGroup": "branch:553"
+          "branchGroup": "branch:545"
         }
       ],
       "label": "else (files.length) → if (result.type === 'text' && result.subtype === 'text' && resul) → if (isSingleIframe)",
@@ -61401,12 +61503,12 @@
         {
           "condition": "else (files.length)",
           "branch": "else",
-          "branchGroup": "branch:317"
+          "branchGroup": "branch:309"
         },
         {
           "condition": "if (result.type === 'text' && result.subtype === 'text' && resul)",
           "branch": "then",
-          "branchGroup": "branch:572"
+          "branchGroup": "branch:564"
         }
       ],
       "label": "else (files.length) → if (result.type === 'text' && result.subtype === 'text' && resul)",
@@ -61422,22 +61524,22 @@
         {
           "condition": "else (files.length)",
           "branch": "else",
-          "branchGroup": "branch:317"
+          "branchGroup": "branch:309"
         },
         {
           "condition": "if (result.type === 'text' && result.subtype === 'html')",
           "branch": "then",
-          "branchGroup": "branch:492"
+          "branchGroup": "branch:484"
         },
         {
           "condition": "else (isHtmlSingleLink)",
           "branch": "else",
-          "branchGroup": "branch:507"
+          "branchGroup": "branch:499"
         },
         {
           "condition": "if (!results.some((r) => r.type === 'text' && r.subtype !== 'htm)",
           "branch": "then",
-          "branchGroup": "branch:513"
+          "branchGroup": "branch:505"
         }
       ],
       "label": "else (files.length) → if (result.type === 'text' && result.subtype === 'html') → else (isHtmlSingleLink) → if (!results.some((r) => r.type === 'text' && r.subtype !== 'htm)",
@@ -61453,27 +61555,27 @@
         {
           "condition": "else (files.length)",
           "branch": "else",
-          "branchGroup": "branch:317"
+          "branchGroup": "branch:309"
         },
         {
           "condition": "if (result.type === 'text' && result.subtype === 'html')",
           "branch": "then",
-          "branchGroup": "branch:492"
+          "branchGroup": "branch:484"
         },
         {
           "condition": "else (isHtmlSingleLink)",
           "branch": "else",
-          "branchGroup": "branch:507"
+          "branchGroup": "branch:499"
         },
         {
           "condition": "if (!results.some((r) => r.type === 'text' && r.subtype !== 'htm)",
           "branch": "then",
-          "branchGroup": "branch:513"
+          "branchGroup": "branch:505"
         },
         {
           "condition": "if (html)",
           "branch": "then",
-          "branchGroup": "branch:517"
+          "branchGroup": "branch:509"
         }
       ],
       "label": "else (files.length) → if (result.type === 'text' && result.subtype === 'html') → else (isHtmlSingleLink) → if (!results.some((r) => r.type === 'text' && r.subtype !== 'htm) → if (html)",
@@ -61489,22 +61591,22 @@
         {
           "condition": "else (files.length)",
           "branch": "else",
-          "branchGroup": "branch:317"
+          "branchGroup": "branch:309"
         },
         {
           "condition": "if (result.type === 'text' && result.subtype === 'html')",
           "branch": "then",
-          "branchGroup": "branch:492"
+          "branchGroup": "branch:484"
         },
         {
           "condition": "else (isHtmlSingleLink)",
           "branch": "else",
-          "branchGroup": "branch:507"
+          "branchGroup": "branch:499"
         },
         {
           "condition": "if (results.some((r) => r.type === 'text' && r.subtype !== 'html)",
           "branch": "then",
-          "branchGroup": "branch:522"
+          "branchGroup": "branch:514"
         }
       ],
       "label": "else (files.length) → if (result.type === 'text' && result.subtype === 'html') → else (isHtmlSingleLink) → if (results.some((r) => r.type === 'text' && r.subtype !== 'html)",
@@ -61520,12 +61622,12 @@
         {
           "condition": "else (files.length)",
           "branch": "else",
-          "branchGroup": "branch:317"
+          "branchGroup": "branch:309"
         },
         {
           "condition": "if (result.type === 'text' && result.subtype === 'url')",
           "branch": "then",
-          "branchGroup": "branch:564"
+          "branchGroup": "branch:556"
         }
       ],
       "label": "else (files.length) → if (result.type === 'text' && result.subtype === 'url')",
@@ -61549,7 +61651,7 @@
         {
           "condition": "else (editor.getSelectedShapeIds().length === 0)",
           "branch": "else",
-          "branchGroup": "branch:661"
+          "branchGroup": "branch:653"
         }
       ],
       "label": "else (editor.getSelectedShapeIds().length === 0)",
@@ -61565,12 +61667,12 @@
         {
           "condition": "else (!editor)",
           "branch": "else",
-          "branchGroup": "branch:671"
+          "branchGroup": "branch:663"
         },
         {
           "condition": "else (editor.getSelectedShapeIds().length === 0)",
           "branch": "else",
-          "branchGroup": "branch:672"
+          "branchGroup": "branch:664"
         }
       ],
       "label": "else (!editor) → else (editor.getSelectedShapeIds().length === 0)",
@@ -61586,17 +61688,17 @@
         {
           "condition": "else (!editor)",
           "branch": "else",
-          "branchGroup": "branch:687"
+          "branchGroup": "branch:679"
         },
         {
           "condition": "else (editor.getEditingShapeId() !== null)",
           "branch": "else",
-          "branchGroup": "branch:688"
+          "branchGroup": "branch:680"
         },
         {
           "condition": "if (Array.isArray(data) && data[0] instanceof ClipboardItem)",
           "branch": "then",
-          "branchGroup": "branch:692"
+          "branchGroup": "branch:684"
         }
       ],
       "label": "else (!editor) → else (editor.getEditingShapeId() !== null) → if (Array.isArray(data) && data[0] instanceof ClipboardItem)",
@@ -61620,12 +61722,12 @@
         {
           "condition": "else (!appIsFocused)",
           "branch": "else",
-          "branchGroup": "branch:724"
+          "branchGroup": "branch:716"
         },
         {
           "condition": "editor.getSelectedShapeIds().length === 0 ||\n\t\t\t\teditor.getE ||",
           "branch": "||",
-          "branchGroup": "branch:727"
+          "branchGroup": "branch:719"
         }
       ],
       "label": "else (!appIsFocused) → editor.getSelectedShapeIds().length === 0 ||\n\t\t\t\teditor.getE ||",
@@ -61641,12 +61743,12 @@
         {
           "condition": "else (!appIsFocused)",
           "branch": "else",
-          "branchGroup": "branch:724"
+          "branchGroup": "branch:716"
         },
         {
           "condition": "editor.getSelectedShapeIds().length === 0 ||\n\t\t\t\teditor.getE ||",
           "branch": "||",
-          "branchGroup": "branch:741"
+          "branchGroup": "branch:733"
         }
       ],
       "label": "else (!appIsFocused) → editor.getSelectedShapeIds().length === 0 ||\n\t\t\t\teditor.getE ||",
@@ -61662,17 +61764,17 @@
         {
           "condition": "else (!appIsFocused)",
           "branch": "else",
-          "branchGroup": "branch:724"
+          "branchGroup": "branch:716"
         },
         {
           "condition": "else (disablingMiddleClickPaste)",
           "branch": "else",
-          "branchGroup": "branch:765"
+          "branchGroup": "branch:757"
         },
         {
           "condition": "editor.getEditingShapeId() !== null ||",
           "branch": "||",
-          "branchGroup": "branch:774"
+          "branchGroup": "branch:766"
         }
       ],
       "label": "else (!appIsFocused) → else (disablingMiddleClickPaste) → editor.getEditingShapeId() !== null ||",
@@ -61688,12 +61790,12 @@
         {
           "condition": "else (!appIsFocused)",
           "branch": "else",
-          "branchGroup": "branch:724"
+          "branchGroup": "branch:716"
         },
         {
           "condition": "else (editor.getSelectedShapeIds().length === 0 ||\n\t\t\t\teditor.getE)",
           "branch": "else",
-          "branchGroup": "branch:726"
+          "branchGroup": "branch:718"
         }
       ],
       "label": "else (!appIsFocused) → else (editor.getSelectedShapeIds().length === 0 ||\n\t\t\t\teditor.getE)",
@@ -61709,12 +61811,12 @@
         {
           "condition": "else (!appIsFocused)",
           "branch": "else",
-          "branchGroup": "branch:724"
+          "branchGroup": "branch:716"
         },
         {
           "condition": "else (editor.getSelectedShapeIds().length === 0 ||\n\t\t\t\teditor.getE)",
           "branch": "else",
-          "branchGroup": "branch:740"
+          "branchGroup": "branch:732"
         }
       ],
       "label": "else (!appIsFocused) → else (editor.getSelectedShapeIds().length === 0 ||\n\t\t\t\teditor.getE)",
@@ -61730,22 +61832,22 @@
         {
           "condition": "else (!appIsFocused)",
           "branch": "else",
-          "branchGroup": "branch:724"
+          "branchGroup": "branch:716"
         },
         {
           "condition": "else (disablingMiddleClickPaste)",
           "branch": "else",
-          "branchGroup": "branch:765"
+          "branchGroup": "branch:757"
         },
         {
           "condition": "else (editor.getEditingShapeId() !== null || areShortcutsDisabled()",
           "branch": "else",
-          "branchGroup": "branch:769"
+          "branchGroup": "branch:761"
         },
         {
           "condition": "if (e.clipboardData)",
           "branch": "then",
-          "branchGroup": "branch:789"
+          "branchGroup": "branch:781"
         }
       ],
       "label": "else (!appIsFocused) → else (disablingMiddleClickPaste) → else (editor.getEditingShapeId() !== null || areShortcutsDisabled() → if (e.clipboardData)",
@@ -61761,27 +61863,27 @@
         {
           "condition": "else (!appIsFocused)",
           "branch": "else",
-          "branchGroup": "branch:724"
+          "branchGroup": "branch:716"
         },
         {
           "condition": "else (disablingMiddleClickPaste)",
           "branch": "else",
-          "branchGroup": "branch:765"
+          "branchGroup": "branch:757"
         },
         {
           "condition": "else (editor.getEditingShapeId() !== null || areShortcutsDisabled()",
           "branch": "else",
-          "branchGroup": "branch:769"
+          "branchGroup": "branch:761"
         },
         {
           "condition": "if (navigator.clipboard?.read)",
           "branch": "then",
-          "branchGroup": "branch:793"
+          "branchGroup": "branch:785"
         },
         {
           "condition": "if (Array.isArray(clipboardItems) && clipboardItems[0] instanceo)",
           "branch": "then",
-          "branchGroup": "branch:804"
+          "branchGroup": "branch:796"
         }
       ],
       "label": "else (!appIsFocused) → else (disablingMiddleClickPaste) → else (editor.getEditingShapeId() !== null || areShortcutsDisabled() → if (navigator.clipboard?.read) → if (Array.isArray(clipboardItems) && clipboardItems[0] instanceo)",
