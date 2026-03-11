@@ -31,12 +31,9 @@ interface FlowControlsProps {
   onToggleDiff: () => void;
   baseRef: string | null;
   diffSummary: DiffSummary | null;
-  diffDepth: number;
-  diffMaxDepth: number;
-  onDiffDepthChange: (depth: number) => void;
-  focusDepth: number;
-  focusMaxDepth: number;
-  onFocusDepthChange: (depth: number) => void;
+  depth: number;
+  maxDepth: number;
+  onDepthChange: (depth: number) => void;
 }
 
 /** Graph filtering controls: search, node stats, type filters, conditionals toggle. */
@@ -58,12 +55,9 @@ export function FlowControls({
   onToggleDiff,
   baseRef,
   diffSummary,
-  diffDepth,
-  diffMaxDepth,
-  onDiffDepthChange,
-  focusDepth,
-  focusMaxDepth,
-  onFocusDepthChange,
+  depth,
+  maxDepth,
+  onDepthChange,
 }: FlowControlsProps) {
   const searchRef = useRef<HTMLInputElement>(null);
   const [localQuery, setLocalQuery] = useState(searchQuery);
@@ -103,30 +97,23 @@ export function FlowControls({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Unified depth slider — picks whichever source is active (diff takes priority)
-  const activeDepth = diffEnabled && diffMaxDepth > 0
-    ? { value: diffDepth, max: diffMaxDepth, onChange: onDiffDepthChange, id: 'diff-depth' }
-    : focusMaxDepth > 0
-      ? { value: focusDepth, max: focusMaxDepth, onChange: onFocusDepthChange, id: 'focus-depth' }
-      : null;
-
-  const depthSlider = activeDepth && (
+  const depthSlider = maxDepth > 0 && (
     <div className="mb-3">
       <div className="flex items-center gap-2">
-        <label className="text-[11px] text-muted-foreground shrink-0" htmlFor={activeDepth.id}>
+        <label className="text-[11px] text-muted-foreground shrink-0" htmlFor="depth">
           Depth
         </label>
         <input
-          id={activeDepth.id}
+          id="depth"
           type="range"
           min={0}
-          max={activeDepth.max}
-          value={activeDepth.value}
-          onChange={(e) => activeDepth.onChange(Number(e.target.value))}
+          max={maxDepth}
+          value={depth}
+          onChange={(e) => onDepthChange(Number(e.target.value))}
           className="flex-1 h-1 accent-foreground"
         />
         <span className="text-[11px] text-muted-foreground tabular-nums w-8 text-right">
-          {activeDepth.value === activeDepth.max ? 'all' : activeDepth.value}
+          {depth === maxDepth ? 'all' : depth}
         </span>
       </div>
     </div>

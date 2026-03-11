@@ -142,25 +142,18 @@ export function GraphExplorer({
   // --- Live diff state ---
   const diffEnabled = searchParams.get('diff') === 'true';
   const { diff: diffData, baseRef: diffBaseRef } = useLiveDiff(diffEnabled);
-  const diffMaxDepth = diffData?.maxDepth ?? 0;
-  const diffDepthParam = searchParams.get('depth');
-  const diffDepth = diffDepthParam != null ? Number(diffDepthParam) : 0;
-  const setDiffDepth = useCallback(
-    (d: number) => setParam('depth', d > 0 ? String(d) : null),
-    [setParam],
-  );
 
-
-  // --- Focus depth state (URL-persisted, reset atomically via useNodeSelection) ---
+  // --- Unified depth state (single URL param for both diff and focus) ---
   const [focusMaxDepth, setFocusMaxDepth] = useState(0);
-  const focusDepthParam = searchParams.get('focusDepth');
-  const focusDepth = focusDepthParam != null ? Number(focusDepthParam) : focusMaxDepth;
-  const setFocusDepth = useCallback(
-    (d: number) => setParam('focusDepth', d < focusMaxDepth ? String(d) : null),
-    [setParam, focusMaxDepth],
+  const maxDepth = diffEnabled ? (diffData?.maxDepth ?? 0) : focusMaxDepth;
+  const depthParam = searchParams.get('depth');
+  const depth = depthParam != null ? Math.min(Number(depthParam), maxDepth) : maxDepth;
+  const setDepth = useCallback(
+    (d: number) => setParam('depth', d < maxDepth ? String(d) : null),
+    [setParam, maxDepth],
   );
 
-  /** When focus max depth changes, update the max (focusDepth resets via useNodeSelection). */
+  /** When focus max depth changes, update the max. */
   const handleFocusMaxDepthChange = useCallback((maxDepth: number) => {
     setFocusMaxDepth(maxDepth);
   }, []);
@@ -179,7 +172,7 @@ export function GraphExplorer({
     if (!diffData || !graph) return null;
     const depths = diffData.nodeDepths;
     // Filter nodes to those within the selected depth
-    const nodes = diffData.nodes.filter((n) => (depths[n.id] ?? 0) <= diffDepth);
+    const nodes = diffData.nodes.filter((n) => (depths[n.id] ?? 0) <= depth);
     // Include removed nodes (ghost nodes) — they have depth 0 (they are changed nodes)
     const allNodes = [...nodes, ...diffData.removedNodes];
     const nodeIds = new Set(allNodes.map((n) => n.id));
@@ -187,7 +180,7 @@ export function GraphExplorer({
       (e) => nodeIds.has(e.source) && nodeIds.has(e.target),
     );
     return { ...graph, nodes: allNodes, edges };
-  }, [diffData, diffDepth, graph]);
+  }, [diffData, depth, graph]);
 
   // --- Computed graph data ---
 
@@ -321,7 +314,7 @@ export function GraphExplorer({
         <FlowGraph
           graph={diffEnabled && diffGraph ? diffGraph : graph}
           diffData={diffData}
-          focusDepth={focusDepth}
+          focusDepth={depth}
           onFocusMaxDepthChange={handleFocusMaxDepthChange}
           onLayoutReady={onLayoutReady}
           searchQuery={searchQuery}
@@ -392,21 +385,19 @@ export function GraphExplorer({
               setSearchParams((prev) => {
                 if (diffEnabled) {
                   prev.delete('diff');
+                  prev.delete('depth');
                 } else {
                   prev.set('diff', 'true');
-                  prev.delete('depth'); // reset depth when enabling
+                  prev.set('depth', '0'); // diff starts at depth 0 (changed nodes only)
                 }
                 return prev;
               });
             }}
             baseRef={diffBaseRef}
             diffSummary={diffSummary}
-            diffDepth={diffDepth}
-            diffMaxDepth={diffMaxDepth}
-            onDiffDepthChange={setDiffDepth}
-            focusDepth={focusDepth}
-            focusMaxDepth={focusMaxDepth}
-            onFocusDepthChange={setFocusDepth}
+            depth={depth}
+            maxDepth={maxDepth}
+            onDepthChange={setDepth}
           />
           <div className="border-t border-border" />
           <DocsTree visibleNames={visibleNames} />
