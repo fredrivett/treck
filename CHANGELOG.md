@@ -1,5 +1,12 @@
 # treck
 
+## 0.2.6
+
+### Patch Changes
+
+- d680db8: Add keyboard navigation to graph: arrow keys and hjkl pan the camera
+- c0ef2fd: Add live diff viewer with SSE streaming, unified depth controls, and diff visualization
+
 ## 0.2.5
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @treck/website
 
+## 0.0.4
+
+### Patch Changes
+
+- 338e069: Add "Explore any repo" feature: paste a GitHub URL on the showcases page to generate and view its dependency graph on demand. Includes Upstash Redis caching (30d TTL with 24h staleness checks), rate limiting, hardened git clone, and chat support for explored repos.
+- 9d670d5: Fix chat message content overflowing container horizontally. Adds `min-w-0` to prevent flexbox overflow and caps heading top margins to 1em. Also reduces heading font sizes: h1-h2 slightly bigger, h3-h6 at base prose-sm size.
+
 ## 0.0.3
 
 ### Patch Changes
