@@ -279,15 +279,15 @@ export function handleGetGraphSummary(graph: FlowGraph): McpTextResponse {
  * @param graphPath - Relative path to graph.json from repo root
  * @param currentGraph - The current in-memory graph
  */
-export async function handleDiffGraph(
+export function handleDiffGraph(
   baseRef: string,
   depth: number | undefined,
   graphPath: string,
   currentGraph: FlowGraph,
-): Promise<McpTextResponse> {
+): McpTextResponse {
   let baseGraph: FlowGraph;
   try {
-    baseGraph = await loadGraphAtRef(baseRef, graphPath);
+    baseGraph = loadGraphAtRef(baseRef, graphPath);
   } catch (err) {
     return {
       content: [{ type: 'text', text: (err as Error).message }],
@@ -317,16 +317,6 @@ export function registerMcpCommand(cli: CAC) {
         // biome-ignore lint/suspicious/noConsole: MCP uses stderr for diagnostics (stdout is reserved for protocol)
         console.error('Config not found. Run: treck init');
         process.exit(1);
-      }
-
-      process.stderr.write('Syncing graph...\n');
-      const syncResult = syncGraph(config);
-      if (syncResult) {
-        process.stderr.write(
-          `Graph synced (${syncResult.nodeCount} nodes, ${syncResult.edgeCount} edges)\n`,
-        );
-      } else {
-        process.stderr.write('Sync: no source files matched\n');
       }
 
       const store = new GraphStore(config.outputDir);
