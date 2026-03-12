@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-11T04:31:16.562Z",
+  "generatedAt": "2026-03-12T04:32:24.939Z",
   "nodes": [
     {
       "id": "packages/editor/src/lib/TldrawEditor.tsx:TldrawEditor",
@@ -2491,10 +2491,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/editor/Editor.ts",
       "isAsync": true,
-      "hash": "6e4e4b0572ce02caf43eb7658fe45c218f833d2a984035aa20e186c8b62ca4da",
+      "hash": "bef124dbf48d4c969c6d9a0784456dbfb40954977e78db031e4fa8cab2c81afb",
       "lineRange": [
         288,
-        10837
+        10853
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -2507,8 +2507,8 @@
       "isAsync": false,
       "hash": "52d8f1d0369fd28a3d6386fce8db0a1b7f7a1df9de87ef4f939f5b64afa45b8e",
       "lineRange": [
-        10837,
-        10842
+        10853,
+        10858
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -2536,8 +2536,8 @@
       "isAsync": false,
       "hash": "3cfae07aa46b4b548c51fd34936ff449ec09259d72a837e8959002c51046b7be",
       "lineRange": [
-        10842,
-        10880
+        10858,
+        10896
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -2565,8 +2565,8 @@
       "isAsync": false,
       "hash": "cdad6f7150d0a65e5914f4e0ef5e36676b219eaa7e89dfd9b5a8091b43f4eced",
       "lineRange": [
-        10880,
-        10890
+        10896,
+        10906
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -2600,8 +2600,8 @@
       "isAsync": false,
       "hash": "19f1aa23d782d69c18cc8921f2eaeb6b58e2b633f533f51c292e28a4744e4b43",
       "lineRange": [
-        10890,
-        10948
+        10906,
+        10964
       ],
       "hasJsDoc": true,
       "description": "Run `callback` in a world where all bindings from the shapes in `shapeIds` to shapes not in\n`shapeIds` are removed. This is useful when you want to duplicate/copy shapes without worrying\nabout bindings that might be pointing to shapes that are not being duplicated.\n\nThe callback is given the set of bindings that should be maintained.",
@@ -2636,8 +2636,8 @@
       "isAsync": false,
       "hash": "684f3404de518bd8bd72e6a1cd76cbbe1f936d7e196c5fc27c121359983d8ca9",
       "lineRange": [
-        10948,
-        10960
+        10964,
+        10976
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -4471,7 +4471,7 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/exports/exportToSvg.tsx",
       "isAsync": true,
-      "hash": "b9f3f40a37dd34fad1afd910b5d3508fb007a8b7632a0dc020ec9d208deb3d4d",
+      "hash": "1598cc1b87a64a3031b8ee8de5219f4861bf2c9d8412a84ccff78cdf5540a20b",
       "lineRange": [
         12,
         83
@@ -4570,10 +4570,10 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/exports/getSvgAsImage.ts",
       "isAsync": true,
-      "hash": "d692dab524fb66b8f705061b7b545134651079d82e274a483b5171a7278e8e99",
+      "hash": "f80ab61e448b87b19611e770fc29a4b5f4944ba650e41bb5e4b8779b85a02569",
       "lineRange": [
         4,
-        92
+        19
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -4593,15 +4593,171 @@
       "isExported": true
     },
     {
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImageWithOptions",
+      "name": "getSvgAsImageWithOptions",
+      "kind": "function",
+      "filePath": "packages/editor/src/lib/exports/getSvgAsImage.ts",
+      "isAsync": true,
+      "hash": "c42f6254ff7740dfdcadcd10e57a4d5b0c286bf5c5015e45e8b3b76209553631",
+      "lineRange": [
+        19,
+        85
+      ],
+      "hasJsDoc": false,
+      "structuredParams": [
+        {
+          "name": "svgString",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "options",
+          "type": "{\n\t\ttype: 'png' | 'jpeg' | 'webp'\n\t\twidth: number\n\t\theight: number\n\t\tquality?: number\n\t\tpixelRatio?: number\n\t\ttrimPadding?: number\n\t\tscale?: number\n\t}",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "Promise<{ blob: Blob; width: number; height: number } | null>",
+      "isExported": true
+    },
+    {
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:renderSvgToCanvas",
+      "name": "renderSvgToCanvas",
+      "kind": "function",
+      "filePath": "packages/editor/src/lib/exports/getSvgAsImage.ts",
+      "isAsync": true,
+      "hash": "2d8639099b6bdf9d22309f597f688317f2ad9a7d598d4580e91cd47a6b26ebbe",
+      "lineRange": [
+        85,
+        126
+      ],
+      "hasJsDoc": false,
+      "structuredParams": [
+        {
+          "name": "svgString",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "Promise<HTMLCanvasElement | null>",
+      "isExported": false
+    },
+    {
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:measureContentBounds",
+      "name": "measureContentBounds",
+      "kind": "function",
+      "filePath": "packages/editor/src/lib/exports/getSvgAsImage.ts",
+      "isAsync": false,
+      "hash": "026448bfedd8a9472621389a55f207d78858a5c6a0c0d347dbcf61f6cace9b70",
+      "lineRange": [
+        126,
+        249
+      ],
+      "hasJsDoc": true,
+      "description": "Scans a canvas from each edge inward (up to trimPaddingPx pixels) to find\nthe first row/column containing non-background content. Returns the crop\nrectangle in canvas pixel coordinates, or null if no trimming is needed.",
+      "structuredParams": [
+        {
+          "name": "canvas",
+          "type": "HTMLCanvasElement",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "trimPaddingPx",
+          "type": "number",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "{ cropLeft: number; cropTop: number; cropRight: number; cropBottom: number } | null",
+      "isExported": false
+    },
+    {
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:trimExtraPadding",
+      "name": "trimExtraPadding",
+      "kind": "function",
+      "filePath": "packages/editor/src/lib/exports/getSvgAsImage.ts",
+      "isAsync": false,
+      "hash": "6dc2b37ab9440bd3bedd639cdeeac8f13c64de3c7bab8518af172c26e011c4d6",
+      "lineRange": [
+        249,
+        278
+      ],
+      "hasJsDoc": true,
+      "description": "Trims extra padding from a canvas by scanning from each edge inward to find\nnon-transparent (or non-background) pixels. Stops at either content pixels or\nthe declared bounds (the area without extra padding).",
+      "structuredParams": [
+        {
+          "name": "canvas",
+          "type": "HTMLCanvasElement",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "trimPaddingPx",
+          "type": "number",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "returnType": "{ canvas: HTMLCanvasElement; width: number; height: number }",
+      "isExported": false
+    },
+    {
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:trimSvgToContent",
+      "name": "trimSvgToContent",
+      "kind": "function",
+      "filePath": "packages/editor/src/lib/exports/getSvgAsImage.ts",
+      "isAsync": true,
+      "hash": "467815c7ecd1cd4e615c98de332416d775e600ba018708cb249391288c571838",
+      "lineRange": [
+        278,
+        351
+      ],
+      "hasJsDoc": true,
+      "description": "Trims an SVG string to its visual content bounds by rendering it to a\ntemporary canvas, measuring the actual content area, then adjusting the\nSVG's viewBox and dimensions to match.",
+      "structuredParams": [
+        {
+          "name": "svgString",
+          "type": "string",
+          "isOptional": false,
+          "isRest": false,
+          "description": "The SVG string to trim."
+        },
+        {
+          "name": "options",
+          "type": "{\n\t\twidth: number\n\t\theight: number\n\t\ttrimPadding: number\n\t\tscale: number\n\t}",
+          "isOptional": false,
+          "isRest": false,
+          "description": "Options for trimming."
+        }
+      ],
+      "returnType": "Promise<{ svg: string; width: number; height: number } | null>",
+      "isExported": true
+    },
+    {
       "id": "packages/editor/src/lib/exports/getSvgJsx.tsx:getSvgJsx",
       "name": "getSvgJsx",
       "kind": "function",
       "filePath": "packages/editor/src/lib/exports/getSvgJsx.tsx",
       "isAsync": false,
-      "hash": "f91643276201200e35ae1f229952bd733e42b4162efc02eaafa186781fa14c94",
+      "hash": "48e28fc43a50824634980a51f5589bffa3eec4cd08116a80402a34aa721098e8",
       "lineRange": [
         37,
-        106
+        127
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -4633,10 +4789,10 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/exports/getSvgJsx.tsx",
       "isAsync": false,
-      "hash": "fc57997885c61aa40e595ed6af79e230c9166c2165bde6a739b794374a6913fb",
+      "hash": "0abb130b03e86dd75b1e69b65de07c940cd891c868f839e5b15e56553079d193",
       "lineRange": [
-        106,
-        175
+        127,
+        197
       ],
       "hasJsDoc": true,
       "description": "Calculates the default bounds for an SVG export. This function handles:\n1. Computing masked page bounds for each shape\n2. Container logic: if a shape is marked as an export bounds container and it\n   contains all other shapes, use its bounds and skip padding\n3. Otherwise, create a union of all shape bounds and apply padding\n\nThe container logic is useful for cases like annotating on an image - if the image\ncontains all annotations, we want to export exactly the image bounds without extra padding.",
@@ -4670,6 +4826,7 @@
           "description": "If exporting a single frame, this is its ID (skips padding)"
         }
       ],
+      "returnType": "{ box: Box; paddingApplied: boolean } | { box: null; paddingApplied: false }",
       "isExported": true
     },
     {
@@ -4680,8 +4837,8 @@
       "isAsync": true,
       "hash": "8138252943be5ee73205b028f737736cfc667bdf5becb55009a963803d50f1d4",
       "lineRange": [
-        175,
-        460
+        197,
+        482
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -4762,8 +4919,8 @@
       "isAsync": false,
       "hash": "a55fd4197c0745b35c000e3d0ab8482217f4089459012ebc0b9a92888a3fda63",
       "lineRange": [
-        460,
-        512
+        482,
+        534
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -6868,36 +7025,13 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/Vec.ts",
       "isAsync": false,
-      "hash": "5eefb3aa62f1f698cbf244a7e9c2599fe2f259b1f25f8bfa7eff932a9d29b1ec",
+      "hash": "512b461406cd26984a8faa07fa8dfefd0843c3cf72395b1c89d56db6c916851e",
       "lineRange": [
         12,
-        624
+        644
       ],
       "hasJsDoc": false,
       "isExported": true
-    },
-    {
-      "id": "packages/editor/src/lib/primitives/Vec.ts:ease",
-      "name": "ease",
-      "kind": "const",
-      "filePath": "packages/editor/src/lib/primitives/Vec.ts",
-      "isAsync": false,
-      "hash": "b3d37bc9b248c76c40b8a27c8a3b8574267f93e57dfe659b93679c9dce544d0e",
-      "lineRange": [
-        626,
-        626
-      ],
-      "hasJsDoc": false,
-      "isTrivial": true,
-      "structuredParams": [
-        {
-          "name": "t",
-          "type": "number",
-          "isOptional": false,
-          "isRest": false
-        }
-      ],
-      "isExported": false
     },
     {
       "id": "packages/editor/src/lib/primitives/geometry/Arc2d.ts:Arc2d",
@@ -6905,10 +7039,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/Arc2d.ts",
       "isAsync": false,
-      "hash": "a7bfd64e11d8e5b0d5d651a58a4d50a03352c698f6acd5f7e2f997bbd1fc1a43",
+      "hash": "0f1a5ab33cdeac6a9f34455df6c04593a157b8538d12b65b61eb78f7082e4988",
       "lineRange": [
         5,
-        119
+        111
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -6919,10 +7053,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/Circle2d.ts",
       "isAsync": false,
-      "hash": "bfc8a2d3fb920e06e16ff638fc0e75965181f4f6c71ec6be5f343d44cb31a1e9",
+      "hash": "2385900fa3b25d0269f0881bfe76bc9eba76a02fed21142a3ac6ace489cbd0d7",
       "lineRange": [
         6,
-        61
+        92
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -6933,10 +7067,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/CubicBezier2d.ts",
       "isAsync": false,
-      "hash": "e75871761fc751499995662402f857b75a9a8182e5106ca94059aa1f05c24fdd",
+      "hash": "ac3d45e1c1ffb1e835e7f9d20b3b6176dcc655dabb9b68b994fecfbc89a7fa40",
       "lineRange": [
         3,
-        102
+        112
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -6947,10 +7081,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/CubicSpline2d.ts",
       "isAsync": false,
-      "hash": "dc1d5e2b59b340759b10f8f41fb6fb5b43091f5b48c1ac2a0e77140c9e8fdef2",
+      "hash": "82053532ed600c8290e708a79d225100bc8cc16501b4eaaa9baaf3556d2853da",
       "lineRange": [
         3,
-        93
+        103
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -6961,10 +7095,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/Edge2d.ts",
       "isAsync": false,
-      "hash": "618069c4560f0ddbbbc454b11855aa4eca5e59d6553273bca167fc7e8f6b7dc7",
+      "hash": "66ba1dd29025e21e83e3f2e1b8c7380649ad00f13e5b6b9a0ba92be4694e6718",
       "lineRange": [
         2,
-        50
+        68
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -6975,10 +7109,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/Ellipse2d.ts",
       "isAsync": false,
-      "hash": "d78a357e2f1f9cd32862598bbaa8a2956b16ea54f0f9294d87356c9198fec942",
+      "hash": "6b03640de655f2114d517851395c4486461619fb2d52d173f7eb3ec7fd3a0abb",
       "lineRange": [
         6,
-        117
+        130
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -7059,10 +7193,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/Polyline2d.ts",
       "isAsync": false,
-      "hash": "9fb95b2665fc5fdb8634c1d50d1e0327c3bfce85f30765fa63667d0a5971c5d4",
+      "hash": "219439c36c6d86a9d2a992b5f20326ce9d9b3bc84df7e204ddee2cd750e093f6",
       "lineRange": [
-        3,
-        83
+        4,
+        128
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -7109,10 +7243,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/Stadium2d.ts",
       "isAsync": false,
-      "hash": "a66628be919737924d28150031ba43c6d5f335fb5095f36008670de5bf7cc319",
+      "hash": "96e1a55ebf16113777f27007e079d97fe388861605861b161649b9653e9b8dcf",
       "lineRange": [
         6,
-        113
+        126
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -7153,10 +7287,10 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/primitives/intersect.ts",
       "isAsync": false,
-      "hash": "8d45c341529ac228deacd8c5438c1b0ca173e5438ac69fc8ed0365eeb8b52346",
+      "hash": "562c8cf1b4041ada21e381f069b3086862b99b7d3885441e0fc6897dd8e5e02c",
       "lineRange": [
         3,
-        51
+        44
       ],
       "hasJsDoc": true,
       "description": "Find the intersection between a line segment and a line segment.",
@@ -7205,10 +7339,10 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/primitives/intersect.ts",
       "isAsync": false,
-      "hash": "7913ac173658b2abd64c4cd407553b9aaccdc90fdad68308b33a5bdc7b67db44",
+      "hash": "f0f33672fc3cf235a884ae7d1111df581a22d19f002b0f7a6130810a7166e1ff",
       "lineRange": [
-        51,
-        91
+        44,
+        84
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a line segment and a circle.",
@@ -7252,8 +7386,8 @@
       "isAsync": false,
       "hash": "57b660276ae30660617247894bdd561910a86e5b48e0642b66967fd76e07001f",
       "lineRange": [
-        91,
-        113
+        84,
+        106
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a line segment and a polyline.",
@@ -7290,8 +7424,8 @@
       "isAsync": false,
       "hash": "4b1af61a1b0c4182dfb14aebe38e963d70753270741aeb7e92e5cf2a6c490fb5",
       "lineRange": [
-        113,
-        141
+        106,
+        134
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a line segment and a closed polygon.",
@@ -7328,8 +7462,8 @@
       "isAsync": false,
       "hash": "cd79fb2d888ba100cc9ad1afb73a0fc1a6e3a412dfba5c9190426f66ff8ddcd9",
       "lineRange": [
-        141,
-        164
+        134,
+        157
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a circle and a circle.",
@@ -7373,8 +7507,8 @@
       "isAsync": false,
       "hash": "51777c586aca6b11579099699e4051f2facbc9cee1ab9db18ba058ca9f6d3e83",
       "lineRange": [
-        164,
-        188
+        157,
+        181
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a circle and a bounding box.",
@@ -7411,8 +7545,8 @@
       "isAsync": false,
       "hash": "97638a7d5251d57e93acfc2aab58236586e21106315567b09e4a8e07f770622e",
       "lineRange": [
-        188,
-        212
+        181,
+        205
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a circle and a bounding box.",
@@ -7449,8 +7583,8 @@
       "isAsync": false,
       "hash": "ab3f97633abd894cccf0d84dd8c64375444242a19543b32f8de26ba5d0c8e797",
       "lineRange": [
-        212,
-        231
+        205,
+        224
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a polygon and a bounding box.",
@@ -7478,8 +7612,8 @@
       "isAsync": false,
       "hash": "02c9c57c341ad050a954400a006eceafd526d37a82666bd25264c76f9ff0e7af",
       "lineRange": [
-        231,
-        235
+        224,
+        228
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -7513,8 +7647,8 @@
       "isAsync": false,
       "hash": "a1476d0b1ba71bea88def539ab75213e63b7d6931f8321381c360f6bcc5296df",
       "lineRange": [
-        235,
-        240
+        228,
+        233
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -7554,8 +7688,8 @@
       "isAsync": false,
       "hash": "e2cb91c42e16837061da3c658862405c9320eb9ed7ed0023c8db65b9df59e38e",
       "lineRange": [
-        240,
-        301
+        233,
+        294
       ],
       "hasJsDoc": true,
       "description": "Create a new convex polygon as the intersection of two convex polygons.",
@@ -7586,8 +7720,8 @@
       "isAsync": false,
       "hash": "2451bcd47a051e83cbdf4bdb0d0cc6bc9513539af91098b536d9f15dc2663b46",
       "lineRange": [
-        301,
-        342
+        294,
+        335
       ],
       "hasJsDoc": true,
       "description": "Find all the points where `polyA` and `polyB` intersect and returns them in an undefined order.\nTo find the polygon that's the intersection of polyA and polyB, use `intersectPolygonPolygon`\ninstead, which orders the points and includes internal points.",
@@ -7632,8 +7766,8 @@
       "isAsync": false,
       "hash": "4490231eaa274a5b2692cf4fd3f8d89dec5fed6359383430be6b962762e5e8a9",
       "lineRange": [
-        342,
-        346
+        335,
+        339
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -7655,8 +7789,8 @@
       "isAsync": false,
       "hash": "b990f38754032f112dc344cbabacbe33a7222f747b7843dc92635e548ad3436c",
       "lineRange": [
-        346,
-        351
+        339,
+        344
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -7678,8 +7812,8 @@
       "isAsync": false,
       "hash": "731a86e6cd81946945be6d494cc102007ab0fd3e6a0f638967d308b40a4929b4",
       "lineRange": [
-        351,
-        366
+        344,
+        359
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -7706,8 +7840,8 @@
       "isAsync": false,
       "hash": "3479533c02f7f0d78e67ea0912bffd88dde82420bd44b0fa16cefcded9b9182b",
       "lineRange": [
-        366,
-        382
+        359,
+        375
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -8503,10 +8637,10 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/primitives/utils.ts",
       "isAsync": false,
-      "hash": "e70fe2b24213da9d77bf3d53916e34b40351f2b97627c3e3f380ac3f52f24e38",
+      "hash": "b03d1c00445f631560a3efb5fc07898fb3e27f4af6ee51748e9e129cd85f3568",
       "lineRange": [
         308,
-        344
+        341
       ],
       "hasJsDoc": true,
       "description": "Get whether a point is inside of a polygon.\n\n```ts\nconst result = pointInPolygon(myPoint, myPoints)\n```",
@@ -8535,8 +8669,8 @@
       "isAsync": false,
       "hash": "90a16326c919fe6d4fdd0ab740617c9f901334dc5a1559fa172f5f6b28acd8f5",
       "lineRange": [
-        344,
-        353
+        341,
+        350
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -8559,8 +8693,8 @@
       "isAsync": false,
       "hash": "c84d770a619ef3196a44039d40ba90a6babd94395fb2c48e944982eaa30a5239",
       "lineRange": [
-        353,
-        360
+        350,
+        357
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -8582,8 +8716,8 @@
       "isAsync": false,
       "hash": "93aff00885f75c3b389e3880f1b09165f2c8107647526894f0f2698ec4be6c18",
       "lineRange": [
-        366,
-        368
+        363,
+        365
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -8606,8 +8740,8 @@
       "isAsync": false,
       "hash": "0e475ba94aadc8a09f79d2a745a2310b26db3c52c8a40a520c16a05f5b12d578",
       "lineRange": [
-        368,
-        384
+        365,
+        381
       ],
       "hasJsDoc": true,
       "description": "Get the angle of a point on an arc.",
@@ -8644,8 +8778,8 @@
       "isAsync": false,
       "hash": "d775b810edd87ad5416eea9b2f69f1ffa890b8a09eff1aea35beda20ee115cc1",
       "lineRange": [
-        384,
-        421
+        381,
+        418
       ],
       "hasJsDoc": true,
       "description": "Returns the t value of the point on the arc.",
@@ -8690,8 +8824,8 @@
       "isAsync": false,
       "hash": "54057d02a76b45db4faf023397ffa6f7dda174930f777cdd01af239b5904368c",
       "lineRange": [
-        421,
-        439
+        418,
+        436
       ],
       "hasJsDoc": true,
       "description": "Get the measure of an arc.",
@@ -8735,8 +8869,8 @@
       "isAsync": false,
       "hash": "5fd6b2dae326b7c4027a5ed200d14d99c336b62748b3b89e0cd3ce79d482ca27",
       "lineRange": [
-        439,
-        468
+        436,
+        465
       ],
       "hasJsDoc": true,
       "description": "Get the center of a circle from three points.",
@@ -8773,8 +8907,8 @@
       "isAsync": false,
       "hash": "8e0d43d4d3b990af387073bb7ce775e5e6b0e19af001f63cd37d2133cbf3b080",
       "lineRange": [
-        468,
-        492
+        465,
+        489
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -10660,8 +10794,8 @@
       "isAsync": false,
       "hash": "aeba749247717e0d9cc3194e24ab8d6f7f5eefe77814304f0a31d6055cbd2847",
       "lineRange": [
-        26,
-        108
+        25,
+        107
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -10674,8 +10808,8 @@
       "isAsync": false,
       "hash": "43b4a52b8aeea746bf8a1694b7dac3d11ed16399e02738178fb05afc71165a83",
       "lineRange": [
-        108,
-        198
+        107,
+        197
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -10702,8 +10836,8 @@
       "isAsync": false,
       "hash": "0370c883a939d0c21aba8ff7910cd2568bb4d3fbf505151117284e116cfe8304",
       "lineRange": [
-        198,
-        217
+        197,
+        216
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -10728,10 +10862,10 @@
       "kind": "function",
       "filePath": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts",
       "isAsync": false,
-      "hash": "aa293e79e0d1271e83bcd7809555721889292084366bf9e2f47eefbac1b0579b",
+      "hash": "49f29d3aaca2173cb9baf6784bb6cf4ff6e1b9ca5f89f9577b05850ccd0fd510",
       "lineRange": [
-        217,
-        285
+        216,
+        318
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -10769,6 +10903,35 @@
         }
       ],
       "isExported": true
+    },
+    {
+      "id": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:getValidTerminalPoint",
+      "name": "getValidTerminalPoint",
+      "kind": "function",
+      "filePath": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts",
+      "isAsync": false,
+      "hash": "00396eec04febfced2c0baaa2074c23913950b72f8f0f507dda9aa1d4b26376a",
+      "lineRange": [
+        318,
+        325
+      ],
+      "hasJsDoc": false,
+      "isTrivial": true,
+      "structuredParams": [
+        {
+          "name": "point",
+          "type": "{ x: number; y: number }",
+          "isOptional": false,
+          "isRest": false
+        },
+        {
+          "name": "fallback",
+          "type": "{ x: number; y: number }",
+          "isOptional": false,
+          "isRest": false
+        }
+      ],
+      "isExported": false
     },
     {
       "id": "packages/tldraw/src/lib/canvas/TldrawCropHandles.tsx:TldrawCropHandles",
@@ -15440,10 +15603,10 @@
       "kind": "function",
       "filePath": "packages/tldraw/src/lib/shapes/draw/getPath.ts",
       "isAsync": false,
-      "hash": "83fa4ccf069944895c424b076c9572d8752134ac8868bf8f41e3c0195e558b24",
+      "hash": "802056225fe7fbbea47afa5449886ebc258ad59b08c49999b8f6b6f983374c58",
       "lineRange": [
         103,
-        130
+        142
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -15483,8 +15646,8 @@
       "isAsync": false,
       "hash": "dea74c41576d1954682ef1ee8882a914bdd25570fa9bdd31f951347ac92589f5",
       "lineRange": [
-        130,
-        141
+        142,
+        153
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -15519,8 +15682,8 @@
       "isAsync": false,
       "hash": "def2aa2c40b3b4cd5c1ccc6ea31229909d862701046d47f4870fbe5e02419449",
       "lineRange": [
-        141,
-        154
+        153,
+        166
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -19463,10 +19626,10 @@
       "kind": "function",
       "filePath": "packages/tldraw/src/lib/shapes/shared/useEditablePlainText.ts",
       "isAsync": false,
-      "hash": "53fc439d72b5977f542f97686c0b52386cbe33c10ca0109c701138f7508c55a4",
+      "hash": "5bfe780fcb8ea633f7a3b7e453a9b5dfc49958b9f6ca425a13f0065a246e36a9",
       "lineRange": [
         114,
-        172
+        178
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -24514,10 +24677,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/menu-items.tsx",
       "isAsync": false,
-      "hash": "e26859bc030e9aa824771d6a0c94e872f72b90b21e1c2053b052183d51a0c929",
+      "hash": "643af63e6841efde7bd6e15e15bdcafd0b24d68242658d5a332951b7389928df",
       "lineRange": [
         229,
-        253
+        256
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24530,8 +24693,8 @@
       "isAsync": false,
       "hash": "54d7fa9c06b8fa15cb11491d3ddc501b2fbc97d836b3b58754a7dca4182c4d57",
       "lineRange": [
-        253,
-        266
+        256,
+        269
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24544,8 +24707,8 @@
       "isAsync": false,
       "hash": "07333a551a5cbf875a1d14833963bcbbf71991ca39ea241788e0aae0c5463d74",
       "lineRange": [
-        266,
-        273
+        269,
+        276
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24558,8 +24721,8 @@
       "isAsync": false,
       "hash": "5152da4d432691744904d3ddffa9737138403fed5c2eaa7d0699e8f6949fb055",
       "lineRange": [
-        273,
-        280
+        276,
+        283
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24572,8 +24735,8 @@
       "isAsync": false,
       "hash": "fcbbb43306f3da64744341a07e0ed926db9f40736f604d4cd1eff63ea492736d",
       "lineRange": [
-        280,
-        305
+        283,
+        308
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24586,8 +24749,8 @@
       "isAsync": false,
       "hash": "7051c6b3baa1609d4d7130cd5958c96a6d36a485e12bfeb82149e567c1afb69a",
       "lineRange": [
-        305,
-        313
+        308,
+        316
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24600,8 +24763,8 @@
       "isAsync": false,
       "hash": "a8d69f9779fc9e67a992a5f6de874d87870b01423f5a8025a1c37fb6e3c7f60e",
       "lineRange": [
-        313,
-        328
+        316,
+        331
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24614,8 +24777,8 @@
       "isAsync": false,
       "hash": "79452a8f33b18f8b970715d60fe532291863762d89ed3de96b9090064e5e7412",
       "lineRange": [
-        328,
-        352
+        331,
+        355
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24628,8 +24791,8 @@
       "isAsync": false,
       "hash": "cfa1cbd767c17a149bbfc136da657dfb7f6e1bc0bf2f91f2c97c0f608d97d22c",
       "lineRange": [
-        352,
-        391
+        355,
+        394
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24642,8 +24805,8 @@
       "isAsync": false,
       "hash": "203e6d0be000f30b8375694531d616566a8c4b24ce41c834bcb3cdf5cdca498c",
       "lineRange": [
-        391,
-        403
+        394,
+        406
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -24656,8 +24819,8 @@
       "isAsync": false,
       "hash": "a839dff799f0cd334ae79515dcebedc5f7cdf1011cd4f459dec2e2936c105265",
       "lineRange": [
-        403,
-        417
+        406,
+        420
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -24670,8 +24833,8 @@
       "isAsync": false,
       "hash": "c5d370481aa1e7eca2f0336392b619e9d9d0bfbc1f7669f250f64743317bbc08",
       "lineRange": [
-        417,
-        436
+        420,
+        439
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24684,8 +24847,8 @@
       "isAsync": false,
       "hash": "160bb3602772f2fc79da838e6806aeacaa5e27d4c9069df3743273e8320ee88f",
       "lineRange": [
-        436,
-        492
+        439,
+        495
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24698,8 +24861,8 @@
       "isAsync": false,
       "hash": "34b5b6754414d004e02672ff138b9c07c301daec337a3d0f7dd76055567610d8",
       "lineRange": [
-        492,
-        515
+        495,
+        518
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24712,8 +24875,8 @@
       "isAsync": false,
       "hash": "7fea61ed7469c75eff18ef1ec2b6c7a6f4fab6a7b1955877a174433d3ead7cbe",
       "lineRange": [
-        515,
-        540
+        518,
+        543
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24726,8 +24889,8 @@
       "isAsync": false,
       "hash": "d4d8f207ac153ed09f0cf01dea8bb58b0f94310f08f72cfcf26abcaf85537103",
       "lineRange": [
-        540,
-        550
+        543,
+        553
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24740,8 +24903,8 @@
       "isAsync": false,
       "hash": "71a068738aa875a3ed40a10927b9ce1cd8c9b420eaad1fa34afb49741c82cdc6",
       "lineRange": [
-        550,
-        558
+        553,
+        561
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24754,8 +24917,8 @@
       "isAsync": false,
       "hash": "54701411f26cd07f696939684b091654e6085ae69021e5d2e1ba52eea86fefdc",
       "lineRange": [
-        558,
-        566
+        561,
+        569
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24768,8 +24931,8 @@
       "isAsync": false,
       "hash": "1ce0364cccfa2c35a50357bd967feb677daf57aa433e7cbafcf37870ce995cc5",
       "lineRange": [
-        566,
-        574
+        569,
+        577
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24782,8 +24945,8 @@
       "isAsync": false,
       "hash": "3d2f71d10bd65ecde45bb2f884099fd9638d981e0a7b2e6c29121f1f4da67a20",
       "lineRange": [
-        574,
-        582
+        577,
+        585
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24796,8 +24959,8 @@
       "isAsync": false,
       "hash": "2e7f855891b35ce737ec65759c84dc82f4163974f4247c11b13d7f1fb68d6137",
       "lineRange": [
-        582,
-        590
+        585,
+        593
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24810,8 +24973,8 @@
       "isAsync": false,
       "hash": "6f87bcb5dd0d954f693a650240059e3889f30dac6f34fdd1632b4077ff023da6",
       "lineRange": [
-        590,
-        605
+        593,
+        608
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24824,8 +24987,8 @@
       "isAsync": false,
       "hash": "d8ef77ebdc5a36339cded454d64c61e69477b45a7bce69209a771ba5326d918b",
       "lineRange": [
-        605,
-        630
+        608,
+        633
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24838,8 +25001,8 @@
       "isAsync": false,
       "hash": "bc76b991d2d5d3c6117127b574e6849adcc5a079ce70be0a048e9a61b1b3a63e",
       "lineRange": [
-        630,
-        643
+        633,
+        646
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24852,8 +25015,8 @@
       "isAsync": false,
       "hash": "17128d62a3cb4abc0fb49f937668d4bd68137679c08d2249485686e563365ff4",
       "lineRange": [
-        643,
-        660
+        646,
+        663
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24866,8 +25029,8 @@
       "isAsync": false,
       "hash": "7036214f01cdab85895213ca0c9ab6bc191f7caadbb27951a10c42245a7f0200",
       "lineRange": [
-        660,
-        670
+        663,
+        673
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24880,8 +25043,8 @@
       "isAsync": false,
       "hash": "5bdb29e98de95c8125b3711ba22ce27e5f6c375a05cb5e53c1d7ca5000449546",
       "lineRange": [
-        670,
-        677
+        673,
+        680
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24894,8 +25057,8 @@
       "isAsync": false,
       "hash": "3b0b2fa51e5df12f7ebf5fa52f9c8e90a1db836a9388bf99c483e769c9079fe9",
       "lineRange": [
-        677,
-        694
+        680,
+        697
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24908,8 +25071,8 @@
       "isAsync": false,
       "hash": "9f6ef3ab2e8d6f4c03976c439fa70c3151118d4513f476ac5ce75607ecb78ebe",
       "lineRange": [
-        694,
-        706
+        697,
+        709
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24922,8 +25085,8 @@
       "isAsync": false,
       "hash": "0b357bca0bcad34cd85906d325318a2d7c4cb6e8c3287c56982a58d7bf7e78fe",
       "lineRange": [
-        706,
-        715
+        709,
+        718
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24936,8 +25099,8 @@
       "isAsync": false,
       "hash": "2547dfc5ab612c5b6ea262abed5e0f81f5b98a6dec0ac82083fda75d884e6e93",
       "lineRange": [
-        715,
-        731
+        718,
+        734
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -27252,10 +27415,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/context/actions.tsx",
       "isAsync": true,
-      "hash": "2f9b83c4c7031b2dfbeddd0465446a2a4e38406fba766342ed257706c70cc8ae",
+      "hash": "0b1f441b3e7075f2ec700ed69a756a529ee917806df1033f990bcf9ae9f89620",
       "lineRange": [
         96,
-        1823
+        1839
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -27282,8 +27445,8 @@
       "isAsync": false,
       "hash": "f44c9c25b2ec3ba223db7d2ad77c38e3dc87e20529abbca284f60e81bedce79b",
       "lineRange": [
-        1823,
-        1834
+        1839,
+        1850
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -27296,8 +27459,8 @@
       "isAsync": false,
       "hash": "f7a4f737e6e14569ce8048ecb4ed2ba3b72a2cb124ead35577c7227d65ad4681",
       "lineRange": [
-        1834,
-        1838
+        1850,
+        1854
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -27319,8 +27482,8 @@
       "isAsync": false,
       "hash": "3dc6d7a2d2d632a1c905fd71b826dfa7240e126c856454019154a6410fe9436f",
       "lineRange": [
-        1838,
-        1849
+        1854,
+        1865
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -29690,10 +29853,10 @@
       "kind": "function",
       "filePath": "packages/tldraw/src/lib/utils/export/copyAs.ts",
       "isAsync": true,
-      "hash": "78ca3a878e30c4e84d41646a5eea3b9e36339b61e618cb0aa506735e980f349e",
+      "hash": "1d7deac45b0cf15ee4f85235491b55501a33a7d0463a2facdb3dd82fcb51c05c",
       "lineRange": [
         22,
-        70
+        82
       ],
       "hasJsDoc": true,
       "description": "Copy the given shapes to the clipboard.",
@@ -29731,8 +29894,8 @@
       "isAsync": true,
       "hash": "9b7ae1fe796fbbbd155880ce12100126c56c4d12a26000eafeeb6a1e17bb41d1",
       "lineRange": [
-        70,
-        74
+        82,
+        86
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -34877,25 +35040,51 @@
       "order": 53
     },
     {
-      "id": "packages/editor/src/lib/editor/Editor.ts:Editor->packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImage",
+      "id": "packages/editor/src/lib/editor/Editor.ts:Editor->packages/editor/src/lib/exports/getSvgAsImage.ts:trimSvgToContent",
       "source": "packages/editor/src/lib/editor/Editor.ts:Editor",
-      "target": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImage",
+      "target": "packages/editor/src/lib/exports/getSvgAsImage.ts:trimSvgToContent",
       "type": "conditional-call",
       "conditions": [
         {
           "condition": "else (!result)",
           "branch": "else",
-          "branchGroup": "branch:9614"
+          "branchGroup": "branch:9615"
+        },
+        {
+          "condition": "switch (withDefaults.format): case 'svg'",
+          "branch": "case 'svg'",
+          "branchGroup": "branch:9616"
+        },
+        {
+          "condition": "if (result.trimPadding > 0)",
+          "branch": "then",
+          "branchGroup": "branch:9622"
+        }
+      ],
+      "label": "else (!result) → switch (withDefaults.format): case 'svg' → if (result.trimPadding > 0)",
+      "isAsync": true,
+      "order": 54
+    },
+    {
+      "id": "packages/editor/src/lib/editor/Editor.ts:Editor->packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImageWithOptions",
+      "source": "packages/editor/src/lib/editor/Editor.ts:Editor",
+      "target": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImageWithOptions",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!result)",
+          "branch": "else",
+          "branchGroup": "branch:9615"
         },
         {
           "condition": "switch (withDefaults.format): case 'jpeg' | 'png' | 'webp'",
           "branch": "case 'jpeg' | 'png' | 'webp'",
-          "branchGroup": "branch:9615"
+          "branchGroup": "branch:9616"
         }
       ],
       "label": "else (!result) → switch (withDefaults.format): case 'jpeg' | 'png' | 'webp'",
       "isAsync": true,
-      "order": 54
+      "order": 55
     },
     {
       "id": "packages/editor/src/lib/editor/Editor.ts:Editor->packages/editor/src/lib/config/TLEditorSnapshot.ts:getSnapshot",
@@ -34903,7 +35092,7 @@
       "target": "packages/editor/src/lib/config/TLEditorSnapshot.ts:getSnapshot",
       "type": "direct-call",
       "isAsync": false,
-      "order": 55
+      "order": 56
     },
     {
       "id": "packages/editor/src/lib/editor/Editor.ts:Editor->packages/editor/src/lib/config/TLEditorSnapshot.ts:loadSnapshot",
@@ -34911,7 +35100,7 @@
       "target": "packages/editor/src/lib/config/TLEditorSnapshot.ts:loadSnapshot",
       "type": "direct-call",
       "isAsync": false,
-      "order": 56
+      "order": 57
     },
     {
       "id": "packages/editor/src/lib/editor/Editor.ts:Editor->packages/editor/src/lib/utils/deepLinks.ts:parseDeepLinkString",
@@ -34922,17 +35111,17 @@
         {
           "condition": "else (opts && 'type' in opts)",
           "branch": "else",
-          "branchGroup": "branch:9937"
+          "branchGroup": "branch:9953"
         },
         {
           "condition": "else (!deepLinkString)",
           "branch": "else",
-          "branchGroup": "branch:9944"
+          "branchGroup": "branch:9960"
         }
       ],
       "label": "else (opts && 'type' in opts) → else (!deepLinkString)",
       "isAsync": false,
-      "order": 57
+      "order": 58
     },
     {
       "id": "packages/editor/src/lib/editor/Editor.ts:Editor->packages/editor/src/lib/utils/deepLinks.ts:createDeepLinkString",
@@ -34940,7 +35129,7 @@
       "target": "packages/editor/src/lib/utils/deepLinks.ts:createDeepLinkString",
       "type": "direct-call",
       "isAsync": false,
-      "order": 58
+      "order": 59
     },
     {
       "id": "packages/editor/src/lib/editor/Editor.ts:Editor->packages/editor/src/lib/editor/managers/ClickManager/ClickManager.ts:ClickManager",
@@ -34948,7 +35137,7 @@
       "target": "packages/editor/src/lib/editor/managers/ClickManager/ClickManager.ts:ClickManager",
       "type": "direct-call",
       "isAsync": false,
-      "order": 59
+      "order": 60
     },
     {
       "id": "packages/editor/src/lib/editor/Editor.ts:pushShapeWithDescendants->packages/editor/src/lib/editor/Editor.ts:pushShapeWithDescendants",
@@ -34959,7 +35148,7 @@
         {
           "condition": "else (!shape)",
           "branch": "else",
-          "branchGroup": "branch:10882"
+          "branchGroup": "branch:10898"
         }
       ],
       "label": "else (!shape)",
@@ -36801,12 +36990,125 @@
       "order": 0
     },
     {
-      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImage->packages/editor/src/lib/utils/browserCanvasMaxSize.ts:clampToBrowserMaxCanvasSize",
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImage->packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImageWithOptions",
       "source": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImage",
+      "target": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImageWithOptions",
+      "type": "direct-call",
+      "isAsync": true,
+      "order": 0
+    },
+    {
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImageWithOptions->packages/editor/src/lib/utils/browserCanvasMaxSize.ts:clampToBrowserMaxCanvasSize",
+      "source": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImageWithOptions",
       "target": "packages/editor/src/lib/utils/browserCanvasMaxSize.ts:clampToBrowserMaxCanvasSize",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (width <= 0 || height <= 0)",
+          "branch": "else",
+          "branchGroup": "branch:33"
+        }
+      ],
+      "label": "else (width <= 0 || height <= 0)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImageWithOptions->packages/editor/src/lib/exports/getSvgAsImage.ts:renderSvgToCanvas",
+      "source": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImageWithOptions",
+      "target": "packages/editor/src/lib/exports/getSvgAsImage.ts:renderSvgToCanvas",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (width <= 0 || height <= 0)",
+          "branch": "else",
+          "branchGroup": "branch:33"
+        }
+      ],
+      "label": "else (width <= 0 || height <= 0)",
+      "isAsync": true,
+      "order": 1
+    },
+    {
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImageWithOptions->packages/editor/src/lib/exports/getSvgAsImage.ts:trimExtraPadding",
+      "source": "packages/editor/src/lib/exports/getSvgAsImage.ts:getSvgAsImageWithOptions",
+      "target": "packages/editor/src/lib/exports/getSvgAsImage.ts:trimExtraPadding",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (width <= 0 || height <= 0)",
+          "branch": "else",
+          "branchGroup": "branch:33"
+        },
+        {
+          "condition": "else (!canvas)",
+          "branch": "else",
+          "branchGroup": "branch:45"
+        },
+        {
+          "condition": "if (trimPadding > 0)",
+          "branch": "then",
+          "branchGroup": "branch:50"
+        }
+      ],
+      "label": "else (width <= 0 || height <= 0) → else (!canvas) → if (trimPadding > 0)",
+      "isAsync": false,
+      "order": 2
+    },
+    {
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:trimExtraPadding->packages/editor/src/lib/exports/getSvgAsImage.ts:measureContentBounds",
+      "source": "packages/editor/src/lib/exports/getSvgAsImage.ts:trimExtraPadding",
+      "target": "packages/editor/src/lib/exports/getSvgAsImage.ts:measureContentBounds",
       "type": "direct-call",
       "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:trimSvgToContent->packages/editor/src/lib/exports/getSvgAsImage.ts:renderSvgToCanvas",
+      "source": "packages/editor/src/lib/exports/getSvgAsImage.ts:trimSvgToContent",
+      "target": "packages/editor/src/lib/exports/getSvgAsImage.ts:renderSvgToCanvas",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (trimPadding <= 0)",
+          "branch": "else",
+          "branchGroup": "branch:299"
+        },
+        {
+          "condition": "else (canvasWidth <= 0 || canvasHeight <= 0)",
+          "branch": "else",
+          "branchGroup": "branch:305"
+        }
+      ],
+      "label": "else (trimPadding <= 0) → else (canvasWidth <= 0 || canvasHeight <= 0)",
+      "isAsync": true,
+      "order": 0
+    },
+    {
+      "id": "packages/editor/src/lib/exports/getSvgAsImage.ts:trimSvgToContent->packages/editor/src/lib/exports/getSvgAsImage.ts:measureContentBounds",
+      "source": "packages/editor/src/lib/exports/getSvgAsImage.ts:trimSvgToContent",
+      "target": "packages/editor/src/lib/exports/getSvgAsImage.ts:measureContentBounds",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (trimPadding <= 0)",
+          "branch": "else",
+          "branchGroup": "branch:299"
+        },
+        {
+          "condition": "else (canvasWidth <= 0 || canvasHeight <= 0)",
+          "branch": "else",
+          "branchGroup": "branch:305"
+        },
+        {
+          "condition": "else (!canvas)",
+          "branch": "else",
+          "branchGroup": "branch:309"
+        }
+      ],
+      "label": "else (trimPadding <= 0) → else (canvasWidth <= 0 || canvasHeight <= 0) → else (!canvas)",
+      "isAsync": false,
+      "order": 1
     },
     {
       "id": "packages/editor/src/lib/exports/getSvgJsx.tsx:getSvgJsx->packages/editor/src/lib/exports/getSvgJsx.tsx:getExportDefaultBounds",
@@ -36822,7 +37124,7 @@
         {
           "condition": "else (opts.bounds)",
           "branch": "else",
-          "branchGroup": "branch:61"
+          "branchGroup": "branch:68"
         }
       ],
       "label": "else (!window.document) → else (opts.bounds)",
@@ -36843,7 +37145,7 @@
         {
           "condition": "else (!bbox)",
           "branch": "else",
-          "branchGroup": "branch:66"
+          "branchGroup": "branch:81"
         }
       ],
       "label": "else (!window.document) → else (!bbox)",
@@ -36864,7 +37166,7 @@
         {
           "condition": "else (!bbox)",
           "branch": "else",
-          "branchGroup": "branch:66"
+          "branchGroup": "branch:81"
         }
       ],
       "label": "else (!window.document) → else (!bbox)",
@@ -36896,22 +37198,22 @@
         {
           "condition": "else (didRenderRef.current)",
           "branch": "else",
-          "branchGroup": "branch:255"
+          "branchGroup": "branch:277"
         },
         {
           "condition": "else (id === singleFrameShapeId)",
           "branch": "else",
-          "branchGroup": "branch:265"
+          "branchGroup": "branch:287"
         },
         {
           "condition": "else (editor.isShapeOfType(shape, 'group'))",
           "branch": "else",
-          "branchGroup": "branch:269"
+          "branchGroup": "branch:291"
         },
         {
           "condition": "if (util.toSvg || util.toBackgroundSvg)",
           "branch": "then",
-          "branchGroup": "branch:274"
+          "branchGroup": "branch:296"
         }
       ],
       "label": "else (didRenderRef.current) → else (id === singleFrameShapeId) → else (editor.isShapeOfType(shape, 'group')) → if (util.toSvg || util.toBackgroundSvg)",
@@ -36927,22 +37229,22 @@
         {
           "condition": "else (didRenderRef.current)",
           "branch": "else",
-          "branchGroup": "branch:255"
+          "branchGroup": "branch:277"
         },
         {
           "condition": "else (id === singleFrameShapeId)",
           "branch": "else",
-          "branchGroup": "branch:265"
+          "branchGroup": "branch:287"
         },
         {
           "condition": "else (editor.isShapeOfType(shape, 'group'))",
           "branch": "else",
-          "branchGroup": "branch:269"
+          "branchGroup": "branch:291"
         },
         {
           "condition": "else (util.toSvg || util.toBackgroundSvg)",
           "branch": "else",
-          "branchGroup": "branch:274"
+          "branchGroup": "branch:296"
         }
       ],
       "label": "else (didRenderRef.current) → else (id === singleFrameShapeId) → else (editor.isShapeOfType(shape, 'group')) → else (util.toSvg || util.toBackgroundSvg)",
@@ -36958,27 +37260,27 @@
         {
           "condition": "else (didRenderRef.current)",
           "branch": "else",
-          "branchGroup": "branch:255"
+          "branchGroup": "branch:277"
         },
         {
           "condition": "else (id === singleFrameShapeId)",
           "branch": "else",
-          "branchGroup": "branch:265"
+          "branchGroup": "branch:287"
         },
         {
           "condition": "else (editor.isShapeOfType(shape, 'group'))",
           "branch": "else",
-          "branchGroup": "branch:269"
+          "branchGroup": "branch:291"
         },
         {
           "condition": "else (util.toSvg || util.toBackgroundSvg)",
           "branch": "else",
-          "branchGroup": "branch:274"
+          "branchGroup": "branch:296"
         },
         {
           "condition": "if (util.backgroundComponent)",
           "branch": "then",
-          "branchGroup": "branch:360"
+          "branchGroup": "branch:382"
         }
       ],
       "label": "else (didRenderRef.current) → else (id === singleFrameShapeId) → else (editor.isShapeOfType(shape, 'group')) → else (util.toSvg || util.toBackgroundSvg) → if (util.backgroundComponent)",
@@ -39167,14 +39469,6 @@
       "order": 2
     },
     {
-      "id": "packages/editor/src/lib/primitives/Vec.ts:Vec->packages/editor/src/lib/primitives/Vec.ts:ease",
-      "source": "packages/editor/src/lib/primitives/Vec.ts:Vec",
-      "target": "packages/editor/src/lib/primitives/Vec.ts:ease",
-      "type": "direct-call",
-      "isAsync": false,
-      "order": 3
-    },
-    {
       "id": "packages/editor/src/lib/primitives/geometry/Arc2d.ts:Arc2d->packages/editor/src/lib/primitives/geometry/Geometry2d.ts:Geometry2d",
       "source": "packages/editor/src/lib/primitives/geometry/Arc2d.ts:Arc2d",
       "target": "packages/editor/src/lib/primitives/geometry/Geometry2d.ts:Geometry2d",
@@ -39207,12 +39501,38 @@
       "order": 2
     },
     {
+      "id": "packages/editor/src/lib/primitives/geometry/Arc2d.ts:Arc2d->packages/editor/src/lib/primitives/Vec.ts:Vec",
+      "source": "packages/editor/src/lib/primitives/geometry/Arc2d.ts:Arc2d",
+      "target": "packages/editor/src/lib/primitives/Vec.ts:Vec",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (t <= 0)",
+          "branch": "else",
+          "branchGroup": "branch:55"
+        },
+        {
+          "condition": "else (t >= 1)",
+          "branch": "else",
+          "branchGroup": "branch:56"
+        },
+        {
+          "condition": "else (len === 0)",
+          "branch": "else",
+          "branchGroup": "branch:62"
+        }
+      ],
+      "label": "else (t <= 0) → else (t >= 1) → else (len === 0)",
+      "isAsync": false,
+      "order": 3
+    },
+    {
       "id": "packages/editor/src/lib/primitives/geometry/Arc2d.ts:Arc2d->packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentCircle",
       "source": "packages/editor/src/lib/primitives/geometry/Arc2d.ts:Arc2d",
       "target": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentCircle",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/editor/src/lib/primitives/geometry/Arc2d.ts:Arc2d->packages/editor/src/lib/primitives/geometry/geometry-constants.ts:getVerticesCountForArcLength",
@@ -39220,7 +39540,7 @@
       "target": "packages/editor/src/lib/primitives/geometry/geometry-constants.ts:getVerticesCountForArcLength",
       "type": "direct-call",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "packages/editor/src/lib/primitives/geometry/Arc2d.ts:Arc2d->packages/editor/src/lib/primitives/utils.ts:getPointOnCircle",
@@ -39228,7 +39548,7 @@
       "target": "packages/editor/src/lib/primitives/utils.ts:getPointOnCircle",
       "type": "direct-call",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "packages/editor/src/lib/primitives/geometry/Circle2d.ts:Circle2d->packages/editor/src/lib/primitives/geometry/Geometry2d.ts:Geometry2d",
@@ -39375,37 +39695,22 @@
       "type": "conditional-call",
       "conditions": [
         {
-          "condition": "else (d.len() === 0)",
+          "condition": "else (len2 === 0)",
           "branch": "else",
           "branchGroup": "branch:32"
         },
         {
-          "condition": "else (l === 0)",
-          "branch": "else",
-          "branchGroup": "branch:33"
-        },
-        {
-          "condition": "else (cx < Math.min(start.x, end.x))",
+          "condition": "else (t <= 0)",
           "branch": "else",
           "branchGroup": "branch:36"
         },
         {
-          "condition": "else (cx > Math.max(start.x, end.x))",
+          "condition": "else (t >= 1)",
           "branch": "else",
           "branchGroup": "branch:37"
-        },
-        {
-          "condition": "else (cy < Math.min(start.y, end.y))",
-          "branch": "else",
-          "branchGroup": "branch:39"
-        },
-        {
-          "condition": "else (cy > Math.max(start.y, end.y))",
-          "branch": "else",
-          "branchGroup": "branch:40"
         }
       ],
-      "label": "else (d.len() === 0) → else (l === 0) → else (cx < Math.min(start.x, end.x)) → else (cx > Math.max(start.x, end.x)) → else (cy < Math.min(start.y, end.y)) → else (cy > Math.max(start.y, end.y))",
+      "label": "else (len2 === 0) → else (t <= 0) → else (t >= 1)",
       "isAsync": false,
       "order": 1
     },
@@ -39458,12 +39763,28 @@
       "order": 4
     },
     {
+      "id": "packages/editor/src/lib/primitives/geometry/Ellipse2d.ts:Ellipse2d->packages/editor/src/lib/primitives/utils.ts:pointInPolygon",
+      "source": "packages/editor/src/lib/primitives/geometry/Ellipse2d.ts:Ellipse2d",
+      "target": "packages/editor/src/lib/primitives/utils.ts:pointInPolygon",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "this.isClosed && (this.isFilled || hitInside) &&",
+          "branch": "&&",
+          "branchGroup": "branch:98"
+        }
+      ],
+      "label": "this.isClosed && (this.isFilled || hitInside) &&",
+      "isAsync": false,
+      "order": 5
+    },
+    {
       "id": "packages/editor/src/lib/primitives/geometry/Ellipse2d.ts:Ellipse2d->packages/editor/src/lib/primitives/Box.ts:Box",
       "source": "packages/editor/src/lib/primitives/geometry/Ellipse2d.ts:Ellipse2d",
       "target": "packages/editor/src/lib/primitives/Box.ts:Box",
       "type": "direct-call",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "packages/editor/src/lib/primitives/geometry/Ellipse2d.ts:Ellipse2d->packages/editor/src/lib/primitives/utils.ts:perimeterOfEllipse",
@@ -39471,7 +39792,7 @@
       "target": "packages/editor/src/lib/primitives/utils.ts:perimeterOfEllipse",
       "type": "direct-call",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "packages/editor/src/lib/primitives/geometry/Geometry2d.ts:Geometry2d->packages/editor/src/lib/primitives/utils.ts:pointInPolygon",
@@ -39876,7 +40197,7 @@
         {
           "condition": "if (!this._segments)",
           "branch": "then",
-          "branchGroup": "branch:20"
+          "branchGroup": "branch:21"
         }
       ],
       "label": "if (!this._segments)",
@@ -39892,17 +40213,41 @@
         {
           "condition": "if (!this._segments)",
           "branch": "then",
-          "branchGroup": "branch:20"
+          "branchGroup": "branch:21"
         },
         {
           "condition": "if (this.isClosed)",
           "branch": "then",
-          "branchGroup": "branch:28"
+          "branchGroup": "branch:29"
         }
       ],
       "label": "if (!this._segments) → if (this.isClosed)",
       "isAsync": false,
       "order": 2
+    },
+    {
+      "id": "packages/editor/src/lib/primitives/geometry/Polyline2d.ts:Polyline2d->packages/editor/src/lib/primitives/Vec.ts:Vec",
+      "source": "packages/editor/src/lib/primitives/geometry/Polyline2d.ts:Polyline2d",
+      "target": "packages/editor/src/lib/primitives/Vec.ts:Vec",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 3
+    },
+    {
+      "id": "packages/editor/src/lib/primitives/geometry/Polyline2d.ts:Polyline2d->packages/editor/src/lib/primitives/utils.ts:pointInPolygon",
+      "source": "packages/editor/src/lib/primitives/geometry/Polyline2d.ts:Polyline2d",
+      "target": "packages/editor/src/lib/primitives/utils.ts:pointInPolygon",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "this.isClosed && (this.isFilled || hitInside) &&",
+          "branch": "&&",
+          "branchGroup": "branch:103"
+        }
+      ],
+      "label": "this.isClosed && (this.isFilled || hitInside) &&",
+      "isAsync": false,
+      "order": 4
     },
     {
       "id": "packages/editor/src/lib/primitives/geometry/Rectangle2d.ts:Rectangle2d->packages/editor/src/lib/primitives/geometry/Polygon2d.ts:Polygon2d",
@@ -39969,108 +40314,106 @@
       "order": 3
     },
     {
+      "id": "packages/editor/src/lib/primitives/geometry/Stadium2d.ts:Stadium2d->packages/editor/src/lib/primitives/utils.ts:pointInPolygon",
+      "source": "packages/editor/src/lib/primitives/geometry/Stadium2d.ts:Stadium2d",
+      "target": "packages/editor/src/lib/primitives/utils.ts:pointInPolygon",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "this.isClosed && (this.isFilled || hitInside) &&",
+          "branch": "&&",
+          "branchGroup": "branch:92"
+        }
+      ],
+      "label": "this.isClosed && (this.isFilled || hitInside) &&",
+      "isAsync": false,
+      "order": 4
+    },
+    {
       "id": "packages/editor/src/lib/primitives/geometry/Stadium2d.ts:Stadium2d->packages/editor/src/lib/primitives/Box.ts:Box",
       "source": "packages/editor/src/lib/primitives/geometry/Stadium2d.ts:Stadium2d",
       "target": "packages/editor/src/lib/primitives/Box.ts:Box",
       "type": "direct-call",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
-      "id": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentLineSegment->packages/editor/src/lib/primitives/utils.ts:approximately",
+      "id": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentLineSegment->packages/editor/src/lib/primitives/Vec.ts:Vec",
       "source": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentLineSegment",
-      "target": "packages/editor/src/lib/primitives/utils.ts:approximately",
-      "type": "direct-call",
+      "target": "packages/editor/src/lib/primitives/Vec.ts:Vec",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (Math.abs(ua_t) <= precision || Math.abs(ub_t) <= precision)",
+          "branch": "else",
+          "branchGroup": "branch:30"
+        },
+        {
+          "condition": "else (Math.abs(u_b) <= precision)",
+          "branch": "else",
+          "branchGroup": "branch:32"
+        },
+        {
+          "condition": "if (ua >= -precision && ua <= 1 + precision && ub >= -precision )",
+          "branch": "then",
+          "branchGroup": "branch:37"
+        }
+      ],
+      "label": "else (Math.abs(ua_t) <= precision || Math.abs(ub_t) <= precision) → else (Math.abs(u_b) <= precision) → if (ua >= -precision && ua <= 1 + precision && ub >= -precision )",
       "isAsync": false,
       "order": 0
     },
     {
-      "id": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentLineSegment->packages/editor/src/lib/primitives/utils.ts:approximatelyLte",
-      "source": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentLineSegment",
-      "target": "packages/editor/src/lib/primitives/utils.ts:approximatelyLte",
+      "id": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentCircle->packages/editor/src/lib/primitives/Vec.ts:Vec",
+      "source": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentCircle",
+      "target": "packages/editor/src/lib/primitives/Vec.ts:Vec",
       "type": "conditional-call",
       "conditions": [
         {
-          "condition": "else (approximately(ua_t, 0, precision) || approximately(ub_t, 0, )",
+          "condition": "else (deter <= 0)",
           "branch": "else",
-          "branchGroup": "branch:30"
+          "branchGroup": "branch:63"
         },
         {
-          "condition": "else (approximately(u_b, 0, precision))",
+          "condition": "else ((u1 < 0 || u1 > 1) && (u2 < 0 || u2 > 1))",
           "branch": "else",
-          "branchGroup": "branch:32"
+          "branchGroup": "branch:69"
         },
         {
-          "condition": "if (u_b !== 0)",
+          "condition": "if (u1 >= 0 && u1 <= 1)",
           "branch": "then",
-          "branchGroup": "branch:34"
+          "branchGroup": "branch:75"
         }
       ],
-      "label": "else (approximately(ua_t, 0, precision) || approximately(ub_t, 0, ) → else (approximately(u_b, 0, precision)) → if (u_b !== 0)",
+      "label": "else (deter <= 0) → else ((u1 < 0 || u1 > 1) && (u2 < 0 || u2 > 1)) → if (u1 >= 0 && u1 <= 1)",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentCircle->packages/editor/src/lib/primitives/Vec.ts:Vec::1",
+      "source": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentCircle",
+      "target": "packages/editor/src/lib/primitives/Vec.ts:Vec",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (deter <= 0)",
+          "branch": "else",
+          "branchGroup": "branch:63"
+        },
+        {
+          "condition": "else ((u1 < 0 || u1 > 1) && (u2 < 0 || u2 > 1))",
+          "branch": "else",
+          "branchGroup": "branch:69"
+        },
+        {
+          "condition": "if (u2 >= 0 && u2 <= 1)",
+          "branch": "then",
+          "branchGroup": "branch:77"
+        }
+      ],
+      "label": "else (deter <= 0) → else ((u1 < 0 || u1 > 1) && (u2 < 0 || u2 > 1)) → if (u2 >= 0 && u2 <= 1)",
       "isAsync": false,
       "order": 1
-    },
-    {
-      "id": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentLineSegment->packages/editor/src/lib/primitives/utils.ts:approximatelyLte::1",
-      "source": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentLineSegment",
-      "target": "packages/editor/src/lib/primitives/utils.ts:approximatelyLte",
-      "type": "conditional-call",
-      "conditions": [
-        {
-          "condition": "else (approximately(ua_t, 0, precision) || approximately(ub_t, 0, )",
-          "branch": "else",
-          "branchGroup": "branch:30"
-        },
-        {
-          "condition": "else (approximately(u_b, 0, precision))",
-          "branch": "else",
-          "branchGroup": "branch:32"
-        },
-        {
-          "condition": "if (u_b !== 0)",
-          "branch": "then",
-          "branchGroup": "branch:34"
-        },
-        {
-          "condition": "approximatelyLte(0, ua, precision) &&",
-          "branch": "&&",
-          "branchGroup": "branch:39"
-        }
-      ],
-      "label": "else (approximately(ua_t, 0, precision) || approximately(ub_t, 0, ) → else (approximately(u_b, 0, precision)) → if (u_b !== 0) → approximatelyLte(0, ua, precision) &&",
-      "isAsync": false,
-      "order": 2
-    },
-    {
-      "id": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentLineSegment->packages/editor/src/lib/primitives/utils.ts:approximatelyLte::2",
-      "source": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentLineSegment",
-      "target": "packages/editor/src/lib/primitives/utils.ts:approximatelyLte",
-      "type": "conditional-call",
-      "conditions": [
-        {
-          "condition": "else (approximately(ua_t, 0, precision) || approximately(ub_t, 0, )",
-          "branch": "else",
-          "branchGroup": "branch:30"
-        },
-        {
-          "condition": "else (approximately(u_b, 0, precision))",
-          "branch": "else",
-          "branchGroup": "branch:32"
-        },
-        {
-          "condition": "if (u_b !== 0)",
-          "branch": "then",
-          "branchGroup": "branch:34"
-        },
-        {
-          "condition": "approximatelyLte(0, ua, precision) &&\n\t\t\tapproximatelyLte(ua &&",
-          "branch": "&&",
-          "branchGroup": "branch:39"
-        }
-      ],
-      "label": "else (approximately(ua_t, 0, precision) || approximately(ub_t, 0, ) → else (approximately(u_b, 0, precision)) → if (u_b !== 0) → approximatelyLte(0, ua, precision) &&\n\t\t\tapproximatelyLte(ua &&",
-      "isAsync": false,
-      "order": 3
     },
     {
       "id": "packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentPolyline->packages/editor/src/lib/primitives/intersect.ts:intersectLineSegmentLineSegment",
@@ -40145,7 +40488,7 @@
         {
           "condition": "if (pointInPolygon(a, polygonB))",
           "branch": "then",
-          "branchGroup": "branch:258"
+          "branchGroup": "branch:251"
         }
       ],
       "label": "if (pointInPolygon(a, polygonB))",
@@ -40161,7 +40504,7 @@
         {
           "condition": "if (pointInPolygon(a, polygonA))",
           "branch": "then",
-          "branchGroup": "branch:268"
+          "branchGroup": "branch:261"
         }
       ],
       "label": "if (pointInPolygon(a, polygonA))",
@@ -40177,7 +40520,7 @@
         {
           "condition": "if (intersection !== null)",
           "branch": "then",
-          "branchGroup": "branch:285"
+          "branchGroup": "branch:278"
         }
       ],
       "label": "if (intersection !== null)",
@@ -40201,7 +40544,7 @@
         {
           "condition": "else (result.size === 0)",
           "branch": "else",
-          "branchGroup": "branch:294"
+          "branchGroup": "branch:287"
         }
       ],
       "label": "else (result.size === 0)",
@@ -40225,7 +40568,7 @@
         {
           "condition": "if (intersection !== null)",
           "branch": "then",
-          "branchGroup": "branch:329"
+          "branchGroup": "branch:322"
         }
       ],
       "label": "if (intersection !== null)",
@@ -40348,22 +40691,17 @@
           "branchGroup": "branch:324"
         },
         {
-          "condition": "else (Vec.Dist(A, a) + Vec.Dist(A, b) === Vec.Dist(a, b))",
-          "branch": "else",
-          "branchGroup": "branch:328"
-        },
-        {
           "condition": "if (a.y <= A.y)",
           "branch": "then",
-          "branchGroup": "branch:331"
+          "branchGroup": "branch:328"
         },
         {
           "condition": "b.y > A.y &&",
           "branch": "&&",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:331"
         }
       ],
-      "label": "else (a.x === A.x && a.y === A.y) → else (Vec.Dist(A, a) + Vec.Dist(A, b) === Vec.Dist(a, b)) → if (a.y <= A.y) → b.y > A.y &&",
+      "label": "else (a.x === A.x && a.y === A.y) → if (a.y <= A.y) → b.y > A.y &&",
       "isAsync": false,
       "order": 0
     },
@@ -40379,17 +40717,12 @@
           "branchGroup": "branch:324"
         },
         {
-          "condition": "else (Vec.Dist(A, a) + Vec.Dist(A, b) === Vec.Dist(a, b))",
-          "branch": "else",
-          "branchGroup": "branch:328"
-        },
-        {
           "condition": "b.y <= A.y &&",
           "branch": "&&",
-          "branchGroup": "branch:337"
+          "branchGroup": "branch:334"
         }
       ],
-      "label": "else (a.x === A.x && a.y === A.y) → else (Vec.Dist(A, a) + Vec.Dist(A, b) === Vec.Dist(a, b)) → b.y <= A.y &&",
+      "label": "else (a.x === A.x && a.y === A.y) → b.y <= A.y &&",
       "isAsync": false,
       "order": 1
     },
@@ -40402,7 +40735,7 @@
         {
           "condition": "if (direction < 0)",
           "branch": "then",
-          "branchGroup": "branch:378"
+          "branchGroup": "branch:375"
         }
       ],
       "label": "if (direction < 0)",
@@ -40418,7 +40751,7 @@
         {
           "condition": "else (direction < 0)",
           "branch": "else",
-          "branchGroup": "branch:378"
+          "branchGroup": "branch:375"
         }
       ],
       "label": "else (direction < 0)",
@@ -40442,7 +40775,7 @@
         {
           "condition": "else (!Number.isFinite(x) || !Number.isFinite(y))",
           "branch": "else",
-          "branchGroup": "branch:462"
+          "branchGroup": "branch:459"
         }
       ],
       "label": "else (!Number.isFinite(x) || !Number.isFinite(y))",
@@ -40458,7 +40791,7 @@
         {
           "condition": "else (center === null)",
           "branch": "else",
-          "branchGroup": "branch:476"
+          "branchGroup": "branch:473"
         }
       ],
       "label": "else (center === null)",
@@ -40474,7 +40807,7 @@
         {
           "condition": "else (center === null)",
           "branch": "else",
-          "branchGroup": "branch:476"
+          "branchGroup": "branch:473"
         }
       ],
       "label": "else (center === null)",
@@ -41420,7 +41753,7 @@
         {
           "condition": "else (!arrow)",
           "branch": "else",
-          "branchGroup": "branch:47"
+          "branchGroup": "branch:46"
         }
       ],
       "label": "else (!arrow)",
@@ -41436,7 +41769,7 @@
         {
           "condition": "else (!arrow)",
           "branch": "else",
-          "branchGroup": "branch:54"
+          "branchGroup": "branch:53"
         }
       ],
       "label": "else (!arrow)",
@@ -41452,7 +41785,7 @@
         {
           "condition": "else (reason !== 'ancestry' &&\n\t\t\tshapeBefore.parentId === shapeAf)",
           "branch": "else",
-          "branchGroup": "branch:64"
+          "branchGroup": "branch:63"
         }
       ],
       "label": "else (reason !== 'ancestry' &&\n\t\t\tshapeBefore.parentId === shapeAf)",
@@ -41468,7 +41801,7 @@
         {
           "condition": "else (reason !== 'ancestry' &&\n\t\t\tshapeBefore.parentId === shapeAf)",
           "branch": "else",
-          "branchGroup": "branch:84"
+          "branchGroup": "branch:83"
         }
       ],
       "label": "else (reason !== 'ancestry' &&\n\t\t\tshapeBefore.parentId === shapeAf)",
@@ -41484,7 +41817,7 @@
         {
           "condition": "else (!arrow)",
           "branch": "else",
-          "branchGroup": "branch:99"
+          "branchGroup": "branch:98"
         }
       ],
       "label": "else (!arrow)",
@@ -41500,7 +41833,7 @@
         {
           "condition": "else (!arrow)",
           "branch": "else",
-          "branchGroup": "branch:110"
+          "branchGroup": "branch:109"
         }
       ],
       "label": "else (!arrow)",
@@ -41524,12 +41857,12 @@
         {
           "condition": "else (!binding)",
           "branch": "else",
-          "branchGroup": "branch:204"
+          "branchGroup": "branch:203"
         },
         {
           "condition": "if (!boundShape || !isShapeInSamePageAsArrow)",
           "branch": "then",
-          "branchGroup": "branch:208"
+          "branchGroup": "branch:207"
         }
       ],
       "label": "else (!binding) → if (!boundShape || !isShapeInSamePageAsArrow)",
@@ -41553,6 +41886,74 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal->packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:getValidTerminalPoint",
+      "source": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal",
+      "target": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:getValidTerminalPoint",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!info)",
+          "branch": "else",
+          "branchGroup": "branch:231"
+        }
+      ],
+      "label": "else (!info)",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal->packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:getValidTerminalPoint::1",
+      "source": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal",
+      "target": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:getValidTerminalPoint",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!info)",
+          "branch": "else",
+          "branchGroup": "branch:231"
+        },
+        {
+          "condition": "if (info.type === 'arc')",
+          "branch": "then",
+          "branchGroup": "branch:253"
+        },
+        {
+          "condition": "else (terminal === 'start')",
+          "branch": "else",
+          "branchGroup": "branch:258"
+        }
+      ],
+      "label": "else (!info) → if (info.type === 'arc') → else (terminal === 'start')",
+      "isAsync": false,
+      "order": 3
+    },
+    {
+      "id": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal->packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:getValidTerminalPoint::2",
+      "source": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal",
+      "target": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:getValidTerminalPoint",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!info)",
+          "branch": "else",
+          "branchGroup": "branch:231"
+        },
+        {
+          "condition": "if (info.type === 'arc')",
+          "branch": "then",
+          "branchGroup": "branch:253"
+        },
+        {
+          "condition": "else (terminal === 'end')",
+          "branch": "else",
+          "branchGroup": "branch:262"
+        }
+      ],
+      "label": "else (!info) → if (info.type === 'arc') → else (terminal === 'end')",
+      "isAsync": false,
+      "order": 4
+    },
+    {
       "id": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal->packages/tldraw/src/lib/shapes/arrow/shared.ts:removeArrowBinding",
       "source": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal",
       "target": "packages/tldraw/src/lib/shapes/arrow/shared.ts:removeArrowBinding",
@@ -41561,17 +41962,84 @@
         {
           "condition": "else (!info)",
           "branch": "else",
-          "branchGroup": "branch:232"
+          "branchGroup": "branch:231"
+        },
+        {
+          "condition": "if (info.type === 'arc')",
+          "branch": "then",
+          "branchGroup": "branch:253"
+        },
+        {
+          "condition": "if (approximately(Vec.Len2(arrowDirection), 0))",
+          "branch": "then",
+          "branchGroup": "branch:265"
         },
         {
           "condition": "if (unbind)",
           "branch": "then",
+          "branchGroup": "branch:267"
+        }
+      ],
+      "label": "else (!info) → if (info.type === 'arc') → if (approximately(Vec.Len2(arrowDirection), 0)) → if (unbind)",
+      "isAsync": false,
+      "order": 5
+    },
+    {
+      "id": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal->packages/tldraw/src/lib/shapes/arrow/shared.ts:removeArrowBinding::1",
+      "source": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal",
+      "target": "packages/tldraw/src/lib/shapes/arrow/shared.ts:removeArrowBinding",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!info)",
+          "branch": "else",
+          "branchGroup": "branch:231"
+        },
+        {
+          "condition": "if (info.type === 'arc')",
+          "branch": "then",
+          "branchGroup": "branch:253"
+        },
+        {
+          "condition": "else (approximately(Vec.Len2(arrowDirection), 0))",
+          "branch": "else",
+          "branchGroup": "branch:265"
+        },
+        {
+          "condition": "if (!Vec.IsFinite(info.handleArc.center) ||\n\t\t\t!Number.isFinite()",
+          "branch": "then",
           "branchGroup": "branch:280"
+        },
+        {
+          "condition": "if (unbind)",
+          "branch": "then",
+          "branchGroup": "branch:286"
+        }
+      ],
+      "label": "else (!info) → if (info.type === 'arc') → else (approximately(Vec.Len2(arrowDirection), 0)) → if (!Vec.IsFinite(info.handleArc.center) ||\n\t\t\t!Number.isFinite() → if (unbind)",
+      "isAsync": false,
+      "order": 6
+    },
+    {
+      "id": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal->packages/tldraw/src/lib/shapes/arrow/shared.ts:removeArrowBinding::2",
+      "source": "packages/tldraw/src/lib/bindings/arrow/ArrowBindingUtil.ts:updateArrowTerminal",
+      "target": "packages/tldraw/src/lib/shapes/arrow/shared.ts:removeArrowBinding",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (!info)",
+          "branch": "else",
+          "branchGroup": "branch:231"
+        },
+        {
+          "condition": "if (unbind)",
+          "branch": "then",
+          "branchGroup": "branch:313"
         }
       ],
       "label": "else (!info) → if (unbind)",
       "isAsync": false,
-      "order": 1
+      "order": 7
     },
     {
       "id": "packages/tldraw/src/lib/canvas/TldrawCropHandles.tsx:TldrawCropHandles->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useTranslation",
@@ -58110,7 +58578,7 @@
         {
           "condition": "else (!atLeastOneShapeOnPage)",
           "branch": "else",
-          "branchGroup": "branch:285"
+          "branchGroup": "branch:288"
         }
       ],
       "label": "else (!atLeastOneShapeOnPage)",
@@ -58126,7 +58594,7 @@
         {
           "condition": "else (!atLeastOneShapeOnPage)",
           "branch": "else",
-          "branchGroup": "branch:285"
+          "branchGroup": "branch:288"
         }
       ],
       "label": "else (!atLeastOneShapeOnPage)",
@@ -58142,7 +58610,7 @@
         {
           "condition": "else (!atLeastOneShapeOnPage)",
           "branch": "else",
-          "branchGroup": "branch:285"
+          "branchGroup": "branch:288"
         }
       ],
       "label": "else (!atLeastOneShapeOnPage)",
@@ -58158,7 +58626,7 @@
         {
           "condition": "else (!atLeastOneShapeOnPage)",
           "branch": "else",
-          "branchGroup": "branch:285"
+          "branchGroup": "branch:288"
         }
       ],
       "label": "else (!atLeastOneShapeOnPage)",
@@ -58174,7 +58642,7 @@
         {
           "condition": "else (!atLeastOneShapeOnPage)",
           "branch": "else",
-          "branchGroup": "branch:285"
+          "branchGroup": "branch:288"
         }
       ],
       "label": "else (!atLeastOneShapeOnPage)",
@@ -58190,7 +58658,7 @@
         {
           "condition": "else (!atLeastOneShapeOnPage)",
           "branch": "else",
-          "branchGroup": "branch:285"
+          "branchGroup": "branch:288"
         }
       ],
       "label": "else (!atLeastOneShapeOnPage)",
@@ -58262,12 +58730,12 @@
         {
           "condition": "else (!useAnySelectedShapesCount(1))",
           "branch": "else",
-          "branchGroup": "branch:333"
+          "branchGroup": "branch:336"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (!useAnySelectedShapesCount(1)) → else (isReadonlyMode)",
@@ -58283,12 +58751,12 @@
         {
           "condition": "else (!useAnySelectedShapesCount(1))",
           "branch": "else",
-          "branchGroup": "branch:333"
+          "branchGroup": "branch:336"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (!useAnySelectedShapesCount(1)) → else (isReadonlyMode)",
@@ -58304,12 +58772,12 @@
         {
           "condition": "else (!useAnySelectedShapesCount(1))",
           "branch": "else",
-          "branchGroup": "branch:333"
+          "branchGroup": "branch:336"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (!useAnySelectedShapesCount(1)) → else (isReadonlyMode)",
@@ -58325,12 +58793,12 @@
         {
           "condition": "else (!useAnySelectedShapesCount(1))",
           "branch": "else",
-          "branchGroup": "branch:333"
+          "branchGroup": "branch:336"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (!useAnySelectedShapesCount(1)) → else (isReadonlyMode)",
@@ -58346,12 +58814,12 @@
         {
           "condition": "else (!useAnySelectedShapesCount(1))",
           "branch": "else",
-          "branchGroup": "branch:333"
+          "branchGroup": "branch:336"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (!useAnySelectedShapesCount(1)) → else (isReadonlyMode)",
@@ -58367,12 +58835,12 @@
         {
           "condition": "else (!useAnySelectedShapesCount(1))",
           "branch": "else",
-          "branchGroup": "branch:333"
+          "branchGroup": "branch:336"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (!useAnySelectedShapesCount(1)) → else (isReadonlyMode)",
@@ -58388,12 +58856,12 @@
         {
           "condition": "else (!useAnySelectedShapesCount(1))",
           "branch": "else",
-          "branchGroup": "branch:333"
+          "branchGroup": "branch:336"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (!useAnySelectedShapesCount(1)) → else (isReadonlyMode)",
@@ -58409,12 +58877,12 @@
         {
           "condition": "else (!useAnySelectedShapesCount(1))",
           "branch": "else",
-          "branchGroup": "branch:333"
+          "branchGroup": "branch:336"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (!useAnySelectedShapesCount(1)) → else (isReadonlyMode)",
@@ -58430,12 +58898,12 @@
         {
           "condition": "else (!useAnySelectedShapesCount(1))",
           "branch": "else",
-          "branchGroup": "branch:333"
+          "branchGroup": "branch:336"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (!useAnySelectedShapesCount(1)) → else (isReadonlyMode)",
@@ -58451,12 +58919,12 @@
         {
           "condition": "else (!useAnySelectedShapesCount(1))",
           "branch": "else",
-          "branchGroup": "branch:333"
+          "branchGroup": "branch:336"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (!useAnySelectedShapesCount(1)) → else (isReadonlyMode)",
@@ -58472,12 +58940,12 @@
         {
           "condition": "else (!useAnySelectedShapesCount(1))",
           "branch": "else",
-          "branchGroup": "branch:333"
+          "branchGroup": "branch:336"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (!useAnySelectedShapesCount(1)) → else (isReadonlyMode)",
@@ -58517,12 +58985,12 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:357"
+          "branchGroup": "branch:360"
         },
         {
           "condition": "else (!(twoSelected || onlyFlippableShapeSelected))",
           "branch": "else",
-          "branchGroup": "branch:359"
+          "branchGroup": "branch:362"
         }
       ],
       "label": "else (isReadonlyMode) → else (!(twoSelected || onlyFlippableShapeSelected))",
@@ -58538,17 +59006,17 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:357"
+          "branchGroup": "branch:360"
         },
         {
           "condition": "else (!(twoSelected || onlyFlippableShapeSelected))",
           "branch": "else",
-          "branchGroup": "branch:359"
+          "branchGroup": "branch:362"
         },
         {
           "condition": "twoSelected &&",
           "branch": "&&",
-          "branchGroup": "branch:364"
+          "branchGroup": "branch:367"
         }
       ],
       "label": "else (isReadonlyMode) → else (!(twoSelected || onlyFlippableShapeSelected)) → twoSelected &&",
@@ -58564,17 +59032,17 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:357"
+          "branchGroup": "branch:360"
         },
         {
           "condition": "else (!(twoSelected || onlyFlippableShapeSelected))",
           "branch": "else",
-          "branchGroup": "branch:359"
+          "branchGroup": "branch:362"
         },
         {
           "condition": "twoSelected &&",
           "branch": "&&",
-          "branchGroup": "branch:375"
+          "branchGroup": "branch:378"
         }
       ],
       "label": "else (isReadonlyMode) → else (!(twoSelected || onlyFlippableShapeSelected)) → twoSelected &&",
@@ -58590,17 +59058,17 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:357"
+          "branchGroup": "branch:360"
         },
         {
           "condition": "else (!(twoSelected || onlyFlippableShapeSelected))",
           "branch": "else",
-          "branchGroup": "branch:359"
+          "branchGroup": "branch:362"
         },
         {
           "condition": "(twoSelected || onlyFlippableShapeSelected) &&",
           "branch": "&&",
-          "branchGroup": "branch:381"
+          "branchGroup": "branch:384"
         }
       ],
       "label": "else (isReadonlyMode) → else (!(twoSelected || onlyFlippableShapeSelected)) → (twoSelected || onlyFlippableShapeSelected) &&",
@@ -58616,17 +59084,17 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:357"
+          "branchGroup": "branch:360"
         },
         {
           "condition": "else (!(twoSelected || onlyFlippableShapeSelected))",
           "branch": "else",
-          "branchGroup": "branch:359"
+          "branchGroup": "branch:362"
         },
         {
           "condition": "twoSelected &&",
           "branch": "&&",
-          "branchGroup": "branch:364"
+          "branchGroup": "branch:367"
         }
       ],
       "label": "else (isReadonlyMode) → else (!(twoSelected || onlyFlippableShapeSelected)) → twoSelected &&",
@@ -58642,17 +59110,17 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:357"
+          "branchGroup": "branch:360"
         },
         {
           "condition": "else (!(twoSelected || onlyFlippableShapeSelected))",
           "branch": "else",
-          "branchGroup": "branch:359"
+          "branchGroup": "branch:362"
         },
         {
           "condition": "twoSelected &&",
           "branch": "&&",
-          "branchGroup": "branch:375"
+          "branchGroup": "branch:378"
         }
       ],
       "label": "else (isReadonlyMode) → else (!(twoSelected || onlyFlippableShapeSelected)) → twoSelected &&",
@@ -58668,17 +59136,17 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:357"
+          "branchGroup": "branch:360"
         },
         {
           "condition": "else (!(twoSelected || onlyFlippableShapeSelected))",
           "branch": "else",
-          "branchGroup": "branch:359"
+          "branchGroup": "branch:362"
         },
         {
           "condition": "(twoSelected || onlyFlippableShapeSelected) &&",
           "branch": "&&",
-          "branchGroup": "branch:381"
+          "branchGroup": "branch:384"
         }
       ],
       "label": "else (isReadonlyMode) → else (!(twoSelected || onlyFlippableShapeSelected)) → (twoSelected || onlyFlippableShapeSelected) &&",
@@ -58694,12 +59162,12 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:357"
+          "branchGroup": "branch:360"
         },
         {
           "condition": "else (!(twoSelected || onlyFlippableShapeSelected))",
           "branch": "else",
-          "branchGroup": "branch:359"
+          "branchGroup": "branch:362"
         }
       ],
       "label": "else (isReadonlyMode) → else (!(twoSelected || onlyFlippableShapeSelected))",
@@ -58715,12 +59183,12 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:357"
+          "branchGroup": "branch:360"
         },
         {
           "condition": "else (!(twoSelected || onlyFlippableShapeSelected))",
           "branch": "else",
-          "branchGroup": "branch:359"
+          "branchGroup": "branch:362"
         }
       ],
       "label": "else (isReadonlyMode) → else (!(twoSelected || onlyFlippableShapeSelected))",
@@ -58744,7 +59212,7 @@
         {
           "condition": "else (!threeSelected)",
           "branch": "else",
-          "branchGroup": "branch:393"
+          "branchGroup": "branch:396"
         }
       ],
       "label": "else (!threeSelected)",
@@ -58760,7 +59228,7 @@
         {
           "condition": "else (!threeSelected)",
           "branch": "else",
-          "branchGroup": "branch:393"
+          "branchGroup": "branch:396"
         }
       ],
       "label": "else (!threeSelected)",
@@ -58792,7 +59260,7 @@
         {
           "condition": "else (!twoSelected)",
           "branch": "else",
-          "branchGroup": "branch:406"
+          "branchGroup": "branch:409"
         }
       ],
       "label": "else (!twoSelected)",
@@ -58808,7 +59276,7 @@
         {
           "condition": "else (!twoSelected)",
           "branch": "else",
-          "branchGroup": "branch:406"
+          "branchGroup": "branch:409"
         }
       ],
       "label": "else (!twoSelected)",
@@ -58824,12 +59292,12 @@
         {
           "condition": "else (!twoSelected)",
           "branch": "else",
-          "branchGroup": "branch:406"
+          "branchGroup": "branch:409"
         },
         {
           "condition": "threeStackableItems &&",
           "branch": "&&",
-          "branchGroup": "branch:412"
+          "branchGroup": "branch:415"
         }
       ],
       "label": "else (!twoSelected) → threeStackableItems &&",
@@ -58845,12 +59313,12 @@
         {
           "condition": "else (!twoSelected)",
           "branch": "else",
-          "branchGroup": "branch:406"
+          "branchGroup": "branch:409"
         },
         {
           "condition": "threeStackableItems &&",
           "branch": "&&",
-          "branchGroup": "branch:413"
+          "branchGroup": "branch:416"
         }
       ],
       "label": "else (!twoSelected) → threeStackableItems &&",
@@ -58882,12 +59350,12 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:421"
+          "branchGroup": "branch:424"
         },
         {
           "condition": "else (!oneSelected)",
           "branch": "else",
-          "branchGroup": "branch:422"
+          "branchGroup": "branch:425"
         }
       ],
       "label": "else (isReadonlyMode) → else (!oneSelected)",
@@ -58903,12 +59371,12 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:421"
+          "branchGroup": "branch:424"
         },
         {
           "condition": "else (!oneSelected)",
           "branch": "else",
-          "branchGroup": "branch:422"
+          "branchGroup": "branch:425"
         }
       ],
       "label": "else (isReadonlyMode) → else (!oneSelected)",
@@ -58924,12 +59392,12 @@
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:421"
+          "branchGroup": "branch:424"
         },
         {
           "condition": "else (!oneSelected)",
           "branch": "else",
-          "branchGroup": "branch:422"
+          "branchGroup": "branch:425"
         }
       ],
       "label": "else (isReadonlyMode) → else (!oneSelected)",
@@ -58977,12 +59445,12 @@
         {
           "condition": "else (!oneSelected)",
           "branch": "else",
-          "branchGroup": "branch:445"
+          "branchGroup": "branch:448"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:447"
+          "branchGroup": "branch:450"
         }
       ],
       "label": "else (!oneSelected) → else (isReadonlyMode)",
@@ -58998,12 +59466,12 @@
         {
           "condition": "else (!oneSelected)",
           "branch": "else",
-          "branchGroup": "branch:445"
+          "branchGroup": "branch:448"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:447"
+          "branchGroup": "branch:450"
         }
       ],
       "label": "else (!oneSelected) → else (isReadonlyMode)",
@@ -59019,12 +59487,12 @@
         {
           "condition": "else (!oneSelected)",
           "branch": "else",
-          "branchGroup": "branch:445"
+          "branchGroup": "branch:448"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:447"
+          "branchGroup": "branch:450"
         }
       ],
       "label": "else (!oneSelected) → else (isReadonlyMode)",
@@ -59040,12 +59508,12 @@
         {
           "condition": "else (!oneSelected)",
           "branch": "else",
-          "branchGroup": "branch:445"
+          "branchGroup": "branch:448"
         },
         {
           "condition": "else (isReadonlyMode)",
           "branch": "else",
-          "branchGroup": "branch:447"
+          "branchGroup": "branch:450"
         }
       ],
       "label": "else (!oneSelected) → else (isReadonlyMode)",
@@ -59061,7 +59529,7 @@
         {
           "condition": "else (!oneEmbedSelected)",
           "branch": "else",
-          "branchGroup": "branch:509"
+          "branchGroup": "branch:512"
         }
       ],
       "label": "else (!oneEmbedSelected)",
@@ -59085,7 +59553,7 @@
         {
           "condition": "else (!oneEmbeddableBookmarkSelected)",
           "branch": "else",
-          "branchGroup": "branch:534"
+          "branchGroup": "branch:537"
         }
       ],
       "label": "else (!oneEmbeddableBookmarkSelected)",
@@ -59229,7 +59697,7 @@
         {
           "condition": "else (!shouldShow)",
           "branch": "else",
-          "branchGroup": "branch:725"
+          "branchGroup": "branch:728"
         }
       ],
       "label": "else (!shouldShow)",
@@ -61016,22 +61484,22 @@
         {
           "condition": "else (!canApplySelectionAction())",
           "branch": "else",
-          "branchGroup": "branch:397"
+          "branchGroup": "branch:413"
         },
         {
           "condition": "else (mustGoBackToSelectToolFirst())",
           "branch": "else",
-          "branchGroup": "branch:398"
+          "branchGroup": "branch:414"
         },
         {
           "condition": "else (!shape || !editor.isShapeOfType(shape, 'embed') || !shape.pr)",
           "branch": "else",
-          "branchGroup": "branch:408"
+          "branchGroup": "branch:424"
         },
         {
           "condition": "else (!center)",
           "branch": "else",
-          "branchGroup": "branch:411"
+          "branchGroup": "branch:427"
         }
       ],
       "label": "else (!editor) → else (!canApplySelectionAction()) → else (mustGoBackToSelectToolFirst()) → else (!shape || !editor.isShapeOfType(shape, 'embed') || !shape.pr) → else (!center)",
@@ -61052,12 +61520,12 @@
         {
           "condition": "else (!canApplySelectionAction())",
           "branch": "else",
-          "branchGroup": "branch:572"
+          "branchGroup": "branch:588"
         },
         {
           "condition": "if (selectedShapes.length > 0 &&\n\t\t\t\t\t\tselectedShapes.every((sha)",
           "branch": "then",
-          "branchGroup": "branch:576"
+          "branchGroup": "branch:592"
         }
       ],
       "label": "else (!editor) → else (!canApplySelectionAction()) → if (selectedShapes.length > 0 &&\n\t\t\t\t\t\tselectedShapes.every((sha)",
@@ -61078,12 +61546,12 @@
         {
           "condition": "else (!canApplySelectionAction())",
           "branch": "else",
-          "branchGroup": "branch:592"
+          "branchGroup": "branch:608"
         },
         {
           "condition": "if (onlySelectedShape && editor.isShapeOfType(onlySelectedShape,)",
           "branch": "then",
-          "branchGroup": "branch:596"
+          "branchGroup": "branch:612"
         }
       ],
       "label": "else (!editor) → else (!canApplySelectionAction()) → if (onlySelectedShape && editor.isShapeOfType(onlySelectedShape,)",
@@ -61104,7 +61572,7 @@
         {
           "condition": "else (ids.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:1539"
+          "branchGroup": "branch:1555"
         }
       ],
       "label": "else (!editor) → else (ids.length === 0)",
@@ -61125,7 +61593,7 @@
         {
           "condition": "else (!selectedShapeIds.length)",
           "branch": "else",
-          "branchGroup": "branch:1700"
+          "branchGroup": "branch:1716"
         }
       ],
       "label": "else (!editor) → else (!selectedShapeIds.length)",
@@ -61146,7 +61614,7 @@
         {
           "condition": "else (selectedShapes.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:1742"
+          "branchGroup": "branch:1758"
         }
       ],
       "label": "else (!editor) → else (selectedShapes.length === 0)",
@@ -61167,27 +61635,27 @@
         {
           "condition": "else (selectedShapes.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:1742"
+          "branchGroup": "branch:1758"
         },
         {
           "condition": "else (mediaShapes.length === 0)",
           "branch": "else",
-          "branchGroup": "branch:1747"
+          "branchGroup": "branch:1763"
         },
         {
           "condition": "else (!asset || !asset.props.src)",
           "branch": "else",
-          "branchGroup": "branch:1752"
+          "branchGroup": "branch:1768"
         },
         {
           "condition": "else (!url)",
           "branch": "else",
-          "branchGroup": "branch:1755"
+          "branchGroup": "branch:1771"
         },
         {
           "condition": "else (!resp.ok)",
           "branch": "else",
-          "branchGroup": "branch:1765"
+          "branchGroup": "branch:1781"
         }
       ],
       "label": "else (!editor) → else (selectedShapes.length === 0) → else (mediaShapes.length === 0) → else (!asset || !asset.props.src) → else (!url) → else (!resp.ok)",
@@ -62608,12 +63076,17 @@
           "branchGroup": "branch:33"
         },
         {
+          "condition": "else (opts.format === 'json')",
+          "branch": "else",
+          "branchGroup": "branch:39"
+        },
+        {
           "condition": "if (navigator.clipboard.write as any)",
           "branch": "then",
-          "branchGroup": "branch:39"
+          "branchGroup": "branch:50"
         }
       ],
-      "label": "else (!navigator.clipboard) → if (navigator.clipboard.write as any)",
+      "label": "else (!navigator.clipboard) → else (opts.format === 'json') → if (navigator.clipboard.write as any)",
       "isAsync": false,
       "order": 0
     },
@@ -62629,12 +63102,17 @@
           "branchGroup": "branch:33"
         },
         {
+          "condition": "else (opts.format === 'json')",
+          "branch": "else",
+          "branchGroup": "branch:39"
+        },
+        {
           "condition": "if (navigator.clipboard.write as any)",
           "branch": "then",
-          "branchGroup": "branch:39"
+          "branchGroup": "branch:50"
         }
       ],
-      "label": "else (!navigator.clipboard) → if (navigator.clipboard.write as any)",
+      "label": "else (!navigator.clipboard) → else (opts.format === 'json') → if (navigator.clipboard.write as any)",
       "isAsync": false,
       "order": 1
     },
@@ -62650,17 +63128,22 @@
           "branchGroup": "branch:33"
         },
         {
+          "condition": "else (opts.format === 'json')",
+          "branch": "else",
+          "branchGroup": "branch:39"
+        },
+        {
           "condition": "if (navigator.clipboard.write as any)",
           "branch": "then",
-          "branchGroup": "branch:39"
+          "branchGroup": "branch:50"
         },
         {
           "condition": "additionalMimeType &&",
           "branch": "&&",
-          "branchGroup": "branch:45"
+          "branchGroup": "branch:57"
         }
       ],
-      "label": "else (!navigator.clipboard) → if (navigator.clipboard.write as any) → additionalMimeType &&",
+      "label": "else (!navigator.clipboard) → else (opts.format === 'json') → if (navigator.clipboard.write as any) → additionalMimeType &&",
       "isAsync": false,
       "order": 2
     },
@@ -62676,12 +63159,17 @@
           "branchGroup": "branch:33"
         },
         {
+          "condition": "else (opts.format === 'json')",
+          "branch": "else",
+          "branchGroup": "branch:39"
+        },
+        {
           "condition": "if (navigator.clipboard.write as any)",
           "branch": "then",
-          "branchGroup": "branch:39"
+          "branchGroup": "branch:50"
         }
       ],
-      "label": "else (!navigator.clipboard) → if (navigator.clipboard.write as any)",
+      "label": "else (!navigator.clipboard) → else (opts.format === 'json') → if (navigator.clipboard.write as any)",
       "isAsync": true,
       "order": 3
     },
@@ -62697,17 +63185,22 @@
           "branchGroup": "branch:33"
         },
         {
-          "condition": "else (navigator.clipboard.write as any)",
+          "condition": "else (opts.format === 'json')",
           "branch": "else",
           "branchGroup": "branch:39"
         },
         {
+          "condition": "else (navigator.clipboard.write as any)",
+          "branch": "else",
+          "branchGroup": "branch:50"
+        },
+        {
           "condition": "switch (opts.format): case 'svg'",
           "branch": "case 'svg'",
-          "branchGroup": "branch:52"
+          "branchGroup": "branch:64"
         }
       ],
-      "label": "else (!navigator.clipboard) → else (navigator.clipboard.write as any) → switch (opts.format): case 'svg'",
+      "label": "else (!navigator.clipboard) → else (opts.format === 'json') → else (navigator.clipboard.write as any) → switch (opts.format): case 'svg'",
       "isAsync": true,
       "order": 4
     },
