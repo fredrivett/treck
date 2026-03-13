@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-12T04:32:24.939Z",
+  "generatedAt": "2026-03-13T04:31:42.881Z",
   "nodes": [
     {
       "id": "packages/editor/src/lib/TldrawEditor.tsx:TldrawEditor",
@@ -2254,8 +2254,8 @@
       "isAsync": false,
       "hash": "0ca79e43e0b889cbe53363125e8606351efe6472443e9dd015377a8b1079acc7",
       "lineRange": [
-        60,
-        60
+        62,
+        62
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -2275,10 +2275,10 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/config/createTLStore.ts",
       "isAsync": false,
-      "hash": "e3d5d9e7248d8e031cf5ad205fcbbeb2fc0d2ea6833684de10bf9e888eec9c97",
+      "hash": "65a3c68a3c72278f8ee8a89afff0b2827ca9f4cd3e8d630ece2d5ba4bb1594d8",
       "lineRange": [
-        67,
-        93
+        69,
+        96
       ],
       "hasJsDoc": true,
       "description": "A helper for creating a TLStore schema from either an object with shapeUtils, bindingUtils, and\nmigrations, or a schema.",
@@ -2302,8 +2302,8 @@
       "isAsync": false,
       "hash": "35f08fc6955363235956baa89229e2a3a6f034560dfbf3d54c9109e7b88d27db",
       "lineRange": [
-        93,
-        138
+        96,
+        141
       ],
       "hasJsDoc": true,
       "description": "A helper for creating a TLStore.",
@@ -2364,8 +2364,8 @@
       "isAsync": false,
       "hash": "b8a45e77adeca343ec1b6f51f8816b4db4cdf4d070a19ad2372045a101d67fdb",
       "lineRange": [
-        138,
-        150
+        141,
+        153
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -6780,10 +6780,10 @@
       "kind": "const",
       "filePath": "packages/editor/src/lib/license/Watermark.tsx",
       "isAsync": false,
-      "hash": "756f1f2c8bc002c75d420fe7363bb1e8bbb567f418811cf1aad987ef80ef855f",
+      "hash": "41ab3e2e14d03cb72d78fb10ad23d8841d20fc342dddb12af8205ba183a5bcf4",
       "lineRange": [
         133,
-        248
+        258
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -20947,10 +20947,10 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/TldrawUi.tsx",
       "isAsync": false,
-      "hash": "faeec05c74ce6e15562aea5471f17f7b815e55531b9a6dd324507d0818b7778b",
+      "hash": "e3aa8879e03fd1c2dbfb9465efe8d93e8ce2391bd2ebe9f8edf9b4c4eb777770",
       "lineRange": [
         97,
-        228
+        236
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -20963,8 +20963,8 @@
       "isAsync": false,
       "hash": "dec4a430d76b85326818d33b0a0c4192578aceb2b23e40b7b1f1fa04f3836a95",
       "lineRange": [
-        228,
-        244
+        236,
+        252
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -21321,10 +21321,10 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/components/ContextMenu/DefaultContextMenu.tsx",
       "isAsync": false,
-      "hash": "aa50bd7b7c953e0070753cd22f4c627e5ccc532fae22cdd3f396324f982e49d1",
+      "hash": "9ff9c7e1e8b72035e21452c3319f36386b85b69f8bc034377d55b0590d1242a9",
       "lineRange": [
         16,
-        125
+        126
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -21719,10 +21719,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/Dialogs.tsx",
       "isAsync": false,
-      "hash": "27468352a571e660ca2d6a5fe6ce377d4d9a73649b891259de66d9a3af71c3a4",
+      "hash": "66c2970ddcae82effaeb18158f9ba89e1f19766b08cf6c9aecf751e7fc24a975",
       "lineRange": [
-        7,
-        60
+        8,
+        62
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -21755,8 +21755,8 @@
       "isAsync": false,
       "hash": "73de5abd15aec6b880519de0362c1c5a683d1a6829c7be365fe669d055dcd553",
       "lineRange": [
-        63,
-        67
+        65,
+        69
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -22070,10 +22070,10 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenu.tsx",
       "isAsync": false,
-      "hash": "157c01c8f7eb88afd1dc3d6a5b06e5c64234a22c101c27be879be958f61da9ac",
+      "hash": "ef853fb90a5da4803deb997b27058653f457c02ec5215efdb1918c5b7283878d",
       "lineRange": [
         17,
-        50
+        51
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -22515,10 +22515,10 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx",
       "isAsync": false,
-      "hash": "a7bf4bf23474bf6d9fb0920d42384543ad17c99b846e1eaf538b6d6df3396eaa",
+      "hash": "c2086fc8fabb387562d86a8ccf5d846ff019fff4f5a938a4dc41eccb370acb28",
       "lineRange": [
         14,
-        78
+        89
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -22734,10 +22734,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx",
       "isAsync": false,
-      "hash": "1796ac2ad50dda8d1eafd481995fa6048865d63b27a339e947ce71f390221105",
+      "hash": "fb54d3f7bb48d65aca29b8c2c3ca2cd68591bef0cdead560696f67a3698c2f5d",
       "lineRange": [
         18,
-        90
+        91
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -22815,10 +22815,10 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/components/SharePanel/UserPresenceColorPicker.tsx",
       "isAsync": false,
-      "hash": "36338ee136acb9b6627b84b257aa2a8fabd600afdd9c8fd7788e2e62db9a058c",
+      "hash": "02891bc7fac51ff3b20895211bfc2435bf568cfea0e2125208fb748b8cb82c62",
       "lineRange": [
         10,
-        128
+        129
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24409,10 +24409,10 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx",
       "isAsync": false,
-      "hash": "e108a9df29337c7c4ff906c0c758f01b68ee366dd39ebd69585bffb1c09ce996",
+      "hash": "9ded6047c35904c693fca3b9e305d0465183251d6aea042af7da17d1515c004a",
       "lineRange": [
         18,
-        46
+        47
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -24423,10 +24423,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx",
       "isAsync": false,
-      "hash": "0edf8951e9a4925e2be703da031228494fbf7ba9ea7ed7cd4890e0189eb1585b",
+      "hash": "261f1473bcda01d81452ed5d891d14e291b9c8d9bd815fdbb4c59c8b9e2ee7d2",
       "lineRange": [
-        48,
-        78
+        49,
+        80
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -25417,13 +25417,12 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDialog.tsx",
       "isAsync": false,
-      "hash": "5ec4a4da0d0715d631648ee7fd80970b207866a15ae893745455e44f42aa5077",
+      "hash": "a14b56b3735ea419510423dd27de7aa79f42f37b3bd7745e6e27a16931868a4b",
       "lineRange": [
         24,
-        37
+        38
       ],
       "hasJsDoc": false,
-      "isTrivial": true,
       "structuredParams": [
         {
           "name": "className",
@@ -25452,10 +25451,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDialog.tsx",
       "isAsync": false,
-      "hash": "3e5420d9e60c26a5a963342ce50f5e4a4db0f3bd0ac16b8b6dd07c1455977793",
+      "hash": "e9e200782c20269f8ff7df777fa098e6c1e5860c734fe79befc8de2bdc9221f3",
       "lineRange": [
-        37,
-        56
+        38,
+        58
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -25468,8 +25467,8 @@
       "isAsync": false,
       "hash": "857542c0586687f0b304993dba02c34d70a65fe04e3cb811a1ef2f6259ad70d6",
       "lineRange": [
-        63,
-        72
+        65,
+        74
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -25503,8 +25502,8 @@
       "isAsync": false,
       "hash": "f59a497c3e012d60de2941706ea118e959c17f22cc573077a92efa4ac1862a9a",
       "lineRange": [
-        78,
-        83
+        80,
+        85
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -25530,10 +25529,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx",
       "isAsync": false,
-      "hash": "8bc59f63229a3ee5743dcc057d0579a2e020eb86bb9aaec2e17fb5f3189dc091",
+      "hash": "c374e23981438b565daa9bc662247c1d6279648ceeb71c21d6ac7f609b1aaffa",
       "lineRange": [
         18,
-        39
+        40
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -25572,13 +25571,12 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx",
       "isAsync": false,
-      "hash": "da2a48bb152aba7ee0558b48aeade6676169b8f6dee79fc0c35cb16f5189a492",
+      "hash": "3b291a13dfe850a8507d42a7cae26220d60ff90b53681e2feba2a826130c27d2",
       "lineRange": [
-        44,
-        59
+        45,
+        61
       ],
       "hasJsDoc": false,
-      "isTrivial": true,
       "structuredParams": [
         {
           "name": "children",
@@ -25603,8 +25601,8 @@
       "isAsync": false,
       "hash": "d64f6ac297e4e05e14f3c0c3e0de5847cdcc2f3e6457681c3e0cee41d76f551b",
       "lineRange": [
-        70,
-        97
+        72,
+        99
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -25659,8 +25657,8 @@
       "isAsync": false,
       "hash": "dc82e61177884eb8e66da800c14ed7eac84224f8d8c9e7c74029b327a53517ac",
       "lineRange": [
-        103,
-        114
+        105,
+        116
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -25685,13 +25683,12 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx",
       "isAsync": false,
-      "hash": "0132395223bb069ed787a1ecb71b806106ae1a8b04585ec9d7f5962ad73fe0da",
+      "hash": "1609cd653cf57bbb710ededbb641c36d0dd1dbf4b964ad0a0c85b004f5dfa7d3",
       "lineRange": [
-        122,
-        145
+        124,
+        148
       ],
       "hasJsDoc": false,
-      "isTrivial": true,
       "structuredParams": [
         {
           "name": "id",
@@ -25728,8 +25725,8 @@
       "isAsync": false,
       "hash": "bcb39d779ec42127fcf2bde0fc1257e13cd9ba2945e9eaac35943b6829b2f65a",
       "lineRange": [
-        154,
-        179
+        157,
+        182
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -25775,13 +25772,12 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx",
       "isAsync": false,
-      "hash": "331f4b91e5f73712d18e180629f8509a3eca9b7329ac59f35ad7591ef43157b1",
+      "hash": "0f6fc4a659418577cce1ace6e200fdc6379c28909a869cf87cdc71f67cdc8271",
       "lineRange": [
-        185,
-        194
+        188,
+        198
       ],
       "hasJsDoc": false,
-      "isTrivial": true,
       "structuredParams": [
         {
           "name": "className",
@@ -25804,10 +25800,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx",
       "isAsync": false,
-      "hash": "7a2af7b51d81f9e923e4bef8815da6ea6c7fa4ea6f8fc2638dba8f09e6bad1b6",
+      "hash": "7e829367f6477129fd925ad6b4cf23635fef65a6283b94134b13701424ebb70e",
       "lineRange": [
-        194,
-        205
+        198,
+        210
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -25818,13 +25814,12 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx",
       "isAsync": false,
-      "hash": "540ee38fcfdd75aabe2d4f3ed6e896c9a51cbaeb7069bc92722fdcb676d3c21c",
+      "hash": "d69cd0e24ee639f647a88ac42961c6deefcd2e4eeadc1d7492416292d4dfeece",
       "lineRange": [
-        211,
-        220
+        216,
+        226
       ],
       "hasJsDoc": false,
-      "isTrivial": true,
       "structuredParams": [
         {
           "name": "noClose",
@@ -25847,10 +25842,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx",
       "isAsync": false,
-      "hash": "7b5c7dd9df5434bd532cdae900dad2e55422f32ce480e21a4db5e5f420d50bb6",
+      "hash": "662340facca2156c2f607b8f511ad9d112f5c9ca2d76e5d6baaba43ec354055d",
       "lineRange": [
-        229,
-        257
+        235,
+        264
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -25998,8 +25993,8 @@
       "isAsync": false,
       "hash": "f130c0779da88526c96dd6ab02a6e881d2d2a9ac8bc56cc79fbf34eae7af58e0",
       "lineRange": [
-        14,
-        25
+        15,
+        26
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -26042,13 +26037,12 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiPopover.tsx",
       "isAsync": false,
-      "hash": "1711bf6f10a385ca76b72887409043ed26c2bc01f4b64f03a3ee2ea54df3a981",
+      "hash": "c90a515864590fa7bfcbd1cead025525b078921fafc4d48882aab8fc16babfee",
       "lineRange": [
-        30,
-        39
+        31,
+        41
       ],
       "hasJsDoc": false,
-      "isTrivial": true,
       "structuredParams": [
         {
           "name": "children",
@@ -26065,10 +26059,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiPopover.tsx",
       "isAsync": false,
-      "hash": "28eba871cadafa115eaab3f52eea0b666a26e7c64ed3ab6ab796463099288793",
+      "hash": "0c10b88d0caa7657fc42fd53dfcb87872ac754503a711a7810a81db306861c9a",
       "lineRange": [
-        50,
-        93
+        52,
+        96
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -26128,10 +26122,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSelect.tsx",
       "isAsync": false,
-      "hash": "2535198282dc422d6873ac240804fc986c203fe99ae9820fc2c35f0042762ccd",
+      "hash": "2365818e7fd2a1e2faac366f8ecd234949e880066be0562ecac7bfb1d4b125cc",
       "lineRange": [
-        22,
-        75
+        23,
+        77
       ],
       "hasJsDoc": true,
       "description": "A select dropdown component.",
@@ -26204,8 +26198,8 @@
       "isAsync": false,
       "hash": "ef44f92a224b5ceb6d8dddbec91437aac9e91c2e0340d0e47591a2166a593386",
       "lineRange": [
-        91,
-        105
+        93,
+        107
       ],
       "hasJsDoc": true,
       "description": "The trigger button for the select dropdown.",
@@ -26219,8 +26213,8 @@
       "isAsync": false,
       "hash": "4d4b7b2302b79ab5f358d3ed529b3be74281202e81943341c6ae3c571d934adc",
       "lineRange": [
-        114,
-        131
+        116,
+        133
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -26255,8 +26249,8 @@
       "isAsync": false,
       "hash": "0598d9c9fecf3e865ab6a5a1c40bfe880e788c4fb56a7418d8dafca995c05ff8",
       "lineRange": [
-        141,
-        171
+        143,
+        173
       ],
       "hasJsDoc": true,
       "description": "The dropdown content container for select items.",
@@ -26298,8 +26292,8 @@
       "isAsync": false,
       "hash": "c97673f214623e5b5c9fe2a59c59b24c2da1f2d5439ce91cc9ac2fc70ec5212b",
       "lineRange": [
-        182,
-        211
+        184,
+        213
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -26344,10 +26338,10 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSlider.tsx",
       "isAsync": false,
-      "hash": "bbd5b534d125d0fde412502df33425ba3486e294f99bede1edc4c63d415543a5",
+      "hash": "2f52a5de0df62061cbbcbde26bd9525b1d7d7207369e01a1e1f8290729028601",
       "lineRange": [
         22,
-        119
+        120
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -26487,8 +26481,8 @@
       "isAsync": false,
       "hash": "1123e76356815f4805902c9486e2336636a0ace29bbc1fb29852daafa9631378",
       "lineRange": [
-        58,
-        175
+        59,
+        176
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -26501,8 +26495,8 @@
       "isAsync": false,
       "hash": "76ff74fe1db40df5a1bbfa9254a8a9353ed90a850b893d5da6ba9a039b8da1f7",
       "lineRange": [
-        177,
-        177
+        178,
+        178
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -26515,8 +26509,8 @@
       "isAsync": false,
       "hash": "ec4fa78f2c971ef1713985e7471448c5fdcd9a6d6e8c28469a1124490dc43801",
       "lineRange": [
-        177,
-        182
+        178,
+        183
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -26529,8 +26523,8 @@
       "isAsync": false,
       "hash": "1cb535817caa64bd34adf77d4995fc198bcccf2762a62ea8ecaad66730b902e6",
       "lineRange": [
-        185,
-        185
+        186,
+        186
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -26543,8 +26537,8 @@
       "isAsync": false,
       "hash": "6948e82bb9d4e801c0dc12d75a6f804843fc95c3ffbcb356e4b80ec201513731",
       "lineRange": [
-        190,
-        202
+        191,
+        203
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -26564,10 +26558,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx",
       "isAsync": false,
-      "hash": "679a935edf2cf987fd5d0fa8b8d56578fc23f57021e76024638cad06115e0ccf",
+      "hash": "7c00171feb2a12911b092e936941d840644e5f67a22fffa310ce0185f7a9f560",
       "lineRange": [
-        202,
-        335
+        203,
+        337
       ],
       "hasJsDoc": false,
       "isExported": false
@@ -26578,10 +26572,10 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx",
       "isAsync": false,
-      "hash": "deabbb6edc6fbb04f98e8f6e3b623cf8aa318611834de1124272238b66a8fff6",
+      "hash": "4c5bca3eeb20c50ea85eeeee33d557d17392e0e5fe958cf610326acbb835ecc8",
       "lineRange": [
-        338,
-        486
+        340,
+        489
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -26758,10 +26752,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuCheckboxItem.tsx",
       "isAsync": false,
-      "hash": "9117d6ead34f902b79bb0fab9bbce7b24a27196eaef46eeae830e647ac04740b",
+      "hash": "dc6e773a37568996eff9f793aa90549d806bd6fff4df1bc76d165a12a73fcede",
       "lineRange": [
         28,
-        118
+        119
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -26894,10 +26888,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuGroup.tsx",
       "isAsync": false,
-      "hash": "c0a3fbf7dcaa301b6fb20fc8e956d93eb3b0d957afa891f38f901b50c5bdf0a2",
+      "hash": "b286d628776391b1573ea06ff098608176483e87cf5f722bfbdce9b9d566e8c1",
       "lineRange": [
         19,
-        82
+        83
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -26934,10 +26928,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx",
       "isAsync": false,
-      "hash": "d8e07cc199292a863fa12743fd5ee31dd05c1f1816080d6d2755534fc2ebf013",
+      "hash": "d9df0415de74821f2a6cb6d301e368ddec978fa595f8e5346712efc7a38c5201",
       "lineRange": [
         80,
-        282
+        283
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -27027,8 +27021,8 @@
       "isAsync": false,
       "hash": "c0dea2565e15cd5a59136d317a9b8521f05544c876c25db9348906e5a596bc5b",
       "lineRange": [
-        282,
-        396
+        283,
+        397
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -27055,8 +27049,8 @@
       "isAsync": false,
       "hash": "ca045d80ee15f729d8d0698e68f59de918675922ff27b043539ae476df2bb659",
       "lineRange": [
-        396,
-        458
+        397,
+        459
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -27123,10 +27117,10 @@
       "kind": "component",
       "filePath": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx",
       "isAsync": false,
-      "hash": "eca42fb473546c43fe14e147cf157f647b985f9efac0e12df3440716bd2c3055",
+      "hash": "9e19f61131d2962847e2a28fb132f492714ed2b0808f47eeccad4dfe990a28f6",
       "lineRange": [
         24,
-        95
+        96
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -27173,8 +27167,8 @@
       "isAsync": false,
       "hash": "499af2ee812844f925d0581d5276b40aeef59fcdc136a349bcd249d73d5af8bb",
       "lineRange": [
-        101,
-        112
+        102,
+        113
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -27228,7 +27222,7 @@
       "kind": "const",
       "filePath": "packages/tldraw/src/lib/ui/context/TldrawUiContextProvider.tsx",
       "isAsync": false,
-      "hash": "a0cca67e9ac0dedb62af58df8cbdb7e6582dea88e8e3d8dad950785238849376",
+      "hash": "8e4dd9faf5c104c15ec4090a7173d16805cfe4a6f40ec864bc2eebd4ca6dd843",
       "lineRange": [
         61,
         100
@@ -28988,8 +28982,8 @@
       "isAsync": true,
       "hash": "f94bf6958abb9863f439cc70136e55b592a49ee34a10469b60f57f67f1b0b1e9",
       "lineRange": [
-        28,
-        79
+        29,
+        80
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -29091,6 +29085,21 @@
       ]
     },
     {
+      "id": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "name": "useDirection",
+      "kind": "function",
+      "filePath": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx",
+      "isAsync": false,
+      "hash": "4ca62efe931fa19d5003289fe132bddd4d245586b4f89136b954fc6f2fc36375",
+      "lineRange": [
+        128,
+        138
+      ],
+      "hasJsDoc": true,
+      "description": "Returns the current text direction ('ltr' or 'rtl') based on the current translation.",
+      "isExported": true
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:untranslated",
       "name": "untranslated",
       "kind": "function",
@@ -29098,8 +29107,8 @@
       "isAsync": false,
       "hash": "e443a1203f5c10059dbe1979d70e365a6abfcafa0b9fe811924d4b8493032180",
       "lineRange": [
-        128,
-        132
+        138,
+        142
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -33924,12 +33933,12 @@
         {
           "condition": "else ('schema' in opts && opts.schema)",
           "branch": "else",
-          "branchGroup": "branch:78"
+          "branchGroup": "branch:80"
         },
         {
           "condition": "if ('shapeUtils' in opts && opts.shapeUtils)",
           "branch": "then",
-          "branchGroup": "branch:82"
+          "branchGroup": "branch:84"
         }
       ],
       "label": "else ('schema' in opts && opts.schema) → if ('shapeUtils' in opts && opts.shapeUtils)",
@@ -33945,12 +33954,12 @@
         {
           "condition": "else ('schema' in opts && opts.schema)",
           "branch": "else",
-          "branchGroup": "branch:78"
+          "branchGroup": "branch:80"
         },
         {
           "condition": "if ('bindingUtils' in opts && opts.bindingUtils)",
           "branch": "then",
-          "branchGroup": "branch:86"
+          "branchGroup": "branch:88"
         }
       ],
       "label": "else ('schema' in opts && opts.schema) → if ('bindingUtils' in opts && opts.bindingUtils)",
@@ -33966,12 +33975,12 @@
         {
           "condition": "else ('schema' in opts && opts.schema)",
           "branch": "else",
-          "branchGroup": "branch:78"
+          "branchGroup": "branch:80"
         },
         {
           "condition": "if ('shapeUtils' in opts && opts.shapeUtils)",
           "branch": "then",
-          "branchGroup": "branch:82"
+          "branchGroup": "branch:84"
         }
       ],
       "label": "else ('schema' in opts && opts.schema) → if ('shapeUtils' in opts && opts.shapeUtils)",
@@ -33987,12 +33996,12 @@
         {
           "condition": "else ('schema' in opts && opts.schema)",
           "branch": "else",
-          "branchGroup": "branch:78"
+          "branchGroup": "branch:80"
         },
         {
           "condition": "if ('bindingUtils' in opts && opts.bindingUtils)",
           "branch": "then",
-          "branchGroup": "branch:86"
+          "branchGroup": "branch:88"
         }
       ],
       "label": "else ('schema' in opts && opts.schema) → if ('bindingUtils' in opts && opts.bindingUtils)",
@@ -34016,12 +34025,12 @@
         {
           "condition": "if (rest.snapshot)",
           "branch": "then",
-          "branchGroup": "branch:129"
+          "branchGroup": "branch:132"
         },
         {
           "condition": "else (initialData)",
           "branch": "else",
-          "branchGroup": "branch:131"
+          "branchGroup": "branch:134"
         }
       ],
       "label": "if (rest.snapshot) → else (initialData)",
@@ -51190,12 +51199,20 @@
       "order": 2
     },
     {
+      "id": "packages/tldraw/src/lib/ui/TldrawUi.tsx:TldrawUiContent->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/TldrawUi.tsx:TldrawUiContent",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 3
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/TldrawUi.tsx:TldrawUiContent->packages/tldraw/src/lib/ui/context/components.tsx:useTldrawUiComponents",
       "source": "packages/tldraw/src/lib/ui/TldrawUi.tsx:TldrawUiContent",
       "target": "packages/tldraw/src/lib/ui/context/components.tsx:useTldrawUiComponents",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/tldraw/src/lib/ui/TldrawUi.tsx:TldrawUiContent->packages/tldraw/src/lib/ui/hooks/useEditorEvents.ts:useEditorEvents",
@@ -51203,7 +51220,7 @@
       "target": "packages/tldraw/src/lib/ui/hooks/useEditorEvents.ts:useEditorEvents",
       "type": "direct-call",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "packages/tldraw/src/lib/ui/TldrawUi.tsx:TldrawUiContent->packages/tldraw/src/lib/ui/context/actions.tsx:useActions",
@@ -51211,7 +51228,7 @@
       "target": "packages/tldraw/src/lib/ui/context/actions.tsx:useActions",
       "type": "direct-call",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "packages/tldraw/src/lib/ui/TldrawUi.tsx:TldrawUiContent->packages/tldraw/src/lib/ui/components/A11y.tsx:SkipToMainContent",
@@ -51219,7 +51236,7 @@
       "target": "packages/tldraw/src/lib/ui/components/A11y.tsx:SkipToMainContent",
       "type": "direct-call",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "packages/tldraw/src/lib/ui/TldrawUi.tsx:TldrawUiContent->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
@@ -51230,12 +51247,12 @@
         {
           "condition": "if (isFocusMode)",
           "branch": "then",
-          "branchGroup": "branch:186"
+          "branchGroup": "branch:194"
         }
       ],
       "label": "if (isFocusMode)",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "packages/tldraw/src/lib/ui/TldrawUi.tsx:TldrawUiContent->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
@@ -51246,12 +51263,12 @@
         {
           "condition": "if (isFocusMode)",
           "branch": "then",
-          "branchGroup": "branch:186"
+          "branchGroup": "branch:194"
         }
       ],
       "label": "if (isFocusMode)",
       "isAsync": false,
-      "order": 8
+      "order": 9
     },
     {
       "id": "packages/tldraw/src/lib/ui/TldrawUi.tsx:TldrawUiInFrontOfTheCanvas->packages/tldraw/src/lib/ui/context/components.tsx:useTldrawUiComponents",
@@ -51962,12 +51979,20 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/ContextMenu/DefaultContextMenu.tsx:DefaultContextMenu->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/ContextMenu/DefaultContextMenu.tsx:DefaultContextMenu",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/ContextMenu/DefaultContextMenu.tsx:DefaultContextMenu->packages/tldraw/src/lib/ui/hooks/useMenuIsOpen.ts:useMenuIsOpen",
       "source": "packages/tldraw/src/lib/ui/components/ContextMenu/DefaultContextMenu.tsx:DefaultContextMenu",
       "target": "packages/tldraw/src/lib/ui/hooks/useMenuIsOpen.ts:useMenuIsOpen",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/ContextMenu/DefaultContextMenu.tsx:DefaultContextMenu->packages/tldraw/src/lib/ui/components/ContextMenu/DefaultContextMenuContent.tsx:DefaultContextMenuContent",
@@ -51975,7 +52000,7 @@
       "target": "packages/tldraw/src/lib/ui/components/ContextMenu/DefaultContextMenuContent.tsx:DefaultContextMenuContent",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/ContextMenu/DefaultContextMenu.tsx:DefaultContextMenu->packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuContext.tsx:TldrawUiMenuContextProvider",
@@ -51986,12 +52011,12 @@
         {
           "condition": "isOpen &&",
           "branch": "&&",
-          "branchGroup": "branch:106"
+          "branchGroup": "branch:107"
         }
       ],
       "label": "isOpen &&",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/ContextMenu/DefaultContextMenuContent.tsx:DefaultContextMenuContent->packages/tldraw/src/lib/ui/hooks/useCollaborationStatus.ts:useShowCollaborationUi",
@@ -52628,6 +52653,14 @@
       "type": "direct-call",
       "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/Dialogs.tsx:TldrawUiDialog->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/Dialogs.tsx:TldrawUiDialog",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/Dialogs.tsx:DefaultDialogs->packages/tldraw/src/lib/ui/context/dialogs.tsx:useDialogs",
@@ -53591,12 +53624,20 @@
       "order": 1
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenu.tsx:DefaultMainMenu->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenu.tsx:DefaultMainMenu",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenu.tsx:DefaultMainMenu->packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:DefaultMainMenuContent",
       "source": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenu.tsx:DefaultMainMenu",
       "target": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:DefaultMainMenuContent",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenu.tsx:DefaultMainMenu->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
@@ -53604,7 +53645,7 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenu.tsx:DefaultMainMenu->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
@@ -53612,7 +53653,7 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
       "type": "direct-call",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenu.tsx:DefaultMainMenu->packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuContext.tsx:TldrawUiMenuContextProvider",
@@ -53620,7 +53661,7 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuContext.tsx:TldrawUiMenuContextProvider",
       "type": "direct-call",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx:DefaultMainMenuContent->packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuGroup.tsx:TldrawUiMenuGroup",
@@ -54424,12 +54465,20 @@
       "order": 1
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/context/breakpoints.tsx:useBreakpoint",
       "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
       "target": "packages/tldraw/src/lib/ui/context/breakpoints.tsx:useBreakpoint",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/hooks/useLocalStorageState.ts:useLocalStorageState",
@@ -54437,7 +54486,7 @@
       "target": "packages/tldraw/src/lib/ui/hooks/useLocalStorageState.ts:useLocalStorageState",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/context/components.tsx:useTldrawUiComponents",
@@ -54445,7 +54494,7 @@
       "target": "packages/tldraw/src/lib/ui/context/components.tsx:useTldrawUiComponents",
       "type": "direct-call",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbar",
@@ -54456,12 +54505,12 @@
         {
           "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
           "branch": "else",
-          "branchGroup": "branch:27"
+          "branchGroup": "branch:28"
         }
       ],
       "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbarButton",
@@ -54472,22 +54521,22 @@
         {
           "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
           "branch": "else",
-          "branchGroup": "branch:27"
+          "branchGroup": "branch:28"
         },
         {
           "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
           "branch": "else",
-          "branchGroup": "branch:36"
+          "branchGroup": "branch:37"
         },
         {
-          "condition": "!collapsed &&",
+          "condition": "Minimap && dir === 'rtl' &&",
           "branch": "&&",
-          "branchGroup": "branch:40"
+          "branchGroup": "branch:41"
         }
       ],
-      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → !collapsed &&",
+      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → Minimap && dir === 'rtl' &&",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbarButton::1",
@@ -54498,12 +54547,12 @@
         {
           "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
           "branch": "else",
-          "branchGroup": "branch:27"
+          "branchGroup": "branch:28"
         },
         {
           "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
           "branch": "else",
-          "branchGroup": "branch:36"
+          "branchGroup": "branch:37"
         },
         {
           "condition": "!collapsed &&",
@@ -54513,7 +54562,7 @@
       ],
       "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → !collapsed &&",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbarButton::2",
@@ -54524,43 +54573,17 @@
         {
           "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
           "branch": "else",
-          "branchGroup": "branch:27"
+          "branchGroup": "branch:28"
         },
         {
           "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
           "branch": "else",
-          "branchGroup": "branch:36"
-        },
-        {
-          "condition": "Minimap &&",
-          "branch": "&&",
-          "branchGroup": "branch:61"
-        }
-      ],
-      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → Minimap &&",
-      "isAsync": false,
-      "order": 8
-    },
-    {
-      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel",
-      "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
-      "target": "packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel",
-      "type": "conditional-call",
-      "conditions": [
-        {
-          "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
-          "branch": "else",
-          "branchGroup": "branch:27"
-        },
-        {
-          "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
-          "branch": "else",
-          "branchGroup": "branch:36"
+          "branchGroup": "branch:37"
         },
         {
           "condition": "!collapsed &&",
           "branch": "&&",
-          "branchGroup": "branch:40"
+          "branchGroup": "branch:62"
         }
       ],
       "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → !collapsed &&",
@@ -54568,72 +54591,72 @@
       "order": 9
     },
     {
-      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel::1",
+      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbarButton::3",
       "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
-      "target": "packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel",
+      "target": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbarButton",
       "type": "conditional-call",
       "conditions": [
         {
           "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
           "branch": "else",
-          "branchGroup": "branch:27"
+          "branchGroup": "branch:28"
         },
         {
           "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
           "branch": "else",
-          "branchGroup": "branch:36"
+          "branchGroup": "branch:37"
         },
         {
-          "condition": "!collapsed &&",
+          "condition": "Minimap && dir !== 'rtl' &&",
           "branch": "&&",
-          "branchGroup": "branch:51"
+          "branchGroup": "branch:72"
         }
       ],
-      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → !collapsed &&",
+      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → Minimap && dir !== 'rtl' &&",
       "isAsync": false,
       "order": 10
     },
     {
-      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/kbd-utils.ts:kbdStr",
+      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
       "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
-      "target": "packages/tldraw/src/lib/ui/kbd-utils.ts:kbdStr",
+      "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
       "type": "conditional-call",
       "conditions": [
         {
           "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
           "branch": "else",
-          "branchGroup": "branch:27"
+          "branchGroup": "branch:28"
         },
         {
           "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
           "branch": "else",
-          "branchGroup": "branch:36"
+          "branchGroup": "branch:37"
         },
         {
-          "condition": "!collapsed &&",
+          "condition": "Minimap && dir === 'rtl' &&",
           "branch": "&&",
-          "branchGroup": "branch:40"
+          "branchGroup": "branch:41"
         }
       ],
-      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → !collapsed &&",
+      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → Minimap && dir === 'rtl' &&",
       "isAsync": false,
       "order": 11
     },
     {
-      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/kbd-utils.ts:kbdStr::1",
+      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon::1",
       "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
-      "target": "packages/tldraw/src/lib/ui/kbd-utils.ts:kbdStr",
+      "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
       "type": "conditional-call",
       "conditions": [
         {
           "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
           "branch": "else",
-          "branchGroup": "branch:27"
+          "branchGroup": "branch:28"
         },
         {
           "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
           "branch": "else",
-          "branchGroup": "branch:36"
+          "branchGroup": "branch:37"
         },
         {
           "condition": "!collapsed &&",
@@ -54646,7 +54669,7 @@
       "order": 12
     },
     {
-      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
+      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon::2",
       "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
       "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
       "type": "conditional-call",
@@ -54654,17 +54677,17 @@
         {
           "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
           "branch": "else",
-          "branchGroup": "branch:27"
+          "branchGroup": "branch:28"
         },
         {
           "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
           "branch": "else",
-          "branchGroup": "branch:36"
+          "branchGroup": "branch:37"
         },
         {
           "condition": "!collapsed &&",
           "branch": "&&",
-          "branchGroup": "branch:40"
+          "branchGroup": "branch:62"
         }
       ],
       "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → !collapsed &&",
@@ -54672,7 +54695,7 @@
       "order": 13
     },
     {
-      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon::1",
+      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon::3",
       "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
       "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
       "type": "conditional-call",
@@ -54680,12 +54703,38 @@
         {
           "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
           "branch": "else",
-          "branchGroup": "branch:27"
+          "branchGroup": "branch:28"
         },
         {
           "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
           "branch": "else",
-          "branchGroup": "branch:36"
+          "branchGroup": "branch:37"
+        },
+        {
+          "condition": "Minimap && dir !== 'rtl' &&",
+          "branch": "&&",
+          "branchGroup": "branch:72"
+        }
+      ],
+      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → Minimap && dir !== 'rtl' &&",
+      "isAsync": false,
+      "order": 14
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel",
+      "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
+      "target": "packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
+          "branch": "else",
+          "branchGroup": "branch:28"
+        },
+        {
+          "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
+          "branch": "else",
+          "branchGroup": "branch:37"
         },
         {
           "condition": "!collapsed &&",
@@ -54695,33 +54744,85 @@
       ],
       "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → !collapsed &&",
       "isAsync": false,
-      "order": 14
+      "order": 15
     },
     {
-      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon::2",
+      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel::1",
       "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
-      "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
+      "target": "packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel",
       "type": "conditional-call",
       "conditions": [
         {
           "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
           "branch": "else",
-          "branchGroup": "branch:27"
+          "branchGroup": "branch:28"
         },
         {
           "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
           "branch": "else",
-          "branchGroup": "branch:36"
+          "branchGroup": "branch:37"
         },
         {
-          "condition": "Minimap &&",
+          "condition": "!collapsed &&",
           "branch": "&&",
-          "branchGroup": "branch:61"
+          "branchGroup": "branch:62"
         }
       ],
-      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → Minimap &&",
+      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → !collapsed &&",
       "isAsync": false,
-      "order": 15
+      "order": 16
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/kbd-utils.ts:kbdStr",
+      "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
+      "target": "packages/tldraw/src/lib/ui/kbd-utils.ts:kbdStr",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
+          "branch": "else",
+          "branchGroup": "branch:28"
+        },
+        {
+          "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
+          "branch": "else",
+          "branchGroup": "branch:37"
+        },
+        {
+          "condition": "!collapsed &&",
+          "branch": "&&",
+          "branchGroup": "branch:51"
+        }
+      ],
+      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → !collapsed &&",
+      "isAsync": false,
+      "order": 17
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel->packages/tldraw/src/lib/ui/kbd-utils.ts:kbdStr::1",
+      "source": "packages/tldraw/src/lib/ui/components/NavigationPanel/DefaultNavigationPanel.tsx:DefaultNavigationPanel",
+      "target": "packages/tldraw/src/lib/ui/kbd-utils.ts:kbdStr",
+      "type": "conditional-call",
+      "conditions": [
+        {
+          "condition": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE)",
+          "branch": "else",
+          "branchGroup": "branch:28"
+        },
+        {
+          "condition": "else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET)",
+          "branch": "else",
+          "branchGroup": "branch:37"
+        },
+        {
+          "condition": "!collapsed &&",
+          "branch": "&&",
+          "branchGroup": "branch:62"
+        }
+      ],
+      "label": "else (breakpoint < PORTRAIT_BREAKPOINT.MOBILE) → else (ZoomMenu && breakpoint < PORTRAIT_BREAKPOINT.TABLET) → !collapsed &&",
+      "isAsync": false,
+      "order": 18
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/OfflineIndicator/OfflineIndicator.tsx:OfflineIndicator->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useTranslation",
@@ -55129,12 +55230,20 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx:PeopleMenu->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx:PeopleMenu",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx:PeopleMenu->packages/tldraw/src/lib/ui/hooks/useMenuIsOpen.ts:useMenuIsOpen",
       "source": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx:PeopleMenu",
       "target": "packages/tldraw/src/lib/ui/hooks/useMenuIsOpen.ts:useMenuIsOpen",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx:PeopleMenu->packages/tldraw/src/lib/ui/context/breakpoints.tsx:useBreakpoint",
@@ -55142,7 +55251,7 @@
       "target": "packages/tldraw/src/lib/ui/context/breakpoints.tsx:useBreakpoint",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx:PeopleMenu->packages/tldraw/src/lib/ui/hooks/useCollaborationStatus.ts:useCollaborationStatus",
@@ -55150,7 +55259,7 @@
       "target": "packages/tldraw/src/lib/ui/hooks/useCollaborationStatus.ts:useCollaborationStatus",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx:PeopleMenu->packages/tldraw/src/lib/ui/components/OfflineIndicator/OfflineIndicator.tsx:OfflineIndicator",
@@ -55161,12 +55270,12 @@
         {
           "condition": "if (collaborationStatus === 'offline')",
           "branch": "then",
-          "branchGroup": "branch:34"
+          "branchGroup": "branch:35"
         }
       ],
       "label": "if (collaborationStatus === 'offline')",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx:PeopleMenu->packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenuAvatar.tsx:PeopleMenuAvatar",
@@ -55177,17 +55286,17 @@
         {
           "condition": "else (collaborationStatus === 'offline')",
           "branch": "else",
-          "branchGroup": "branch:34"
+          "branchGroup": "branch:35"
         },
         {
           "condition": "else (!userIds.length)",
           "branch": "else",
-          "branchGroup": "branch:38"
+          "branchGroup": "branch:39"
         }
       ],
       "label": "else (collaborationStatus === 'offline') → else (!userIds.length)",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx:PeopleMenu->packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenuMore.tsx:PeopleMenuMore",
@@ -55198,22 +55307,22 @@
         {
           "condition": "else (collaborationStatus === 'offline')",
           "branch": "else",
-          "branchGroup": "branch:34"
+          "branchGroup": "branch:35"
         },
         {
           "condition": "else (!userIds.length)",
           "branch": "else",
-          "branchGroup": "branch:38"
+          "branchGroup": "branch:39"
         },
         {
           "condition": "userIds.length > maxAvatars &&",
           "branch": "&&",
-          "branchGroup": "branch:60"
+          "branchGroup": "branch:61"
         }
       ],
       "label": "else (collaborationStatus === 'offline') → else (!userIds.length) → userIds.length > maxAvatars &&",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx:PeopleMenu->packages/tldraw/src/lib/ui/components/SharePanel/UserPresenceEditor.tsx:UserPresenceEditor",
@@ -55224,17 +55333,17 @@
         {
           "condition": "else (collaborationStatus === 'offline')",
           "branch": "else",
-          "branchGroup": "branch:34"
+          "branchGroup": "branch:35"
         },
         {
           "condition": "else (!userIds.length)",
           "branch": "else",
-          "branchGroup": "branch:38"
+          "branchGroup": "branch:39"
         }
       ],
       "label": "else (collaborationStatus === 'offline') → else (!userIds.length)",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenu.tsx:PeopleMenu->packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenuItem.tsx:PeopleMenuItem",
@@ -55245,22 +55354,22 @@
         {
           "condition": "else (collaborationStatus === 'offline')",
           "branch": "else",
-          "branchGroup": "branch:34"
+          "branchGroup": "branch:35"
         },
         {
           "condition": "else (!userIds.length)",
           "branch": "else",
-          "branchGroup": "branch:38"
+          "branchGroup": "branch:39"
         },
         {
           "condition": "userIds.length > 0 &&",
           "branch": "&&",
-          "branchGroup": "branch:76"
+          "branchGroup": "branch:77"
         }
       ],
       "label": "else (collaborationStatus === 'offline') → else (!userIds.length) → userIds.length > 0 &&",
       "isAsync": false,
-      "order": 8
+      "order": 9
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/PeopleMenuItem.tsx:PeopleMenuItem->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useTranslation",
@@ -55351,12 +55460,20 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/SharePanel/UserPresenceColorPicker.tsx:UserPresenceColorPicker->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/SharePanel/UserPresenceColorPicker.tsx:UserPresenceColorPicker",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/UserPresenceColorPicker.tsx:UserPresenceColorPicker->packages/tldraw/src/lib/ui/context/events.tsx:useUiEvents",
       "source": "packages/tldraw/src/lib/ui/components/SharePanel/UserPresenceColorPicker.tsx:UserPresenceColorPicker",
       "target": "packages/tldraw/src/lib/ui/context/events.tsx:useUiEvents",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/UserPresenceColorPicker.tsx:UserPresenceColorPicker->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
@@ -55364,7 +55481,7 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/UserPresenceColorPicker.tsx:UserPresenceColorPicker->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
@@ -55372,7 +55489,7 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/UserPresenceColorPicker.tsx:UserPresenceColorPicker->packages/tldraw/src/lib/ui/components/primitives/layout.tsx:TldrawUiGrid",
@@ -55380,7 +55497,7 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/layout.tsx:TldrawUiGrid",
       "type": "direct-call",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/SharePanel/UserPresenceEditor.tsx:UserPresenceEditor->packages/tldraw/src/lib/ui/context/events.tsx:useUiEvents",
@@ -58058,12 +58175,20 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:DefaultZoomMenu->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:DefaultZoomMenu",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:DefaultZoomMenu->packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenuContent.tsx:DefaultZoomMenuContent",
       "source": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:DefaultZoomMenu",
       "target": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenuContent.tsx:DefaultZoomMenuContent",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:DefaultZoomMenu->packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:ZoomTriggerButton",
@@ -58071,7 +58196,7 @@
       "target": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:ZoomTriggerButton",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:DefaultZoomMenu->packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuContext.tsx:TldrawUiMenuContextProvider",
@@ -58079,7 +58204,7 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuContext.tsx:TldrawUiMenuContextProvider",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:ZoomTriggerButton->packages/tldraw/src/lib/ui/context/breakpoints.tsx:useBreakpoint",
@@ -58098,12 +58223,20 @@
       "order": 1
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:ZoomTriggerButton->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:ZoomTriggerButton",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:ZoomTriggerButton->packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbarButton",
       "source": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenu.tsx:ZoomTriggerButton",
       "target": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbarButton",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/ZoomMenu/DefaultZoomMenuContent.tsx:DefaultZoomMenuContent->packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuActionItem.tsx:TldrawUiMenuActionItem",
@@ -59827,6 +59960,14 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDialog.tsx:TldrawUiDialogTitle->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDialog.tsx:TldrawUiDialogTitle",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDialog.tsx:TldrawUiDialogCloseButton->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useTranslation",
       "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDialog.tsx:TldrawUiDialogCloseButton",
       "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useTranslation",
@@ -59835,12 +59976,20 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDialog.tsx:TldrawUiDialogCloseButton->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDialog.tsx:TldrawUiDialogCloseButton",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDialog.tsx:TldrawUiDialogCloseButton->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
       "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDialog.tsx:TldrawUiDialogCloseButton",
       "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDialog.tsx:TldrawUiDialogCloseButton->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
@@ -59848,12 +59997,28 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuRoot->packages/tldraw/src/lib/ui/hooks/useMenuIsOpen.ts:useMenuIsOpen",
       "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuRoot",
       "target": "packages/tldraw/src/lib/ui/hooks/useMenuIsOpen.ts:useMenuIsOpen",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuRoot->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuRoot",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuTrigger->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuTrigger",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
       "type": "direct-call",
       "isAsync": false,
       "order": 0
@@ -59867,12 +60032,20 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuSubTrigger->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuSubTrigger",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuSubTrigger->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
       "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuSubTrigger",
       "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
       "type": "direct-call",
       "isAsync": false,
-      "order": 0
+      "order": 1
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuSubTrigger->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonLabel.tsx:TldrawUiButtonLabel",
@@ -59880,7 +60053,7 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonLabel.tsx:TldrawUiButtonLabel",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuSubTrigger->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
@@ -59888,7 +60061,15 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuGroup->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuGroup",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuIndicator->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useTranslation",
@@ -59899,12 +60080,28 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuIndicator->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuIndicator",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuIndicator->packages/tldraw/src/lib/ui/components/primitives/TldrawUiIcon.tsx:TldrawUiIcon",
       "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuIndicator",
       "target": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiIcon.tsx:TldrawUiIcon",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuItem->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuItem",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuCheckboxItem->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useTranslation",
@@ -59915,12 +60112,20 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuCheckboxItem->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuCheckboxItem",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuCheckboxItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiIcon.tsx:TldrawUiIcon",
       "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuCheckboxItem",
       "target": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiIcon.tsx:TldrawUiIcon",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiIcon.tsx:TldrawUiIcon->packages/tldraw/src/lib/ui/components/primitives/TldrawUiIcon.tsx:TldrawUIIconInner",
@@ -60019,12 +60224,36 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiPopover.tsx:TldrawUiPopoverTrigger->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiPopover.tsx:TldrawUiPopoverTrigger",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiPopover.tsx:TldrawUiPopoverContent->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiPopover.tsx:TldrawUiPopoverContent",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSelect.tsx:TldrawUiSelect->packages/tldraw/src/lib/ui/hooks/useMenuIsOpen.ts:useMenuIsOpen",
       "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSelect.tsx:TldrawUiSelect",
       "target": "packages/tldraw/src/lib/ui/hooks/useMenuIsOpen.ts:useMenuIsOpen",
       "type": "direct-call",
       "isAsync": false,
       "order": 0
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSelect.tsx:TldrawUiSelect->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSelect.tsx:TldrawUiSelect",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSelect.tsx:TldrawUiSelectTrigger->packages/tldraw/src/lib/ui/components/primitives/TldrawUiIcon.tsx:TldrawUiIcon",
@@ -60043,7 +60272,7 @@
         {
           "condition": "icon &&",
           "branch": "&&",
-          "branchGroup": "branch:125"
+          "branchGroup": "branch:127"
         }
       ],
       "label": "icon &&",
@@ -60067,12 +60296,20 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSlider.tsx:TldrawUiSlider->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSlider.tsx:TldrawUiSlider",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 1
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSlider.tsx:TldrawUiSlider->packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:hideAllTooltips",
       "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSlider.tsx:TldrawUiSlider",
       "target": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:hideAllTooltips",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiSlider.tsx:TldrawUiSlider->packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TldrawUiTooltip",
@@ -60080,7 +60317,7 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TldrawUiTooltip",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbarButton->packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TldrawUiTooltip",
@@ -60107,7 +60344,7 @@
         {
           "condition": "if (!TooltipManager.instance)",
           "branch": "then",
-          "branchGroup": "branch:64"
+          "branchGroup": "branch:65"
         }
       ],
       "label": "if (!TooltipManager.instance)",
@@ -60131,6 +60368,14 @@
       "order": 0
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TooltipSingleton->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TooltipSingleton",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TooltipSingleton->packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:hideAllTooltips",
       "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TooltipSingleton",
       "target": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:hideAllTooltips",
@@ -60139,10 +60384,18 @@
         {
           "condition": "if (event.key === 'Escape' && currentTooltip && isOpen)",
           "branch": "then",
-          "branchGroup": "branch:231"
+          "branchGroup": "branch:233"
         }
       ],
       "label": "if (event.key === 'Escape' && currentTooltip && isOpen)",
+      "isAsync": false,
+      "order": 1
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TldrawUiTooltip->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TldrawUiTooltip",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
       "isAsync": false,
       "order": 0
     },
@@ -60152,7 +60405,7 @@
       "target": "packages/tldraw/src/lib/ui/components/primitives/layout.tsx:useTldrawUiOrientation",
       "type": "direct-call",
       "isAsync": false,
-      "order": 0
+      "order": 1
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/layout.tsx:TldrawUiOrientationProvider->packages/tldraw/src/lib/ui/components/primitives/layout.tsx:useTldrawUiOrientation",
@@ -60259,6 +60512,14 @@
       "order": 2
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuCheckboxItem.tsx:TldrawUiMenuCheckboxItem->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuCheckboxItem.tsx:TldrawUiMenuCheckboxItem",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 3
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuCheckboxItem.tsx:TldrawUiMenuCheckboxItem->packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel",
       "source": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuCheckboxItem.tsx:TldrawUiMenuCheckboxItem",
       "target": "packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel",
@@ -60267,12 +60528,12 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:46"
+          "branchGroup": "branch:47"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk)",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuCheckboxItem.tsx:TldrawUiMenuCheckboxItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiIcon.tsx:TldrawUiIcon",
@@ -60283,17 +60544,17 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:46"
+          "branchGroup": "branch:47"
         },
         {
           "condition": "switch (menuType): case 'menu'",
           "branch": "case 'menu'",
-          "branchGroup": "branch:52"
+          "branchGroup": "branch:53"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'menu'",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuCheckboxItem.tsx:TldrawUiMenuCheckboxItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiIcon.tsx:TldrawUiIcon::1",
@@ -60304,17 +60565,17 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:46"
+          "branchGroup": "branch:47"
         },
         {
           "condition": "switch (menuType): case 'context-menu'",
           "branch": "case 'context-menu'",
-          "branchGroup": "branch:52"
+          "branchGroup": "branch:53"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'context-menu'",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuCheckboxItem.tsx:TldrawUiMenuCheckboxItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiKbd.tsx:TldrawUiKbd",
@@ -60325,22 +60586,22 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:46"
+          "branchGroup": "branch:47"
         },
         {
           "condition": "switch (menuType): case 'menu'",
           "branch": "case 'menu'",
-          "branchGroup": "branch:52"
+          "branchGroup": "branch:53"
         },
         {
           "condition": "kbd &&",
           "branch": "&&",
-          "branchGroup": "branch:79"
+          "branchGroup": "branch:80"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'menu' → kbd &&",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuCheckboxItem.tsx:TldrawUiMenuCheckboxItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiKbd.tsx:TldrawUiKbd::1",
@@ -60351,22 +60612,22 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:46"
+          "branchGroup": "branch:47"
         },
         {
           "condition": "switch (menuType): case 'context-menu'",
           "branch": "case 'context-menu'",
-          "branchGroup": "branch:52"
+          "branchGroup": "branch:53"
         },
         {
           "condition": "kbd &&",
           "branch": "&&",
-          "branchGroup": "branch:108"
+          "branchGroup": "branch:109"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'context-menu' → kbd &&",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuGroup.tsx:TldrawUiMenuGroup->packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuContext.tsx:useTldrawUiMenuContext",
@@ -60393,12 +60654,20 @@
       "order": 2
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuGroup.tsx:TldrawUiMenuGroup->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuGroup.tsx:TldrawUiMenuGroup",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 3
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuGroup.tsx:TldrawUiMenuGroup->packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel",
       "source": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuGroup.tsx:TldrawUiMenuGroup",
       "target": "packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel",
       "type": "direct-call",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuGroup.tsx:TldrawUiMenuGroup->packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuGroup",
@@ -60409,12 +60678,12 @@
         {
           "condition": "switch (menu.type): case 'menu'",
           "branch": "case 'menu'",
-          "branchGroup": "branch:26"
+          "branchGroup": "branch:27"
         }
       ],
       "label": "switch (menu.type): case 'menu'",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuGroup.tsx:TldrawUiMenuGroup->packages/tldraw/src/lib/ui/components/primitives/layout.tsx:TldrawUiGrid",
@@ -60425,12 +60694,12 @@
         {
           "condition": "switch (menu.type): case 'toolbar-overflow'",
           "branch": "case 'toolbar-overflow'",
-          "branchGroup": "branch:26"
+          "branchGroup": "branch:27"
         }
       ],
       "label": "switch (menu.type): case 'toolbar-overflow'",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuContext.tsx:useTldrawUiMenuContext",
@@ -60449,12 +60718,20 @@
       "order": 1
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/hooks/useReadonly.ts:useReadonly",
       "source": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem",
       "target": "packages/tldraw/src/lib/ui/hooks/useReadonly.ts:useReadonly",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/context/actions.tsx:unwrapLabel",
@@ -60465,12 +60742,12 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk)",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/kbd-utils.ts:kbdStr",
@@ -60481,17 +60758,17 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "if (kbd)",
           "branch": "then",
-          "branchGroup": "branch:109"
+          "branchGroup": "branch:110"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → if (kbd)",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuItem",
@@ -60502,17 +60779,17 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'menu'",
           "branch": "case 'menu'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'menu'",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
@@ -60523,17 +60800,17 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'menu'",
           "branch": "case 'menu'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'menu'",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton::1",
@@ -60544,17 +60821,17 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'helper-buttons'",
           "branch": "case 'helper-buttons'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'helper-buttons'",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
@@ -60565,22 +60842,22 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'menu'",
           "branch": "case 'menu'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "iconLeft &&",
           "branch": "&&",
-          "branchGroup": "branch:133"
+          "branchGroup": "branch:134"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'menu' → iconLeft &&",
       "isAsync": false,
-      "order": 8
+      "order": 9
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon::1",
@@ -60591,27 +60868,27 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'context-menu'",
           "branch": "case 'context-menu'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "else (disabled)",
           "branch": "else",
-          "branchGroup": "branch:140"
+          "branchGroup": "branch:141"
         },
         {
           "condition": "iconLeft &&",
           "branch": "&&",
-          "branchGroup": "branch:162"
+          "branchGroup": "branch:163"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'context-menu' → else (disabled) → iconLeft &&",
       "isAsync": false,
-      "order": 9
+      "order": 10
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon::2",
@@ -60622,17 +60899,17 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'small-icons' | 'icons'",
           "branch": "case 'small-icons' | 'icons'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'small-icons' | 'icons'",
       "isAsync": false,
-      "order": 10
+      "order": 11
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon::3",
@@ -60643,17 +60920,17 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'helper-buttons'",
           "branch": "case 'helper-buttons'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'helper-buttons'",
       "isAsync": false,
-      "order": 11
+      "order": 12
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon::4",
@@ -60664,22 +60941,22 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'toolbar'",
           "branch": "case 'toolbar'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "else (onDragStart)",
           "branch": "else",
-          "branchGroup": "branch:211"
+          "branchGroup": "branch:212"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'toolbar' → else (onDragStart)",
       "isAsync": false,
-      "order": 12
+      "order": 13
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon::5",
@@ -60690,22 +60967,22 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'toolbar-overflow'",
           "branch": "case 'toolbar-overflow'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "else (onDragStart)",
           "branch": "else",
-          "branchGroup": "branch:245"
+          "branchGroup": "branch:246"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'toolbar-overflow' → else (onDragStart)",
       "isAsync": false,
-      "order": 13
+      "order": 14
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonLabel.tsx:TldrawUiButtonLabel",
@@ -60716,17 +60993,17 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'menu'",
           "branch": "case 'menu'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'menu'",
       "isAsync": false,
-      "order": 14
+      "order": 15
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonLabel.tsx:TldrawUiButtonLabel::1",
@@ -60737,17 +61014,17 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'helper-buttons'",
           "branch": "case 'helper-buttons'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'helper-buttons'",
       "isAsync": false,
-      "order": 15
+      "order": 16
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiKbd.tsx:TldrawUiKbd",
@@ -60758,22 +61035,22 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'menu'",
           "branch": "case 'menu'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "kbd &&",
           "branch": "&&",
-          "branchGroup": "branch:135"
+          "branchGroup": "branch:136"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'menu' → kbd &&",
       "isAsync": false,
-      "order": 16
+      "order": 17
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiKbd.tsx:TldrawUiKbd::1",
@@ -60784,27 +61061,27 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'context-menu'",
           "branch": "case 'context-menu'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "else (disabled)",
           "branch": "else",
-          "branchGroup": "branch:140"
+          "branchGroup": "branch:141"
         },
         {
           "condition": "kbd &&",
           "branch": "&&",
-          "branchGroup": "branch:163"
+          "branchGroup": "branch:164"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'context-menu' → else (disabled) → kbd &&",
       "isAsync": false,
-      "order": 17
+      "order": 18
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiKbd.tsx:TldrawUiKbd::2",
@@ -60815,22 +61092,22 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'keyboard-shortcuts'",
           "branch": "case 'keyboard-shortcuts'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "else (!kbd)",
           "branch": "else",
-          "branchGroup": "branch:182"
+          "branchGroup": "branch:183"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'keyboard-shortcuts' → else (!kbd)",
       "isAsync": false,
-      "order": 18
+      "order": 19
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/Spinner.tsx:Spinner",
@@ -60841,27 +61118,27 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'context-menu'",
           "branch": "case 'context-menu'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "else (disabled)",
           "branch": "else",
-          "branchGroup": "branch:140"
+          "branchGroup": "branch:141"
         },
         {
           "condition": "spinner &&",
           "branch": "&&",
-          "branchGroup": "branch:164"
+          "branchGroup": "branch:165"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'context-menu' → else (disabled) → spinner &&",
       "isAsync": false,
-      "order": 19
+      "order": 20
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbarButton",
@@ -60872,17 +61149,17 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'small-icons' | 'icons'",
           "branch": "case 'small-icons' | 'icons'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'small-icons' | 'icons'",
       "isAsync": false,
-      "order": 20
+      "order": 21
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbarButton::1",
@@ -60893,22 +61170,22 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'toolbar'",
           "branch": "case 'toolbar'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "else (onDragStart)",
           "branch": "else",
-          "branchGroup": "branch:211"
+          "branchGroup": "branch:212"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'toolbar' → else (onDragStart)",
       "isAsync": false,
-      "order": 21
+      "order": 22
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/TldrawUiToolbar.tsx:TldrawUiToolbarButton::2",
@@ -60919,22 +61196,22 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'toolbar-overflow'",
           "branch": "case 'toolbar-overflow'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "else (onDragStart)",
           "branch": "else",
-          "branchGroup": "branch:245"
+          "branchGroup": "branch:246"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'toolbar-overflow' → else (onDragStart)",
       "isAsync": false,
-      "order": 22
+      "order": 23
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:DraggableToolbarButton",
@@ -60945,22 +61222,22 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'toolbar'",
           "branch": "case 'toolbar'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "if (onDragStart)",
           "branch": "then",
-          "branchGroup": "branch:211"
+          "branchGroup": "branch:212"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'toolbar' → if (onDragStart)",
       "isAsync": false,
-      "order": 23
+      "order": 24
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:TldrawUiMenuItem->packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:DraggableToolbarButton::1",
@@ -60971,22 +61248,22 @@
         {
           "condition": "else (isReadonlyMode && !readonlyOk)",
           "branch": "else",
-          "branchGroup": "branch:105"
+          "branchGroup": "branch:106"
         },
         {
           "condition": "switch (menuType): case 'toolbar-overflow'",
           "branch": "case 'toolbar-overflow'",
-          "branchGroup": "branch:112"
+          "branchGroup": "branch:113"
         },
         {
           "condition": "if (onDragStart)",
           "branch": "then",
-          "branchGroup": "branch:245"
+          "branchGroup": "branch:246"
         }
       ],
       "label": "else (isReadonlyMode && !readonlyOk) → switch (menuType): case 'toolbar-overflow' → if (onDragStart)",
       "isAsync": false,
-      "order": 24
+      "order": 25
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuItem.tsx:useDraggableEvents->packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:hideAllTooltips",
@@ -60997,17 +61274,17 @@
         {
           "condition": "else ((e as any).isSpecialRedispatchedEvent)",
           "branch": "else",
-          "branchGroup": "branch:314"
+          "branchGroup": "branch:315"
         },
         {
           "condition": "if (state.name === 'pointing')",
           "branch": "then",
-          "branchGroup": "branch:315"
+          "branchGroup": "branch:316"
         },
         {
           "condition": "if (distanceSq >\n\t\t\t\t\t(editor.getInstanceState().isCoarsePointer)",
           "branch": "then",
-          "branchGroup": "branch:318"
+          "branchGroup": "branch:319"
         }
       ],
       "label": "else ((e as any).isSpecialRedispatchedEvent) → if (state.name === 'pointing') → if (distanceSq >\n\t\t\t\t\t(editor.getInstanceState().isCoarsePointer)",
@@ -61055,6 +61332,14 @@
       "order": 1
     },
     {
+      "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:TldrawUiMenuSubmenu->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "source": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:TldrawUiMenuSubmenu",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 2
+    },
+    {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:TldrawUiMenuSubmenu->packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuSub",
       "source": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:TldrawUiMenuSubmenu",
       "target": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuSub",
@@ -61063,12 +61348,12 @@
         {
           "condition": "switch (menuType): case 'menu'",
           "branch": "case 'menu'",
-          "branchGroup": "branch:41"
+          "branchGroup": "branch:42"
         }
       ],
       "label": "switch (menuType): case 'menu'",
       "isAsync": false,
-      "order": 2
+      "order": 3
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:TldrawUiMenuSubmenu->packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuSubTrigger",
@@ -61079,12 +61364,12 @@
         {
           "condition": "switch (menuType): case 'menu'",
           "branch": "case 'menu'",
-          "branchGroup": "branch:41"
+          "branchGroup": "branch:42"
         }
       ],
       "label": "switch (menuType): case 'menu'",
       "isAsync": false,
-      "order": 3
+      "order": 4
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:TldrawUiMenuSubmenu->packages/tldraw/src/lib/ui/components/primitives/TldrawUiDropdownMenu.tsx:TldrawUiDropdownMenuSubContent",
@@ -61095,12 +61380,12 @@
         {
           "condition": "switch (menuType): case 'menu'",
           "branch": "case 'menu'",
-          "branchGroup": "branch:41"
+          "branchGroup": "branch:42"
         }
       ],
       "label": "switch (menuType): case 'menu'",
       "isAsync": false,
-      "order": 4
+      "order": 5
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:TldrawUiMenuSubmenu->packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:ContextMenuSubWithMenu",
@@ -61111,17 +61396,17 @@
         {
           "condition": "switch (menuType): case 'context-menu'",
           "branch": "case 'context-menu'",
-          "branchGroup": "branch:41"
+          "branchGroup": "branch:42"
         },
         {
           "condition": "else (disabled)",
           "branch": "else",
-          "branchGroup": "branch:59"
+          "branchGroup": "branch:60"
         }
       ],
       "label": "switch (menuType): case 'context-menu' → else (disabled)",
       "isAsync": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:TldrawUiMenuSubmenu->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButton.tsx:TldrawUiButton",
@@ -61132,17 +61417,17 @@
         {
           "condition": "switch (menuType): case 'context-menu'",
           "branch": "case 'context-menu'",
-          "branchGroup": "branch:41"
+          "branchGroup": "branch:42"
         },
         {
           "condition": "else (disabled)",
           "branch": "else",
-          "branchGroup": "branch:59"
+          "branchGroup": "branch:60"
         }
       ],
       "label": "switch (menuType): case 'context-menu' → else (disabled)",
       "isAsync": false,
-      "order": 6
+      "order": 7
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:TldrawUiMenuSubmenu->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonLabel.tsx:TldrawUiButtonLabel",
@@ -61153,17 +61438,17 @@
         {
           "condition": "switch (menuType): case 'context-menu'",
           "branch": "case 'context-menu'",
-          "branchGroup": "branch:41"
+          "branchGroup": "branch:42"
         },
         {
           "condition": "else (disabled)",
           "branch": "else",
-          "branchGroup": "branch:59"
+          "branchGroup": "branch:60"
         }
       ],
       "label": "switch (menuType): case 'context-menu' → else (disabled)",
       "isAsync": false,
-      "order": 7
+      "order": 8
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:TldrawUiMenuSubmenu->packages/tldraw/src/lib/ui/components/primitives/Button/TldrawUiButtonIcon.tsx:TldrawUiButtonIcon",
@@ -61174,17 +61459,17 @@
         {
           "condition": "switch (menuType): case 'context-menu'",
           "branch": "case 'context-menu'",
-          "branchGroup": "branch:41"
+          "branchGroup": "branch:42"
         },
         {
           "condition": "else (disabled)",
           "branch": "else",
-          "branchGroup": "branch:59"
+          "branchGroup": "branch:60"
         }
       ],
       "label": "switch (menuType): case 'context-menu' → else (disabled)",
       "isAsync": false,
-      "order": 8
+      "order": 9
     },
     {
       "id": "packages/tldraw/src/lib/ui/components/primitives/menus/TldrawUiMenuSubmenu.tsx:ContextMenuSubWithMenu->packages/tldraw/src/lib/ui/hooks/useMenuIsOpen.ts:useMenuIsOpen",
@@ -61219,20 +61504,12 @@
       "order": 1
     },
     {
-      "id": "packages/tldraw/src/lib/ui/context/TldrawUiContextProvider.tsx:TldrawUiContextProvider->packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TldrawUiTooltipProvider",
-      "source": "packages/tldraw/src/lib/ui/context/TldrawUiContextProvider.tsx:TldrawUiContextProvider",
-      "target": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TldrawUiTooltipProvider",
-      "type": "direct-call",
-      "isAsync": false,
-      "order": 0
-    },
-    {
       "id": "packages/tldraw/src/lib/ui/context/TldrawUiContextProvider.tsx:TldrawUiContextProvider->packages/tldraw/src/lib/ui/context/asset-urls.tsx:AssetUrlsProvider",
       "source": "packages/tldraw/src/lib/ui/context/TldrawUiContextProvider.tsx:TldrawUiContextProvider",
       "target": "packages/tldraw/src/lib/ui/context/asset-urls.tsx:AssetUrlsProvider",
       "type": "direct-call",
       "isAsync": false,
-      "order": 1
+      "order": 0
     },
     {
       "id": "packages/tldraw/src/lib/ui/context/TldrawUiContextProvider.tsx:TldrawUiContextProvider->packages/tldraw/src/lib/ui/assetUrls.ts:useDefaultUiAssetUrlsWithOverrides",
@@ -61240,7 +61517,7 @@
       "target": "packages/tldraw/src/lib/ui/assetUrls.ts:useDefaultUiAssetUrlsWithOverrides",
       "type": "direct-call",
       "isAsync": false,
-      "order": 2
+      "order": 1
     },
     {
       "id": "packages/tldraw/src/lib/ui/context/TldrawUiContextProvider.tsx:TldrawUiContextProvider->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:TldrawUiTranslationProvider",
@@ -61248,12 +61525,20 @@
       "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:TldrawUiTranslationProvider",
       "type": "direct-call",
       "isAsync": true,
-      "order": 3
+      "order": 2
     },
     {
       "id": "packages/tldraw/src/lib/ui/context/TldrawUiContextProvider.tsx:TldrawUiContextProvider->packages/tldraw/src/lib/ui/overrides.ts:useMergedTranslationOverrides",
       "source": "packages/tldraw/src/lib/ui/context/TldrawUiContextProvider.tsx:TldrawUiContextProvider",
       "target": "packages/tldraw/src/lib/ui/overrides.ts:useMergedTranslationOverrides",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 3
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/context/TldrawUiContextProvider.tsx:TldrawUiContextProvider->packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TldrawUiTooltipProvider",
+      "source": "packages/tldraw/src/lib/ui/context/TldrawUiContextProvider.tsx:TldrawUiContextProvider",
+      "target": "packages/tldraw/src/lib/ui/components/primitives/TldrawUiTooltip.tsx:TldrawUiTooltipProvider",
       "type": "direct-call",
       "isAsync": false,
       "order": 4
@@ -62687,6 +62972,14 @@
       "type": "direct-call",
       "isAsync": true,
       "order": 1
+    },
+    {
+      "id": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection->packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useCurrentTranslation",
+      "source": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useDirection",
+      "target": "packages/tldraw/src/lib/ui/hooks/useTranslation/useTranslation.tsx:useCurrentTranslation",
+      "type": "direct-call",
+      "isAsync": false,
+      "order": 0
     },
     {
       "id": "packages/tldraw/src/lib/ui/kbd-utils.ts:kbdStr->packages/tldraw/src/lib/ui/kbd-utils.ts:kbd",
