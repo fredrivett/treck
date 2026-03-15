@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-14T04:31:18.653Z",
+  "generatedAt": "2026-03-15T04:44:59.130Z",
   "nodes": [
     {
       "id": "packages/editor/src/lib/TldrawEditor.tsx:TldrawEditor",
@@ -7025,10 +7025,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/Vec.ts",
       "isAsync": false,
-      "hash": "512b461406cd26984a8faa07fa8dfefd0843c3cf72395b1c89d56db6c916851e",
+      "hash": "b9b5bf10f700a4134ac2af9c79a0ccf3b16bc44d9f9547fb050ae9fd185bf38c",
       "lineRange": [
         12,
-        644
+        653
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -7039,10 +7039,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/Arc2d.ts",
       "isAsync": false,
-      "hash": "0f1a5ab33cdeac6a9f34455df6c04593a157b8538d12b65b61eb78f7082e4988",
+      "hash": "adaff594a3ab1c1a45b0e8af9c332d082bb28f6a525a03779652c3d51a30bfae",
       "lineRange": [
         5,
-        111
+        114
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -7053,10 +7053,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/Circle2d.ts",
       "isAsync": false,
-      "hash": "2385900fa3b25d0269f0881bfe76bc9eba76a02fed21142a3ac6ace489cbd0d7",
+      "hash": "46141acd4e270a06705953730987a35387b7560a3b199e52fd159f8f2c27dbbc",
       "lineRange": [
         6,
-        92
+        99
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -7095,10 +7095,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/Edge2d.ts",
       "isAsync": false,
-      "hash": "66ba1dd29025e21e83e3f2e1b8c7380649ad00f13e5b6b9a0ba92be4694e6718",
+      "hash": "b5ae4f497d9404f5b6ecf8cb762b02b1b60cc682c385007836bfd8b8493b64c7",
       "lineRange": [
         2,
-        68
+        73
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -7193,10 +7193,10 @@
       "kind": "class",
       "filePath": "packages/editor/src/lib/primitives/geometry/Polyline2d.ts",
       "isAsync": false,
-      "hash": "219439c36c6d86a9d2a992b5f20326ce9d9b3bc84df7e204ddee2cd750e093f6",
+      "hash": "bd2836af4f10c8c672cfe47223cb083b5162dcb19cda437bf0a7e693c7d80fb7",
       "lineRange": [
         4,
-        128
+        131
       ],
       "hasJsDoc": false,
       "isExported": true
@@ -7287,10 +7287,10 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/primitives/intersect.ts",
       "isAsync": false,
-      "hash": "562c8cf1b4041ada21e381f069b3086862b99b7d3885441e0fc6897dd8e5e02c",
+      "hash": "88d634f7161e58dedf00d325df1c9ea4e45abe12e81dd27ed50eae138ae2d6d4",
       "lineRange": [
         3,
-        44
+        48
       ],
       "hasJsDoc": true,
       "description": "Find the intersection between a line segment and a line segment.",
@@ -7339,10 +7339,10 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/primitives/intersect.ts",
       "isAsync": false,
-      "hash": "f0f33672fc3cf235a884ae7d1111df581a22d19f002b0f7a6130810a7166e1ff",
+      "hash": "ae3e767f8a54d6d32ea2ab8568fee67f350c1f6b293a5069b9ae6b4d9e84ff24",
       "lineRange": [
-        44,
-        84
+        48,
+        91
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a line segment and a circle.",
@@ -7386,8 +7386,8 @@
       "isAsync": false,
       "hash": "57b660276ae30660617247894bdd561910a86e5b48e0642b66967fd76e07001f",
       "lineRange": [
-        84,
-        106
+        91,
+        113
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a line segment and a polyline.",
@@ -7424,8 +7424,8 @@
       "isAsync": false,
       "hash": "4b1af61a1b0c4182dfb14aebe38e963d70753270741aeb7e92e5cf2a6c490fb5",
       "lineRange": [
-        106,
-        134
+        113,
+        141
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a line segment and a closed polygon.",
@@ -7462,8 +7462,8 @@
       "isAsync": false,
       "hash": "cd79fb2d888ba100cc9ad1afb73a0fc1a6e3a412dfba5c9190426f66ff8ddcd9",
       "lineRange": [
-        134,
-        157
+        141,
+        164
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a circle and a circle.",
@@ -7507,8 +7507,8 @@
       "isAsync": false,
       "hash": "51777c586aca6b11579099699e4051f2facbc9cee1ab9db18ba058ca9f6d3e83",
       "lineRange": [
-        157,
-        181
+        164,
+        188
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a circle and a bounding box.",
@@ -7545,8 +7545,8 @@
       "isAsync": false,
       "hash": "97638a7d5251d57e93acfc2aab58236586e21106315567b09e4a8e07f770622e",
       "lineRange": [
-        181,
-        205
+        188,
+        212
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a circle and a bounding box.",
@@ -7583,8 +7583,8 @@
       "isAsync": false,
       "hash": "ab3f97633abd894cccf0d84dd8c64375444242a19543b32f8de26ba5d0c8e797",
       "lineRange": [
-        205,
-        224
+        212,
+        231
       ],
       "hasJsDoc": true,
       "description": "Find the intersections between a polygon and a bounding box.",
@@ -7612,8 +7612,8 @@
       "isAsync": false,
       "hash": "02c9c57c341ad050a954400a006eceafd526d37a82666bd25264c76f9ff0e7af",
       "lineRange": [
-        224,
-        228
+        231,
+        235
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -7647,8 +7647,8 @@
       "isAsync": false,
       "hash": "a1476d0b1ba71bea88def539ab75213e63b7d6931f8321381c360f6bcc5296df",
       "lineRange": [
-        228,
-        233
+        235,
+        240
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -7688,8 +7688,8 @@
       "isAsync": false,
       "hash": "e2cb91c42e16837061da3c658862405c9320eb9ed7ed0023c8db65b9df59e38e",
       "lineRange": [
-        233,
-        294
+        240,
+        301
       ],
       "hasJsDoc": true,
       "description": "Create a new convex polygon as the intersection of two convex polygons.",
@@ -7720,8 +7720,8 @@
       "isAsync": false,
       "hash": "2451bcd47a051e83cbdf4bdb0d0cc6bc9513539af91098b536d9f15dc2663b46",
       "lineRange": [
-        294,
-        335
+        301,
+        342
       ],
       "hasJsDoc": true,
       "description": "Find all the points where `polyA` and `polyB` intersect and returns them in an undefined order.\nTo find the polygon that's the intersection of polyA and polyB, use `intersectPolygonPolygon`\ninstead, which orders the points and includes internal points.",
@@ -7766,8 +7766,8 @@
       "isAsync": false,
       "hash": "4490231eaa274a5b2692cf4fd3f8d89dec5fed6359383430be6b962762e5e8a9",
       "lineRange": [
-        335,
-        339
+        342,
+        346
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -7789,8 +7789,8 @@
       "isAsync": false,
       "hash": "b990f38754032f112dc344cbabacbe33a7222f747b7843dc92635e548ad3436c",
       "lineRange": [
-        339,
-        344
+        346,
+        351
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -7812,8 +7812,8 @@
       "isAsync": false,
       "hash": "731a86e6cd81946945be6d494cc102007ab0fd3e6a0f638967d308b40a4929b4",
       "lineRange": [
-        344,
-        359
+        351,
+        366
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -7840,8 +7840,8 @@
       "isAsync": false,
       "hash": "3479533c02f7f0d78e67ea0912bffd88dde82420bd44b0fa16cefcded9b9182b",
       "lineRange": [
-        359,
-        375
+        366,
+        382
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -8637,10 +8637,10 @@
       "kind": "function",
       "filePath": "packages/editor/src/lib/primitives/utils.ts",
       "isAsync": false,
-      "hash": "b03d1c00445f631560a3efb5fc07898fb3e27f4af6ee51748e9e129cd85f3568",
+      "hash": "aaa9670f63a28e593c3c9c4230def8243f97efa3f99d41c529de75bc20734849",
       "lineRange": [
         308,
-        341
+        344
       ],
       "hasJsDoc": true,
       "description": "Get whether a point is inside of a polygon.\n\n```ts\nconst result = pointInPolygon(myPoint, myPoints)\n```",
@@ -8669,8 +8669,8 @@
       "isAsync": false,
       "hash": "90a16326c919fe6d4fdd0ab740617c9f901334dc5a1559fa172f5f6b28acd8f5",
       "lineRange": [
-        341,
-        350
+        344,
+        353
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -8693,8 +8693,8 @@
       "isAsync": false,
       "hash": "c84d770a619ef3196a44039d40ba90a6babd94395fb2c48e944982eaa30a5239",
       "lineRange": [
-        350,
-        357
+        353,
+        360
       ],
       "hasJsDoc": false,
       "isTrivial": true,
@@ -8716,8 +8716,8 @@
       "isAsync": false,
       "hash": "93aff00885f75c3b389e3880f1b09165f2c8107647526894f0f2698ec4be6c18",
       "lineRange": [
-        363,
-        365
+        366,
+        368
       ],
       "hasJsDoc": true,
       "isTrivial": true,
@@ -8740,8 +8740,8 @@
       "isAsync": false,
       "hash": "0e475ba94aadc8a09f79d2a745a2310b26db3c52c8a40a520c16a05f5b12d578",
       "lineRange": [
-        365,
-        381
+        368,
+        384
       ],
       "hasJsDoc": true,
       "description": "Get the angle of a point on an arc.",
@@ -8778,8 +8778,8 @@
       "isAsync": false,
       "hash": "d775b810edd87ad5416eea9b2f69f1ffa890b8a09eff1aea35beda20ee115cc1",
       "lineRange": [
-        381,
-        418
+        384,
+        421
       ],
       "hasJsDoc": true,
       "description": "Returns the t value of the point on the arc.",
@@ -8824,8 +8824,8 @@
       "isAsync": false,
       "hash": "54057d02a76b45db4faf023397ffa6f7dda174930f777cdd01af239b5904368c",
       "lineRange": [
-        418,
-        436
+        421,
+        439
       ],
       "hasJsDoc": true,
       "description": "Get the measure of an arc.",
@@ -8869,8 +8869,8 @@
       "isAsync": false,
       "hash": "5fd6b2dae326b7c4027a5ed200d14d99c336b62748b3b89e0cd3ce79d482ca27",
       "lineRange": [
-        436,
-        465
+        439,
+        468
       ],
       "hasJsDoc": true,
       "description": "Get the center of a circle from three points.",
@@ -8907,8 +8907,8 @@
       "isAsync": false,
       "hash": "8e0d43d4d3b990af387073bb7ce775e5e6b0e19af001f63cd37d2133cbf3b080",
       "lineRange": [
-        465,
-        489
+        468,
+        492
       ],
       "hasJsDoc": false,
       "structuredParams": [
@@ -39528,7 +39528,7 @@
         {
           "condition": "else (len === 0)",
           "branch": "else",
-          "branchGroup": "branch:62"
+          "branchGroup": "branch:65"
         }
       ],
       "label": "else (t <= 0) → else (t >= 1) → else (len === 0)",
@@ -39706,17 +39706,17 @@
         {
           "condition": "else (len2 === 0)",
           "branch": "else",
-          "branchGroup": "branch:32"
+          "branchGroup": "branch:35"
         },
         {
           "condition": "else (t <= 0)",
           "branch": "else",
-          "branchGroup": "branch:36"
+          "branchGroup": "branch:38"
         },
         {
           "condition": "else (t >= 1)",
           "branch": "else",
-          "branchGroup": "branch:37"
+          "branchGroup": "branch:39"
         }
       ],
       "label": "else (len2 === 0) → else (t <= 0) → else (t >= 1)",
@@ -40251,7 +40251,7 @@
         {
           "condition": "this.isClosed && (this.isFilled || hitInside) &&",
           "branch": "&&",
-          "branchGroup": "branch:103"
+          "branchGroup": "branch:106"
         }
       ],
       "label": "this.isClosed && (this.isFilled || hitInside) &&",
@@ -40360,12 +40360,12 @@
         {
           "condition": "else (Math.abs(u_b) <= precision)",
           "branch": "else",
-          "branchGroup": "branch:32"
+          "branchGroup": "branch:34"
         },
         {
           "condition": "if (ua >= -precision && ua <= 1 + precision && ub >= -precision )",
           "branch": "then",
-          "branchGroup": "branch:37"
+          "branchGroup": "branch:39"
         }
       ],
       "label": "else (Math.abs(ua_t) <= precision || Math.abs(ub_t) <= precision) → else (Math.abs(u_b) <= precision) → if (ua >= -precision && ua <= 1 + precision && ub >= -precision )",
@@ -40381,17 +40381,17 @@
         {
           "condition": "else (deter <= 0)",
           "branch": "else",
-          "branchGroup": "branch:63"
+          "branchGroup": "branch:69"
         },
         {
           "condition": "else ((u1 < 0 || u1 > 1) && (u2 < 0 || u2 > 1))",
           "branch": "else",
-          "branchGroup": "branch:69"
+          "branchGroup": "branch:75"
         },
         {
           "condition": "if (u1 >= 0 && u1 <= 1)",
           "branch": "then",
-          "branchGroup": "branch:75"
+          "branchGroup": "branch:81"
         }
       ],
       "label": "else (deter <= 0) → else ((u1 < 0 || u1 > 1) && (u2 < 0 || u2 > 1)) → if (u1 >= 0 && u1 <= 1)",
@@ -40407,17 +40407,17 @@
         {
           "condition": "else (deter <= 0)",
           "branch": "else",
-          "branchGroup": "branch:63"
+          "branchGroup": "branch:69"
         },
         {
           "condition": "else ((u1 < 0 || u1 > 1) && (u2 < 0 || u2 > 1))",
           "branch": "else",
-          "branchGroup": "branch:69"
+          "branchGroup": "branch:75"
         },
         {
           "condition": "if (u2 >= 0 && u2 <= 1)",
           "branch": "then",
-          "branchGroup": "branch:77"
+          "branchGroup": "branch:84"
         }
       ],
       "label": "else (deter <= 0) → else ((u1 < 0 || u1 > 1) && (u2 < 0 || u2 > 1)) → if (u2 >= 0 && u2 <= 1)",
@@ -40497,7 +40497,7 @@
         {
           "condition": "if (pointInPolygon(a, polygonB))",
           "branch": "then",
-          "branchGroup": "branch:251"
+          "branchGroup": "branch:258"
         }
       ],
       "label": "if (pointInPolygon(a, polygonB))",
@@ -40513,7 +40513,7 @@
         {
           "condition": "if (pointInPolygon(a, polygonA))",
           "branch": "then",
-          "branchGroup": "branch:261"
+          "branchGroup": "branch:268"
         }
       ],
       "label": "if (pointInPolygon(a, polygonA))",
@@ -40529,7 +40529,7 @@
         {
           "condition": "if (intersection !== null)",
           "branch": "then",
-          "branchGroup": "branch:278"
+          "branchGroup": "branch:285"
         }
       ],
       "label": "if (intersection !== null)",
@@ -40553,7 +40553,7 @@
         {
           "condition": "else (result.size === 0)",
           "branch": "else",
-          "branchGroup": "branch:287"
+          "branchGroup": "branch:294"
         }
       ],
       "label": "else (result.size === 0)",
@@ -40577,7 +40577,7 @@
         {
           "condition": "if (intersection !== null)",
           "branch": "then",
-          "branchGroup": "branch:322"
+          "branchGroup": "branch:329"
         }
       ],
       "label": "if (intersection !== null)",
@@ -40697,17 +40697,17 @@
         {
           "condition": "else (a.x === A.x && a.y === A.y)",
           "branch": "else",
-          "branchGroup": "branch:324"
+          "branchGroup": "branch:328"
         },
         {
           "condition": "if (a.y <= A.y)",
           "branch": "then",
-          "branchGroup": "branch:328"
+          "branchGroup": "branch:331"
         },
         {
           "condition": "b.y > A.y &&",
           "branch": "&&",
-          "branchGroup": "branch:331"
+          "branchGroup": "branch:334"
         }
       ],
       "label": "else (a.x === A.x && a.y === A.y) → if (a.y <= A.y) → b.y > A.y &&",
@@ -40723,12 +40723,12 @@
         {
           "condition": "else (a.x === A.x && a.y === A.y)",
           "branch": "else",
-          "branchGroup": "branch:324"
+          "branchGroup": "branch:328"
         },
         {
           "condition": "b.y <= A.y &&",
           "branch": "&&",
-          "branchGroup": "branch:334"
+          "branchGroup": "branch:337"
         }
       ],
       "label": "else (a.x === A.x && a.y === A.y) → b.y <= A.y &&",
@@ -40744,7 +40744,7 @@
         {
           "condition": "if (direction < 0)",
           "branch": "then",
-          "branchGroup": "branch:375"
+          "branchGroup": "branch:378"
         }
       ],
       "label": "if (direction < 0)",
@@ -40760,7 +40760,7 @@
         {
           "condition": "else (direction < 0)",
           "branch": "else",
-          "branchGroup": "branch:375"
+          "branchGroup": "branch:378"
         }
       ],
       "label": "else (direction < 0)",
@@ -40784,7 +40784,7 @@
         {
           "condition": "else (!Number.isFinite(x) || !Number.isFinite(y))",
           "branch": "else",
-          "branchGroup": "branch:459"
+          "branchGroup": "branch:462"
         }
       ],
       "label": "else (!Number.isFinite(x) || !Number.isFinite(y))",
@@ -40800,7 +40800,7 @@
         {
           "condition": "else (center === null)",
           "branch": "else",
-          "branchGroup": "branch:473"
+          "branchGroup": "branch:476"
         }
       ],
       "label": "else (center === null)",
@@ -40816,7 +40816,7 @@
         {
           "condition": "else (center === null)",
           "branch": "else",
-          "branchGroup": "branch:473"
+          "branchGroup": "branch:476"
         }
       ],
       "label": "else (center === null)",
